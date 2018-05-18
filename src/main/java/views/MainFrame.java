@@ -42,6 +42,22 @@ public class MainFrame extends javax.swing.JFrame {
         recentScrollPane = new javax.swing.JScrollPane();
         recentList = new javax.swing.JList<>();
         infoPanel = new javax.swing.JPanel();
+        idPanel = new javax.swing.JPanel();
+        imagePanel = new javax.swing.JPanel();
+        nameLabel = new javax.swing.JLabel();
+        copyPanel = new javax.swing.JPanel();
+        copyButton = new javax.swing.JButton();
+        colorPanel = new javax.swing.JPanel();
+        colorLabel = new javax.swing.JLabel();
+        colorCodeTextField = new javax.swing.JTextField();
+        colorDisplayTextField = new javax.swing.JTextField();
+        keywordPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        keywordScrollPane = new javax.swing.JScrollPane();
+        keywordTextArea = new javax.swing.JTextArea();
+        changeButtonPanel = new javax.swing.JPanel();
+        revertButton = new javax.swing.JButton();
+        applyButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,16 +127,79 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(selectionPanel, java.awt.BorderLayout.WEST);
 
-        javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
-        infoPanel.setLayout(infoPanelLayout);
-        infoPanelLayout.setHorizontalGroup(
-            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        infoPanel.setLayout(new java.awt.GridBagLayout());
+
+        imagePanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
+        imagePanel.setLayout(imagePanelLayout);
+        imagePanelLayout.setHorizontalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 64, Short.MAX_VALUE)
         );
-        infoPanelLayout.setVerticalGroup(
-            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        imagePanelLayout.setVerticalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 64, Short.MAX_VALUE)
         );
+
+        idPanel.add(imagePanel);
+
+        nameLabel.setText("Name");
+        idPanel.add(nameLabel);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        infoPanel.add(idPanel, gridBagConstraints);
+
+        copyButton.setText("Copy");
+        copyPanel.add(copyButton);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        infoPanel.add(copyPanel, gridBagConstraints);
+
+        colorLabel.setText("Color:");
+        colorPanel.add(colorLabel);
+
+        colorCodeTextField.setText("000000");
+        colorPanel.add(colorCodeTextField);
+        colorPanel.add(colorDisplayTextField);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        infoPanel.add(colorPanel, gridBagConstraints);
+
+        jLabel1.setText("keywordLabel:");
+        keywordPanel.add(jLabel1);
+
+        keywordTextArea.setColumns(20);
+        keywordTextArea.setRows(5);
+        keywordScrollPane.setViewportView(keywordTextArea);
+
+        keywordPanel.add(keywordScrollPane);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        infoPanel.add(keywordPanel, gridBagConstraints);
+
+        revertButton.setText("Revert");
+        changeButtonPanel.add(revertButton);
+
+        applyButton.setText("Apply");
+        changeButtonPanel.add(applyButton);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        infoPanel.add(changeButtonPanel, gridBagConstraints);
 
         getContentPane().add(infoPanel, java.awt.BorderLayout.EAST);
 
@@ -163,13 +242,29 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton applyButton;
+    private javax.swing.JPanel changeButtonPanel;
+    private javax.swing.JTextField colorCodeTextField;
+    private javax.swing.JTextField colorDisplayTextField;
+    private javax.swing.JLabel colorLabel;
+    private javax.swing.JPanel colorPanel;
+    private javax.swing.JButton copyButton;
+    private javax.swing.JPanel copyPanel;
+    private javax.swing.JPanel idPanel;
+    private javax.swing.JPanel imagePanel;
     private javax.swing.JPanel infoPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel keywordPanel;
+    private javax.swing.JScrollPane keywordScrollPane;
+    private javax.swing.JTextArea keywordTextArea;
+    private javax.swing.JLabel nameLabel;
     private javax.swing.JList<String> recentList;
     private javax.swing.JPanel recentPanel;
     private javax.swing.JScrollPane recentScrollPane;
     private javax.swing.JList<String> resultsList;
     private javax.swing.JPanel resultsPanel;
     private javax.swing.JScrollPane resultsScrollPane;
+    private javax.swing.JButton revertButton;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTextField searchTextField;
