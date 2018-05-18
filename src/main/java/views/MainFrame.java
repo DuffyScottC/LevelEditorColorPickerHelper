@@ -162,12 +162,19 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         infoPanel.add(copyPanel, gridBagConstraints);
 
+        colorPanel.setLayout(new java.awt.GridBagLayout());
+
         colorLabel.setText("Color:");
-        colorPanel.add(colorLabel);
+        colorPanel.add(colorLabel, new java.awt.GridBagConstraints());
 
         colorCodeTextField.setText("000000");
-        colorPanel.add(colorCodeTextField);
-        colorPanel.add(colorDisplayTextField);
+        colorPanel.add(colorCodeTextField, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        colorPanel.add(colorDisplayTextField, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -186,7 +193,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         infoPanel.add(keywordPanel, gridBagConstraints);
 
         revertButton.setText("Revert");
@@ -197,11 +205,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         infoPanel.add(changeButtonPanel, gridBagConstraints);
 
-        getContentPane().add(infoPanel, java.awt.BorderLayout.EAST);
+        getContentPane().add(infoPanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
