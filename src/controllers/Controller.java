@@ -21,8 +21,8 @@ public class Controller {
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
         
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println(new File(Controller.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath());
+        //during practice it is /Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper
+        frame.getKeywordTextField().setText(System.getProperty("user.dir"));
     }
 
     public static void main(String[] args) {
