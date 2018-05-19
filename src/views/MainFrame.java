@@ -5,6 +5,11 @@
  */
 package views;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Scott
@@ -309,4 +314,51 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getAddEntityButton() {
+        return addEntityButton;
+    }
+
+    public JButton getApplyButton() {
+        return applyButton;
+    }
+
+    public JTextField getColorCodeTextField() {
+        return colorCodeTextField;
+    }
+
+    public JTextField getColorDisplayTextField() {
+        return colorDisplayTextField;
+    }
+
+    public JTextField getKeywordTextField() {
+        return keywordTextField;
+    }
+
+    public JList<String> getRecentList() {
+        return recentList;
+    }
+
+    public JList<String> getResultsList() {
+        return resultsList;
+    }
+
+    public JButton getRevertButton() {
+        return revertButton;
+    }
+
+    public JTextField getSearchTextField() {
+        return searchTextField;
+    }
+
+    public JButton getSelectButton() {
+        return selectButton;
+    }
+
+    public JComboBox<String> getTypeComboBox() {
+        return typeComboBox;
+    }
+
+    
+    
 }
