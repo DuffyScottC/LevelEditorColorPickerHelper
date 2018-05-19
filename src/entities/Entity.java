@@ -73,6 +73,10 @@ public class Entity {
         this.unityPrefab = unityPrefab;
     }
     
+    public String getImage() {
+        return image;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
