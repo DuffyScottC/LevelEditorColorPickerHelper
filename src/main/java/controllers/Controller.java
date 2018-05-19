@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import com.google.gson.Gson;
 import views.MainFrame;
 
 public class Controller {
@@ -16,7 +17,6 @@ public class Controller {
         frame.setLocationRelativeTo(null);
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
-
         
     }
 
