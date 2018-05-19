@@ -19,7 +19,7 @@ public class Controller {
         frame.setLocationRelativeTo(null);
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
-        Entity e = new Entity("image.png", "Enemy", Color.blue);
+        Entity e = new Entity("image.png", "Enemy", Color.blue, "Enemy");
         Gson gson = new Gson();
         String eGson = gson.toJson(e);
         System.out.println(eGson);
