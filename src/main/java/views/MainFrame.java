@@ -38,6 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
         resultsPanel = new javax.swing.JPanel();
         resultsScrollPane = new javax.swing.JScrollPane();
         resultsList = new javax.swing.JList<>();
+        recentLabel = new javax.swing.JLabel();
         recentPanel = new javax.swing.JPanel();
         recentScrollPane = new javax.swing.JScrollPane();
         recentList = new javax.swing.JList<>();
@@ -57,22 +58,26 @@ public class MainFrame extends javax.swing.JFrame {
 
         selectionPanel.setLayout(new java.awt.GridBagLayout());
 
+        typePanel.setLayout(new java.awt.BorderLayout());
+
         typeLabel.setText("Type:");
-        typePanel.add(typeLabel);
+        typePanel.add(typeLabel, java.awt.BorderLayout.WEST);
 
         typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        typePanel.add(typeComboBox);
+        typePanel.add(typeComboBox, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         selectionPanel.add(typePanel, gridBagConstraints);
 
+        searchPanel.setLayout(new java.awt.BorderLayout());
+
         searchLabel.setText("Search:");
-        searchPanel.add(searchLabel);
+        searchPanel.add(searchLabel, java.awt.BorderLayout.WEST);
 
         searchTextField.setText("Name");
-        searchPanel.add(searchTextField);
+        searchPanel.add(searchTextField, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -100,6 +105,13 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.weighty = 0.1;
         selectionPanel.add(resultsPanel, gridBagConstraints);
 
+        recentLabel.setText("Recent:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        selectionPanel.add(recentLabel, gridBagConstraints);
+
         recentPanel.setLayout(new java.awt.BorderLayout());
 
         recentList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -113,7 +125,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
@@ -198,7 +210,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(revertButton)
                     .addComponent(applyButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         getContentPane().add(infoPanel, java.awt.BorderLayout.CENTER);
@@ -251,6 +263,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel keywordLabel;
     private javax.swing.JTextField keywordTextField;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel recentLabel;
     private javax.swing.JList<String> recentList;
     private javax.swing.JPanel recentPanel;
     private javax.swing.JScrollPane recentScrollPane;
