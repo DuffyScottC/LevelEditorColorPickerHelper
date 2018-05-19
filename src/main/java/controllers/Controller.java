@@ -6,6 +6,8 @@
 package controllers;
 
 import com.google.gson.Gson;
+import entities.Entity;
+import java.awt.Color;
 import views.MainFrame;
 
 public class Controller {
@@ -17,7 +19,11 @@ public class Controller {
         frame.setLocationRelativeTo(null);
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
-        
+        Entity e = new Entity("image.png", "Enemy", Color.blue);
+        Gson gson = new Gson();
+        String eGson = gson.toJson(e);
+        System.out.println(eGson);
+        System.out.println(Color.blue + " " + Color.blue.toString());
     }
 
     public static void main(String[] args) {

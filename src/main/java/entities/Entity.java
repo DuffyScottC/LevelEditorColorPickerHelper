@@ -26,17 +26,23 @@ public class Entity {
      * The color associated with this entity
      */
     private Color color;
+    /**
+     * The Unity Prefab associated with this entity
+     */
+    private String unityPrefab;
     
     /**
      * Create a new entity
      * @param image The path of the image associated with this entity
      * @param name The name associated with this entity
      * @param color The color associated with this entity
+     * @param unityPrefab The Unity Prefab associated with this entity
      */
-    public Entity (String image, String name, Color color) {
+    public Entity (String image, String name, Color color, String unityPrefab) {
         this.image = image;
         this.name = name;
         this.color = color;
+        this.unityPrefab = unityPrefab;
     }
     
     @Override

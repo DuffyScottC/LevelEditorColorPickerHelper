@@ -42,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
         recentPanel = new javax.swing.JPanel();
         recentScrollPane = new javax.swing.JScrollPane();
         recentList = new javax.swing.JList<>();
+        addEntityButton = new javax.swing.JButton();
         infoPanel = new javax.swing.JPanel();
         nameLabel = new javax.swing.JLabel();
         imagePreviewPanel = new javax.swing.JPanel();
@@ -56,7 +57,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        selectionPanel.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout selectionPanelLayout = new java.awt.GridBagLayout();
+        selectionPanelLayout.columnWidths = new int[] {0};
+        selectionPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        selectionPanel.setLayout(selectionPanelLayout);
 
         typePanel.setLayout(new java.awt.BorderLayout());
 
@@ -67,8 +71,11 @@ public class MainFrame extends javax.swing.JFrame {
         typePanel.add(typeComboBox, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         selectionPanel.add(typePanel, gridBagConstraints);
 
         searchPanel.setLayout(new java.awt.BorderLayout());
@@ -81,9 +88,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         selectionPanel.add(searchPanel, gridBagConstraints);
 
         resultsPanel.setLayout(new java.awt.BorderLayout());
@@ -99,17 +107,19 @@ public class MainFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         selectionPanel.add(resultsPanel, gridBagConstraints);
 
         recentLabel.setText("Recent:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         selectionPanel.add(recentLabel, gridBagConstraints);
 
         recentPanel.setLayout(new java.awt.BorderLayout());
@@ -125,11 +135,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         selectionPanel.add(recentPanel, gridBagConstraints);
+
+        addEntityButton.setText("Add Entity");
+        addEntityButton.setToolTipText("Add a new Entity to this project.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        selectionPanel.add(addEntityButton, gridBagConstraints);
 
         getContentPane().add(selectionPanel, java.awt.BorderLayout.WEST);
 
@@ -210,7 +229,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(revertButton)
                     .addComponent(applyButton))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         getContentPane().add(infoPanel, java.awt.BorderLayout.CENTER);
@@ -254,6 +273,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addEntityButton;
     private javax.swing.JButton applyButton;
     private javax.swing.JTextField colorCodeTextField;
     private javax.swing.JTextField colorDisplayTextField;
