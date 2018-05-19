@@ -24,8 +24,7 @@ public class Controller {
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
         
-        
-        System.out.println(new File(Controller.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath());
+        System.out.println(System.getProperty("user.dir"));
     }
 
     public static void main(String[] args) {
