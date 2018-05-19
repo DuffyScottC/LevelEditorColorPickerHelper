@@ -5,11 +5,8 @@
  */
 package controllers;
 
-import entities.Entity;
-import java.awt.Color;
 import java.io.File;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import views.MainFrame;
@@ -25,6 +22,7 @@ public class Controller {
         // frame.setSize(600, 500);
         
         System.out.println(System.getProperty("user.dir"));
+        System.out.println(new File(Controller.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath());
     }
 
     public static void main(String[] args) {
