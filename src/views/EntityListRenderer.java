@@ -7,8 +7,10 @@ package views;
 
 import entities.Entity;
 import java.awt.Component;
+import java.net.URL;
 import java.util.List;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
@@ -36,6 +38,16 @@ public class EntityListRenderer extends DefaultListCellRenderer {
                 boolean isSelected, boolean cellHasFocus) {
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
+        
+        ImageIcon imageIcon;
+        String path = entitiesInList.get(index).getImage();
+        URL imgURL = EntityListRenderer.class.getResource(path);
+        if (imgURL != null) {
+            imageIcon = new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            imageIcon = null;
+        }
         
         
         return label;
