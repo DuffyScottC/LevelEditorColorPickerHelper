@@ -5,9 +5,6 @@
     <artifactId>LevelEditorColorPicker</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <properties>
-        <mainClass>controller.GraphController</mainClass>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -25,5 +22,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <mainClass>controller.GraphController</mainClass>
     </properties>
 </project>
