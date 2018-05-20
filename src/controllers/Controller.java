@@ -25,7 +25,7 @@ public class Controller {
 
     private final MainFrame frame = new MainFrame();
 
-    public Controller() throws URISyntaxException {
+    public Controller() {
         frame.setTitle(getClass().getSimpleName());
         frame.setLocationRelativeTo(null);
         // you can adjust the size with something like this:
@@ -43,12 +43,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller app;
-        try {
-            app = new Controller();
-            app.frame.setVisible(true);
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Controller app = new Controller();
+        app.frame.setVisible(true);
     }
 }
