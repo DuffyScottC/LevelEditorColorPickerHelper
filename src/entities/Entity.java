@@ -116,4 +116,9 @@ public class Entity {
             return false;
         }
     }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
 }

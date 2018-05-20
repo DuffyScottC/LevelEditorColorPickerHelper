@@ -39,7 +39,7 @@ public class ResultsListController {
     private void updateListModel() {
         resultsListModel.clear();
         for (Entity e : entitiesInResults) {
-            resultsListModel.addElement(e.getName());
+            resultsListModel.addElement(e);
         }
         resultsList.repaint();
     }
