@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /**
@@ -62,15 +64,15 @@ public class MainFrame extends javax.swing.JFrame {
         redSpinner = new javax.swing.JSpinner();
         greenSpinner = new javax.swing.JSpinner();
         blueSpinner = new javax.swing.JSpinner();
-        jPanel2 = new javax.swing.JPanel();
-        keywordLabel = new javax.swing.JLabel();
-        keywordTextField = new javax.swing.JTextField();
-        revertButton = new javax.swing.JButton();
-        applyButton = new javax.swing.JButton();
+        tagsPanel = new javax.swing.JPanel();
+        tagsLabel = new javax.swing.JLabel();
+        tagsTextField = new javax.swing.JTextField();
         colorPanel = new javax.swing.JPanel();
         colorCodeTextField = new javax.swing.JTextField();
         colorLabel = new javax.swing.JLabel();
         imagePanel = new views.ImagePanel();
+        applyButton = new javax.swing.JButton();
+        revertButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -236,38 +238,26 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(59, 59, 59))
         );
 
-        keywordLabel.setText("Keywords:");
+        tagsLabel.setText("Tags:");
 
-        revertButton.setText("Revert");
-
-        applyButton.setText("Apply");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout tagsPanelLayout = new javax.swing.GroupLayout(tagsPanel);
+        tagsPanel.setLayout(tagsPanelLayout);
+        tagsPanelLayout.setHorizontalGroup(
+            tagsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tagsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(keywordLabel)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(revertButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(applyButton))
-                    .addComponent(keywordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tagsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tagsLabel)
+                    .addComponent(tagsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        tagsPanelLayout.setVerticalGroup(
+            tagsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tagsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(keywordLabel)
+                .addComponent(tagsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(keywordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(revertButton)
-                    .addComponent(applyButton))
+                .addComponent(tagsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -301,6 +291,10 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        applyButton.setText("Apply");
+
+        revertButton.setText("Revert");
+
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
         infoPanelLayout.setHorizontalGroup(
@@ -315,7 +309,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(selectButton)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tagsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(infoPanelLayout.createSequentialGroup()
                                 .addComponent(colorLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -324,7 +318,12 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(colorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(colorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(revertButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(applyButton)))
                 .addContainerGap())
         );
         infoPanelLayout.setVerticalGroup(
@@ -345,8 +344,12 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sliderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61))
+                .addComponent(tagsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(61, 61, 61)
+                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(applyButton)
+                    .addComponent(revertButton))
+                .addContainerGap())
         );
 
         getContentPane().add(infoPanel, java.awt.BorderLayout.CENTER);
@@ -405,9 +408,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel keywordLabel;
-    private javax.swing.JTextField keywordTextField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel recentLabel;
     private javax.swing.JList<String> recentList;
@@ -425,6 +425,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton selectButton;
     private javax.swing.JPanel selectionPanel;
     private javax.swing.JPanel sliderPanel;
+    private javax.swing.JLabel tagsLabel;
+    private javax.swing.JPanel tagsPanel;
+    private javax.swing.JTextField tagsTextField;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
@@ -446,8 +449,8 @@ public class MainFrame extends javax.swing.JFrame {
         return colorPanel;
     }
 
-    public JTextField getKeywordTextField() {
-        return keywordTextField;
+    public JTextField getTagsTextField() {
+        return tagsTextField;
     }
 
     public JList<String> getRecentList() {
@@ -477,4 +480,29 @@ public class MainFrame extends javax.swing.JFrame {
     public ImagePanel getImagePanel() {
         return imagePanel;
     }
+
+    public JSpinner getBlueSpinner() {
+        return blueSpinner;
+    }
+
+    public JSpinner getGreenSpinner() {
+        return greenSpinner;
+    }
+
+    public JSpinner getRedSpinner() {
+        return redSpinner;
+    }
+
+    public JSlider getBlueSlider() {
+        return blueSlider;
+    }
+
+    public JSlider getGreenSlider() {
+        return greenSlider;
+    }
+
+    public JSlider getRedSlider() {
+        return redSlider;
+    }
+    
 }

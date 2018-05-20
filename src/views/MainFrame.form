@@ -856,7 +856,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="selectButton" min="-2" max="-2" attributes="0"/>
-                              <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="tagsPanel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="colorLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -869,6 +869,12 @@
                           <Component id="imagePanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="colorPanel" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="revertButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="applyButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -895,8 +901,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="sliderPanel" min="-2" pref="115" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <Component id="tagsPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="applyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="revertButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -1018,7 +1029,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="tagsPanel">
 
           <Layout>
             <DimensionLayout dim="0">
@@ -1026,13 +1037,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="keywordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="revertButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="applyButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="keywordTextField" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
+                          <Component id="tagsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="tagsTextField" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -1042,36 +1048,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="keywordLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="tagsLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="keywordTextField" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="revertButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="applyButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="tagsTextField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="keywordLabel">
+            <Component class="javax.swing.JLabel" name="tagsLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Keywords:"/>
+                <Property name="text" type="java.lang.String" value="Tags:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="keywordTextField">
-            </Component>
-            <Component class="javax.swing.JButton" name="revertButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Revert"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="applyButton">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Apply"/>
-              </Properties>
+            <Component class="javax.swing.JTextField" name="tagsTextField">
             </Component>
           </SubComponents>
         </Container>
@@ -1125,6 +1116,16 @@
             </DimensionLayout>
           </Layout>
         </Container>
+        <Component class="javax.swing.JButton" name="applyButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Apply"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="revertButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Revert"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
