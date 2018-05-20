@@ -33,17 +33,10 @@ public class Controller {
         
         String imagePath = System.getProperty("user.dir") + "/projects/project1/brick.png";
         
-        Entity e = new Entity(imagePath, "name", Color.black, "prefab");
-        
         List<Entity> entitiesInResults = new ArrayList();
-        entitiesInResults.add(e);
         
-        DefaultListModel listModel = new DefaultListModel();
-        
-        JList list = frame.getResultsList();
-        list.setModel(listModel);
-        list.setCellRenderer(new EntityListRenderer(entitiesInResults));
-        listModel.addElement("name");
+        //Set up the Results List Controller
+        ResultsListController resultsListController = new ResultsListController(frame, entitiesInResults);
         
         File imageFile = new File(imagePath);
         frame.getImagePanel().setImagePath(imageFile);
