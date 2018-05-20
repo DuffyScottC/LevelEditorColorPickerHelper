@@ -31,7 +31,7 @@ public class Controller {
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
         
-        String imagePath = System.getProperty("user.dir") + "/resources/images/brick.png";
+        String imagePath = System.getProperty("user.dir") + "/projects/project1/brick.png";
         
         Entity e = new Entity(imagePath, "name", Color.black, "prefab");
         
@@ -45,15 +45,7 @@ public class Controller {
         list.setCellRenderer(new EntityListRenderer(entitiesInResults));
         listModel.addElement("name");
         
-        File imageFile = new File(imagePath);
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(imageFile);
-        } catch (IOException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        BufferedImage ret = new BufferedImage(32,32,BufferedImage.TYPE_INT_RGB);
-        ret.getGraphics().drawImage(image,0,0,32,32,null);
+        frame.getImagePanel1().setImagePath(imagePath);
     }
 
     public static void main(String[] args) {
