@@ -31,7 +31,6 @@ public class Controller {
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
         
-        
         //Set up the Results List Controller
         ResultsListController resultsListController = new ResultsListController(frame);
         RecentListController recentListController = new RecentListController(frame);
