@@ -93,14 +93,82 @@ public class ColorPickerManager {
             g = greenSlider.getValue();
             updateColorCodeTextField();
             updateColorPanel();
-            greenSpinner.setValue(r);
+            greenSpinner.setValue(g);
+        });
+        
+        greenSpinner.addChangeListener((ChangeEvent e) -> {
+            //"ensure manually typed values with the editor 
+            //are propagated to the model"
+            try {
+                //add manually typed value to the model
+                greenSpinner.commitEdit();
+            } catch (ParseException ex ) {
+                //if the manually typed value is not formatted properly
+                System.err.println(ex.toString());
+                //reset the spinner to the previous r value
+                greenSpinner.setValue(g);
+            }
+            //get the spinner value
+            int val = (Integer) greenSpinner.getValue();
+            //if val is at least 0
+            if (0 <= val) {
+                if (val <= 255) {
+                    //set r to the value in the spinner
+                    g = val;
+                } else {
+                    //if val is greater than 255
+                    g = 255;
+                    greenSpinner.setValue(255);
+                }
+            } else {
+                //if val is less than 0
+                g = 0;
+                greenSpinner.setValue(0);
+            }
+            updateColorCodeTextField();
+            updateColorPanel();
+            greenSlider.setValue(g);
         });
         
         blueSlider.addChangeListener((ChangeEvent e) -> {
             b = blueSlider.getValue();
             updateColorCodeTextField();
             updateColorPanel();
-            blueSpinner.setValue(r);
+            blueSpinner.setValue(b);
+        });
+        
+        blueSpinner.addChangeListener((ChangeEvent e) -> {
+            //"ensure manually typed values with the editor 
+            //are propagated to the model"
+            try {
+                //add manually typed value to the model
+                blueSpinner.commitEdit();
+            } catch (ParseException ex ) {
+                //if the manually typed value is not formatted properly
+                System.err.println(ex.toString());
+                //reset the spinner to the previous r value
+                blueSpinner.setValue(b);
+            }
+            //get the spinner value
+            int val = (Integer) blueSpinner.getValue();
+            //if val is at least 0
+            if (0 <= val) {
+                if (val <= 255) {
+                    //set r to the value in the spinner
+                    b = val;
+                } else {
+                    //if val is greater than 255
+                    b = 255;
+                    blueSpinner.setValue(255);
+                }
+            } else {
+                //if val is less than 0
+                b = 0;
+                blueSpinner.setValue(0);
+            }
+            updateColorCodeTextField();
+            updateColorPanel();
+            blueSlider.setValue(b);
         });
         
         
