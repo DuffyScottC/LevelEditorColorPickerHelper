@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -75,6 +76,13 @@ public class MainFrame extends javax.swing.JFrame {
         applyButton = new javax.swing.JButton();
         revertButton = new javax.swing.JButton();
         includeHashTagCheckBox = new javax.swing.JCheckBox();
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        newProjectMenuItem = new javax.swing.JMenuItem();
+        openProjectMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        newEntityMenuItem = new javax.swing.JMenuItem();
+        deleteEntityMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -362,6 +370,25 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(infoPanel, java.awt.BorderLayout.CENTER);
 
+        fileMenu.setText("File");
+
+        newProjectMenuItem.setText("New Project");
+        fileMenu.add(newProjectMenuItem);
+
+        openProjectMenuItem.setText("Open Project");
+        fileMenu.add(openProjectMenuItem);
+        fileMenu.add(jSeparator1);
+
+        newEntityMenuItem.setText("New Entity");
+        fileMenu.add(newEntityMenuItem);
+
+        deleteEntityMenuItem.setText("Delete Entity");
+        fileMenu.add(deleteEntityMenuItem);
+
+        menuBar.add(fileMenu);
+
+        setJMenuBar(menuBar);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -409,6 +436,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField colorCodeTextField;
     private javax.swing.JLabel colorLabel;
     private javax.swing.JPanel colorPanel;
+    private javax.swing.JMenuItem deleteEntityMenuItem;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JSlider greenSlider;
     private javax.swing.JSpinner greenSpinner;
     private views.ImagePanel imagePanel;
@@ -417,7 +446,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JMenuItem newEntityMenuItem;
+    private javax.swing.JMenuItem newProjectMenuItem;
+    private javax.swing.JMenuItem openProjectMenuItem;
     private javax.swing.JLabel recentLabel;
     private javax.swing.JList<String> recentList;
     private javax.swing.JPanel recentPanel;
@@ -516,6 +550,22 @@ public class MainFrame extends javax.swing.JFrame {
     
     public JCheckBox getIncludeHashTagCheckBox() {
         return includeHashTagCheckBox;
+    }
+
+    public JMenuItem getDeleteEntityMenuItem() {
+        return deleteEntityMenuItem;
+    }
+
+    public JMenuItem getNewEntityMenuItem() {
+        return newEntityMenuItem;
+    }
+
+    public JMenuItem getNewProjectMenuItem() {
+        return newProjectMenuItem;
+    }
+
+    public JMenuItem getOpenProjectMenuItem() {
+        return openProjectMenuItem;
     }
     
 }
