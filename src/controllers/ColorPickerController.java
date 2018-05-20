@@ -20,7 +20,7 @@ import views.MainFrame;
  * This manages the color picker section of the info panel in the main frame.
  * @author Scott
  */
-public class ColorPickerManager {
+public class ColorPickerController {
     private int r = 0;
     private int g = 0;
     private int b = 0;
@@ -40,7 +40,7 @@ public class ColorPickerManager {
     private final JCheckBox includeHashTagCheckBox;
     private boolean includeHashTag = false;
     
-    public ColorPickerManager(MainFrame frame) {
+    public ColorPickerController(MainFrame frame) {
         redSlider = frame.getRedSlider();
         greenSlider = frame.getGreenSlider();
         blueSlider = frame.getBlueSlider();

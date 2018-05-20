@@ -21,7 +21,7 @@ public class Controller {
         ResultsListController resultsListController = new ResultsListController(frame);
         RecentListController recentListController = new RecentListController(frame);
         ProjectController projectController = new ProjectController(frame);
-        ColorPickerManager colorPickerManager = new ColorPickerManager(frame);
+        ColorPickerController colorPickerController = new ColorPickerController(frame);
         
     }
 
