@@ -34,9 +34,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="projectNameTextField" alignment="0" pref="271" max="32767" attributes="0"/>
-                          <Component id="projectFolderTextField" max="32767" attributes="0"/>
-                          <Component id="projectLocationTextField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="projectNameTextField" alignment="0" max="32767" attributes="0"/>
+                          <Component id="projectFolderTextField" pref="0" max="32767" attributes="0"/>
+                          <Component id="projectLocationTextField" alignment="0" pref="522" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="browseButton" min="-2" max="-2" attributes="0"/>
@@ -71,7 +71,7 @@
                   <Component id="projectFolderTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="166" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="finishButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -98,10 +98,21 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="projectNameTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="New Project"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="projectLocationTextField">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
+        <Property name="text" type="java.lang.String" value="/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="projectFolderTextField">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="11"/>
+        <Property name="text" type="java.lang.String" value="/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="browseButton">
       <Properties>

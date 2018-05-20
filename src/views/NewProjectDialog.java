@@ -49,6 +49,14 @@ public class NewProjectDialog extends javax.swing.JDialog {
 
         jLabel3.setText("Project Folder:");
 
+        projectNameTextField.setText("New Project");
+
+        projectLocationTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        projectLocationTextField.setText("/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper");
+
+        projectFolderTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        projectFolderTextField.setText("/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project");
+
         browseButton.setText("Browse");
 
         finishButton.setText("Finish");
@@ -69,9 +77,9 @@ public class NewProjectDialog extends javax.swing.JDialog {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(projectNameTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-                            .addComponent(projectFolderTextField)
-                            .addComponent(projectLocationTextField, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(projectNameTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(projectFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(projectLocationTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(browseButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -97,7 +105,7 @@ public class NewProjectDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(projectFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(finishButton)
                     .addComponent(cancelButton))
