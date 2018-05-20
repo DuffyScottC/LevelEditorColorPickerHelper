@@ -32,8 +32,8 @@ public class ImagePanel extends JPanel {
         } catch (IOException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ret = new BufferedImage(64,64,BufferedImage.TYPE_INT_RGB);
-        ret.getGraphics().drawImage(image,0,0,64,64,null);
+        ret = new BufferedImage(getSize().width,getSize().height,BufferedImage.TYPE_INT_RGB);
+        ret.getGraphics().drawImage(image,0,0,getSize().width,getSize().height,null);
     }
     
     @Override
