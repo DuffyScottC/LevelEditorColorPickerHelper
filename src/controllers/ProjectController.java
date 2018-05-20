@@ -6,9 +6,13 @@
 package controllers;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
+import java.nio.file.Path;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JTextField;
 import projects.Project;
 import views.MainFrame;
 import views.NewProjectDialog;
@@ -23,6 +27,8 @@ public class ProjectController {
      * The current opened project
      */
     private Project currentProject = null;
+    private File projectLocation = null;
+    private String projectName = "newproject";
     
     
     private final JMenuItem newProjectMenuItem;
@@ -58,23 +64,43 @@ public class ProjectController {
     private void setUpNewProjectDialog(MainFrame frame) {
         newProjectDialog.setName("New Project");
         
+        JTextField pNameTextField 
+                = newProjectDialog.getProjectNameTextField();
+        JTextField pLocationTextField 
+                = newProjectDialog.getProjectLocationTextField();
+        JTextField pFolderTextField 
+                = newProjectDialog.getProjectFolderTextField();
+        
+        pNameTextField.setText("New Project");
+        pLocationTextField.setText(System.getProperty("user.dir"));
+        pFolderTextField.setText(System.getProperty("user.dir") + "/New Project");
+        
         //If the user clicks the browse button
         newProjectDialog.getBrowseButton().addActionListener((ActionEvent e) -> {
             int result = chooser.showDialog(frame, "Create");
             if (result == JFileChooser.APPROVE_OPTION) {
-                File directory = chooser.getSelectedFile();
-                if (directory.exists()) {
-                    if (directory.isDirectory()) {
+                projectLocation = chooser.getSelectedFile();
+                if (projectLocation.exists()) {
+                    if (projectLocation.isDirectory()) {
                         //set the project location
-                        newProjectDialog.getProjectLocationTextField()
-                                .setText(directory.getAbsolutePath());
+                        pLocationTextField.setText(projectLocation.getAbsolutePath());
+                        
+                        //Convert the projectLocation to a path object
+                        Path projectLocationPath = projectLocation.toPath();
+                        //add the projectName to the path to get the project folder
+                        //and store it in a file object
+                        File projectFolder = projectLocationPath.resolve(projectName).toFile();
                         //set the project folder
-                        newProjectDialog.getProjectFolderTextField()
-                                .setText(directory.getAbsolutePath() 
-                                    + newProjectDialog.getProjectNameTextField()
-                                            .getText());
+                        pFolderTextField.setText(projectFolder.getAbsolutePath());
                     }
                 }
+            }
+        });
+        
+        newProjectDialog.getProjectNameTextField().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                
             }
         });
     }
