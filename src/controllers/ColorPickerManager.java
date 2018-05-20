@@ -41,8 +41,8 @@ public class ColorPickerManager {
         blueSlider = frame.getBlueSlider();
         
         redSpinner = frame.getRedSpinner();
-        greenSpinner = frame.getRedSpinner();
-        blueSpinner = frame.getRedSpinner();
+        greenSpinner = frame.getGreenSpinner();
+        blueSpinner = frame.getBlueSpinner();
         
         colorPanel = frame.getColorPanel();
         
@@ -171,7 +171,6 @@ public class ColorPickerManager {
             blueSlider.setValue(b);
         });
         
-        
     }
     
     private void updateColorCodeTextField() {
@@ -181,6 +180,36 @@ public class ColorPickerManager {
     
     private void updateColorPanel() {
         colorPanel.setBackground(new Color(r, g, b));
+    }
+    
+    private void parseUserHex() {
+        String hex = colorCodeTextField.getText();
+        //if this is not of the hex format
+        if (hex.matches("[0-9A-Fa-f]{0,6}")) {
+            //convert the input hex value to 16 bits
+            int value = Integer.valueOf(hex, 16);
+            //if it's between 0 and 0xFFFFFF
+            if (0 <= value) {
+                if (value <= 16777215) {
+                    r = Integer.valueOf( hex.substring( 1, 3 ), 16 );
+                    g = Integer.valueOf( hex.substring( 3, 5 ), 16 );
+                    b = Integer.valueOf( hex.substring( 5, 7 ), 16 );
+                } else {
+                    r = 255;
+                    g = 255;
+                    b = 255;
+                }
+            } else {
+                r = 0;
+                g = 0;
+                b = 0;
+            }
+        } else {
+            //reset the color code to the old value
+            updateColorCodeTextField();
+            return;
+        }
+        updateEverything();
     }
     
 }
