@@ -6,9 +6,11 @@
 package controllers;
 
 /**
- *
+ * This manages the color picker section of the info panel in the main frame.
  * @author Scott
  */
-public class SearchManager {
+public class ColorPickerManager {
+    
+    
     
 }

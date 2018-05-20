@@ -6,6 +6,7 @@
 package entities;
 
 import java.awt.Color;
+import java.util.List;
 
 /**
  * An entity consists of an image, a name, and a color.<>
@@ -38,9 +39,13 @@ public class Entity {
      * The path of the Unity Prefab associated with this entity
      */
     private String unityPrefab;
+    /**
+     * A list of all the tags associated with this entity
+     */
+    private List<String> tags;
     
     /**
-     * Create a new entity
+     * Create a new entity using a Color object to assign the r, g, b values.
      * @param image The path of the image associated with this entity
      * @param name The name associated with this entity
      * @param color The color associated with this entity
@@ -56,7 +61,7 @@ public class Entity {
     }
     
     /**
-     * Create a new entity
+     * Create a new entity using the r, g, b values directly.
      * @param image The path of the image associated with this entity
      * @param name The name associated with this entity
      * @param r The r of the color associated with this entity
@@ -81,6 +86,12 @@ public class Entity {
         return name;
     }
     
+    /**
+     * Checks the name, color, and imagePath of the given object, in that order,
+     * if the object is an Entity.
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -88,10 +99,10 @@ public class Entity {
         }
         if (obj instanceof Entity) {
             Entity e = (Entity) obj;
-            if (r == e.r && g == e.g && b == e.b) {
+            if (name.equals(e.name)) {
                 return false;
             } else {
-                if (name.equals(e.name)) {
+                if (r == e.r && g == e.g && b == e.b) {
                     return false;
                 } else {
                     if (image.equals(e.image)) {

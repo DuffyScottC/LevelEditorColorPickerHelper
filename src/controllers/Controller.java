@@ -5,20 +5,6 @@
  */
 package controllers;
 
-import entities.Entity;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import views.EntityListRenderer;
 import views.MainFrame;
 
 public class Controller {
