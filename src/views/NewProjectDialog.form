@@ -104,13 +104,11 @@
     </Component>
     <Component class="javax.swing.JTextField" name="projectLocationTextField">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" value="/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="projectFolderTextField">
       <Properties>
-        <Property name="horizontalAlignment" type="int" value="11"/>
         <Property name="text" type="java.lang.String" value="/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project"/>
       </Properties>
     </Component>

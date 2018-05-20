@@ -64,6 +64,8 @@ public class ProjectController {
     private void setUpNewProjectDialog(MainFrame frame) {
         newProjectDialog.setName("New Project");
         newProjectDialog.setLocationRelativeTo(null);
+        //make it so that the user can press enter to finish
+        newProjectDialog.getRootPane().setDefaultButton(newProjectDialog.getFinishButton());
         
         JTextField pNameTextField 
                 = newProjectDialog.getProjectNameTextField();
@@ -71,6 +73,8 @@ public class ProjectController {
                 = newProjectDialog.getProjectLocationTextField();
         JTextField pFolderTextField 
                 = newProjectDialog.getProjectFolderTextField();
+        pNameTextField.requestFocus();
+        pNameTextField.selectAll();
         
         //initialize the project location
         projectLocation = new File(System.getProperty("user.dir"));
@@ -97,7 +101,7 @@ public class ProjectController {
         
         pNameTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 projectName = pNameTextField.getText();
                 //every time the user presses a key, update the project folder
                 updateProjectFolderTextBox();

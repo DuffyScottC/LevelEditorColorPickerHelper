@@ -51,10 +51,8 @@ public class NewProjectDialog extends javax.swing.JDialog {
 
         projectNameTextField.setText("New Project");
 
-        projectLocationTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         projectLocationTextField.setText("/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper");
 
-        projectFolderTextField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         projectFolderTextField.setText("/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project");
 
         browseButton.setText("Browse");
