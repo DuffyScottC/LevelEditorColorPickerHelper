@@ -8,6 +8,7 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -36,6 +37,8 @@ public class ColorPickerManager {
     
     private final JTextField colorCodeTextField;
     
+    private final JCheckBox includeHashTagCheckBox;
+    
     public ColorPickerManager(MainFrame frame) {
         redSlider = frame.getRedSlider();
         greenSlider = frame.getGreenSlider();
@@ -48,6 +51,8 @@ public class ColorPickerManager {
         colorPanel = frame.getColorPanel();
         
         colorCodeTextField = frame.getColorCodeTextField();
+        
+        includeHashTagCheckBox = frame.getIncludeHashTagCheckBox();
         
         redSlider.addChangeListener((ChangeEvent e) -> {
             r = redSlider.getValue();
