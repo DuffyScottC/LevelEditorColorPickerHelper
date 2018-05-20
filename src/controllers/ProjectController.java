@@ -5,11 +5,23 @@
  */
 package controllers;
 
+import projects.Project;
+
 /**
- * Handles the creation, storage, modification, and other management of all
+ * Handles the creation, storage, opening, closing, and other management of all
  * projects.
  * @author Scott
  */
 public class ProjectController {
+    /**
+     * The current opened project
+     */
+    private Project currentProject = null;
     
+    /**
+     * Called when the user wants to open a new project
+     */
+    public void openProject() {
+        
+    }
 }
