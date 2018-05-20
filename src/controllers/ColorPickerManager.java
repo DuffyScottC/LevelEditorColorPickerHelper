@@ -38,6 +38,7 @@ public class ColorPickerManager {
     private final JTextField colorCodeTextField;
     
     private final JCheckBox includeHashTagCheckBox;
+    private boolean includeHashTag = false;
     
     public ColorPickerManager(MainFrame frame) {
         redSlider = frame.getRedSlider();
@@ -181,10 +182,20 @@ public class ColorPickerManager {
             parseUserHex();
         });
         
+        includeHashTagCheckBox.addActionListener((ActionEvent e) -> {
+            includeHashTag = includeHashTagCheckBox.isSelected();
+            updateColorCodeTextField();
+        });
+        
     }
     
     private void updateColorCodeTextField() {
-        String hex = String.format("%02X%02X%02X", r, g, b);
+        String hex;
+        if (includeHashTag) {
+            hex = String.format("#%02X%02X%02X", r, g, b);
+        } else {
+            hex = String.format("%02X%02X%02X", r, g, b);
+        }
         colorCodeTextField.setText(hex);
     }
     
@@ -194,6 +205,21 @@ public class ColorPickerManager {
     
     private void parseUserHex() {
         String hex = colorCodeTextField.getText();
+        if (hex == "") {
+            r = 0;
+            g = 0;
+            b = 0;
+            updateAll();
+            return;
+        }
+        //if we are including hashTags
+        if (includeHashTag) {
+            //if this has a #
+            if (hex.charAt(0) == '#') {
+                //remove the #
+                hex = hex.substring(1, hex.length());
+            }
+        }
         //if the hex is not of length 6
         if (hex.length() != 6) {
             //correct the size by adding or removing bits
