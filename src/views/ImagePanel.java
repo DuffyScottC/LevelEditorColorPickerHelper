@@ -24,7 +24,7 @@ public class ImagePanel extends JPanel {
     
     private BufferedImage ret = null;
     
-    public ImagePanel(String imagePath) {
+    public void setImagePath(String imagePath) {
         File imageFile = new File(imagePath);
         BufferedImage image = null;
         try {
