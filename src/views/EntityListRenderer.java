@@ -25,7 +25,7 @@ import javax.swing.JList;
 public class EntityListRenderer extends DefaultListCellRenderer {
     
     List<Entity> entitiesInList;
-    private Font font = new Font("helvitica", Font.BOLD, 9);
+    private Font font = new Font("helvitica", Font.PLAIN, 15);
     
     /**
      * This is to be used in the lists that display the entities.
