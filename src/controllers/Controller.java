@@ -25,6 +25,7 @@ public class Controller {
             recentListController);
         ColorPickerController colorPickerController = new ColorPickerController(frame);
         
+        resultsListController.clearEntitiesInResults();
     }
 
     public static void main(String[] args) {
