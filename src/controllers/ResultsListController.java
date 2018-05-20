@@ -23,11 +23,13 @@ public class ResultsListController {
     
     private final DefaultListModel listModel = new DefaultListModel();
     private final JList resultsList;
+    private final List<Entity> entitiesInResults;
     
     public ResultsListController(MainFrame frame, List<Entity> entitiesInResults) {
         resultsList = frame.getResultsList();
         resultsList.setModel(listModel);
-        resultsList.setCellRenderer(new EntityListRenderer(entitiesInResults));
+        this.entitiesInResults = entitiesInResults;
+        resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
     }
     
 }
