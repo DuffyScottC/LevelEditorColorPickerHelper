@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.Entity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -21,10 +22,10 @@ public class RecentListController {
     private final JList recentList;
     private final List<Entity> entitiesInRecent;
     
-    public RecentListController(MainFrame frame, List<Entity> entitiesInRecent) {
+    public RecentListController(MainFrame frame) {
         recentList = frame.getRecentList();
         recentList.setModel(recentListModel);
-        this.entitiesInRecent = entitiesInRecent;
+        this.entitiesInRecent = new ArrayList();
         recentList.setCellRenderer(new EntityListRenderer(this.entitiesInRecent));
     }
 }

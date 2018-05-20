@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.Entity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -25,10 +26,10 @@ public class ResultsListController {
     private final JList resultsList;
     private final List<Entity> entitiesInResults;
     
-    public ResultsListController(MainFrame frame, List<Entity> entitiesInResults) {
+    public ResultsListController(MainFrame frame) {
         resultsList = frame.getResultsList();
         resultsList.setModel(listModel);
-        this.entitiesInResults = entitiesInResults;
+        this.entitiesInResults = new ArrayList();
         resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
     }
     

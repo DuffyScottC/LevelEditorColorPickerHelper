@@ -31,15 +31,10 @@ public class Controller {
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
         
-        String imagePath = System.getProperty("user.dir") + "/projects/project1/brick.png";
-        
-        List<Entity> entitiesInResults = new ArrayList();
         
         //Set up the Results List Controller
-        ResultsListController resultsListController = new ResultsListController(frame, entitiesInResults);
-        
-        File imageFile = new File(imagePath);
-        frame.getImagePanel().setImagePath(imageFile);
+        ResultsListController resultsListController = new ResultsListController(frame);
+        RecentListController recentListController = new RecentListController(frame);
         
     }
 
