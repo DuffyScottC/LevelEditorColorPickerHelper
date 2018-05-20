@@ -32,8 +32,11 @@ public class ImagePanel extends JPanel {
         } catch (IOException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ret = new BufferedImage(getSize().width,getSize().height,BufferedImage.TYPE_INT_RGB);
-        ret.getGraphics().drawImage(image,0,0,getSize().width,getSize().height,null);
+        //Get the size of the panel that we are drawing to
+        int w = getSize().width;
+        int h = getSize().height;
+        ret = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
+        ret.getGraphics().drawImage(image,0,0,w,h,null);
     }
     
     @Override
