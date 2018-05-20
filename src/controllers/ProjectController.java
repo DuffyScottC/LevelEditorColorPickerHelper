@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.nio.file.Path;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
@@ -61,11 +62,27 @@ public class ProjectController {
         });
     }
     
+    private void createNewProject() {
+        // Create the directory that the user designated for the project:
+        //Fist, convert the projectLocation to a path object
+        Path projectLocationPath = projectLocation.toPath();
+        //add the projectName to the path to get the project folder
+        //and store it in a file object
+        projectLocation = projectLocationPath.resolve(projectName).toFile();
+        //make the directory
+        boolean success = projectLocation.mkdir();
+        
+    }
+    
     private void setUpNewProjectDialog(MainFrame frame) {
         newProjectDialog.setName("New Project");
         newProjectDialog.setLocationRelativeTo(null);
+        
+        JButton cancelButton = newProjectDialog.getCancelButton();
+        JButton finishButton = newProjectDialog.getFinishButton();
+        
         //make it so that the user can press enter to finish
-        newProjectDialog.getRootPane().setDefaultButton(newProjectDialog.getFinishButton());
+        newProjectDialog.getRootPane().setDefaultButton(finishButton);
         
         JTextField pNameTextField 
                 = newProjectDialog.getProjectNameTextField();
@@ -106,6 +123,15 @@ public class ProjectController {
                 //every time the user presses a key, update the project folder
                 updateProjectFolderTextBox();
             }
+        });
+        
+        cancelButton.addActionListener((ActionEvent e) -> {
+            newProjectDialog.setVisible(false);
+        });
+        
+        finishButton.addActionListener((ActionEvent e) -> {
+            createNewProject();
+            newProjectDialog.setVisible(false);
         });
     }
     
