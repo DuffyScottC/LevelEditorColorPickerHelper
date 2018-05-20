@@ -29,9 +29,6 @@ public class Controller {
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);
         
-        // /Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper
-        // System.getProperty("user.dir")
-        
         String imagePath = System.getProperty("user.dir") + "/resources/images/brick.png";
         
         Entity e = new Entity(imagePath, "name", Color.black, "prefab");
