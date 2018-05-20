@@ -17,7 +17,9 @@ import java.awt.image.BufferedImage;
 public class Utils {
     /**
      * * Convenience method that returns a scaled instance of the * provided
-     * {@code BufferedImage}. * * 
+     * {@code BufferedImage}. * * <>
+     * Courtesy of:
+     * https://community.oracle.com/docs/DOC-983611
      * 
      * @param img the original image to be scaled
      * @param targetWidth the desired width of the scaled instance, * in pixels

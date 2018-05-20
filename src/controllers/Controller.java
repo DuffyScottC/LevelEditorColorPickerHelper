@@ -7,14 +7,16 @@ package controllers;
 
 import entities.Entity;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import views.EntityListRenderer;
 import views.MainFrame;
@@ -43,9 +45,15 @@ public class Controller {
         list.setCellRenderer(new EntityListRenderer(entitiesInResults));
         listModel.addElement("name");
         
-        ImageIcon imageIcon = new ImageIcon(imagePath);
-        JLabel label = new JLabel(imageIcon);
-        frame.getImagePreviewPanel().add(label);
+        File imageFile = new File(imagePath);
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(imageFile);
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedImage ret = new BufferedImage(32,32,BufferedImage.TYPE_INT_RGB);
+        ret.getGraphics().drawImage(image,0,0,32,32,null);
     }
 
     public static void main(String[] args) {

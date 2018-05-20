@@ -38,6 +38,7 @@ public class ImagePanel extends JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         int x = (getWidth() - ret.getWidth()) / 2;
         int y = (getHeight() - ret.getHeight()) / 2;
