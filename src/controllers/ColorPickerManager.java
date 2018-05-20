@@ -6,6 +6,7 @@
 package controllers;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -171,6 +172,10 @@ public class ColorPickerManager {
             blueSlider.setValue(b);
         });
         
+        colorCodeTextField.addActionListener((ActionEvent e) -> {
+            parseUserHex();
+        });
+        
     }
     
     private void updateColorCodeTextField() {
@@ -184,32 +189,45 @@ public class ColorPickerManager {
     
     private void parseUserHex() {
         String hex = colorCodeTextField.getText();
-        //if this is not of the hex format
-        if (hex.matches("[0-9A-Fa-f]{0,6}")) {
-            //convert the input hex value to 16 bits
-            int value = Integer.valueOf(hex, 16);
-            //if it's between 0 and 0xFFFFFF
-            if (0 <= value) {
-                if (value <= 16777215) {
-                    r = Integer.valueOf( hex.substring( 1, 3 ), 16 );
-                    g = Integer.valueOf( hex.substring( 3, 5 ), 16 );
-                    b = Integer.valueOf( hex.substring( 5, 7 ), 16 );
-                } else {
-                    r = 255;
-                    g = 255;
-                    b = 255;
-                }
-            } else {
-                r = 0;
-                g = 0;
-                b = 0;
+        //if the hex is not of length 6
+        if (hex.length() != 6) {
+            //correct the size by adding or removing bits
+            if (hex.length() < 6) {
+                //if the hex is less than 6 characters long
+                //find out how many characters are missing
+                int numOfZeros = 6 - hex.length();
+                //add on the appropriate number of zeros
+                hex += "000000".substring(0,numOfZeros);
+            } else if (hex.length() > 6) {
+                //if the hex is greater than 6 characters long
+                //take the first size characters
+                hex = hex.substring(0, 6);
             }
-        } else {
-            //reset the color code to the old value
+        }
+        //At this point, the hex is of the right size
+        //if the string is NOT made up of hex characters
+        if (!hex.matches("[0-9A-Fa-f]{6}")) {
+            //reset the textfield to the old code
             updateColorCodeTextField();
             return;
         }
-        updateEverything();
+        //if the string is made up of hex characters
+        r = Integer.valueOf( hex.substring( 0, 2 ), 16 );
+        g = Integer.valueOf( hex.substring( 2, 4 ), 16 );
+        b = Integer.valueOf( hex.substring( 4, 6 ), 16 );
+        updateAllButCode();
+    }
+    
+    private void updateAllButCode() {
+        redSlider.setValue(r);
+        greenSlider.setValue(g);
+        blueSlider.setValue(b);
+        
+        redSpinner.setValue(r);
+        greenSpinner.setValue(g);
+        blueSlider.setValue(b);
+        
+        updateColorPanel();
     }
     
 }
