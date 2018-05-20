@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  */
 public class ImagePanel extends JPanel {
     
-    private BufferedImage ret = null;
+    private BufferedImage image = null;
     
     /**
      * Give the image panel a new image path to display the image
@@ -30,26 +30,26 @@ public class ImagePanel extends JPanel {
      * @param imageFile The file containing the image
      */
     public void setImagePath(File imageFile) {
-        BufferedImage image = null;
+        BufferedImage newImage = null;
         try {
-            image = ImageIO.read(imageFile);
+            newImage = ImageIO.read(imageFile);
         } catch (IOException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
         //Get the size of the panel that we are drawing to
         int w = getSize().width;
         int h = getSize().height;
-        ret = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
-        ret.getGraphics().drawImage(image,0,0,w,h,null);
+        image = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
+        image.getGraphics().drawImage(newImage, 0, 0, w, h, null);
     }
     
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
-        int x = (getWidth() - ret.getWidth()) / 2;
-        int y = (getHeight() - ret.getHeight()) / 2;
-        g2d.drawImage(ret, x, y, this);
+        int x = (getWidth() - image.getWidth()) / 2;
+        int y = (getHeight() - image.getHeight()) / 2;
+        g2d.drawImage(image, x, y, this);
         g2d.dispose();
     }
 }
