@@ -24,6 +24,11 @@ public class ImagePanel extends JPanel {
     
     private BufferedImage ret = null;
     
+    /**
+     * Give the image panel a new image path to display the image
+     * associated with the selected entity in the side bar.
+     * @param imagePath 
+     */
     public void setImagePath(String imagePath) {
         File imageFile = new File(imagePath);
         BufferedImage image = null;
