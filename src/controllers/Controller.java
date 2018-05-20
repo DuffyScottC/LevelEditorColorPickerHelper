@@ -45,7 +45,8 @@ public class Controller {
         list.setCellRenderer(new EntityListRenderer(entitiesInResults));
         listModel.addElement("name");
         
-        frame.getImagePanel().setImagePath(imagePath);
+        File imageFile = new File(imagePath);
+        frame.getImagePanel().setImagePath(imageFile);
     }
 
     public static void main(String[] args) {
