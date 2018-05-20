@@ -215,10 +215,10 @@ public class ColorPickerManager {
         r = Integer.valueOf( hex.substring( 0, 2 ), 16 );
         g = Integer.valueOf( hex.substring( 2, 4 ), 16 );
         b = Integer.valueOf( hex.substring( 4, 6 ), 16 );
-        updateAllButCode();
+        updateAll();
     }
     
-    private void updateAllButCode() {
+    private void updateAll() {
         redSlider.setValue(r);
         greenSlider.setValue(g);
         blueSlider.setValue(b);
@@ -228,6 +228,7 @@ public class ColorPickerManager {
         blueSlider.setValue(b);
         
         updateColorPanel();
+        updateColorCodeTextField();
     }
     
 }
