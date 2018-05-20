@@ -6,6 +6,7 @@
 package projects;
 
 import entities.Entity;
+import java.io.File;
 import java.util.Dictionary;
 
 /**
@@ -20,7 +21,7 @@ public class Project {
     /**
      * The path to the project's top directory
      */
-    private String projectPath;
+    private File projectFile;
     /**
      * A dictionary of all the categories in this project. New entities should
      * be added to this dictionary by assigning a category, and storing within
@@ -34,9 +35,9 @@ public class Project {
      */
     private Dictionary<String, Entity> entities;
     
-    public Project(String name, String projectPath) {
+    public Project(String name, File projectFile) {
         this.name = name;
-        this.projectPath = projectPath;
+        this.projectFile = projectFile;
         //System.getProperty("user.dir") + "/projects/project1/brick.png";
     }
     

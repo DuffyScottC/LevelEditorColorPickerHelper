@@ -71,7 +71,8 @@ public class ProjectController {
         projectLocation = projectLocationPath.resolve(projectName).toFile();
         //make the directory
         boolean success = projectLocation.mkdir();
-        
+        //create the new project
+        currentProject = new Project(projectName, projectLocation);
     }
     
     private void setUpNewProjectDialog(MainFrame frame) {
