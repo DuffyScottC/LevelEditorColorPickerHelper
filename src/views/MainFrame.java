@@ -274,6 +274,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 84, Short.MAX_VALUE)
         );
 
+        colorCodeTextField.setColumns(4);
         colorCodeTextField.setText("000000");
 
         colorLabel.setText("Color:");
