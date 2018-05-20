@@ -37,6 +37,9 @@ public class ProjectController {
     private final JMenuItem newEntityMenuItem;
     private final JMenuItem deleteEntityMenuItem;
     
+    private final ResultsListController resultsListController;
+    private final RecentListController recentListController;
+    
     /**
      * initialized with user.dir just in case something goes wrong with loading
      * preferences
@@ -44,7 +47,18 @@ public class ProjectController {
     private final JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
     private final NewProjectDialog newProjectDialog;
     
-    public ProjectController(MainFrame frame) {
+    /**
+     * Set up the ProjectController
+     * @param frame
+     * @param resultsListController
+     * @param recentListController 
+     */
+    public ProjectController(MainFrame frame,
+            ResultsListController resultsListController,
+            RecentListController recentListController) {
+        this.resultsListController = resultsListController;
+        this.recentListController = recentListController;
+        
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
         newEntityMenuItem = frame.getNewEntityMenuItem();
@@ -73,6 +87,7 @@ public class ProjectController {
         boolean success = projectLocation.mkdir();
         //create the new project
         currentProject = new Project(projectName, projectLocation);
+        resultsListController.clearEntitiesInResults();
     }
     
     private void setUpNewProjectDialog(MainFrame frame) {

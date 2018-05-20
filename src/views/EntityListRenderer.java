@@ -6,8 +6,11 @@
 package views;
 
 import entities.Entity;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import javax.swing.DefaultListCellRenderer;
@@ -53,6 +56,15 @@ public class EntityListRenderer extends DefaultListCellRenderer {
             ImageIcon imageIcon = new ImageIcon(imagePath);
             //set the label's icon to this image
             label.setIcon(imageIcon);
+        } else {
+            //Create a blank white image icon
+            BufferedImage bi = new BufferedImage(32,32, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = bi.createGraphics();
+            g2d.setColor(Color.white);
+            g2d.drawRect(0, 0, 32, 32);
+            ImageIcon imageIcon = new ImageIcon(bi);
+            //set the label's icon to this image
+            label.setIcon(imageIcon);
         }
         
         label.setHorizontalTextPosition(JLabel.RIGHT);
@@ -62,8 +74,12 @@ public class EntityListRenderer extends DefaultListCellRenderer {
     }
 
     private boolean imageFileExists(String imagePath) {
-        File file = new File(imagePath);
-        return file.exists();
+        if (imagePath != null) {
+            File file = new File(imagePath);
+            return file.exists();
+        } else {
+            return false;
+        }
     }
 
 }
