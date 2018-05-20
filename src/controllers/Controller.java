@@ -40,6 +40,7 @@ public class Controller {
         
         File imageFile = new File(imagePath);
         frame.getImagePanel().setImagePath(imageFile);
+        
     }
 
     public static void main(String[] args) {
