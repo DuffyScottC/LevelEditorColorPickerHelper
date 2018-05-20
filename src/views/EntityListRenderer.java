@@ -7,8 +7,12 @@ package views;
 
 import entities.Entity;
 import java.awt.Component;
+import java.awt.Font;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,6 +25,7 @@ import javax.swing.JList;
 public class EntityListRenderer extends DefaultListCellRenderer {
     
     List<Entity> entitiesInList;
+    private Font font = new Font("helvitica", Font.BOLD, 9);
     
     /**
      * This is to be used in the lists that display the entities.
@@ -36,18 +41,16 @@ public class EntityListRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(
                 JList list, Object value, int index,
                 boolean isSelected, boolean cellHasFocus) {
+        //Call the original super method
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
-        
-        ImageIcon imageIcon;
-        String path = entitiesInList.get(index).getImage();
-        URL imgURL = EntityListRenderer.class.getResource(path);
-        if (imgURL != null) {
-            imageIcon = new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            imageIcon = null;
-        }
+        //get the path to the image associated with the entity at this index
+        String imagePath = entitiesInList.get(index).getImage();
+        //Create an ImageIcon with this image
+        ImageIcon imageIcon = new ImageIcon(imagePath);
+        label.setIcon(imageIcon);
+        label.setHorizontalTextPosition(JLabel.RIGHT);
+        label.setFont(font);
         
         
         return label;
