@@ -5,7 +5,9 @@
  */
 package controllers;
 
+import javax.swing.JMenuItem;
 import projects.Project;
+import views.MainFrame;
 
 /**
  * Handles the creation, storage, opening, closing, and other management of all
@@ -18,10 +20,16 @@ public class ProjectController {
      */
     private Project currentProject = null;
     
-    /**
-     * Called when the user wants to open a new project
-     */
-    public void openProject() {
-        
+    
+    private final JMenuItem newProjectMenuItem;
+    private final JMenuItem openProjectMenuItem;
+    private final JMenuItem newEntityMenuItem;
+    private final JMenuItem deleteEntityMenuItem;
+    
+    public ProjectController(MainFrame frame) {
+        newProjectMenuItem = frame.getNewProjectMenuItem();
+        openProjectMenuItem = frame.getOpenProjectMenuItem();
+        newEntityMenuItem = frame.getNewEntityMenuItem();
+        deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
     }
 }

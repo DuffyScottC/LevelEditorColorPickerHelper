@@ -20,7 +20,7 @@ public class Controller {
         //Set up the Results List Controller
         ResultsListController resultsListController = new ResultsListController(frame);
         RecentListController recentListController = new RecentListController(frame);
-        ProjectController projectController = new ProjectController();
+        ProjectController projectController = new ProjectController(frame);
         ColorPickerManager colorPickerManager = new ColorPickerManager(frame);
         
     }
