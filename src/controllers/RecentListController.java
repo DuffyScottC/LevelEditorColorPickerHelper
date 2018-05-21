@@ -28,4 +28,20 @@ public class RecentListController {
         this.entitiesInRecent = new ArrayList();
         recentList.setCellRenderer(new EntityListRenderer(this.entitiesInRecent));
     }
+    
+    /**
+     * Remove all entities from the recent list.
+     */
+    private void updateListModel() {
+        recentListModel.clear();
+        for (Entity e : entitiesInRecent) {
+            recentListModel.addElement(e);
+        }
+        recentList.repaint();
+    }
+
+    void clearEntities() {
+        entitiesInRecent.clear();
+        updateListModel();
+    }
 }

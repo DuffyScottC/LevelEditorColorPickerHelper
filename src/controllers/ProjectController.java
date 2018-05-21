@@ -87,7 +87,8 @@ public class ProjectController {
         boolean success = projectLocation.mkdir();
         //create the new project
         currentProject = new Project(projectName, projectLocation);
-        resultsListController.clearEntitiesInResults();
+        resultsListController.clearEntities();
+        recentListController.clearEntities();
     }
     
     private void setUpNewProjectDialog(MainFrame frame) {

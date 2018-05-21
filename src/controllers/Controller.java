@@ -10,6 +10,8 @@ import views.MainFrame;
 public class Controller {
 
     private final MainFrame frame = new MainFrame();
+    private final ResultsListController resultsListController;
+    private final RecentListController recentListController;
 
     public Controller() {
         frame.setTitle(getClass().getSimpleName());
@@ -18,18 +20,39 @@ public class Controller {
         // frame.setSize(600, 500);
         
         //Set up the Results List Controller
-        ResultsListController resultsListController = new ResultsListController(frame);
-        RecentListController recentListController = new RecentListController(frame);
+        resultsListController = new ResultsListController(frame);
+        recentListController = new RecentListController(frame);
         ProjectController projectController = new ProjectController(frame,
             resultsListController,
             recentListController);
         ColorPickerController colorPickerController = new ColorPickerController(frame);
         
-        resultsListController.clearEntitiesInResults();
+        enterNoProjectState();
+        
+        
     }
 
     public static void main(String[] args) {
         Controller app = new Controller();
         app.frame.setVisible(true);
+    }
+
+    private void enterNoProjectState() {
+        resultsListController.clearEntities();
+        recentListController.clearEntities();
+        frame.getTypeComboBox().setEnabled(false);
+        frame.getSearchTextField().setEnabled(false);
+        frame.getSelectButton().setEnabled(false);
+        frame.getColorCodeTextField().setEnabled(false);
+        frame.getIncludeHashTagCheckBox().setEnabled(false);
+        frame.getRedSlider().setEnabled(false);
+        frame.getRedSpinner().setEnabled(false);
+        frame.getGreenSlider().setEnabled(false);
+        frame.getGreenSpinner().setEnabled(false);
+        frame.getBlueSlider().setEnabled(false);
+        frame.getBlueSpinner().setEnabled(false);
+        frame.getTagsTextField().setEnabled(false);
+        frame.getRevertButton().setEnabled(false);
+        frame.getApplyButton().setEnabled(false);
     }
 }
