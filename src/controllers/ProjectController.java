@@ -116,9 +116,14 @@ public class ProjectController {
         }
         //make the directory
         boolean success = projectLocation.mkdir();
+        //if we could not create the project directory
+        if (!success) {
+            return false;
+        }
         //create the new project
         currentProject = new Project(projectName, projectLocation);
         enterNewProjectState();
+        return true;
     }
     
     /**
@@ -184,8 +189,13 @@ public class ProjectController {
         });
         
         finishButton.addActionListener((ActionEvent e) -> {
-            createNewProject();
-            newProjectDialog.setVisible(false);
+            //if the creation of a new project was successful
+            if (createNewProject()) {
+                newProjectDialog.setVisible(false);
+            } else {
+                //if the creation of a new project was NOT successful
+                JOptionPane.showMessageDialog(frame, "Unable to create the project.");
+            }
         });
     }
     
