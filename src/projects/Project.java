@@ -19,24 +19,30 @@ public class Project {
      */
     private String name;
     /**
+     * The path to the directory containing all the project's assets
+     */
+    private File projectLocation;
+    /**
      * The path to the project's top directory
      */
     private File projectFile;
     /**
-     * A dictionary of all the categories in this project. New entities should
+     * A dictionary of all the entities in this project. New entities should
      * be added to this dictionary by assigning a category, and storing within
      * that category using the name as the key and the
      * entity itself as the element.
      */
-    private Dictionary<String, Dictionary<String, Entity>> categories;
-    /**
-     * A dictionary of all the searchable entities in the current
-     * open category (or type).
-     */
-    private Dictionary<String, Entity> entities;
+    private Dictionary<String, Dictionary<String, Entity>> entities;
     
-    public Project(String name, File projectFile) {
+    /**
+     * Instantiates a new project
+     * @param name The name of the project (the user sees this)
+     * @param projectLocation The path to the directory containing all the project's assets
+     * @param projectFile The path to the project's top directory
+     */
+    public Project(String name, File projectLocation, File projectFile) {
         this.name = name;
+        this.projectLocation = projectLocation;
         this.projectFile = projectFile;
         //System.getProperty("user.dir") + "/projects/project1/brick.png";
     }
@@ -46,6 +52,45 @@ public class Project {
      * @param entity 
      */
     public void add(Entity entity) {
-        entities.put(entity.getName(), entity);
+        //get the entity's type
+        String type = entity.getType();
+        //get a reference to the type list of this entity's type
+        Dictionary<String, Entity> typeList = entities.get(type);
+        //place the entity in this type
+        typeList.put(entity.getName(), entity);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public File getProjectLocation() {
+        return projectLocation;
+    }
+
+    public void setProjectLocation(File projectLocation) {
+        this.projectLocation = projectLocation;
+    }
+
+    public File getProjectFile() {
+        return projectFile;
+    }
+
+    public void setProjectFile(File projectFile) {
+        this.projectFile = projectFile;
+    }
+
+    public Dictionary<String, Dictionary<String, Entity>> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(Dictionary<String, Dictionary<String, Entity>> entities) {
+        this.entities = entities;
+    }
+    
+    
 }

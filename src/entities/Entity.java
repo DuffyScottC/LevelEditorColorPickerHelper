@@ -24,6 +24,10 @@ public class Entity {
      */
     private String name;
     /**
+     * The name of the type or category associated with this entity
+     */
+    private String type;
+    /**
      * The r of the color associated with this entity
      */
     private int r;
@@ -51,9 +55,10 @@ public class Entity {
      * @param color The color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      */
-    public Entity (String image, String name, Color color, String unityPrefab) {
+    public Entity (String image, String name, String type, Color color, String unityPrefab) {
         this.image = image;
         this.name = name;
+        this.type = type;
         this.r = color.getRed();
         this.g = color.getGreen();
         this.b = color.getBlue();
@@ -76,14 +81,6 @@ public class Entity {
         this.g = g;
         this.b = b;
         this.unityPrefab = unityPrefab;
-    }
-    
-    public String getImage() {
-        return image;
-    }
-    
-    public String getName() {
-        return name;
     }
     
     /**
@@ -116,6 +113,72 @@ public class Entity {
             return false;
         }
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getR() {
+        return r;
+    }
+
+    public void setR(int r) {
+        this.r = r;
+    }
+
+    public int getG() {
+        return g;
+    }
+
+    public void setG(int g) {
+        this.g = g;
+    }
+
+    public int getB() {
+        return b;
+    }
+
+    public void setB(int b) {
+        this.b = b;
+    }
+
+    public String getUnityPrefab() {
+        return unityPrefab;
+    }
+
+    public void setUnityPrefab(String unityPrefab) {
+        this.unityPrefab = unityPrefab;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+    
+    
     
     @Override
     public String toString() {
