@@ -27,9 +27,7 @@ public class Controller {
             recentListController);
         ColorPickerController colorPickerController = new ColorPickerController(frame);
         
-        enterNoProjectState();
-        
-        
+        projectController.enterNewProjectState();
     }
 
     public static void main(String[] args) {
@@ -37,22 +35,4 @@ public class Controller {
         app.frame.setVisible(true);
     }
 
-    private void enterNoProjectState() {
-        resultsListController.clearEntities();
-        recentListController.clearEntities();
-        frame.getTypeComboBox().setEnabled(false);
-        frame.getSearchTextField().setEnabled(false);
-        frame.getSelectButton().setEnabled(false);
-        frame.getColorCodeTextField().setEnabled(false);
-        frame.getIncludeHashTagCheckBox().setEnabled(false);
-        frame.getRedSlider().setEnabled(false);
-        frame.getRedSpinner().setEnabled(false);
-        frame.getGreenSlider().setEnabled(false);
-        frame.getGreenSpinner().setEnabled(false);
-        frame.getBlueSlider().setEnabled(false);
-        frame.getBlueSpinner().setEnabled(false);
-        frame.getTagsTextField().setEnabled(false);
-        frame.getRevertButton().setEnabled(false);
-        frame.getApplyButton().setEnabled(false);
-    }
 }

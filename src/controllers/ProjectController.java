@@ -31,6 +31,7 @@ public class ProjectController {
     private File projectLocation = null;
     private String projectName = "New Project";
     
+    private final MainFrame frame;
     
     private final JMenuItem newProjectMenuItem;
     private final JMenuItem openProjectMenuItem;
@@ -56,6 +57,8 @@ public class ProjectController {
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,
             RecentListController recentListController) {
+        this.frame = frame;
+        
         this.resultsListController = resultsListController;
         this.recentListController = recentListController;
         
@@ -76,6 +79,11 @@ public class ProjectController {
         });
     }
     
+    
+    //MARK: Open Project
+    
+    
+    //MARK: New Project
     private void createNewProject() {
         // Create the directory that the user designated for the project:
         //Fist, convert the projectLocation to a path object
@@ -87,8 +95,7 @@ public class ProjectController {
         boolean success = projectLocation.mkdir();
         //create the new project
         currentProject = new Project(projectName, projectLocation);
-        resultsListController.clearEntities();
-        recentListController.clearEntities();
+        enterNewProjectState();
     }
     
     private void setUpNewProjectDialog(MainFrame frame) {
@@ -127,7 +134,7 @@ public class ProjectController {
                         //set the project location
                         pLocationTextField.setText(projectLocation.getAbsolutePath());
                         
-                        updateProjectFolderTextBox();
+                        updateNewProjectFolderTextBox();
                     }
                 }
             }
@@ -138,7 +145,7 @@ public class ProjectController {
             public void keyReleased(KeyEvent e) {
                 projectName = pNameTextField.getText();
                 //every time the user presses a key, update the project folder
-                updateProjectFolderTextBox();
+                updateNewProjectFolderTextBox();
             }
         });
         
@@ -152,7 +159,7 @@ public class ProjectController {
         });
     }
     
-    public void updateProjectFolderTextBox() {
+    public void updateNewProjectFolderTextBox() {
         JTextField pFolderTextField = newProjectDialog.getProjectFolderTextField();
         //Convert the projectLocation to a path object
         Path projectLocationPath = projectLocation.toPath();
@@ -162,4 +169,25 @@ public class ProjectController {
         //set the project folder
         pFolderTextField.setText(projectFolder.getAbsolutePath());
     }
+    
+    public void enterNewProjectState() {
+        resultsListController.clearEntities();
+        recentListController.clearEntities();
+        frame.getTypeComboBox().setEnabled(false);
+        frame.getSearchTextField().setEnabled(false);
+        frame.getSelectButton().setEnabled(false);
+        frame.getColorCodeTextField().setEnabled(false);
+        frame.getIncludeHashTagCheckBox().setEnabled(false);
+        frame.getRedSlider().setEnabled(false);
+        frame.getRedSpinner().setEnabled(false);
+        frame.getGreenSlider().setEnabled(false);
+        frame.getGreenSpinner().setEnabled(false);
+        frame.getBlueSlider().setEnabled(false);
+        frame.getBlueSpinner().setEnabled(false);
+        frame.getTagsTextField().setEnabled(false);
+        frame.getRevertButton().setEnabled(false);
+        frame.getApplyButton().setEnabled(false);
+    }
+    
+    //MARK: Misc
 }
