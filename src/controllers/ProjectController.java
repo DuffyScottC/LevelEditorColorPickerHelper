@@ -91,7 +91,7 @@ public class ProjectController {
      * @returns True if this process was successful, false if there was a problem
      * and you should stop creating a new project.
      */
-    private boolean createNewProject() {
+    private void createNewProject() throws Exception {
         // Create the directory that the user designated for the project:
         //Fist, convert the projectLocation to a path object
         Path projectLocationPath = projectLocation.toPath();
@@ -108,7 +108,10 @@ public class ProjectController {
                     //if the user does NOT want to continue
                     if (!shouldContinue("The project folder is not empty."
                             + "Are you sure you wish to continue?")) {
-                        return false;
+                        //return without throwing an exception and without
+                        //creating the new project, because the user chose
+                        //not to continue.
+                        return;
                     }
                     //if the user does want to create the project inside a
                     //non-empty project folder, continue
@@ -116,7 +119,10 @@ public class ProjectController {
                 //if the projectLocation is empty (or the user wants to create
                 //the project inside a non-empty project folder, continue
             } else {
-                return false;
+                //return without throwing an exception and without
+                //creating the new project, because the user chose
+                //not to continue.
+                return;
             }
         } else {
             //if the projectLocation does not exist:
@@ -124,7 +130,9 @@ public class ProjectController {
             boolean success = projectLocation.mkdir();
             //if we could not create the project directory
             if (!success) {
-                return false;
+                //output the problem to the user
+                throw new Exception("Could not create the project folder " +
+                        projectLocation.getAbsolutePath());
             }
         }
         
@@ -133,7 +141,6 @@ public class ProjectController {
         //create the project file
         createNewProjectFile();
         enterNewProjectState();
-        return true;
     }
     
     /**
@@ -171,7 +178,7 @@ public class ProjectController {
         
         //If the user clicks the browse button
         newProjectDialog.getBrowseButton().addActionListener((ActionEvent e) -> {
-            int result = chooser.showDialog(frame, "Create");
+            int result = chooser.showDialog(frame, "Choose");
             if (result == JFileChooser.APPROVE_OPTION) {
                 projectLocation = chooser.getSelectedFile();
                 if (projectLocation.exists()) {
@@ -199,12 +206,15 @@ public class ProjectController {
         });
         
         finishButton.addActionListener((ActionEvent e) -> {
-            //if the creation of a new project was successful
-            if (createNewProject()) {
+            try {
+                createNewProject();
                 newProjectDialog.setVisible(false);
-            } else {
-                //if the creation of a new project was NOT successful
-                JOptionPane.showMessageDialog(frame, "Unable to create the project.");
+            } catch (Exception ex) {
+                //if the creation of the project was not successful,
+                //output the exception message to the user.
+                JOptionPane.showMessageDialog(frame, ex.toString());
+                //allow the user to try again by staying still and keeping
+                //the newProjectDialog window open.
             }
         });
     }
