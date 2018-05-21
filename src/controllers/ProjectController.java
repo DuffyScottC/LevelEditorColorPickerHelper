@@ -30,6 +30,7 @@ public class ProjectController {
      */
     private Project currentProject = null;
     private File projectLocation = null;
+    private File projectFile = null;
     private String projectName = "New Project";
     
     private final MainFrame frame;
@@ -136,10 +137,12 @@ public class ProjectController {
             }
         }
         
-        //create the new project
-        currentProject = new Project(projectName, projectLocation);
+        
         //create the project file
         createNewProjectFile();
+        //create the new project using the name, location, and file created
+        //specifically for this project
+        currentProject = new Project(projectName, projectLocation, projectFile);
         enterNewProjectState();
     }
     
