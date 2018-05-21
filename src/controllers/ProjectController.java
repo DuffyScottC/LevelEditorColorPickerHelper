@@ -105,23 +105,33 @@ public class ProjectController {
                     + "Are you sure you wish to continue?")) {
                 //if the projectLocation is not empty
                 if (projectLocation.list().length > 0) {
-                    //if the user wants to continue
-                    if (shouldContinue("The project folder is not empty."
+                    //if the user does NOT want to continue
+                    if (!shouldContinue("The project folder is not empty."
                             + "Are you sure you wish to continue?")) {
-                        //create the project file
-                        createNewProjectFile();
+                        return false;
                     }
+                    //if the user does want to create the project inside a
+                    //non-empty project folder, continue
                 }
+                //if the projectLocation is empty (or the user wants to create
+                //the project inside a non-empty project folder, continue
+            } else {
+                return false;
+            }
+        } else {
+            //if the projectLocation does not exist:
+            //make the directory
+            boolean success = projectLocation.mkdir();
+            //if we could not create the project directory
+            if (!success) {
+                return false;
             }
         }
-        //make the directory
-        boolean success = projectLocation.mkdir();
-        //if we could not create the project directory
-        if (!success) {
-            return false;
-        }
+        
         //create the new project
         currentProject = new Project(projectName, projectLocation);
+        //create the project file
+        createNewProjectFile();
         enterNewProjectState();
         return true;
     }
