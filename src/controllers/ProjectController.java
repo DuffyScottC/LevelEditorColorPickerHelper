@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import projects.Project;
 import views.MainFrame;
@@ -84,18 +85,47 @@ public class ProjectController {
     
     
     //MARK: New Project
-    private void createNewProject() {
+    /**
+     * Creates a new project in the current projectLocation by creating a new
+     * folder and creating an XML serialized file representing the project.
+     * @returns True if this process was successful, false if there was a problem
+     * and you should stop creating a new project.
+     */
+    private boolean createNewProject() {
         // Create the directory that the user designated for the project:
         //Fist, convert the projectLocation to a path object
         Path projectLocationPath = projectLocation.toPath();
         //add the projectName to the path to get the project folder
         //and store it in a file object
         projectLocation = projectLocationPath.resolve(projectName).toFile();
+        //if the project location already exists
+        if (projectLocation.exists()) {
+            //if the user wants to continue
+            if (shouldContinue("The project folder already exists. "
+                    + "Are you sure you wish to continue?")) {
+                //if the projectLocation is not empty
+                if (projectLocation.list().length > 0) {
+                    //if the user wants to continue
+                    if (shouldContinue("The project folder is not empty."
+                            + "Are you sure you wish to continue?")) {
+                        //create the project file
+                        createNewProjectFile();
+                    }
+                }
+            }
+        }
         //make the directory
         boolean success = projectLocation.mkdir();
         //create the new project
         currentProject = new Project(projectName, projectLocation);
         enterNewProjectState();
+    }
+    
+    /**
+     * Creates an XML file representing the new project
+     */
+    private void createNewProjectFile() {
+        
     }
     
     private void setUpNewProjectDialog(MainFrame frame) {
@@ -190,4 +220,17 @@ public class ProjectController {
     }
     
     //MARK: Misc
+    /**
+     * Convenience method that asks a user if they want to continue
+     * 
+     * @return true if the process should continue, false if you should stop
+     * the process
+     */
+    private boolean shouldContinue(String message) {
+        int selection = JOptionPane.showConfirmDialog(frame, message); //ask the user if they want to continue
+        //if the user did not choose "yes", then we should cancel the operation
+        //if the user did choose yes, then we should continue the operation
+        //if the file has been saved, then we can just return true
+        return selection == JOptionPane.YES_OPTION;
+    }
 }
