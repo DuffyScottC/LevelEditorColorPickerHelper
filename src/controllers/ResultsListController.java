@@ -59,7 +59,7 @@ public class ResultsListController {
     public void clearEntities() {
         entitiesInResults.clear();
         entitiesInResults.add(new Entity(null, 
-                "Choose \"Add Entity\" below!", Color.black, null));
+                "Choose \"Add Entity\" below!", null, Color.black, null));
         updateListModel();
     }
     

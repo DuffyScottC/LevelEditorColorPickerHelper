@@ -44,7 +44,6 @@ public class Project {
         this.name = name;
         this.projectLocation = projectLocation;
         this.projectFile = projectFile;
-        //System.getProperty("user.dir") + "/projects/project1/brick.png";
     }
     
     /**
