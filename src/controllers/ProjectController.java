@@ -419,7 +419,8 @@ public class ProjectController {
         
         pNameTextField.setText("New Project");
         pLocationTextField.setText(System.getProperty("user.dir"));
-        pFolderTextField.setText(System.getProperty("user.dir") + "/New Project");
+        Path defaultPath = Paths.get(System.getProperty("user.dir"), "New Project");
+        pFolderTextField.setText(defaultPath.toString());
     }
     
     private void setUpNewProjectDialogActionListeners(MainFrame frame) {
