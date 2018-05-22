@@ -20,9 +20,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * A user-created project with a name, an asset location, an XML file location,
- * and a Dictionary of types that are paired with Dictionarys of entities. This
- * handles the adding of Entities, the adding of Types, and other project
- * functions.
+ * a list of entities, and several HashMaps for searching for entities by specific
+ * attributes. This handles the adding of Entities, the adding of Types, and
+ * other project functions.
  * @author Scott
  */
 @XmlRootElement(name="Project")
@@ -41,19 +41,23 @@ public class Project {
      */
     private File projectFile;
     /**
-     * A dictionary of all the entities in this project. New entities should
-     * be added to this dictionary by assigning a category, and storing within
-     * that category using the name as the key and the
-     * entity itself as the element.
+     * A list of all the entities in this project
      */
     @XmlElement(name="entities", type=Entity.class)
-    private List<Entity> entities = new ArrayList();
+    private final List<Entity> entities = new ArrayList();
     @XmlTransient
-    private Map<String, Entity> entitiesByName = new HashMap();
+    private final Map<String, Entity> entitiesByName = new HashMap();
     @XmlTransient
-    private Map<Color, Entity> entitiesByColor = new HashMap();
+    private final Map<Color, Entity> entitiesByColor = new HashMap();
     @XmlTransient
-    private Map<String, Entity> entitiesByPrefabName = new HashMap();
+    private final Map<String, Entity> entitiesByUnityPrefab = new HashMap();
+    
+    /**
+     * A list of all the types in this project. There should always be at least
+     * one type in this list. When the list is cleared, a type called "default"
+     * is added. 
+     */
+    private final List<String> types = new ArrayList();
     
     /**
      * Instantiates an empty project. This is only used by the JAXB
@@ -115,7 +119,7 @@ public class Project {
     }
 
     public void setEntities(List<Entity> entities) {
-        this.entities = entities;
+        this.entities.addAll(entities);
     }
 
     public Map<String, Entity> getEntitiesByName() {
@@ -126,8 +130,12 @@ public class Project {
         return entitiesByColor;
     }
 
-    public Map<String, Entity> getEntitiesByPrefabName() {
-        return entitiesByPrefabName;
+    public Map<String, Entity> getEntitiesByUnityPrefab() {
+        return entitiesByUnityPrefab;
+    }
+
+    public List<String> getTypes() {
+        return types;
     }
     
     @Override
