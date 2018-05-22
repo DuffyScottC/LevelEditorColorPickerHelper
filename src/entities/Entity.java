@@ -55,10 +55,6 @@ public class Entity {
      * (e.g. "Prefabs/Prafabname").
      */
     private String unityPrefab;
-    /**
-     * A list of all the tags associated with this entity
-     */
-    private List<String> tags;
     
     /**
      * Instantiates an empty entity. This is only used by the JAXB
@@ -208,16 +204,6 @@ public class Entity {
     public void setUnityPrefab(String unityPrefab) {
         this.unityPrefab = unityPrefab;
     }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-    
-    
     
     @Override
     public String toString() {

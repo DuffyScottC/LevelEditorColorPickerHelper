@@ -526,7 +526,6 @@ public class ProjectController {
         frame.getGreenSpinner().setEnabled(true);
         frame.getBlueSlider().setEnabled(true);
         frame.getBlueSpinner().setEnabled(true);
-        frame.getTagsTextField().setEnabled(true);
         frame.getRevertButton().setEnabled(true);
         frame.getApplyButton().setEnabled(true);
     }
@@ -551,7 +550,6 @@ public class ProjectController {
         frame.getGreenSpinner().setEnabled(false);
         frame.getBlueSlider().setEnabled(false);
         frame.getBlueSpinner().setEnabled(false);
-        frame.getTagsTextField().setEnabled(false);
         frame.getRevertButton().setEnabled(false);
         frame.getApplyButton().setEnabled(false);
     }
