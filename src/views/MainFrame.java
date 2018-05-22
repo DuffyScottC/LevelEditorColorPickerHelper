@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
 /**
@@ -592,6 +593,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JMenuItem getOpenProjectMenuItem() {
         return openProjectMenuItem;
+    }
+
+    public JSplitPane getMainSplitPane() {
+        return mainSplitPane;
+    }
+
+    public JTextField getNameTextField() {
+        return nameTextField;
+    }
+
+    public JTextField getTypeTextField() {
+        return typeTextField;
     }
     
 }
