@@ -8,6 +8,7 @@ package controllers;
 import entities.Entity;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -111,28 +112,33 @@ public class ProjectController {
         });
         
         //action listener for add entity Button and add entity MenuItem
-        
-        
-        frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
-            //if the user just opnned the app and no project has been selected yet
-            if (currentProject != null) {
-                try {
-                    //generate a new default entity
-                    Entity newEntity = generateNewDefaultEntity();
-                    //add the new entity to the currentProject
-                    currentProject.addEntity(newEntity);
-                    //update the UI to reflect the creation of a new entity
-                    loadEntityIntoInfoPanel(newEntity);
-                    //tell the project that it has been modified
-                    setIsModified(true);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frame, ex.toString());
+        ActionListener addEntityActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //if the user just opnned the app and no project has been selected yet
+                if (currentProject != null) {
+                    try {
+                        //generate a new default entity
+                        Entity newEntity = generateNewDefaultEntity();
+                        //add the new entity to the currentProject
+                        currentProject.addEntity(newEntity);
+                        //update the UI to reflect the creation of a new entity
+                        loadEntityIntoInfoPanel(newEntity);
+                        //tell the project that it has been modified
+                        setIsModified(true);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(frame, ex.toString());
+                    }
+                } else {
+                    //open the new project dialog
+                    openNewProjectDialog();
                 }
-            } else {
-                //open the new project dialog
-                openNewProjectDialog();
             }
-        });
+        };
+        
+        //add the action listener to both the button and the menu item
+        frame.getAddEntityButton().addActionListener(addEntityActionListener);
+        frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
     }
     
     //MARK: Add Entity
