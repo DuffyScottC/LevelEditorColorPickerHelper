@@ -10,7 +10,6 @@ import entities.Entity;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
@@ -59,7 +58,7 @@ public class EntityListRenderer extends DefaultListCellRenderer {
             label.setIcon(imageIcon);
         } else {
             //Create a blank white buffered image
-            BufferedImage bi = Utils.getBlankImageIcon(32, 32);
+            BufferedImage bi = Utils.getBlankBufferedImage(32, 32, Color.white);
             //create an image icon from the blank white buffered image
             ImageIcon imageIcon = new ImageIcon(bi);
             //set the label's icon to this image

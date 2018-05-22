@@ -14,11 +14,11 @@ import java.awt.image.BufferedImage;
  * @author Scott
  */
 public class Utils {
-    public static BufferedImage getBlankImageIcon(int width, int height) {
+    public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
         //Create a blank white image icon
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bi.createGraphics();
-        g2d.setColor(Color.white);
+        g2d.setColor(color);
         g2d.drawRect(0, 0, width, height);
         return bi;
     }

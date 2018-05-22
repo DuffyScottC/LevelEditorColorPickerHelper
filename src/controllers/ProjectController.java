@@ -108,28 +108,64 @@ public class ProjectController {
         });
         
         frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
-            
+            try {
+                Entity newEntity = generateNewDefaultEntity();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, ex.toString());
+            }
         });
     }
     
     //MARK: Add Entity
     /**
-     * Fills all the appropriate fields in the mainframe info panel with the
-     * default "new entity" info.
+     * Generates a new entity with default attributes.
+     * @throws Exception if the user can't add a new entity (the reason is
+     * in the exception's description).
      */
-    private void fillNewEntityInfo() {
-        //set the name of the new entity
-        frame.getNameTextField().setText(getUniqueDefaultName());
+    private Entity generateNewDefaultEntity() throws Exception {
+        // Set the color of the entity
+        Color newColor = getUniqueDefaultColor();
+        //if newColor is null
+        if (newColor == null) {
+            //tell the user they have run out of colors
+            throw new Exception(
+                    "Oops! No more colors are available in the RGB spectrum!\n"
+                    + "Congratulations, you used all 16,581,375 possible color\n"
+                    + "combinations! Unfortunately, this means you can't add\n"
+                    + "more entities (at least no to this project).");
+        }
         
-        //set theimage of the new entity to a blank white image
-        BufferedImage newImage = Utils.getBlankImageIcon(32, 32);
-        frame.getImagePanel().setImage(newImage);
+        // Set the image of the new entity to a blank image of the newColor (this
+        // way users can elect not to add an image and use the color instead).
+        BufferedImage newImage = Utils.getBlankBufferedImage(32, 32, newColor);
         
+        String newType = currentProject.getTypes().get(0);
         
+        String newName = getUniqueDefaultName();
+        
+        String newUnityPrefab = getUniqueDefaultUnityPrefab();
+        
+        return new Entity(null, newName, newType, newColor, newUnityPrefab);
     }
     
     private Color getUniqueDefaultColor() {
-        return Color.black;
+        Map<Color, Entity> entities = currentProject.getEntitiesByColor();
+        for (int r = 0; r < 255; r++) {
+            for (int g = 0; g < 255; g++) {
+                for (int b = 0; b < 255; b++) {
+                    //create a new color from these values
+                    Color color = new Color(r, g, b);
+                    //if this is a unique color (no other entity has this color)
+                    if (!entities.containsKey(color)) {
+                        return color;
+                    }
+                }
+            }
+        }
+        //in the highly unlikely instance that we reach this point, 
+        //then all the colors have been used and we cannot create new
+        //entities for this project. 
+        return null;
     }
     
     private String getUniqueDefaultName() {
@@ -143,6 +179,19 @@ public class ProjectController {
         }
         //return the unique name
         return nameBase + num;
+    }
+    
+    private String getUniqueDefaultUnityPrefab() {
+        Map<String, Entity> entities = currentProject.getEntitiesByUnityPrefab();
+        String prefabBase = "Prefabs/Prefab";
+        int num = 1;
+        //keep incrementing the num component until we find a unique string
+        //(i.e. a prefab that is not already in entities)
+        while (!entities.containsKey(prefabBase + num)) {
+            num++;
+        }
+        //return the unique prefab string
+        return prefabBase + num;
     }
     
     //MARK: Open Project
@@ -455,10 +504,8 @@ public class ProjectController {
     }
     
     private void enterOpenProjectState() {
-        //get the map of all the entities in the project
-        Map<String,Entity> newEntitiesMap = currentProject.getEntities();
-        //convert the map to a list
-        List<Entity> allNewEntities = new ArrayList(newEntitiesMap.values());
+        //get the list of all the entities in the project
+        List<Entity> allNewEntities = currentProject.getEntities();
         //update the entities in the results list
         resultsListController.setEntities(allNewEntities);
         

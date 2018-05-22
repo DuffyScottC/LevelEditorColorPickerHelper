@@ -50,7 +50,9 @@ public class Entity {
      */
     private int b;
     /**
-     * The path of the Unity Prefab associated with this entity
+     * The path of the Unity Prefab associated with this entity. This is 
+     * meant to be in the form of a path to the prefab 
+     * (e.g. "Prefabs/Prafabname").
      */
     private String unityPrefab;
     /**
