@@ -23,7 +23,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder={"image","name","type","r","g","b","unityPrefab","tags"})
 public class Entity {
     /**
-     * The path of a the image associated with this entity
+     * The path of a the image associated with this entity. This is null
+     * if there is no image associated with this entity, and you should
+     * simply use the color associated with this entity to color the
+     * image panel.
      */
     private String image;
     /**
@@ -182,6 +185,16 @@ public class Entity {
 
     public void setB(int b) {
         this.b = b;
+    }
+    
+    public Color getColor() {
+        return new Color(r, g, g);
+    }
+    
+    public void setColor(Color color) {
+        r = color.getRed();
+        g = color.getGreen();
+        b = color.getBlue();
     }
 
     public String getUnityPrefab() {
