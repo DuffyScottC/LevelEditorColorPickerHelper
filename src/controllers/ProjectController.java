@@ -418,9 +418,15 @@ public class ProjectController {
     public void enterNewProjectState() {
         resultsListController.clearEntities();
         recentListController.clearEntities();
+        
+        //search panel
         frame.getTypeComboBox().setEnabled(false);
         frame.getSearchTextField().setEnabled(false);
+        
+        //info panel
         frame.getSelectButton().setEnabled(false);
+        frame.getNameTextField().setEnabled(false);
+        frame.getTypeTextField().setEnabled(false);
         frame.getColorCodeTextField().setEnabled(false);
         frame.getIncludeHashTagCheckBox().setEnabled(false);
         frame.getRedSlider().setEnabled(false);

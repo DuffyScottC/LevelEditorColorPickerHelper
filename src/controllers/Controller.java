@@ -28,6 +28,8 @@ public class Controller {
         ColorPickerController colorPickerController = new ColorPickerController(frame);
         
         projectController.enterNewProjectState();
+        //set the divider to halfway between the window
+        frame.getMainSplitPane().setDividerLocation(50);
     }
 
     public static void main(String[] args) {
