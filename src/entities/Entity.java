@@ -6,7 +6,6 @@
 package entities;
 
 import java.awt.Color;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"image","name","type","r","g","b","unityPrefab","tags"})
+@XmlType(propOrder={"image","name","type","r","g","b","unityPrefab"})
 public class Entity {
     /**
      * The path of a the image associated with this entity. This is null
