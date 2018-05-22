@@ -9,15 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import projects.Project;
 import views.MainFrame;
 import views.NewProjectDialog;
@@ -50,7 +54,14 @@ public class ProjectController {
      * initialized with user.dir just in case something goes wrong with loading
      * preferences
      */
-    private final JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+    private final JFileChooser chooser 
+            = new JFileChooser(System.getProperty("user.dir"));
+    /**
+     * A file filter which only allows .lecp files (Project files) to be
+     * chosen.
+     */
+    private final FileFilter projectFileFilter 
+            = new FileNameExtensionFilter("Project (.lecp)","lecp");
     private final NewProjectDialog newProjectDialog;
     
     /**
@@ -73,7 +84,7 @@ public class ProjectController {
         deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
         
         //set up chooser
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setMultiSelectionEnabled(false);
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
@@ -86,17 +97,68 @@ public class ProjectController {
         });
         
         openProjectMenuItem.addActionListener((ActionEvent e) -> {
-            
+            openProject();
         });
     }
     
     
     //MARK: Open Project
-    
-    
     private void openProject() {
+        //only allow the user to open project files (.lecp)
+        chooser.setFileFilter(projectFileFilter);
+        //allow the user to choose a file
+        int result = chooser.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            //reset the chooser's file filters
+            chooser.resetChoosableFileFilters();
+            //get the user's selected file
+            File tempFile = chooser.getSelectedFile();
+            //if the file does NOT exist
+            if (!tempFile.exists()) {
+                //tell the user the file does not exist
+                JOptionPane.showMessageDialog(frame, "Could not open project.\n"
+                        + "The file " + tempFile.getAbsolutePath() 
+                        + " does not exist.");
+                //give up the ghost
+                return;
+            }
+            //if the file exists, continue
+            
+            //if the file does NOT end with .lecp
+            if (tempFile.getName().matches(".*\\.lecp")) {
+                //tell the user the file does not end with .lecp
+                JOptionPane.showMessageDialog(frame, "Could not open project.\n"
+                        + "The file " + tempFile.getAbsolutePath() 
+                        + " is not a .lecp project file.");
+                //give up the ghost
+                return;
+            }
+            //if the file ends with .lecp, continue
+            
+            try {
+                //try to deserialize the project file
+                currentProject = deserializeProjectFromXML(tempFile);
+                System.out.println(currentProject);
+            } catch (JAXBException ex) {
+                //tell the user that you couldn't
+                JOptionPane.showMessageDialog(frame, "Could not deserialize"
+                        + " the project file:\n" + tempFile.getAbsolutePath()
+                        + "\n" + ex.toString());
+            }
+            
+        }
         
     }
+    
+     private Project deserializeProjectFromXML(File file) throws JAXBException {
+         JAXBContext context = JAXBContext.newInstance(Project.class);
+         Unmarshaller unmarshaller = context.createUnmarshaller();
+         Object obj = unmarshaller.unmarshal(file);
+         if (obj instanceof Project) {
+             return (Project) obj;
+         }
+         return null;
+     }
     
     //MARK: New Project
     /**
@@ -105,13 +167,14 @@ public class ProjectController {
      * @returns True if this process was successful, false if there was a problem
      * and you should stop creating a new project.
      */
-    private void createNewProject() throws JAXBException, Exception {
+    private boolean createNewProject() throws JAXBException, Exception {
         // Create the directory that the user designated for the project:
         //Fist, convert the projectLocation to a path object
-        Path projectLocationPath = projectLocation.toPath();
+        Path tempProjectLocationPath = projectLocation.toPath();
         //add the projectName to the path to get the project folder
+        Path projectLocationPath = Paths.get(tempProjectLocationPath.toString(), projectName);
         //and store it in a file object
-        projectLocation = projectLocationPath.resolve(projectName).toFile();
+        projectLocation = projectLocationPath.toFile();
         //if the project location already exists
         if (projectLocation.exists()) {
             //if the user wants to continue
@@ -125,7 +188,7 @@ public class ProjectController {
                         //return without throwing an exception and without
                         //creating the new project, because the user chose
                         //not to continue.
-                        return;
+                        return false;
                     }
                     //if the user does want to create the project inside a
                     //non-empty project folder, continue
@@ -136,7 +199,7 @@ public class ProjectController {
                 //return without throwing an exception and without
                 //creating the new project, because the user chose
                 //not to continue.
-                return;
+                return false;
             }
         } else {
             //if the projectLocation does not exist:
@@ -157,7 +220,7 @@ public class ProjectController {
             //return without throwing an exception and without
             //creating the new project, because the user chose
             //not to continue.
-            return;
+            return false;
         }
         //if the project file was successfully created
         
@@ -167,6 +230,7 @@ public class ProjectController {
         //serialize the new project
         serializeNewProjectToXML();
         enterNewProjectState();
+        return true;
     }
     
     /**
@@ -176,12 +240,12 @@ public class ProjectController {
      */
     private boolean createNewProjectFile() throws Exception {
         //get the path of the project location
-        Path tempPath = projectLocation.toPath();
+        Path tempLocationPath = projectLocation.toPath();
         //append the project .xml file to the project location
         //using the .lecp extension (Level Editor Color Picker)
-        tempPath.resolve(projectName + ".lecp");
+        Path tempFilePath = Paths.get(tempLocationPath.toString(), projectName + ".lecp");
         //convert the path into a file
-        File tempFile = tempPath.toFile();
+        File tempFile = tempFilePath.toFile();
         if (tempFile.exists()) {
             //if the user does NOT want to continue
             if (!shouldContinue("The file " + tempFile.getName() + "already exists "
@@ -254,7 +318,8 @@ public class ProjectController {
         
         //If the user clicks the browse button
         newProjectDialog.getBrowseButton().addActionListener((ActionEvent e) -> {
-            int result = chooser.showDialog(frame, "Choose");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = chooser.showOpenDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
                 projectLocation = chooser.getSelectedFile();
                 if (projectLocation.exists()) {
@@ -266,6 +331,7 @@ public class ProjectController {
                     }
                 }
             }
+            chooser.resetChoosableFileFilters();
         });
         
         pNameTextField.addKeyListener(new KeyAdapter() {
@@ -283,8 +349,10 @@ public class ProjectController {
         
         finishButton.addActionListener((ActionEvent e) -> {
             try {
-                createNewProject();
-                newProjectDialog.setVisible(false);
+                //if we successfully create a new project
+                if (createNewProject()) {
+                    newProjectDialog.setVisible(false);
+                }
             } catch (JAXBException ex) {
                 //if the creation of the project was not successful,
                 //output the exception message to the user.
@@ -307,8 +375,9 @@ public class ProjectController {
         //Convert the projectLocation to a path object
         Path projectLocationPath = projectLocation.toPath();
         //add the projectName to the path to get the project folder
-        //and store it in a file object
-        File projectFolder = projectLocationPath.resolve(projectName).toFile();
+        Path projectFolderPath = Paths.get(projectLocationPath.toString(), projectName);
+        //convert the path to a file object
+        File projectFolder = projectFolderPath.toFile();
         //set the project folder
         pFolderTextField.setText(projectFolder.getAbsolutePath());
     }
