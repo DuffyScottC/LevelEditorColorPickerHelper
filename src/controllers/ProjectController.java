@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.Entity;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -123,10 +124,16 @@ public class ProjectController {
         //set theimage of the new entity to a blank white image
         BufferedImage newImage = Utils.getBlankImageIcon(32, 32);
         frame.getImagePanel().setImage(newImage);
+        
+        
+    }
+    
+    private Color getUniqueDefaultColor() {
+        return Color.black;
     }
     
     private String getUniqueDefaultName() {
-        Map<String, Entity> entities = currentProject.getEntities();
+        Map<String, Entity> entities = currentProject.getEntitiesByName();
         String nameBase = "Entity ";
         int num = 1;
         //keep incrementing the num component until we find a unique name

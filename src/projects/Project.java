@@ -6,14 +6,17 @@
 package projects;
 
 import entities.Entity;
+import java.awt.Color;
 import java.io.File;
-import java.util.Dictionary;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * A user-created project with a name, an asset location, an XML file location,
@@ -44,7 +47,13 @@ public class Project {
      * entity itself as the element.
      */
     @XmlElement(name="entities", type=Entity.class)
-    private Map<String, Entity> entities = new HashMap<String, Entity>();
+    private List<Entity> entities = new ArrayList();
+    @XmlTransient
+    private Map<String, Entity> entitiesByName = new HashMap();
+    @XmlTransient
+    private Map<Color, Entity> entitiesByColor = new HashMap();
+    @XmlTransient
+    private Map<String, Entity> entitiesByPrefabName = new HashMap();
     
     /**
      * Instantiates an empty project. This is only used by the JAXB
@@ -74,7 +83,7 @@ public class Project {
      */
     public void add(Entity entity) {
         //place the entity in this type
-        entities.put(entity.getName(), entity);
+        entities.add(entity);
     }
 
     public String getName() {
@@ -101,12 +110,24 @@ public class Project {
         this.projectFile = projectFile;
     }
 
-    public Map<String, Entity> getEntities() {
+    public List<Entity> getEntities() {
         return entities;
     }
 
-    public void setEntities(Map<String, Entity> entities) {
+    public void setEntities(List<Entity> entities) {
         this.entities = entities;
+    }
+
+    public Map<String, Entity> getEntitiesByName() {
+        return entitiesByName;
+    }
+
+    public Map<Color, Entity> getEntitiesByColor() {
+        return entitiesByColor;
+    }
+
+    public Map<String, Entity> getEntitiesByPrefabName() {
+        return entitiesByPrefabName;
     }
     
     @Override
