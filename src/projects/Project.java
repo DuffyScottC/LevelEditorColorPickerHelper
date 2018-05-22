@@ -35,7 +35,7 @@ public class Project {
      * that category using the name as the key and the
      * entity itself as the element.
      */
-    private Dictionary<String, Dictionary<String, Entity>> entities;
+    private Dictionary<String, Entity> entities;
     
     /**
      * Instantiates a new project
@@ -54,12 +54,8 @@ public class Project {
      * @param entity 
      */
     public void add(Entity entity) {
-        //get the entity's type
-        String type = entity.getType();
-        //get a reference to the type list of this entity's type
-        Dictionary<String, Entity> typeList = entities.get(type);
         //place the entity in this type
-        typeList.put(entity.getName(), entity);
+        entities.put(entity.getName(), entity);
     }
 
     public String getName() {
@@ -86,11 +82,11 @@ public class Project {
         this.projectFile = projectFile;
     }
 
-    public Dictionary<String, Dictionary<String, Entity>> getEntities() {
+    public Dictionary<String, Entity> getEntities() {
         return entities;
     }
 
-    public void setEntities(Dictionary<String, Dictionary<String, Entity>> entities) {
+    public void setEntities(Dictionary<String, Entity> entities) {
         this.entities = entities;
     }
     
