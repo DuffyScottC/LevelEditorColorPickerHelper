@@ -98,7 +98,9 @@ public class Project {
         this.entitiesByName.put(entity.getName(), entity);
         this.entitiesByColor.put(entity.getColor(), entity);
         this.entitiesByUnityPrefab.put(entity.getUnityPrefab(), entity);
-        this.entitiesByType.get(entity.getType()).add(entity);
+        //get the type list accociated with this entity's type
+        List<Entity> theTypeList = this.entitiesByType.get(entity.getType());
+        theTypeList.add(entity);
     }
 
     public String getName() {
@@ -154,7 +156,13 @@ public class Project {
     }
     
     public void addType(String newType) {
+        //add the type to the type list
         types.add(newType);
+        //create a new list of entities for this type. All entities of the new
+        //type will be added to this list.
+        List<Entity> newTypeList = new ArrayList();
+        //add this newTypeList to the entitiesByType HashMap
+        entitiesByType.put(newType, newTypeList);
     }
     
     @Override

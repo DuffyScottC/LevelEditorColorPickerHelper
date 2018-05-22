@@ -126,6 +126,7 @@ public class ProjectController {
                         //tell the project that it has been modified
                         setIsModified(true);
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(frame, ex.toString());
                     }
                 } else {
