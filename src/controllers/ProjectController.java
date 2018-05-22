@@ -15,6 +15,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import projects.Project;
 import views.MainFrame;
 import views.NewProjectDialog;
@@ -92,7 +95,7 @@ public class ProjectController {
      * @returns True if this process was successful, false if there was a problem
      * and you should stop creating a new project.
      */
-    private void createNewProject() throws Exception {
+    private void createNewProject() throws JAXBException, Exception {
         // Create the directory that the user designated for the project:
         //Fist, convert the projectLocation to a path object
         Path projectLocationPath = projectLocation.toPath();
@@ -151,6 +154,7 @@ public class ProjectController {
         //create the new project using the name, location, and file created
         //specifically for this project
         currentProject = new Project(projectName, projectLocation, projectFile);
+        //serialize the new project
         serializeNewProjectToXML();
         enterNewProjectState();
     }
@@ -187,9 +191,12 @@ public class ProjectController {
     /**
      * Serializes the currentProject to the projectFile using JAXB
      * XML serialization. 
+     * @throws JAXBException if something goes wrong in the serialization process
      */
-    private void serializeNewProjectToXML() {
-        
+    private void serializeNewProjectToXML() throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Project.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.marshal(currentProject, projectFile);
     }
     
     private void setUpNewProjectDialog(MainFrame frame) {
@@ -251,6 +258,13 @@ public class ProjectController {
             try {
                 createNewProject();
                 newProjectDialog.setVisible(false);
+            } catch (JAXBException ex) {
+                //if the creation of the project was not successful,
+                //output the exception message to the user.
+                JOptionPane.showMessageDialog(frame, "Unable to serialize project.\n" 
+                        + ex.toString());
+                //allow the user to try again by staying still and keeping
+                //the newProjectDialog window open.
             } catch (Exception ex) {
                 //if the creation of the project was not successful,
                 //output the exception message to the user.
