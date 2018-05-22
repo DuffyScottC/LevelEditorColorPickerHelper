@@ -56,6 +56,20 @@ public class Entity {
     private List<String> tags;
     
     /**
+     * Instantiates an empty entity. This is only used by the JAXB
+     * XML serializer, which requires a no-argument constructor.
+     */
+    public Entity() {
+        this.image = null;
+        this.name = null;
+        this.type = null;
+        this.r = 0;
+        this.g = 0;
+        this.b = 0;
+        this.unityPrefab = null;
+    }
+    
+    /**
      * Create a new entity using a Color object to assign the r, g, b values.
      * @param image The path of the image associated with this entity
      * @param name The name associated with this entity

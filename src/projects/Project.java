@@ -45,6 +45,16 @@ public class Project {
     private Dictionary<String, Entity> entities;
     
     /**
+     * Instantiates an empty project. This is only used by the JAXB
+     * XML serializer, which requires a no-argument constructor.
+     */
+    public Project() {
+        this.name = null;
+        this.projectLocation = null;
+        this.projectFile = null;
+    }
+    
+    /**
      * Instantiates a new project
      * @param name The name of the project (the user sees this)
      * @param projectLocation The path to the directory containing all the project's assets
