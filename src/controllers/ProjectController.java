@@ -218,7 +218,7 @@ public class ProjectController {
         //of whether the project folder already exists or the project file
         //already exists (or the folder does not exist and we are free to make it)
         
-        //Create the project file:
+        // Create the project file:
         //if the project file could NOT be created
         if (!createNewProjectFile(tempProjectLocation)) {
             //return without throwing an exception and without
