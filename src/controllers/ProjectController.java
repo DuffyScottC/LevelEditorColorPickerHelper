@@ -115,10 +115,7 @@ public class ProjectController {
         
         frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
             //if the user just opnned the app and no project has been selected yet
-            if (currentProject == null) {
-                //open the new project dialog
-                openNewProjectDialog();
-            } else {
+            if (currentProject != null) {
                 try {
                     //generate a new default entity
                     Entity newEntity = generateNewDefaultEntity();
@@ -131,6 +128,9 @@ public class ProjectController {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, ex.toString());
                 }
+            } else {
+                //open the new project dialog
+                openNewProjectDialog();
             }
         });
     }
