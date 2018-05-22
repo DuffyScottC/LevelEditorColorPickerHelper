@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entities.Entity;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,9 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -412,7 +416,32 @@ public class ProjectController {
     }
     
     private void enterOpenProjectState() {
+        //get the map of all the entities in the project
+        Map<String,Entity> newEntitiesMap = currentProject.getEntities();
+        //convert the map to a list
+        List<Entity> allNewEntities = new ArrayList(newEntitiesMap.values());
+        //update the entities in the results list
+        resultsListController.setEntities(allNewEntities);
         
+        //search panel
+        frame.getTypeComboBox().setEnabled(true);
+        frame.getSearchTextField().setEnabled(true);
+        
+        //info panel
+        frame.getSelectButton().setEnabled(true);
+        frame.getNameTextField().setEnabled(true);
+        frame.getTypeTextField().setEnabled(true);
+        frame.getColorCodeTextField().setEnabled(true);
+        frame.getIncludeHashTagCheckBox().setEnabled(true);
+        frame.getRedSlider().setEnabled(true);
+        frame.getRedSpinner().setEnabled(true);
+        frame.getGreenSlider().setEnabled(true);
+        frame.getGreenSpinner().setEnabled(true);
+        frame.getBlueSlider().setEnabled(true);
+        frame.getBlueSpinner().setEnabled(true);
+        frame.getTagsTextField().setEnabled(true);
+        frame.getRevertButton().setEnabled(true);
+        frame.getApplyButton().setEnabled(true);
     }
     
     public void enterNewProjectState() {

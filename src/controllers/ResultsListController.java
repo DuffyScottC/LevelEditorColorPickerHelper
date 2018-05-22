@@ -14,6 +14,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import views.EntityListRenderer;
 import views.MainFrame;
 
@@ -36,14 +38,23 @@ public class ResultsListController {
         resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entitiesInResults = new ArrayList();
         resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
+        
+        resultsList.addListSelectionListener((ListSelectionEvent e) -> {
+            System.out.println("Selected " + resultsList.getSelectedValue());
+        });
     }
     
+    /**
+     * Updates the results list model to reflect the contents of the
+     * entitiesInResults list. Also selects the first entity in the list.
+     */
     private void updateListModel() {
         resultsListModel.clear();
         for (Entity e : entitiesInResults) {
             resultsListModel.addElement(e);
         }
         resultsList.repaint();
+        resultsList.setSelectedIndex(0);
     }
     
     /**
@@ -56,6 +67,13 @@ public class ResultsListController {
         entitiesInResults.add(new Entity(null, 
                 "Choose \"Add Entity\" below!", null, Color.black, null));
         updateListModel();
+    }
+    
+    public void setEntities(List<Entity> entitiesInResults) {
+        //add all the entities to the results list
+        this.entitiesInResults.addAll(entitiesInResults);
+        updateListModel();
+        
     }
     
 }
