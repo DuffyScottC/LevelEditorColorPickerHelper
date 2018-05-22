@@ -103,16 +103,22 @@ public class ProjectController {
         setUpNewProjectDialogActionListeners(frame);
         
         newProjectMenuItem.addActionListener((ActionEvent e) -> {
-            //reset the dialog
-            resetNewProjectDialog(frame);
-            newProjectDialog.setVisible(true);
+            openNewProjectDialog();
         });
         
         openProjectMenuItem.addActionListener((ActionEvent e) -> {
             openProject();
         });
         
+        //action listener for add entity Button and add entity MenuItem
+        
+        
         frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
+            //if the user just opnned the app and no project has been selected yet
+            if (currentProject == null) {
+                //open the new project dialog
+                openNewProjectDialog();
+            }
             try {
                 //generate a new default entity
                 Entity newEntity = generateNewDefaultEntity();
@@ -280,6 +286,12 @@ public class ProjectController {
      }
     
     //MARK: New Project
+    private void openNewProjectDialog() {
+        //reset the dialog
+        resetNewProjectDialog(frame);
+        newProjectDialog.setVisible(true);
+    }
+    
     /**
      * Creates a new project in the current projectLocation by creating a new
      * folder and creating an XML serialized file representing the project.
