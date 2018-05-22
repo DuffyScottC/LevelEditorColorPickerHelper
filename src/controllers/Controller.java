@@ -5,6 +5,14 @@
  */
 package controllers;
 
+import entities.Entity;
+import java.awt.Color;
+import java.io.File;
+import java.io.StringWriter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import projects.Project;
 import views.MainFrame;
 
 public class Controller {

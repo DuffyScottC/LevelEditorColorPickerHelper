@@ -168,7 +168,8 @@ public class ProjectController {
         //get the path of the project location
         Path tempPath = projectLocation.toPath();
         //append the project .xml file to the project location
-        tempPath.resolve(projectName + ".xml");
+        //using the .lecp extension (Level Editor Color Picker)
+        tempPath.resolve(projectName + ".lecp");
         //convert the path into a file
         File tempFile = tempPath.toFile();
         if (tempFile.exists()) {
