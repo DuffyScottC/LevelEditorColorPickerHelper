@@ -174,14 +174,14 @@ public class ProjectController {
         //add the projectName to the path to get the project folder
         Path projectLocationPath = Paths.get(tempProjectLocationPath.toString(), projectName);
         //and store it in a file object
-        projectLocation = projectLocationPath.toFile();
+        File tempProjectLocation = projectLocationPath.toFile();
         //if the project location already exists
-        if (projectLocation.exists()) {
+        if (tempProjectLocation.exists()) {
             //if the user wants to continue
             if (shouldContinue("The project folder already exists. "
                     + "Are you sure you wish to continue?")) {
                 //if the projectLocation is not empty
-                if (projectLocation.list().length > 0) {
+                if (tempProjectLocation.list().length > 0) {
                     //if the user does NOT want to continue
                     if (!shouldContinue("The project folder is not empty."
                             + "Are you sure you wish to continue?")) {
@@ -202,21 +202,23 @@ public class ProjectController {
                 return false;
             }
         } else {
-            //if the projectLocation does not exist:
+            //if the projectLocation does NOT exist:
             //make the directory
-            boolean success = projectLocation.mkdir();
+            boolean success = tempProjectLocation.mkdir();
             //if we could not create the project directory
             if (!success) {
                 //output the problem to the user
                 throw new Exception("Could not create the project folder " +
-                        projectLocation.getAbsolutePath());
+                        tempProjectLocation.getAbsolutePath());
             }
         }
-        
+        //if we reach this point, the user wants to create the project, regardless
+        //of whether the project folder already exists or the project file
+        //already exists (or the folder does not exist and we are free to make it)
         
         //Create the project file:
         //if the project file could NOT be created
-        if (!createNewProjectFile()) {
+        if (!createNewProjectFile(tempProjectLocation)) {
             //return without throwing an exception and without
             //creating the new project, because the user chose
             //not to continue.
@@ -224,6 +226,7 @@ public class ProjectController {
         }
         //if the project file was successfully created
         
+        //At this point, the name, locaiton, and file are assigned.
         //create the new project using the name, location, and file created
         //specifically for this project
         currentProject = new Project(projectName, projectLocation, projectFile);
@@ -234,13 +237,18 @@ public class ProjectController {
     }
     
     /**
-     * Creates a file that will be used to serialize the project from now on.
+     * Creates a file that will be used to serialize the project from now on.<>
+     * 
+     * This also assigns the {@link projectLocation} and {@link projectFile} to
+     * their temp values once and for all, if the creation of the new project
+     * file goes well.
+     * 
      * @return True if the file was created with no problems, false if the
      * file could not be created for some reason.
      */
-    private boolean createNewProjectFile() throws Exception {
+    private boolean createNewProjectFile(File tempProjectLocation) throws Exception {
         //get the path of the project location
-        Path tempLocationPath = projectLocation.toPath();
+        Path tempLocationPath = tempProjectLocation.toPath();
         //append the project .xml file to the project location
         //using the .lecp extension (Level Editor Color Picker)
         Path tempFilePath = Paths.get(tempLocationPath.toString(), projectName + ".lecp");
@@ -249,7 +257,7 @@ public class ProjectController {
         if (tempFile.exists()) {
             //if the user does NOT want to continue
             if (!shouldContinue("The file " + tempFile.getName() + "already exists "
-                    + "at " + tempFile.getAbsolutePath() + ". Would you like to "
+                    + "at \n" + tempFile.getAbsolutePath() + ".\nWould you like to "
                     + "overwrite this file?\n"
                     + "Please note: Overwriting this file will erase all data "
                     + "in " + tempFile.getName() + ". This cannot be undone.")) {
@@ -257,8 +265,11 @@ public class ProjectController {
             }
             //if the user does want to continue, continue
         }
-        //if the tempFile does not exist or the user wants to overwrite this
-        //file, assign the file to this project
+        //if the tempFile does not exist or the user wants to overwrite this file
+        
+        //At this point, everything is correct and we can assign the projectFile
+        //and the projectLocation to their temp values.
+        projectLocation = tempProjectLocation;
         projectFile = tempFile;
         return true;
     }
@@ -321,9 +332,11 @@ public class ProjectController {
             chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int result = chooser.showOpenDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
-                projectLocation = chooser.getSelectedFile();
-                if (projectLocation.exists()) {
-                    if (projectLocation.isDirectory()) {
+                File tempProjectLocation = chooser.getSelectedFile();
+                if (tempProjectLocation.exists()) {
+                    if (tempProjectLocation.isDirectory()) {
+                        //assign the project location.
+                        projectLocation = tempProjectLocation;
                         //set the project location
                         pLocationTextField.setText(projectLocation.getAbsolutePath());
                         
