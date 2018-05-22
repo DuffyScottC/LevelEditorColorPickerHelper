@@ -137,8 +137,18 @@ public class ProjectController {
             
             try {
                 //try to deserialize the project file
-                currentProject = deserializeProjectFromXML(tempFile);
-                System.out.println(currentProject);
+                Project tempProject = deserializeProjectFromXML(tempFile);
+                if (tempProject == null) {
+                    //tell the user the file does not end with .lecp
+                    JOptionPane.showMessageDialog(frame, "Could not deserialize"
+                        + " the project file:\n" + tempFile.getAbsolutePath());
+                    //give up the ghost
+                    return;
+                }
+                //if the tempProject is not null, then it is a valid project
+                //deserialized from the file, and we can
+                //load the new project
+                loadProject(tempProject);
             } catch (JAXBException ex) {
                 //tell the user that you couldn't
                 JOptionPane.showMessageDialog(frame, "Could not deserialize"
@@ -150,7 +160,11 @@ public class ProjectController {
         
     }
     
-     private Project deserializeProjectFromXML(File file) throws JAXBException {
+    private void loadProject(Project newProject) {
+        enterOpenProjectState();
+    }
+    
+    private Project deserializeProjectFromXML(File file) throws JAXBException {
          JAXBContext context = JAXBContext.newInstance(Project.class);
          Unmarshaller unmarshaller = context.createUnmarshaller();
          Object obj = unmarshaller.unmarshal(file);
@@ -395,6 +409,10 @@ public class ProjectController {
         File projectFolder = projectFolderPath.toFile();
         //set the project folder
         pFolderTextField.setText(projectFolder.getAbsolutePath());
+    }
+    
+    private void enterOpenProjectState() {
+        
     }
     
     public void enterNewProjectState() {
