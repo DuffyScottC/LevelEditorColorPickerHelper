@@ -126,7 +126,16 @@ public class ProjectController {
     }
     
     private String getUniqueDefaultName() {
-        return "New Entity 1";
+        Map<String, Entity> entities = currentProject.getEntities();
+        String nameBase = "Entity ";
+        int num = 1;
+        //keep incrementing the num component until we find a unique name
+        //(i.e. a name that is not already in entities)
+        while (!entities.containsKey(nameBase + num)) {
+            num++;
+        }
+        //return the unique name
+        return nameBase + num;
     }
     
     //MARK: Open Project
