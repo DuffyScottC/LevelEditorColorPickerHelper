@@ -579,5 +579,9 @@ public class MainFrame extends javax.swing.JFrame {
     public JComboBox getEntityTypeComboBox() {
         return entityTypeComboBox;
     }
+
+    public JButton getChangeImageButton() {
+        return changeImageButton;
+    }
     
 }
