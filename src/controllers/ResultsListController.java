@@ -30,17 +30,12 @@ public class ResultsListController {
     private final JList resultsList;
     private final List<Entity> entitiesInResults;
     
-    private final JComboBox typeComboBox;
-    
     public ResultsListController(MainFrame frame) {
         resultsList = frame.getResultsList();
         resultsList.setModel(resultsListModel);
         resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entitiesInResults = new ArrayList();
         resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
-        
-        typeComboBox = frame.getTypeComboBox();
-        setUpComboBox();
     }
     
     private void updateListModel() {
@@ -61,12 +56,6 @@ public class ResultsListController {
         entitiesInResults.add(new Entity(null, 
                 "Choose \"Add Entity\" below!", null, Color.black, null));
         updateListModel();
-    }
-    
-    private void setUpComboBox() {
-        String[] typeList = {"All", "Add New Type"};
-        DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(typeList);
-        typeComboBox.setModel(comboBoxModel);
     }
     
 }
