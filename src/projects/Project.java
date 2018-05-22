@@ -109,5 +109,17 @@ public class Project {
         this.entities = entities;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Name: ");
+        s.append(name);
+        s.append("\nProject Location: ");
+        s.append(projectLocation);
+        s.append("\nProject File: ");
+        s.append(projectFile);
+        return s.toString();
+    }
+    
     
 }
