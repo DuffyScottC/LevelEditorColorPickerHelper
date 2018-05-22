@@ -153,6 +153,10 @@ public class Project {
         return types;
     }
     
+    public void addType(String newType) {
+        types.add(newType);
+    }
+    
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

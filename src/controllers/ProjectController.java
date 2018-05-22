@@ -370,6 +370,7 @@ public class ProjectController {
         //create the new project using the name, location, and file created
         //specifically for this project
         currentProject = new Project(projectName, projectLocation, projectFile);
+        currentProject.addType(Utils.defaultType);
         //serialize the new project
         serializeNewProjectToXML();
         enterNewProjectState();

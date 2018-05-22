@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
  * @author Scott
  */
 public class Utils {
+    public static final String defaultType = "Misc";
+    
     public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
         //Create a blank white image icon
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
