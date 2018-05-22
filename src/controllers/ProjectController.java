@@ -110,6 +110,7 @@ public class ProjectController {
         frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
             try {
                 Entity newEntity = generateNewDefaultEntity();
+                currentProject.addEntity(newEntity);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(frame, ex.toString());
             }
@@ -119,8 +120,8 @@ public class ProjectController {
     //MARK: Add Entity
     /**
      * Generates a new entity with default attributes.
-     * @throws Exception if the user can't add a new entity (the reason is
-     * in the exception's description).
+     * @throws Exception if the user can't addEntity a new entity (the reason is
+ in the exception's description).
      */
     private Entity generateNewDefaultEntity() throws Exception {
         // Set the color of the entity
@@ -136,7 +137,7 @@ public class ProjectController {
         }
         
         // Set the image of the new entity to a blank image of the newColor (this
-        // way users can elect not to add an image and use the color instead).
+        // way users can elect not to addEntity an image and use the color instead).
         BufferedImage newImage = Utils.getBlankBufferedImage(32, 32, newColor);
         
         String newType = currentProject.getTypes().get(0);

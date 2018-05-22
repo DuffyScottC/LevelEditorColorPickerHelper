@@ -76,7 +76,9 @@ public class Entity {
     
     /**
      * Create a new entity using a Color object to assign the r, g, b values.
-     * @param image The path of the image associated with this entity
+     * @param image The path of the image associated with this entity (pass in 
+     * null if you don't have an image path for this entity, and the entity will
+     * simply use its own color as the image)
      * @param name The name associated with this entity
      * @param type The name of the type or category associated with this entity
      * @param color The color associated with this entity

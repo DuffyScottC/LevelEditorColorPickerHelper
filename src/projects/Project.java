@@ -51,10 +51,16 @@ public class Project {
     private final Map<Color, Entity> entitiesByColor = new HashMap();
     @XmlTransient
     private final Map<String, Entity> entitiesByUnityPrefab = new HashMap();
+    /**
+     * A map with the entity type as the key and a list of all the entities
+     * of a particular type as the element
+     */
+    @XmlTransient
+    private final Map<String, List<Entity>> entitiesByType = new HashMap();
     
     /**
      * A list of all the types in this project. There should always be at least
-     * one type in this list. When the list is cleared, a type called "default"
+     * one type in this list. When the list is cleared, a type called "Misc"
      * is added. 
      */
     private final List<String> types = new ArrayList();
@@ -85,9 +91,14 @@ public class Project {
      * Handles adding new entities to the project
      * @param entity 
      */
-    public void add(Entity entity) {
-        //place the entity in this type
-        entities.add(entity);
+    public void addEntity(Entity entity) {
+        //place the entity in the list of all entities
+        this.entities.add(entity);
+        //add the entity to each list
+        this.entitiesByName.put(entity.getName(), entity);
+        this.entitiesByColor.put(entity.getColor(), entity);
+        this.entitiesByUnityPrefab.put(entity.getUnityPrefab(), entity);
+        this.entitiesByType.get(entity.getType()).add(entity);
     }
 
     public String getName() {
@@ -132,6 +143,10 @@ public class Project {
 
     public Map<String, Entity> getEntitiesByUnityPrefab() {
         return entitiesByUnityPrefab;
+    }
+
+    public Map<String, List<Entity>> getEntitiesByType() {
+        return entitiesByType;
     }
 
     public List<String> getTypes() {
