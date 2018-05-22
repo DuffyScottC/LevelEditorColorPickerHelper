@@ -109,10 +109,10 @@ public class ProjectController {
         //allow the user to choose a file
         int result = chooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
-            //reset the chooser's file filters
-            chooser.resetChoosableFileFilters();
             //get the user's selected file
             File tempFile = chooser.getSelectedFile();
+            //reset the chooser's file filters
+            chooser.resetChoosableFileFilters();
             //if the file does NOT exist
             if (!tempFile.exists()) {
                 //tell the user the file does not exist
@@ -125,7 +125,7 @@ public class ProjectController {
             //if the file exists, continue
             
             //if the file does NOT end with .lecp
-            if (tempFile.getName().matches(".*\\.lecp")) {
+            if (!tempFile.getName().matches(".*\\.lecp")) {
                 //tell the user the file does not end with .lecp
                 JOptionPane.showMessageDialog(frame, "Could not open project.\n"
                         + "The file " + tempFile.getAbsolutePath() 
