@@ -178,13 +178,15 @@ public class ProjectController {
         //if the project location already exists
         if (tempProjectLocation.exists()) {
             //if the user wants to continue
-            if (shouldContinue("The project folder already exists. "
-                    + "Are you sure you wish to continue?")) {
+            if (shouldContinue("The project folder already exists at\n"
+                    + tempProjectLocation.getAbsolutePath()
+                    + "\nAre you sure you wish to continue?")) {
                 //if the projectLocation is not empty
                 if (tempProjectLocation.list().length > 0) {
                     //if the user does NOT want to continue
-                    if (!shouldContinue("The project folder is not empty."
-                            + "Are you sure you wish to continue?")) {
+                    if (!shouldContinue("The project folder at\n"
+                            + tempProjectLocation.getAbsolutePath()
+                            + "\nis not empty. Are you sure you wish to continue?")) {
                         //return without throwing an exception and without
                         //creating the new project, because the user chose
                         //not to continue.
