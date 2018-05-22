@@ -123,6 +123,7 @@ public class ProjectController {
                         currentProject.addEntity(newEntity);
                         //update the UI to reflect the creation of a new entity
                         loadEntityIntoInfoPanel(newEntity);
+                        enterOpenProjectState();
                         //tell the project that it has been modified
                         setIsModified(true);
                     } catch (Exception ex) {
@@ -159,10 +160,6 @@ public class ProjectController {
                     + "combinations! Unfortunately, this means you can't add\n"
                     + "more entities (at least no to this project).");
         }
-        
-        // Set the image of the new entity to a blank image of the newColor (this
-        // way users can elect not to addEntity an image and use the color instead).
-        BufferedImage newImage = Utils.getBlankBufferedImage(32, 32, newColor);
         
         String newType = currentProject.getTypes().get(0);
         
