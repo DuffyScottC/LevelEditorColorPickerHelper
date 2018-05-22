@@ -10,7 +10,10 @@ import java.io.File;
 import java.util.Dictionary;
 
 /**
- * 
+ * A user-created project with a name, an asset location, an XML file location,
+ * and a Dictionary of types that are paired with Dictionarys of entities. This
+ * handles the adding of Entities, the adding of Types, and other project
+ * functions.
  * @author Scott
  */
 public class Project {

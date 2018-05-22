@@ -7,6 +7,10 @@ package entities;
 
 import java.awt.Color;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * An entity consists of an image, a name, and a color.<>
@@ -14,6 +18,9 @@ import java.util.List;
  * so that they can be edited, shared, etc.
  * @author Scott
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder={"image","name","type","r","g","b","unityPrefab","tags"})
 public class Entity {
     /**
      * The path of a the image associated with this entity
@@ -52,6 +59,7 @@ public class Entity {
      * Create a new entity using a Color object to assign the r, g, b values.
      * @param image The path of the image associated with this entity
      * @param name The name associated with this entity
+     * @param type The name of the type or category associated with this entity
      * @param color The color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      */
