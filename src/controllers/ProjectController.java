@@ -9,6 +9,7 @@ import entities.Entity;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -115,7 +117,16 @@ public class ProjectController {
      * default "new entity" info.
      */
     private void fillNewEntityInfo() {
+        //set the name of the new entity
+        frame.getNameTextField().setText(getUniqueDefaultName());
         
+        //set theimage of the new entity to a blank white image
+        BufferedImage newImage = Utils.getBlankImageIcon(32, 32);
+        frame.getImagePanel().setImage(newImage);
+    }
+    
+    private String getUniqueDefaultName() {
+        return "New Entity 1";
     }
     
     //MARK: Open Project

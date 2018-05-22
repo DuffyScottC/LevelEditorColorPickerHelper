@@ -54,4 +54,14 @@ public class ImagePanel extends JPanel {
             g2d.dispose();
         }
     }
+    
+    /**
+     * Assigns the image of this image panel to the buffered image given and
+     * then repaints the panel.
+     * @param image 
+     */
+    public void setImage(BufferedImage image) {
+        this.image = image;
+        repaint();
+    }
 }

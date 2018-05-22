@@ -5,6 +5,7 @@
  */
 package views;
 
+import controllers.Utils;
 import entities.Entity;
 import java.awt.Color;
 import java.awt.Component;
@@ -57,11 +58,9 @@ public class EntityListRenderer extends DefaultListCellRenderer {
             //set the label's icon to this image
             label.setIcon(imageIcon);
         } else {
-            //Create a blank white image icon
-            BufferedImage bi = new BufferedImage(32,32, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = bi.createGraphics();
-            g2d.setColor(Color.white);
-            g2d.drawRect(0, 0, 32, 32);
+            //Create a blank white buffered image
+            BufferedImage bi = Utils.getBlankImageIcon(32, 32);
+            //create an image icon from the blank white buffered image
             ImageIcon imageIcon = new ImageIcon(bi);
             //set the label's icon to this image
             label.setIcon(imageIcon);
