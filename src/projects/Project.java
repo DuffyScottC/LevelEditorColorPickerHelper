@@ -8,6 +8,10 @@ package projects;
 import entities.Entity;
 import java.io.File;
 import java.util.Dictionary;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * A user-created project with a name, an asset location, an XML file location,
@@ -16,6 +20,8 @@ import java.util.Dictionary;
  * functions.
  * @author Scott
  */
+@XmlRootElement(name="Project")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Project {
     /**
      * The name of the project
@@ -35,6 +41,7 @@ public class Project {
      * that category using the name as the key and the
      * entity itself as the element.
      */
+    @XmlElement(name="entities", type=Entity.class)
     private Dictionary<String, Entity> entities;
     
     /**
