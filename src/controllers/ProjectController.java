@@ -138,18 +138,57 @@ public class ProjectController {
         }
         
         
-        //create the project file
-        createNewProjectFile();
+        //Create the project file:
+        //if the project file could NOT be created
+        if (!createNewProjectFile()) {
+            //return without throwing an exception and without
+            //creating the new project, because the user chose
+            //not to continue.
+            return;
+        }
+        //if the project file was successfully created
+        
         //create the new project using the name, location, and file created
         //specifically for this project
         currentProject = new Project(projectName, projectLocation, projectFile);
+        serializeNewProjectToXML();
         enterNewProjectState();
     }
     
     /**
-     * Creates an XML file representing the new project
+     * Creates a file that will be used to serialize the project from now on.
+     * @return True if the file was created with no problems, false if the
+     * file could not be created for some reason.
      */
-    private void createNewProjectFile() {
+    private boolean createNewProjectFile() throws Exception {
+        //get the path of the project location
+        Path tempPath = projectLocation.toPath();
+        //append the project .xml file to the project location
+        tempPath.resolve(projectName + ".xml");
+        //convert the path into a file
+        File tempFile = tempPath.toFile();
+        if (tempFile.exists()) {
+            //if the user does NOT want to continue
+            if (!shouldContinue("The file " + tempFile.getName() + "already exists "
+                    + "at " + tempFile.getAbsolutePath() + ". Would you like to "
+                    + "overwrite this file?\n"
+                    + "Please note: Overwriting this file will erase all data "
+                    + "in " + tempFile.getName() + ". This cannot be undone.")) {
+                return false;
+            }
+            //if the user does want to continue, continue
+        }
+        //if the tempFile does not exist or the user wants to overwrite this
+        //file, assign the file to this project
+        projectFile = tempFile;
+        return true;
+    }
+    
+    /**
+     * Serializes the currentProject to the projectFile using JAXB
+     * XML serialization. 
+     */
+    private void serializeNewProjectToXML() {
         
     }
     
