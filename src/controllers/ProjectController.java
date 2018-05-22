@@ -191,11 +191,13 @@ public class ProjectController {
     /**
      * Serializes the currentProject to the projectFile using JAXB
      * XML serialization. 
-     * @throws JAXBException if something goes wrong in the serialization process
+     * @throws JAXBException if something goes wrong in the serialization 
+     * process
      */
     private void serializeNewProjectToXML() throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(Project.class);
         Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.marshal(currentProject, projectFile);
     }
     
