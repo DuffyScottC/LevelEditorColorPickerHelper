@@ -77,16 +77,26 @@ public class ProjectController {
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
-        setUpNewProjectDialog(frame);
+        setUpNewProjectDialogActionListeners(frame);
         
         newProjectMenuItem.addActionListener((ActionEvent e) -> {
+            //reset the dialog
+            resetNewProjectDialog(frame);
             newProjectDialog.setVisible(true);
+        });
+        
+        openProjectMenuItem.addActionListener((ActionEvent e) -> {
+            
         });
     }
     
     
     //MARK: Open Project
     
+    
+    private void openProject() {
+        
+    }
     
     //MARK: New Project
     /**
@@ -202,11 +212,10 @@ public class ProjectController {
         marshaller.marshal(currentProject, projectFile);
     }
     
-    private void setUpNewProjectDialog(MainFrame frame) {
+    private void resetNewProjectDialog(MainFrame frame) {
         newProjectDialog.setName("New Project");
         newProjectDialog.setLocationRelativeTo(null);
         
-        JButton cancelButton = newProjectDialog.getCancelButton();
         JButton finishButton = newProjectDialog.getFinishButton();
         
         //make it so that the user can press enter to finish
@@ -227,6 +236,21 @@ public class ProjectController {
         pNameTextField.setText("New Project");
         pLocationTextField.setText(System.getProperty("user.dir"));
         pFolderTextField.setText(System.getProperty("user.dir") + "/New Project");
+    }
+    
+    private void setUpNewProjectDialogActionListeners(MainFrame frame) {
+        resetNewProjectDialog(frame);
+        
+        JButton cancelButton = newProjectDialog.getCancelButton();
+        JButton finishButton = newProjectDialog.getFinishButton();
+        
+        //make it so that the user can press enter to finish
+        newProjectDialog.getRootPane().setDefaultButton(finishButton);
+        
+        JTextField pNameTextField 
+                = newProjectDialog.getProjectNameTextField();
+        JTextField pLocationTextField 
+                = newProjectDialog.getProjectLocationTextField();
         
         //If the user clicks the browse button
         newProjectDialog.getBrowseButton().addActionListener((ActionEvent e) -> {
