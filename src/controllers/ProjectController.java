@@ -110,6 +110,13 @@ public class ProjectController {
     }
     
     //MARK: Add Entity
+    /**
+     * Fills all the appropriate fields in the mainframe info panel with the
+     * default "new entity" info.
+     */
+    private void fillNewEntityInfo() {
+        
+    }
     
     //MARK: Open Project
     private void openProject() {
