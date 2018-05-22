@@ -27,7 +27,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import projects.Project;
-import views.AddEntityDialog;
 import views.MainFrame;
 import views.NewProjectDialog;
 
@@ -68,7 +67,6 @@ public class ProjectController {
     private final FileFilter projectFileFilter 
             = new FileNameExtensionFilter("Project (.lecp)","lecp");
     private final NewProjectDialog newProjectDialog;
-    private final AddEntityDialog addEntityDialog;
     
     /**
      * Set up the ProjectController
@@ -96,10 +94,6 @@ public class ProjectController {
         newProjectDialog = new NewProjectDialog(frame, true);
         setUpNewProjectDialogActionListeners(frame);
         
-        //set up add entity dialog
-        addEntityDialog = new AddEntityDialog(frame, true);
-        setUpAddEntityDialogActionListeners(frame);
-        
         newProjectMenuItem.addActionListener((ActionEvent e) -> {
             //reset the dialog
             resetNewProjectDialog(frame);
@@ -116,9 +110,6 @@ public class ProjectController {
     }
     
     //MARK: Add Entity
-    private void setUpAddEntityDialogActionListeners(MainFrame frame) {
-        
-    }
     
     //MARK: Open Project
     private void openProject() {
