@@ -8,6 +8,8 @@ package projects;
 import entities.Entity;
 import java.io.File;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -42,7 +44,7 @@ public class Project {
      * entity itself as the element.
      */
     @XmlElement(name="entities", type=Entity.class)
-    private Dictionary<String, Entity> entities;
+    private Map<String, Entity> entities = new HashMap<String, Entity>();
     
     /**
      * Instantiates an empty project. This is only used by the JAXB
@@ -99,11 +101,11 @@ public class Project {
         this.projectFile = projectFile;
     }
 
-    public Dictionary<String, Entity> getEntities() {
+    public Map<String, Entity> getEntities() {
         return entities;
     }
 
-    public void setEntities(Dictionary<String, Entity> entities) {
+    public void setEntities(Map<String, Entity> entities) {
         this.entities = entities;
     }
     
