@@ -442,7 +442,7 @@ public class ProjectController {
         //info panel
         frame.getSelectButton().setEnabled(true);
         frame.getNameTextField().setEnabled(true);
-        frame.getTypeTextField().setEnabled(true);
+        frame.getEntityTypeComboBox().setEnabled(true);
         frame.getColorCodeTextField().setEnabled(true);
         frame.getIncludeHashTagCheckBox().setEnabled(true);
         frame.getRedSlider().setEnabled(true);
@@ -467,7 +467,7 @@ public class ProjectController {
         //info panel
         frame.getSelectButton().setEnabled(false);
         frame.getNameTextField().setEnabled(false);
-        frame.getTypeTextField().setEnabled(false);
+        frame.getEntityTypeComboBox().setEnabled(false);
         frame.getColorCodeTextField().setEnabled(false);
         frame.getIncludeHashTagCheckBox().setEnabled(false);
         frame.getRedSlider().setEnabled(false);

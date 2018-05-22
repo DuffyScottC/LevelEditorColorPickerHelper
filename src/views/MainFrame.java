@@ -43,7 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         selectionPanel = new javax.swing.JPanel();
         typePanel = new javax.swing.JPanel();
         typeLabel = new javax.swing.JLabel();
-        typeComboBox = new javax.swing.JComboBox<>();
+        searchTypeComboBox = new javax.swing.JComboBox<>();
         searchPanel = new javax.swing.JPanel();
         searchLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
@@ -80,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
         includeHashTagCheckBox = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
-        typeTextField = new javax.swing.JTextField();
+        entityTypeComboBox = new javax.swing.JComboBox<>();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProjectMenuItem = new javax.swing.JMenuItem();
@@ -102,8 +102,8 @@ public class MainFrame extends javax.swing.JFrame {
         typeLabel.setText("Type:");
         typePanel.add(typeLabel, java.awt.BorderLayout.WEST);
 
-        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        typePanel.add(typeComboBox, java.awt.BorderLayout.CENTER);
+        searchTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typePanel.add(searchTypeComboBox, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -316,6 +316,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Type:");
 
+        entityTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
         infoPanelLayout.setHorizontalGroup(
@@ -334,8 +336,8 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(typeTextField)
-                            .addComponent(nameTextField)))
+                            .addComponent(nameTextField)
+                            .addComponent(entityTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -367,8 +369,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(entityTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(colorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -461,6 +463,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel colorLabel;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JMenuItem deleteEntityMenuItem;
+    private javax.swing.JComboBox<String> entityTypeComboBox;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JSlider greenSlider;
     private javax.swing.JSpinner greenSpinner;
@@ -491,16 +494,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel searchLabel;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTextField searchTextField;
+    private javax.swing.JComboBox<String> searchTypeComboBox;
     private javax.swing.JButton selectButton;
     private javax.swing.JPanel selectionPanel;
     private javax.swing.JPanel sliderPanel;
     private javax.swing.JLabel tagsLabel;
     private javax.swing.JPanel tagsPanel;
     private javax.swing.JTextField tagsTextField;
-    private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
-    private javax.swing.JTextField typeTextField;
     // End of variables declaration//GEN-END:variables
 
     public JButton getAddEntityButton() {
@@ -544,7 +546,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public JComboBox<String> getTypeComboBox() {
-        return typeComboBox;
+        return searchTypeComboBox;
     }
 
     public ImagePanel getImagePanel() {
@@ -603,8 +605,8 @@ public class MainFrame extends javax.swing.JFrame {
         return nameTextField;
     }
 
-    public JTextField getTypeTextField() {
-        return typeTextField;
+    public JComboBox getEntityTypeComboBox() {
+        return entityTypeComboBox;
     }
     
 }
