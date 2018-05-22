@@ -29,6 +29,10 @@ public class Controller {
             colorPickerController);
         
         projectController.enterNewProjectState();
+        
+        //set up the type combo box
+        frame.getEntityTypeComboBox().removeAllItems();
+        frame.getEntityTypeComboBox().addItem(Utils.defaultType);
     }
 
     public static void main(String[] args) {

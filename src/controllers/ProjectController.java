@@ -16,11 +16,10 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -115,7 +114,7 @@ public class ProjectController {
         ActionListener addEntityActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if the user just opnned the app and no project has been selected yet
+                //if the user just opened the app and no project has been selected yet
                 if (currentProject != null) {
                     try {
                         //generate a new default entity
@@ -200,7 +199,7 @@ public class ProjectController {
         int num = 1;
         //keep incrementing the num component until we find a unique name
         //(i.e. a name that is not already in entities)
-        while (!entities.containsKey(nameBase + num)) {
+        while (entities.containsKey(nameBase + num)) {
             num++;
         }
         //return the unique name
@@ -213,7 +212,7 @@ public class ProjectController {
         int num = 1;
         //keep incrementing the num component until we find a unique string
         //(i.e. a prefab that is not already in entities)
-        while (!entities.containsKey(prefabBase + num)) {
+        while (entities.containsKey(prefabBase + num)) {
             num++;
         }
         //return the unique prefab string
@@ -279,6 +278,11 @@ public class ProjectController {
     }
     
     private void loadProject(Project newProject) {
+        currentProject = newProject;
+        projectLocation = newProject.getProjectLocation();
+        projectFile = newProject.getProjectFile();
+        projectName = newProject.getName();
+        updateTypeComboBox();
         enterOpenProjectState();
     }
     
@@ -538,6 +542,7 @@ public class ProjectController {
     }
     
     private void enterOpenProjectState() {
+        frame.setName(projectName);
         //get the list of all the entities in the project
         List<Entity> allNewEntities = currentProject.getEntities();
         //update the entities in the results list
@@ -626,6 +631,18 @@ public class ProjectController {
         }
         
         colorPickerController.setColor(entity.getR(), entity.getG(), entity.getB());
+    }
+    
+    /**
+     * Updates the typeComboBox to reflect the current open project's types
+     */
+    public void updateTypeComboBox() {
+        JComboBox typeComboBox = frame.getEntityTypeComboBox();
+        //remove all items in the type combo box
+        typeComboBox.removeAllItems();
+        for (String type : currentProject.getTypes()) {
+            typeComboBox.addItem(type);
+        }
     }
     
     /**
