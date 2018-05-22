@@ -22,10 +22,11 @@ public class Controller {
         //Set up the Results List Controller
         resultsListController = new ResultsListController(frame);
         recentListController = new RecentListController(frame);
+        ColorPickerController colorPickerController = new ColorPickerController(frame);
         ProjectController projectController = new ProjectController(frame,
             resultsListController,
-            recentListController);
-        ColorPickerController colorPickerController = new ColorPickerController(frame);
+            recentListController,
+            colorPickerController);
         
         projectController.enterNewProjectState();
     }

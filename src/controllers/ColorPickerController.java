@@ -262,4 +262,30 @@ public class ColorPickerController {
         updateColorCodeTextField();
     }
     
+    /**
+     * Sets the r, g, b values of the color and updates the UI to reflect the
+     * new color.
+     * @param r
+     * @param g
+     * @param b 
+     */
+    public void setColor(int r, int g, int b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        updateAll();
+    }
+    
+    /**
+     * Sets the r, g, b values of the color using the r, g, b of the passed color 
+     * and updates the UI to reflect the new color.
+     * @param color 
+     */
+    public void setColor(Color color) {
+        r = color.getRed();
+        g = color.getGreen();
+        b = color.getBlue();
+        updateAll();
+    }
+    
 }

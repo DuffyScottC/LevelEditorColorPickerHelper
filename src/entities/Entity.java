@@ -138,7 +138,13 @@ public class Entity {
             return false;
         }
     }
-
+    
+    /**
+     * The path of a the image associated with this entity. This is null
+     * if there is no image associated with this entity, and you should
+     * simply use the color associated with this entity to color the
+     * image panel.
+     */
     public String getImage() {
         return image;
     }

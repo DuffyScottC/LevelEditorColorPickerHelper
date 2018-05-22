@@ -56,6 +56,7 @@ public class ProjectController {
     
     private final ResultsListController resultsListController;
     private final RecentListController recentListController;
+    private final ColorPickerController colorPickerController;
     
     /**
      * initialized with user.dir just in case something goes wrong with loading
@@ -71,6 +72,8 @@ public class ProjectController {
             = new FileNameExtensionFilter("Project (.lecp)","lecp");
     private final NewProjectDialog newProjectDialog;
     
+    private boolean isModified = false;
+    
     /**
      * Set up the ProjectController
      * @param frame
@@ -79,11 +82,13 @@ public class ProjectController {
      */
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,
-            RecentListController recentListController) {
+            RecentListController recentListController,
+            ColorPickerController colorPickerController) {
         this.frame = frame;
         
         this.resultsListController = resultsListController;
         this.recentListController = recentListController;
+        this.colorPickerController = colorPickerController;
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
@@ -109,8 +114,14 @@ public class ProjectController {
         
         frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
             try {
+                //generate a new default entity
                 Entity newEntity = generateNewDefaultEntity();
+                //add the new entity to the currentProject
                 currentProject.addEntity(newEntity);
+                //update the UI to reflect the creation of a new entity
+                loadEntityIntoInfoPanel(newEntity);
+                //tell the project that it has been modified
+                setIsModified(true);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(frame, ex.toString());
             }
@@ -146,6 +157,7 @@ public class ProjectController {
         
         String newUnityPrefab = getUniqueDefaultUnityPrefab();
         
+        //create and return a new entity with the attributes created above
         return new Entity(null, newName, newType, newColor, newUnityPrefab);
     }
     
@@ -556,6 +568,46 @@ public class ProjectController {
     }
     
     //MARK: Misc
+    private void loadEntityIntoInfoPanel(Entity entity) {
+        frame.getNameTextField().setText(entity.getName());
+        //get the index of this entity's type
+        int index = currentProject.getTypes().indexOf(entity.getType());
+        //set the selected type
+        frame.getTypeComboBox().setSelectedIndex(index);
+        boolean noImage = false;
+        //if the entity has an image path
+        if (entity.getImage() != null) {
+            //get the image path and turn it into a file
+            File imageFile = new File(entity.getImage());
+            //if the image exists
+            if (imageFile.exists()) {
+                //set the image of the ImagePanel
+                frame.getImagePanel().setImagePath(imageFile);
+            } else {
+                //tell the user the image does not exist
+                JOptionPane.showMessageDialog(frame,
+                        "Could not find image for " + entity.getName()
+                        + " at\n" + entity.getImage() + "\nFile does not "
+                        + "exist.");
+                noImage = true;
+            }
+            
+        } else {
+            noImage = true;
+        }
+        
+        //if there was no image file associated with this entity
+        if (noImage) {
+            //create a blank image of the color of the entity
+            BufferedImage image 
+                    = Utils.getBlankBufferedImage(32, 32, entity.getColor());
+            //set the image of the ImagePanel
+            frame.getImagePanel().setImage(image);
+        }
+        
+        colorPickerController.setColor(entity.getR(), entity.getG(), entity.getB());
+    }
+    
     /**
      * Convenience method that asks a user if they want to continue
      * 
@@ -563,10 +615,21 @@ public class ProjectController {
      * the process
      */
     private boolean shouldContinue(String message) {
-        int selection = JOptionPane.showConfirmDialog(frame, message); //ask the user if they want to continue
+        //ask the user if they want to continue
+        int selection = JOptionPane.showConfirmDialog(frame, message);
         //if the user did not choose "yes", then we should cancel the operation
         //if the user did choose yes, then we should continue the operation
         //if the file has been saved, then we can just return true
         return selection == JOptionPane.YES_OPTION;
+    }
+    
+    /**
+     * Set the isModified boolean, and calls setEnabled() with the passed in 
+     * value on the frame's revert and apply buttons.
+     */
+    private void setIsModified(boolean isModified) {
+        this.isModified = isModified;
+        frame.getRevertButton().setEnabled(isModified);
+        frame.getApplyButton().setEnabled(isModified);
     }
 }
