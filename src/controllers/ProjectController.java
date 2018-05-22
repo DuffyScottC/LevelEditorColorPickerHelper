@@ -118,18 +118,19 @@ public class ProjectController {
             if (currentProject == null) {
                 //open the new project dialog
                 openNewProjectDialog();
-            }
-            try {
-                //generate a new default entity
-                Entity newEntity = generateNewDefaultEntity();
-                //add the new entity to the currentProject
-                currentProject.addEntity(newEntity);
-                //update the UI to reflect the creation of a new entity
-                loadEntityIntoInfoPanel(newEntity);
-                //tell the project that it has been modified
-                setIsModified(true);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, ex.toString());
+            } else {
+                try {
+                    //generate a new default entity
+                    Entity newEntity = generateNewDefaultEntity();
+                    //add the new entity to the currentProject
+                    currentProject.addEntity(newEntity);
+                    //update the UI to reflect the creation of a new entity
+                    loadEntityIntoInfoPanel(newEntity);
+                    //tell the project that it has been modified
+                    setIsModified(true);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, ex.toString());
+                }
             }
         });
     }
