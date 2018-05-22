@@ -86,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
         newProjectMenuItem = new javax.swing.JMenuItem();
         openProjectMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        newEntityMenuItem = new javax.swing.JMenuItem();
+        addEntityMenuItem = new javax.swing.JMenuItem();
         deleteEntityMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -402,8 +402,8 @@ public class MainFrame extends javax.swing.JFrame {
         fileMenu.add(openProjectMenuItem);
         fileMenu.add(jSeparator1);
 
-        newEntityMenuItem.setText("New Entity");
-        fileMenu.add(newEntityMenuItem);
+        addEntityMenuItem.setText("Add Entity");
+        fileMenu.add(addEntityMenuItem);
 
         deleteEntityMenuItem.setText("Delete Entity");
         fileMenu.add(deleteEntityMenuItem);
@@ -453,6 +453,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEntityButton;
+    private javax.swing.JMenuItem addEntityMenuItem;
     private javax.swing.JButton applyButton;
     private javax.swing.JSlider blueSlider;
     private javax.swing.JSpinner blueSpinner;
@@ -475,7 +476,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
-    private javax.swing.JMenuItem newEntityMenuItem;
     private javax.swing.JMenuItem newProjectMenuItem;
     private javax.swing.JMenuItem openProjectMenuItem;
     private javax.swing.JLabel recentLabel;
@@ -583,8 +583,8 @@ public class MainFrame extends javax.swing.JFrame {
         return deleteEntityMenuItem;
     }
 
-    public JMenuItem getNewEntityMenuItem() {
-        return newEntityMenuItem;
+    public JMenuItem getAddEntityMenuItem() {
+        return addEntityMenuItem;
     }
 
     public JMenuItem getNewProjectMenuItem() {

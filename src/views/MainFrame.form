@@ -21,9 +21,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="newEntityMenuItem">
+            <MenuItem class="javax.swing.JMenuItem" name="addEntityMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="New Entity"/>
+                <Property name="text" type="java.lang.String" value="Add Entity"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="deleteEntityMenuItem">

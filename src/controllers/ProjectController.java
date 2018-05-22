@@ -84,7 +84,7 @@ public class ProjectController {
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
-        newEntityMenuItem = frame.getNewEntityMenuItem();
+        newEntityMenuItem = frame.getAddEntityMenuItem();
         deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
         
         //set up chooser
@@ -103,7 +103,13 @@ public class ProjectController {
         openProjectMenuItem.addActionListener((ActionEvent e) -> {
             openProject();
         });
+        
+        frame.getAddEntityButton().addActionListener((ActionEvent e) -> {
+            
+        });
     }
+    
+    //MARK: Add Entity
     
     
     //MARK: Open Project
