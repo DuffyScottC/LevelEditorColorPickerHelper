@@ -9,9 +9,9 @@ import entities.Entity;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -46,17 +46,17 @@ public class Project {
     @XmlElement(name="entities", type=Entity.class)
     private final List<Entity> entities = new ArrayList();
     @XmlTransient
-    private final Map<String, Entity> entitiesByName = new HashMap();
+    private final Map<String, Entity> entitiesByName = new TreeMap();
     @XmlTransient
-    private final Map<Color, Entity> entitiesByColor = new HashMap();
+    private final Map<Color, Entity> entitiesByColor = new TreeMap();
     @XmlTransient
-    private final Map<String, Entity> entitiesByUnityPrefab = new HashMap();
+    private final Map<String, Entity> entitiesByUnityPrefab = new TreeMap();
     /**
      * A map with the entity type as the key and a list of all the entities
      * of a particular type as the element
      */
     @XmlTransient
-    private final Map<String, List<Entity>> entitiesByType = new HashMap();
+    private final Map<String, List<Entity>> entitiesByType = new TreeMap();
     
     /**
      * A list of all the types in this project. There should always be at least
