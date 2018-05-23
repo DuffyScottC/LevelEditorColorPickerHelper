@@ -282,7 +282,8 @@ public class ProjectController {
         projectName = newProject.getName();
         updateTypeComboBox();
         enterOpenProjectState();
-        
+        List<Entity> allNewEntities = newProject.getEntities();
+        resultsListController.setEntities(allNewEntities);
     }
     
     private Project deserializeProjectFromXML(File file) throws JAXBException {

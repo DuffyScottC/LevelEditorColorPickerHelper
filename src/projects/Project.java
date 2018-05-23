@@ -104,6 +104,16 @@ public class Project {
     public void addEntity(Entity entity) {
         //place the entity in the list of all entities
         this.entities.add(entity);
+        addEntityToTransientLists(entity);
+    }
+    
+    /**
+     * Adds the passed in entity to all the transient lists in the project class.
+     * These lists are not serialized, and are re-created from scratch using the
+     * main entities List every time the project is opened. 
+     * @param entity 
+     */
+    private void addEntityToTransientLists(Entity entity) {
         //Add the entity to each list:
         String newName = entity.getName().toLowerCase();
         this.entitiesByName.put(newName, entity);
