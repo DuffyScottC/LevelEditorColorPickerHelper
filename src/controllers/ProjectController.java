@@ -123,6 +123,7 @@ public class ProjectController {
                         currentProject.addEntity(newEntity);
                         //update the UI to reflect the creation of a new entity
                         loadEntityIntoInfoPanel(newEntity);
+                        
                         //tell the project that it has been modified
                         setIsModified(true);
                         setInfoElementsEnabled(true);
@@ -563,6 +564,7 @@ public class ProjectController {
         resultsListController.clearEntities();
         recentListController.clearEntities();
         setInfoElementsEnabled(false);
+        setIsModified(false);
     }
     
     //MARK: Misc
@@ -615,6 +617,7 @@ public class ProjectController {
         frame.getSelectButton().setEnabled(value);
         frame.getNameTextField().setEnabled(value);
         frame.getEntityTypeComboBox().setEnabled(value);
+        frame.getChangeImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);
         frame.getIncludeHashTagCheckBox().setEnabled(value);
         frame.getRedSlider().setEnabled(value);
@@ -623,8 +626,6 @@ public class ProjectController {
         frame.getGreenSpinner().setEnabled(value);
         frame.getBlueSlider().setEnabled(value);
         frame.getBlueSpinner().setEnabled(value);
-        frame.getRevertButton().setEnabled(value);
-        frame.getApplyButton().setEnabled(value);
     }
     
     /**
