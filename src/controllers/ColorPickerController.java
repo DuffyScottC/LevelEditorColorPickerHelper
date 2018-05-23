@@ -205,7 +205,7 @@ public class ColorPickerController {
     
     private void parseUserHex() {
         String hex = colorCodeTextField.getText();
-        if (hex == "") {
+        if (hex.length() > 0) {
             r = 0;
             g = 0;
             b = 0;

@@ -128,7 +128,10 @@ public class ProjectController {
                         setIsModified(true);
                         setInfoElementsEnabled(true);
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(frame, ex.toString());
+                        //the one with no explaination
+                        JOptionPane.showMessageDialog(frame,  "Technical "
+                                + "difficulties:\n"
+                                + ex.toString());
                     }
                 } else {
                     //open the new project dialog
@@ -160,26 +163,26 @@ public class ProjectController {
                     + "combinations! Unfortunately, this means you can't add\n"
                     + "more entities (at least no to this project).");
         }
-        
+
         String newType = currentProject.getTypes().get(0);
-        
+
         String newName = getUniqueDefaultName();
-        
+
         String newUnityPrefab = getUniqueDefaultUnityPrefab();
-        
+
         //create and return a new entity with the attributes created above
         return new Entity(null, newName, newType, newColor, newUnityPrefab);
     }
     
     private Color getUniqueDefaultColor() {
-        Map<Color, Entity> entities = currentProject.getEntitiesByColor();
+        Map<Integer, Entity> entities = currentProject.getEntitiesByColorValue();
         for (int r = 0; r < 255; r++) {
             for (int g = 0; g < 255; g++) {
                 for (int b = 0; b < 255; b++) {
                     //create a new color from these values
                     Color color = new Color(r, g, b);
                     //if this is a unique color (no other entity has this color)
-                    if (!entities.containsKey(color)) {
+                    if (!entities.containsKey(color.getRGB())) {
                         return color;
                     }
                 }

@@ -51,10 +51,11 @@ public class Project {
     @XmlTransient
     private final Map<String, Entity> entitiesByName = new TreeMap();
     /**
+     * Accesses entities by the color value of the desired color.
      * Keys are lowercase for convenience and more accurate searching.
      */
     @XmlTransient
-    private final Map<Color, Entity> entitiesByColor = new TreeMap();
+    private final Map<Integer, Entity> entitiesByColorValue = new TreeMap();
     /**
      * Keys are lowercase for convenience and more accurate searching.
      */
@@ -132,7 +133,8 @@ public class Project {
         String newName = entity.getName().toLowerCase();
         this.entitiesByName.put(newName, entity);
         
-        this.entitiesByColor.put(entity.getColor(), entity);
+        int newColorValue = entity.getColor().getRGB();
+        this.entitiesByColorValue.put(newColorValue, entity);
         
         String newUnityPrefab = entity.getUnityPrefab().toLowerCase();
         this.entitiesByUnityPrefab.put(newUnityPrefab, entity);
@@ -178,8 +180,8 @@ public class Project {
         return entitiesByName;
     }
 
-    public Map<Color, Entity> getEntitiesByColor() {
-        return entitiesByColor;
+    public Map<Integer, Entity> getEntitiesByColorValue() {
+        return entitiesByColorValue;
     }
 
     public Map<String, Entity> getEntitiesByUnityPrefab() {
