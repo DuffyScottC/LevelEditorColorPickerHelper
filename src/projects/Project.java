@@ -45,10 +45,19 @@ public class Project {
      */
     @XmlElement(name="entities", type=Entity.class)
     private final List<Entity> entities = new ArrayList();
+    /**
+     * Keys are lowercase for convenience and more accurate searching.
+     */
     @XmlTransient
     private final Map<String, Entity> entitiesByName = new TreeMap();
+    /**
+     * Keys are lowercase for convenience and more accurate searching.
+     */
     @XmlTransient
     private final Map<Color, Entity> entitiesByColor = new TreeMap();
+    /**
+     * Keys are lowercase for convenience and more accurate searching.
+     */
     @XmlTransient
     private final Map<String, Entity> entitiesByUnityPrefab = new TreeMap();
     /**
@@ -88,17 +97,22 @@ public class Project {
     }
     
     /**
-     * Handles adding new entities to the project
+     * Handles adding new entities to the project. Adds the new entity to all
+     * of the lists.
      * @param entity 
      */
     public void addEntity(Entity entity) {
         //place the entity in the list of all entities
         this.entities.add(entity);
-        //add the entity to each list
-        this.entitiesByName.put(entity.getName(), entity);
+        //Add the entity to each list:
+        String newName = entity.getName().toLowerCase();
+        this.entitiesByName.put(newName, entity);
         
         this.entitiesByColor.put(entity.getColor(), entity);
-        this.entitiesByUnityPrefab.put(entity.getUnityPrefab(), entity);
+        
+        String newUnityPrefab = entity.getUnityPrefab().toLowerCase();
+        this.entitiesByUnityPrefab.put(newUnityPrefab, entity);
+        
         //get the type list accociated with this entity's type
         List<Entity> theTypeList = this.entitiesByType.get(entity.getType());
         theTypeList.add(entity);
