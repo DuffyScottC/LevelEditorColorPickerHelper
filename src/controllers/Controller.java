@@ -17,7 +17,7 @@ public class Controller {
     private final RecentListController recentListController;
 
     public Controller() {
-        frame.setTitle(getClass().getSimpleName());
+        frame.setTitle("No Project Open");
         frame.setLocationRelativeTo(null);
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);

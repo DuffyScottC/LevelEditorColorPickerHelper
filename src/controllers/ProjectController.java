@@ -123,9 +123,9 @@ public class ProjectController {
                         currentProject.addEntity(newEntity);
                         //update the UI to reflect the creation of a new entity
                         loadEntityIntoInfoPanel(newEntity);
-                        enterOpenProjectState();
                         //tell the project that it has been modified
                         setIsModified(true);
+                        setInfoElementsEnabled(true);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(frame, ex.toString());
@@ -540,54 +540,18 @@ public class ProjectController {
     }
     
     private void enterOpenProjectState() {
-        frame.setName(projectName);
+        frame.setTitle(projectName);
         //get the list of all the entities in the project
         List<Entity> allNewEntities = currentProject.getEntities();
         //update the entities in the results list
         resultsListController.setEntities(allNewEntities);
-        
-        //search panel
-        frame.getTypeComboBox().setEnabled(true);
-        frame.getSearchTextField().setEnabled(true);
-        
-        //info panel
-        frame.getSelectButton().setEnabled(true);
-        frame.getNameTextField().setEnabled(true);
-        frame.getEntityTypeComboBox().setEnabled(true);
-        frame.getColorCodeTextField().setEnabled(true);
-        frame.getIncludeHashTagCheckBox().setEnabled(true);
-        frame.getRedSlider().setEnabled(true);
-        frame.getRedSpinner().setEnabled(true);
-        frame.getGreenSlider().setEnabled(true);
-        frame.getGreenSpinner().setEnabled(true);
-        frame.getBlueSlider().setEnabled(true);
-        frame.getBlueSpinner().setEnabled(true);
-        frame.getRevertButton().setEnabled(true);
-        frame.getApplyButton().setEnabled(true);
+        setInfoElementsEnabled(true);
     }
     
     public void enterNewProjectState() {
         resultsListController.clearEntities();
         recentListController.clearEntities();
-        
-        //search panel
-        frame.getTypeComboBox().setEnabled(false);
-        frame.getSearchTextField().setEnabled(false);
-        
-        //info panel
-        frame.getSelectButton().setEnabled(false);
-        frame.getNameTextField().setEnabled(false);
-        frame.getEntityTypeComboBox().setEnabled(false);
-        frame.getColorCodeTextField().setEnabled(false);
-        frame.getIncludeHashTagCheckBox().setEnabled(false);
-        frame.getRedSlider().setEnabled(false);
-        frame.getRedSpinner().setEnabled(false);
-        frame.getGreenSlider().setEnabled(false);
-        frame.getGreenSpinner().setEnabled(false);
-        frame.getBlueSlider().setEnabled(false);
-        frame.getBlueSpinner().setEnabled(false);
-        frame.getRevertButton().setEnabled(false);
-        frame.getApplyButton().setEnabled(false);
+        setInfoElementsEnabled(false);
     }
     
     //MARK: Misc
@@ -629,6 +593,27 @@ public class ProjectController {
         }
         
         colorPickerController.setColor(entity.getR(), entity.getG(), entity.getB());
+    }
+    
+    private void setInfoElementsEnabled(boolean value) {
+        //search panel
+        frame.getTypeComboBox().setEnabled(value);
+        frame.getSearchTextField().setEnabled(value);
+        
+        //info panel
+        frame.getSelectButton().setEnabled(value);
+        frame.getNameTextField().setEnabled(value);
+        frame.getEntityTypeComboBox().setEnabled(value);
+        frame.getColorCodeTextField().setEnabled(value);
+        frame.getIncludeHashTagCheckBox().setEnabled(value);
+        frame.getRedSlider().setEnabled(value);
+        frame.getRedSpinner().setEnabled(value);
+        frame.getGreenSlider().setEnabled(value);
+        frame.getGreenSpinner().setEnabled(value);
+        frame.getBlueSlider().setEnabled(value);
+        frame.getBlueSpinner().setEnabled(value);
+        frame.getRevertButton().setEnabled(value);
+        frame.getApplyButton().setEnabled(value);
     }
     
     /**
