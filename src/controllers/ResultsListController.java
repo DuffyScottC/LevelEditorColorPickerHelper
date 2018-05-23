@@ -73,10 +73,5 @@ public class ResultsListController {
         updateListModel();
         
     }
-
-    void addEntity(Entity newEntity) {
-        entitiesInResults.add(newEntity);
-        updateListModel();
-    }
     
 }

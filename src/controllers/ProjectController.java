@@ -123,7 +123,6 @@ public class ProjectController {
                         currentProject.addEntity(newEntity);
                         //update the UI to reflect the creation of a new entity
                         loadEntityIntoInfoPanel(newEntity);
-                        resultsListController.addEntity(newEntity);
                         //tell the project that it has been modified
                         setIsModified(true);
                         setInfoElementsEnabled(true);
