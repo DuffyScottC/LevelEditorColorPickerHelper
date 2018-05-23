@@ -275,7 +275,14 @@ public class ProjectController {
         
     }
     
+    /**
+     * This function is called once the project is successfully unmarshalled, 
+     * or deserialized, from xml .lecp file to a project object. This sets up
+     * the project for use, loads data into the JLists, sets up the GUI, etc.
+     * @param newProject A project recently deserialized from .lecp xml format.
+     */
     private void loadProject(Project newProject) {
+        newProject.setUpTransientLists();
         currentProject = newProject;
         projectLocation = newProject.getProjectLocation();
         projectFile = newProject.getProjectFile();

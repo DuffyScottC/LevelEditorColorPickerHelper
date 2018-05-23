@@ -97,6 +97,20 @@ public class Project {
     }
     
     /**
+     * This must be called every time a project is opened, because the transient
+     * lists are not serialized for the sake of keeping the .lecp files small.
+     * All this does is add all the entities in the entities list to the
+     * transient TreeMaps. 
+     */
+    public void setUpTransientLists() {
+        //loop through all the entities in the list
+        for (Entity entity : entities) {
+            //add this entity to the transient lists
+            addEntityToTransientLists(entity);
+        }
+    }
+    
+    /**
      * Handles adding new entities to the project. Adds the new entity to all
      * of the lists.
      * @param entity 
