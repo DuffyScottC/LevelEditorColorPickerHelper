@@ -193,7 +193,7 @@ public class Entity {
     }
     
     public Color getColor() {
-        return new Color(r, g, g);
+        return new Color(r, g, b);
     }
     
     public void setColor(Color color) {

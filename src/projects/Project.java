@@ -96,6 +96,7 @@ public class Project {
         this.entities.add(entity);
         //add the entity to each list
         this.entitiesByName.put(entity.getName(), entity);
+        
         this.entitiesByColor.put(entity.getColor(), entity);
         this.entitiesByUnityPrefab.put(entity.getUnityPrefab(), entity);
         //get the type list accociated with this entity's type

@@ -5,6 +5,9 @@
  */
 package controllers;
 
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import views.MainFrame;
 
 public class Controller {
