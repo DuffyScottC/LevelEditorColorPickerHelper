@@ -123,11 +123,11 @@ public class ProjectController {
                         currentProject.addEntity(newEntity);
                         //update the UI to reflect the creation of a new entity
                         loadEntityIntoInfoPanel(newEntity);
+                        resultsListController.addEntity(newEntity);
                         //tell the project that it has been modified
                         setIsModified(true);
                         setInfoElementsEnabled(true);
                     } catch (Exception ex) {
-                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(frame, ex.toString());
                     }
                 } else {
@@ -282,6 +282,7 @@ public class ProjectController {
         projectName = newProject.getName();
         updateTypeComboBox();
         enterOpenProjectState();
+        
     }
     
     private Project deserializeProjectFromXML(File file) throws JAXBException {

@@ -9,13 +9,10 @@ import entities.Entity;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import views.EntityListRenderer;
 import views.MainFrame;
 
@@ -23,7 +20,8 @@ import views.MainFrame;
 /**
  * Responsible for controlling the Results JList in the GUI. Examples include general 
  * setup (ListManagers, ListRenderers), content management, etc. None of this
- * code should be in the main Controller class.
+ * code should be in the main Controller class. This should not be responsible
+ * for any actual data management such as searching or selecting. Only GUI stuff.
  * @author Scott
  */
 public class ResultsListController {
@@ -74,6 +72,11 @@ public class ResultsListController {
         this.entitiesInResults.addAll(entitiesInResults);
         updateListModel();
         
+    }
+
+    void addEntity(Entity newEntity) {
+        entitiesInResults.add(newEntity);
+        updateListModel();
     }
     
 }
