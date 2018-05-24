@@ -121,6 +121,7 @@ public class ProjectController {
                         Entity newEntity = generateNewDefaultEntity();
                         //add the new entity to the currentProject
                         currentProject.addEntity(newEntity);
+                        currentProject.setCurrentEntity(newEntity);
                         //update the UI to reflect the creation of a new entity
                         loadEntityIntoInfoPanel(newEntity);
                         
@@ -143,6 +144,10 @@ public class ProjectController {
         //add the action listener to both the button and the menu item
         frame.getAddEntityButton().addActionListener(addEntityActionListener);
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
+        
+        frame.getApplyButton().addActionListener((ActionEvent e) -> {
+            
+        });
     }
     
     //MARK: Add Entity

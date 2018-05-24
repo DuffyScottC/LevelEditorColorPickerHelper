@@ -67,13 +67,25 @@ public class Project {
      */
     @XmlTransient
     private final Map<String, List<Entity>> entitiesByType = new TreeMap();
-    
     /**
      * A list of all the types in this project. There should always be at least
      * one type in this list. When the list is cleared, a type called "Misc"
      * is added. 
      */
     private final List<String> types = new ArrayList();
+    
+    /**
+     * The currently selected and displayed entity
+     */
+    @XmlTransient
+    private Entity currentEntity = null;
+    /**
+     * This is used to hold an entity's values when the user edits said value,
+     * so that when a user presses the "revert" button, they can revert the
+     * currentEntity back to the reverEntity's values
+     */
+    @XmlTransient
+    private Entity revertEntity = null;
     
     /**
      * Instantiates an empty project. This is only used by the JAXB
@@ -194,6 +206,18 @@ public class Project {
 
     public List<String> getTypes() {
         return types;
+    }
+    
+    public Entity getCurrentEntity() {
+        return currentEntity;
+    }
+    
+    /**
+     * Assigns the passed in entity to be the currently selected entity.
+     * @param currentEntity 
+     */
+    public void setCurrentEntity(Entity currentEntity) {
+        this.currentEntity = currentEntity;
     }
     
     public void addType(String newType) {
