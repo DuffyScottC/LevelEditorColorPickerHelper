@@ -628,7 +628,7 @@ public class ProjectController {
         //info panel
         frame.getSelectButton().setEnabled(value);
         frame.getNameTextField().setEnabled(value);
-        frame.getEntityTypeComboBox().setEnabled(value);
+        frame.getTypeComboBox().setEnabled(value);
         frame.getChangeImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);
         frame.getIncludeHashTagCheckBox().setEnabled(value);
@@ -644,7 +644,7 @@ public class ProjectController {
      * Updates the typeComboBox to reflect the current open project's types
      */
     public void updateTypeComboBox() {
-        JComboBox typeComboBox = frame.getEntityTypeComboBox();
+        JComboBox typeComboBox = frame.getTypeComboBox();
         //remove all items in the type combo box
         typeComboBox.removeAllItems();
         for (String type : currentProject.getTypes()) {
