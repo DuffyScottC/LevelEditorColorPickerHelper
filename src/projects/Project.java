@@ -79,13 +79,6 @@ public class Project {
      */
     @XmlTransient
     private Entity currentEntity = null;
-    /**
-     * This is used to hold an entity's values when the user edits said value,
-     * so that when a user presses the "revert" button, they can revert the
-     * currentEntity back to the reverEntity's values
-     */
-    @XmlTransient
-    private Entity revertEntity = null;
     
     /**
      * Instantiates an empty project. This is only used by the JAXB
@@ -218,20 +211,6 @@ public class Project {
      */
     public void setCurrentEntity(Entity currentEntity) {
         this.currentEntity = currentEntity;
-    }
-    
-    /**
-     * Copies the values of the currentEntity into the revertEntity object
-     */
-    public void storeRevertEntity() {
-        revertEntity = currentEntity.copy();
-    }
-    
-    /**
-     * Sets the revertEntity to null
-     */
-    public void deleteRevertEntity() {
-        revertEntity = null;
     }
     
     public void addType(String newType) {

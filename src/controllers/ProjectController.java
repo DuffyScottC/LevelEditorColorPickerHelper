@@ -150,8 +150,8 @@ public class ProjectController {
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
         
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
+            
             saveProject();
-            currentProject.deleteRevertEntity();
             setIsModified(false);
         });
     }
