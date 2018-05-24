@@ -90,9 +90,9 @@ public class Entity {
         this.unityPrefab = unityPrefab;
     }
     
-    public Entity copy() {
-        return new Entity(this.image, this.name, this.r, this.g, 
-                this.b, this.unityPrefab);
+    public void replaceValues(String image, String name, String type, 
+            Color color, String unityPrefab) {
+        
     }
     
     /**

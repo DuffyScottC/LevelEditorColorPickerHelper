@@ -672,8 +672,14 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
+        String newImage = null;
+        String newName = frame.getNameTextField().getText();
+        int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
+        String newType = currentProject.getTypes().get(newTypeIndex);
         Color newColor = colorPickerController.getColor();
-        
+        String newUnityPrefab = frame.getUnityPrefabTextField().getText();
+        currentProject.getCurrentEntity().replaceValues(newImage, newName, 
+                newType, newColor, newUnityPrefab);
     }
     
     /**
