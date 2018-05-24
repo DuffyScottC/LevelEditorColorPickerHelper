@@ -220,6 +220,20 @@ public class Project {
         this.currentEntity = currentEntity;
     }
     
+    /**
+     * Copies the values of the currentEntity into the revertEntity object
+     */
+    public void storeRevertEntity() {
+        revertEntity = currentEntity.copy();
+    }
+    
+    /**
+     * Sets the revertEntity to null
+     */
+    public void deleteRevertEntity() {
+        revertEntity = null;
+    }
+    
     public void addType(String newType) {
         //add the type to the type list
         types.add(newType);

@@ -79,7 +79,8 @@ public class Entity {
      * @param color The color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      */
-    public Entity (String image, String name, String type, Color color, String unityPrefab) {
+    public Entity (String image, String name, String type, 
+            Color color, String unityPrefab) {
         this.image = image;
         this.name = name;
         this.type = type;
@@ -87,6 +88,11 @@ public class Entity {
         this.g = color.getGreen();
         this.b = color.getBlue();
         this.unityPrefab = unityPrefab;
+    }
+    
+    public Entity copy() {
+        return new Entity(this.image, this.name, this.r, this.g, 
+                this.b, this.unityPrefab);
     }
     
     /**

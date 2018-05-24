@@ -148,7 +148,8 @@ public class ProjectController {
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
         
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
-            
+            saveProject();
+            currentProject.deleteRevertEntity();
         });
     }
     
@@ -660,6 +661,13 @@ public class ProjectController {
         //if the user did choose yes, then we should continue the operation
         //if the file has been saved, then we can just return true
         return selection == JOptionPane.YES_OPTION;
+    }
+    
+    /**
+     * This is run when the user presses the apply button.
+     */
+    private void saveProject() {
+        
     }
     
     /**
