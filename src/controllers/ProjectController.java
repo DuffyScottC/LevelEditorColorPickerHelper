@@ -18,6 +18,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -150,6 +152,7 @@ public class ProjectController {
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
             saveProject();
             currentProject.deleteRevertEntity();
+            setIsModified(false);
         });
     }
     
@@ -667,7 +670,16 @@ public class ProjectController {
      * This is run when the user presses the apply button.
      */
     private void saveProject() {
-        
+        try {
+            //serialize the new project
+            serializeNewProjectToXML();
+            
+        } catch (JAXBException ex) {
+            //if the serialization of the project was not successful,
+            //output the exception message to the user.
+            JOptionPane.showMessageDialog(frame, "Unable to serialize project.\n" 
+                    + ex.toString());
+        }
     }
     
     /**
