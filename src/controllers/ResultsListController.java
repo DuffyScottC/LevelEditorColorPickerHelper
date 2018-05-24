@@ -7,6 +7,9 @@ package controllers;
 
 import entities.Entity;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -36,9 +39,14 @@ public class ResultsListController {
         this.entitiesInResults = new ArrayList();
         resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
         
-        resultsList.addListSelectionListener((ListSelectionEvent e) -> {
-            System.out.println("Selected " + resultsList.getSelectedValue());
+        resultsList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("Selected " + resultsList.getSelectedValue());
+            }
+            
         });
+    
     }
     
     /**
@@ -71,6 +79,17 @@ public class ResultsListController {
         this.entitiesInResults.addAll(entitiesInResults);
         updateListModel();
         
+    }
+    
+    /**
+     * Sets the selected index in the visual JList
+     * @param index The index to be selected
+     */
+    public void setSelectedIndex(int index) {
+        //if the passed index is a valid index
+        if (0 <= index && index < resultsListModel.size()) {
+            resultsList.setSelectedIndex(index);
+        }
     }
     
 }

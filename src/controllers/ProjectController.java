@@ -568,6 +568,7 @@ public class ProjectController {
         List<Entity> allNewEntities = currentProject.getEntities();
         //update the entities in the results list
         resultsListController.setEntities(allNewEntities);
+        resultsListController.setSelectedIndex(0);
         setInfoElementsEnabled(true);
     }
     
