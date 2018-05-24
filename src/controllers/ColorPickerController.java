@@ -6,6 +6,9 @@
 package controllers;
 
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import javax.swing.JCheckBox;
@@ -185,6 +188,14 @@ public class ColorPickerController {
         includeHashTagCheckBox.addActionListener((ActionEvent e) -> {
             includeHashTag = includeHashTagCheckBox.isSelected();
             updateColorCodeTextField();
+        });
+        
+        frame.getSelectButton().addActionListener((ActionEvent e) -> {
+            //Copy the color code to the clipboard
+            String wolfString = frame.getColorCodeTextField().getText();
+            StringSelection stringSelection = new StringSelection(wolfString);
+            Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clpbrd.setContents(stringSelection, null);
         });
         
     }
