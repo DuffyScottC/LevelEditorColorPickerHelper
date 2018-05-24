@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import entities.Entity;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -297,6 +298,10 @@ public class ColorPickerController {
         g = color.getGreen();
         b = color.getBlue();
         updateAll();
+    }
+    
+    public Color getColor() {
+        return new Color(r, g, b);
     }
     
 }

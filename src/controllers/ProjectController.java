@@ -150,7 +150,7 @@ public class ProjectController {
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
         
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
-            
+            loadEntityFromInfoPanelIntoProject();
             saveProject();
             setIsModified(false);
         });
@@ -665,6 +665,15 @@ public class ProjectController {
         //if the user did choose yes, then we should continue the operation
         //if the file has been saved, then we can just return true
         return selection == JOptionPane.YES_OPTION;
+    }
+    
+    /**
+     * Loads the user-edited information from the info panel into the project,
+     * replacing the project's currentEntity info with that info.
+     */
+    private void loadEntityFromInfoPanelIntoProject() {
+        Color newColor = colorPickerController.getColor();
+        
     }
     
     /**
