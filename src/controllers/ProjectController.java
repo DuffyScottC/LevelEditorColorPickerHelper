@@ -128,6 +128,8 @@ public class ProjectController {
                         //tell the project that it has been modified
                         setIsModified(true);
                         setInfoElementsEnabled(true);
+                        //in this case, there is nothing to revert to
+                        frame.getRevertButton().setEnabled(false);
                     } catch (Exception ex) {
                         //the one with no explaination
                         JOptionPane.showMessageDialog(frame,  "Technical "

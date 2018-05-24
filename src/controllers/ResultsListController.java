@@ -20,8 +20,7 @@ import views.MainFrame;
 /**
  * Responsible for controlling the Results JList in the GUI. Examples include general 
  * setup (ListManagers, ListRenderers), content management, etc. None of this
- * code should be in the main Controller class. This should not be responsible
- * for any actual data management such as searching or selecting. Only GUI stuff.
+ * code should be in the main Controller class.
  * @author Scott
  */
 public class ResultsListController {
