@@ -653,6 +653,7 @@ public class ProjectController {
         frame.getSelectButton().setEnabled(value);
         frame.getNameTextField().setEnabled(value);
         frame.getTypeComboBox().setEnabled(value);
+        frame.getNewTypeButton().setEnabled(value);
         frame.getChangeImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);
         frame.getIncludeHashTagCheckBox().setEnabled(value);
