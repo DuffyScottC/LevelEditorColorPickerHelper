@@ -420,6 +420,7 @@ public class ProjectController {
         //specifically for this project
         currentProject = new Project(projectName, projectLocation, projectFile);
         currentProject.addType(Utils.defaultType);
+        updateTypeComboBox();
         //serialize the new project
         serializeNewProjectToXML();
         enterNewProjectState();
