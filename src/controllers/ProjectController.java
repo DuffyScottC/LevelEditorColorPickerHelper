@@ -18,8 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -81,6 +79,7 @@ public class ProjectController {
      * @param frame
      * @param resultsListController
      * @param recentListController 
+     * @param colorPickerController 
      */
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,
