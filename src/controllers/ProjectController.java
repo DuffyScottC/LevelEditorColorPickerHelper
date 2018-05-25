@@ -334,11 +334,14 @@ public class ProjectController {
         List<Entity> allNewEntities = newProject.getEntities();
         //put all the entities in the results list
         resultsListController.setEntities(allNewEntities);
-        //select the first element
-        resultsListController.setSelectedIndex(0);
-        //load the selected entity into the infoPanel
-        resultsListController.loadSelectedEntity();
-        setInfoElementsEnabled(true);
+        //if there is at least one element in the project
+        if (allNewEntities.size() > 0) {
+            //select the first element
+            resultsListController.setSelectedIndex(0);
+            //load the selected entity into the infoPanel
+            resultsListController.loadSelectedEntity();
+            setInfoElementsEnabled(true);
+        }
     }
     
     private Project deserializeProjectFromXML(File file) throws JAXBException {
