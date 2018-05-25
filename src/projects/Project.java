@@ -212,16 +212,16 @@ public class Project {
         this.currentEntity = currentEntity;
     }
     
-    public void addType(String newTypeUp) {
-        //make the type lowercase
-        String newType = newTypeUp.toLowerCase();
-        //add the type to the type list
+    public void addType(String newType) {
+        //add the type to the type list with the true case
         types.add(newType);
+        //make the type lowercase
+        String newTypeLower = newType.toLowerCase();
         //create a new list of entities for this type. All entities of the new
         //type will be added to this list.
         List<Entity> newTypeList = new ArrayList();
         //add this newTypeList to the entitiesByType HashMap
-        entitiesByType.put(newType, newTypeList);
+        entitiesByType.put(newTypeLower, newTypeList);
     }
     
     @Override
