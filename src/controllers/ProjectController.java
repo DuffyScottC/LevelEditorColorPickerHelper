@@ -325,10 +325,20 @@ public class ProjectController {
         projectLocation = newProject.getProjectLocation();
         projectFile = newProject.getProjectFile();
         projectName = newProject.getName();
+        //update the typeComboBox with the new project's types
         updateTypeComboBox();
-        enterOpenProjectState();
+        
+        //empty the searchTextField
+        frame.getSearchTextField().setText("");
+        //get a list of all the project's new entities
         List<Entity> allNewEntities = newProject.getEntities();
+        //put all the entities in the results list
         resultsListController.setEntities(allNewEntities);
+        //select the first element
+        resultsListController.setSelectedIndex(0);
+        //load the selected entity into the infoPanel
+        resultsListController.loadSelectedEntity();
+        setInfoElementsEnabled(true);
     }
     
     private Project deserializeProjectFromXML(File file) throws JAXBException {
@@ -587,16 +597,6 @@ public class ProjectController {
         pFolderTextField.setText(projectFolder.getAbsolutePath());
     }
     
-    private void enterOpenProjectState() {
-        frame.setTitle(projectName);
-        //get the list of all the entities in the project
-        List<Entity> allNewEntities = currentProject.getEntities();
-        //update the entities in the results list
-        resultsListController.setEntities(allNewEntities);
-        resultsListController.setSelectedIndex(0);
-        setInfoElementsEnabled(true);
-    }
-    
     public void enterNewProjectState() {
         resultsListController.clearEntities();
         recentListController.clearEntities();
@@ -664,6 +664,7 @@ public class ProjectController {
         frame.getGreenSpinner().setEnabled(value);
         frame.getBlueSlider().setEnabled(value);
         frame.getBlueSpinner().setEnabled(value);
+        frame.getUnityPrefabTextField().setEnabled(value);
     }
     
     /**

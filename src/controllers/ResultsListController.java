@@ -28,11 +28,14 @@ import views.MainFrame;
  */
 public class ResultsListController {
     
+    private final MainFrame frame;
+    
     private final DefaultListModel resultsListModel = new DefaultListModel();
     private final JList resultsList;
     private final List<Entity> entitiesInResults;
     
     public ResultsListController(MainFrame frame) {
+        this.frame = frame;
         resultsList = frame.getResultsList();
         resultsList.setModel(resultsListModel);
         resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -42,11 +45,17 @@ public class ResultsListController {
         resultsList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Selected " + resultsList.getSelectedValue());
+                loadSelectedEntity();
             }
-            
         });
     
+    }
+    
+    /**
+     * Loads the selected entity into the frame's infoPanel
+     */
+    public void loadSelectedEntity() {
+        System.out.println("Selected " + resultsList.getSelectedValue());
     }
     
     /**
@@ -78,7 +87,6 @@ public class ResultsListController {
         //add all the entities to the results list
         this.entitiesInResults.addAll(entitiesInResults);
         updateListModel();
-        
     }
     
     /**
