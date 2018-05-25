@@ -153,6 +153,30 @@ public class ProjectController {
             saveProject();
             setIsModified(false);
         });
+        
+        frame.getNewTypeButton().addActionListener((ActionEvent e) -> {
+            //Get the new message type from the user
+            String newType = JOptionPane.showInputDialog(frame, "New type:", 
+                    "New Type", JOptionPane.PLAIN_MESSAGE);
+            //if the user did not press cancel
+            if (newType != null) {
+                //if the user actually entered a string
+                if (newType.length() > 0) {
+                    //if this type is NOT already in the types list
+                    if (!currentProject.getTypes().contains(newType)) {
+                        //add the new type to the project
+                        currentProject.addType(newType);
+                        //update the combo box
+                        updateTypeComboBox();
+                    } else {
+                        //tell the user that the type already exists
+                        JOptionPane.showMessageDialog(frame, "This type already "
+                                + "exists in this project.", "Type Exists", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
     }
     
     //MARK: Add Entity

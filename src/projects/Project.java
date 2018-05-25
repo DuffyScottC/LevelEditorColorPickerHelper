@@ -212,7 +212,9 @@ public class Project {
         this.currentEntity = currentEntity;
     }
     
-    public void addType(String newType) {
+    public void addType(String newTypeUp) {
+        //make the type lowercase
+        String newType = newTypeUp.toLowerCase();
         //add the type to the type list
         types.add(newType);
         //create a new list of entities for this type. All entities of the new
