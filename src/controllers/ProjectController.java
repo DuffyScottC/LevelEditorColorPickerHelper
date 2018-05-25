@@ -80,11 +80,13 @@ public class ProjectController {
      * @param resultsListController
      * @param recentListController 
      * @param colorPickerController 
+     * @param infoPanelController 
      */
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,
             RecentListController recentListController,
-            ColorPickerController colorPickerController) {
+            ColorPickerController colorPickerController,
+            InfoPanelController infoPanelController) {
         this.frame = frame;
         
         this.resultsListController = resultsListController;
