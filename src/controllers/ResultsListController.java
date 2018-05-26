@@ -29,6 +29,11 @@ public class ResultsListController {
     
     private final DefaultListModel resultsListModel = new DefaultListModel();
     private final JList resultsList;
+    
+    /**
+     * All the entities that are in the resultsList, which is all the entities
+     * that match the user's search string.
+     */
     private final List<Entity> entitiesInResults;
     
     public ResultsListController(MainFrame frame) {
@@ -63,10 +68,14 @@ public class ResultsListController {
         updateListModel();
     }
     
-    public void setEntities(List<Entity> entitiesInResults) {
+    public void setEntitiesInResults(List<Entity> entitiesInResults) {
         //add all the entities to the results list
         this.entitiesInResults.addAll(entitiesInResults);
         updateListModel();
+    }
+    
+    public List<Entity> getEntitiesInResults() {
+        return entitiesInResults;
     }
     
     /**
@@ -78,6 +87,10 @@ public class ResultsListController {
         if (0 <= index && index < resultsListModel.size()) {
             resultsList.setSelectedIndex(index);
         }
+    }
+    
+    public void clearSelection() {
+        resultsList.clearSelection();
     }
     
     /**

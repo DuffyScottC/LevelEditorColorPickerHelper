@@ -126,8 +126,15 @@ public class ProjectController {
                         //add the new entity to the currentProject
                         currentProject.addEntity(newEntity);
                         currentProject.setCurrentEntity(newEntity);
+                        
+                        /*
+                        If the newly added entity matches the search string, then
+                        we need to update the search results to include this entity
+                        */
+                        System.out.println("TODO: update search results on Add Entity");
+                        
                         //update the UI to reflect the creation of a new entity
-                        loadEntityIntoInfoPanel(newEntity);
+                        loadCurrentEntityIntoInfoPanel();
                         
                         //tell the project that it has been modified
                         setIsModified(true);
@@ -344,14 +351,15 @@ public class ProjectController {
         //get a list of all the project's new entities
         List<Entity> allNewEntities = newProject.getEntities();
         //put all the entities in the results list
-        resultsListController.setEntities(allNewEntities);
+        resultsListController.setEntitiesInResults(allNewEntities);
         //if there is at least one element in the project
         if (allNewEntities.size() > 0) {
             //select the first element
             resultsListController.setSelectedIndex(0);
             //set the current entity
             newProject.setCurrentEntity(allNewEntities.get(0));
-            
+            //load the entity into the info panel
+            loadCurrentEntityIntoInfoPanel();
             setInfoElementsEnabled(true);
         }
     }
@@ -620,17 +628,18 @@ public class ProjectController {
     }
     
     //MARK: Misc
-    private void loadEntityIntoInfoPanel(Entity entity) {
-        frame.getNameTextField().setText(entity.getName());
+    private void loadCurrentEntityIntoInfoPanel() {
+        Entity currentEntity = currentProject.getCurrentEntity();
+        frame.getNameTextField().setText(currentEntity.getName());
         //get the index of this entity's type
-        int index = currentProject.getTypes().indexOf(entity.getType());
+        int index = currentProject.getTypes().indexOf(currentEntity.getType());
         //set the selected type
         frame.getTypeComboBox().setSelectedIndex(index);
         boolean noImage = false;
         //if the entity has an image path
-        if (entity.getImage() != null) {
+        if (currentEntity.getImage() != null) {
             //get the image path and turn it into a file
-            File imageFile = new File(entity.getImage());
+            File imageFile = new File(currentEntity.getImage());
             //if the image exists
             if (imageFile.exists()) {
                 //set the image of the ImagePanel
@@ -638,8 +647,8 @@ public class ProjectController {
             } else {
                 //tell the user the image does not exist
                 JOptionPane.showMessageDialog(frame,
-                        "Could not find image for " + entity.getName()
-                        + " at\n" + entity.getImage() + "\nFile does not "
+                        "Could not find image for " + currentEntity.getName()
+                        + " at\n" + currentEntity.getImage() + "\nFile does not "
                         + "exist.");
                 noImage = true;
             }
@@ -652,12 +661,12 @@ public class ProjectController {
         if (noImage) {
             //create a blank image of the color of the entity
             BufferedImage image 
-                    = Utils.getBlankBufferedImage(32, 32, entity.getColor());
+                    = Utils.getBlankBufferedImage(32, 32, currentEntity.getColor());
             //set the image of the ImagePanel
             frame.getImagePanel().setImage(image);
         }
         
-        colorPickerController.setColor(entity.getR(), entity.getG(), entity.getB());
+        colorPickerController.setColor(currentEntity.getR(), currentEntity.getG(), currentEntity.getB());
     }
     
     private void setInfoElementsEnabled(boolean value) {
