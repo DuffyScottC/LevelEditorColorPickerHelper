@@ -5,8 +5,10 @@
  */
 package controllers;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
 import views.MainFrame;
 
 /**
@@ -17,12 +19,30 @@ import views.MainFrame;
  */
 public class SearchController {
     
+    private final MainFrame frame;
+    
     public SearchController(MainFrame frame) {
+        this.frame = frame;
+        
+        setUpSearchTypeComboBox();
+        
         frame.getSearchTextField().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 
             }
+        });
+    }
+    
+    private void setUpSearchTypeComboBox() {
+        JComboBox searchModeComboBox = frame.getSearchModeComboBox();
+        searchModeComboBox.addItem("Name");
+        searchModeComboBox.addItem("Type");
+        searchModeComboBox.addItem("Color");
+        searchModeComboBox.addItem("Unity Prefab");
+        
+        searchModeComboBox.addActionListener((ActionEvent e) -> {
+            
         });
     }
     
