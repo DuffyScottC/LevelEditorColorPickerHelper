@@ -462,6 +462,7 @@ public class ProjectController {
             setSearchElementsEnabled(true);
             setInfoElementsEnabled(true);
         }
+        modifiedController.setModified(false);
     }
     
     private Project deserializeProjectFromXML(File file) throws JAXBException {

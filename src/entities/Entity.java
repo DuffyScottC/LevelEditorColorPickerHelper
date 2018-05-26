@@ -132,16 +132,32 @@ public class Entity {
         }
         if (obj instanceof Entity) {
             Entity e = (Entity) obj;
-            if (name.equals(e.name)) {
-                return false;
+            if (name == null) {
+                if (e.name == null) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                if (r == e.r && g == e.g && b == e.b) {
+                if (name.equals(e.name)) {
                     return false;
                 } else {
-                    if (image.equals(e.image)) {
+                    if (r == e.r && g == e.g && b == e.b) {
                         return false;
                     } else {
-                        return true;
+                        if (unityPrefab == null) {
+                            if (e.unityPrefab == null) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            if (unityPrefab.equals(e.unityPrefab)) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
                     }
                 }
             }

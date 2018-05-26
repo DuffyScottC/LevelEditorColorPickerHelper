@@ -6,7 +6,7 @@
     <entities>
         <name>Scott</name>
         <type>Misc</type>
-        <r>0</r>
+        <r>255</r>
         <g>0</g>
         <b>0</b>
         <unityPrefab>Prefab</unityPrefab>
@@ -15,8 +15,8 @@
         <name>Josh</name>
         <type>Misc</type>
         <r>0</r>
-        <g>0</g>
-        <b>1</b>
+        <g>255</g>
+        <b>0</b>
         <unityPrefab>Prefab</unityPrefab>
     </entities>
     <entities>
@@ -24,7 +24,7 @@
         <type>Misc</type>
         <r>0</r>
         <g>0</g>
-        <b>2</b>
+        <b>255</b>
         <unityPrefab>Prefab</unityPrefab>
     </entities>
     <types>Misc</types>
