@@ -69,6 +69,8 @@ public class ResultsListController {
     }
     
     public void setEntitiesInResults(List<Entity> entitiesInResults) {
+        //clear all the elements in this.entitiesInResults
+        this.entitiesInResults.clear();
         //add all the entities to the results list
         this.entitiesInResults.addAll(entitiesInResults);
         updateListModel();
