@@ -3,5 +3,13 @@
     <name>New Project</name>
     <projectLocation>/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project</projectLocation>
     <projectFile>/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project/New Project.lecp</projectFile>
+    <entities>
+        <name>Entity 1</name>
+        <type>Misc</type>
+        <r>0</r>
+        <g>0</g>
+        <b>0</b>
+        <unityPrefab>Prefabs/Prefab1</unityPrefab>
+    </entities>
     <types>Misc</types>
 </Project>

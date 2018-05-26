@@ -71,6 +71,7 @@ public class Project {
      * one type in this list. When the list is cleared, a type called "Misc"
      * is added. 
      */
+    @XmlElement(name="types", type=String.class)
     private final List<String> types = new ArrayList();
     
     /**
@@ -108,6 +109,15 @@ public class Project {
      * transient TreeMaps. 
      */
     public void setUpTransientLists() {
+        //first add all the type lists to the entitiesByType map
+        for (String t : types) {
+            //make the type lowercase
+            String type = t.toLowerCase();
+            //create a new list for this type
+            List<Entity> typeList = new ArrayList();
+            //add this list to the enititesByType map with the type as the key
+            entitiesByType.put(type, typeList);
+        }
         //loop through all the entities in the list
         for (Entity entity : entities) {
             //add this entity to the transient lists
