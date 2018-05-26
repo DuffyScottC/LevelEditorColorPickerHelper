@@ -19,7 +19,6 @@ import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -191,8 +190,12 @@ public class ProjectController {
         frame.getResultsList().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //get the clicked index
                 int index = resultsListController.getSelectedIndex();
-                System.out.println("Selected " + currentProject.getEntities().get(index));
+                //get the entity in the resultsList
+                Entity selectedEntity 
+                        = resultsListController.getEntitiesInResults().get(index);
+                System.out.println("Selected " + selectedEntity);
             }
         });
         
@@ -228,15 +231,30 @@ public class ProjectController {
     }
     
     private Color getUniqueDefaultColor() {
-        Map<Integer, Entity> entities = currentProject.getEntitiesByColorValue();
+        List<Entity> entities = currentProject.getEntities();
+        boolean colorIsTaken = false;
         for (int r = 0; r < 255; r++) {
             for (int g = 0; g < 255; g++) {
                 for (int b = 0; b < 255; b++) {
                     //create a new color from these values
                     Color color = new Color(r, g, b);
-                    //if this is a unique color (no other entity has this color)
-                    if (!entities.containsKey(color.getRGB())) {
+                    
+                    for (Entity entity : entities) {
+                        //if this color is taken
+                        if (entity.getColor().equals(color)) {
+                            //this color is taken
+                            colorIsTaken = true;
+                            //leave this loop
+                            break;
+                        }
+                    }
+                    //if the color is not taken
+                    if (!colorIsTaken) {
                         return color;
+                    } else {
+                        //reset colorIsTaken for the next color
+                        colorIsTaken = false;
+                        //continue searching
                     }
                 }
             }
@@ -248,26 +266,36 @@ public class ProjectController {
     }
     
     private String getUniqueDefaultName() {
-        Map<String, Entity> entities = currentProject.getEntitiesByName();
+        List<Entity> entities = currentProject.getEntities();
         String nameBase = "Entity ";
         int num = 1;
-        //keep incrementing the num component until we find a unique name
+        //keep incrementing the num component until we find a unique string
         //(i.e. a name that is not already in entities)
-        while (entities.containsKey(nameBase + num)) {
-            num++;
+        for (Entity entity : entities) {
+            //if this entity's name matches the generated name
+            //(if this name is already taken)
+            if (entity.getName().equals(nameBase + num)) {
+                //increment the number
+                num++;
+            }
         }
         //return the unique name
         return nameBase + num;
     }
     
     private String getUniqueDefaultUnityPrefab() {
-        Map<String, Entity> entities = currentProject.getEntitiesByUnityPrefab();
+        List<Entity> entities = currentProject.getEntities();
         String prefabBase = "Prefabs/Prefab";
         int num = 1;
         //keep incrementing the num component until we find a unique string
         //(i.e. a prefab that is not already in entities)
-        while (entities.containsKey(prefabBase + num)) {
-            num++;
+        for (Entity entity : entities) {
+            //if this entity's prfab matches the generated prefab
+            //(if this prefab is already taken)
+            if (entity.getUnityPrefab().equals(prefabBase + num)) {
+                //increment the number
+                num++;
+            }
         }
         //return the unique prefab string
         return prefabBase + num;
@@ -338,7 +366,6 @@ public class ProjectController {
      * @param newProject A project recently deserialized from .lecp xml format.
      */
     private void loadProject(Project newProject) {
-        newProject.setUpTransientLists();
         currentProject = newProject;
         projectLocation = newProject.getProjectLocation();
         projectFile = newProject.getProjectFile();

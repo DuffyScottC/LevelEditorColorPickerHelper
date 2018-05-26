@@ -4,20 +4,28 @@
     <projectLocation>/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project</projectLocation>
     <projectFile>/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice Programs/LevelEditorColorPickerHelper/New Project/New Project.lecp</projectFile>
     <entities>
-        <name>Entity 1</name>
+        <name>Scott</name>
         <type>Misc</type>
         <r>0</r>
         <g>0</g>
         <b>0</b>
-        <unityPrefab>Prefabs/Prefab1</unityPrefab>
+        <unityPrefab>Prefab</unityPrefab>
     </entities>
     <entities>
-        <name>Entity 1</name>
+        <name>Josh</name>
         <type>Misc</type>
         <r>0</r>
         <g>0</g>
         <b>1</b>
-        <unityPrefab>Prefabs/Prefab1</unityPrefab>
+        <unityPrefab>Prefab</unityPrefab>
+    </entities>
+    <entities>
+        <name>Ian</name>
+        <type>Misc</type>
+        <r>0</r>
+        <g>0</g>
+        <b>2</b>
+        <unityPrefab>Prefab</unityPrefab>
     </entities>
     <types>Misc</types>
 </Project>

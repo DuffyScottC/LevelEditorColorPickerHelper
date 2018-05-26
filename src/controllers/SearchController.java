@@ -9,8 +9,10 @@ import entities.Entity;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import projects.Project;
 import views.MainFrame;
 
 enum SearchMode {
@@ -29,6 +31,7 @@ enum SearchMode {
 public class SearchController {
     
     private final MainFrame frame;
+    private Project currentProject = null;
     private SearchMode searchMode = SearchMode.Name;
     
     
@@ -41,7 +44,9 @@ public class SearchController {
             @Override
             public void keyReleased(KeyEvent e) {
                 //get the search string from the user
-                String searchString = frame.getSearchTextField().getText();
+                String text = frame.getSearchTextField().getText();
+                //convert the text to lowercase
+                String searchString = text.toLowerCase();
                 //get the search results
                 List<Entity> searchResults = search(searchString);
                 //put the search results in the results JList
@@ -90,7 +95,16 @@ public class SearchController {
     }
     
     private List<Entity> searchByName(String searchString) {
-        return null;
+        List<Entity> results = new ArrayList();
+        for (Entity entity : currentProject.getEntities()) {
+            //convert the name to lowercase
+            String nameLower = entity.getName().toLowerCase();
+            //if the name of this entity partially matches the search string
+            if (nameLower.contains(searchString)) {
+                results.add(entity);
+            }
+        }
+        return results;
     }
     
     private List<Entity> searchByType(String searchString) {
@@ -103,6 +117,10 @@ public class SearchController {
     
     private List<Entity> searchByUnityPrefab(String searchString) {
         return null;
+    }
+    
+    public void setCurrentProject(Project currentProject) {
+        this.currentProject = currentProject;
     }
     
 }
