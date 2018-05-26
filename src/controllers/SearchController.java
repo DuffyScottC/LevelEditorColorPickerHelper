@@ -52,6 +52,7 @@ public class SearchController {
     
     private void setUpSearchTypeComboBox() {
         JComboBox searchModeComboBox = frame.getSearchModeComboBox();
+        searchModeComboBox.removeAllItems();
         searchModeComboBox.addItem("Name");
         searchModeComboBox.addItem("Type");
         searchModeComboBox.addItem("Color");

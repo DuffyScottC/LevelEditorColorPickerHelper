@@ -221,12 +221,52 @@ public class ProjectController {
         frame.getResultsList().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //if the current entity has been modified
+                if (modifiedController.isModified()) {
+                    //if the user does not want to continue
+                    if (!shouldContinue("Discard changes?")) {
+                        /*
+                        We have to re-select the currently selected entity in
+                        the results list JList:
+                        */
+                        //get the entities in the results
+                        List<Entity> entitiesInResults 
+                                = resultsListController.getEntitiesInResults();
+                        //get the currently selected entity
+                        Entity currentEntity = currentProject.getCurrentEntity();
+                        //get the index of the currently selected entity
+                        int index 
+                                = entitiesInResults.indexOf(currentEntity);
+                        //if the currentEntity is NOT in the results list
+                        if (index == -1) {
+                            //exit this method
+                            return;
+                        }
+                        //if the currentEntity is in the results list
+                        //reset the selection to the currentEntity
+                        resultsListController.setSelectedIndex(index);
+                        //exit this method
+                        return;
+                    }
+                }
+                
                 //get the clicked index
                 int index = resultsListController.getSelectedIndex();
+                //if there is no selection
+                if (index == -1) {
+                    //stop
+                    return;
+                }
+                
                 //get the entity in the resultsList
                 Entity selectedEntity 
                         = resultsListController.getEntitiesInResults().get(index);
-                System.out.println("Selected " + selectedEntity);
+                //put the selected entity in the current entity position
+                currentProject.setCurrentEntity(selectedEntity);
+                //put the current entity into the info panel
+                loadCurrentEntityIntoInfoPanel();
+                //we are no longer modifed
+                modifiedController.setModified(false);
             }
         });
         
