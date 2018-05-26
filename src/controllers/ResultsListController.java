@@ -6,16 +6,13 @@
 package controllers;
 
 import entities.Entity;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
 import views.EntityListRenderer;
 import views.MainFrame;
 
@@ -41,21 +38,6 @@ public class ResultsListController {
         resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entitiesInResults = new ArrayList();
         resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
-        
-        resultsList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                loadSelectedEntity();
-            }
-        });
-    
-    }
-    
-    /**
-     * Loads the selected entity into the frame's infoPanel
-     */
-    public void loadSelectedEntity() {
-        System.out.println("Selected " + resultsList.getSelectedValue());
     }
     
     /**
@@ -96,6 +78,15 @@ public class ResultsListController {
         if (0 <= index && index < resultsListModel.size()) {
             resultsList.setSelectedIndex(index);
         }
+    }
+    
+    /**
+     * Gets the selected index of the resultsList JList.
+     * @return The selected index of the resultsList JList (-1 if there is
+     * no selection)
+     */
+    public int getSelectedIndex() {
+        return resultsList.getSelectedIndex();
     }
     
 }

@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
@@ -178,6 +180,15 @@ public class ProjectController {
                 }
             }
         });
+        
+        frame.getResultsList().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = resultsListController.getSelectedIndex();
+                System.out.println("Selected " + currentProject.getEntities().get(index));
+            }
+        });
+        
     }
     
     //MARK: Add Entity
@@ -338,8 +349,9 @@ public class ProjectController {
         if (allNewEntities.size() > 0) {
             //select the first element
             resultsListController.setSelectedIndex(0);
-            //load the selected entity into the infoPanel
-            resultsListController.loadSelectedEntity();
+            //set the current entity
+            newProject.setCurrentEntity(allNewEntities.get(0));
+            
             setInfoElementsEnabled(true);
         }
     }
