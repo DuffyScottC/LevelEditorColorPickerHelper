@@ -82,6 +82,11 @@ public class SearchController {
     }
     
     private List<Entity> search(String searchString) {
+        //if the search string is empty, return all entities
+        if (searchString.length() == 0) {
+            return currentProject.getEntities();
+        }
+        
         switch (searchMode) {
             case Name:
                 return searchByName(searchString);

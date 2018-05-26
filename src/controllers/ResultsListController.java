@@ -6,8 +6,6 @@
 package controllers;
 
 import entities.Entity;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
