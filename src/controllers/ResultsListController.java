@@ -86,6 +86,7 @@ public class ResultsListController {
         //if the passed index is a valid index
         if (0 <= index && index < resultsListModel.size()) {
             resultsList.setSelectedIndex(index);
+            resultsList.repaint();
         }
     }
     

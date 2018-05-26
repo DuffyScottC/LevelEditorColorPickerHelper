@@ -27,5 +27,21 @@
         <b>255</b>
         <unityPrefab>Prefab</unityPrefab>
     </entities>
+    <entities>
+        <name>Sean</name>
+        <type>Misc</type>
+        <r>0</r>
+        <g>0</g>
+        <b>5</b>
+        <unityPrefab>Prefab</unityPrefab>
+    </entities>
+    <entities>
+        <name>Amy</name>
+        <type>Misc</type>
+        <r>255</r>
+        <g>0</g>
+        <b>255</b>
+        <unityPrefab>Prefab</unityPrefab>
+    </entities>
     <types>Misc</types>
 </Project>
