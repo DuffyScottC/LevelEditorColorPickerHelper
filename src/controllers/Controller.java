@@ -25,7 +25,8 @@ public class Controller {
         ProjectController projectController = new ProjectController(frame,
             resultsListController,
             recentListController,
-            colorPickerController);
+            colorPickerController,
+            searchController);
         
         projectController.enterNewProjectState();
         

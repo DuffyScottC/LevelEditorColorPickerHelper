@@ -58,6 +58,7 @@ public class ProjectController {
     private final ResultsListController resultsListController;
     private final RecentListController recentListController;
     private final ColorPickerController colorPickerController;
+    private final SearchController searchController;
     
     /**
      * initialized with user.dir just in case something goes wrong with loading
@@ -86,12 +87,14 @@ public class ProjectController {
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,
             RecentListController recentListController,
-            ColorPickerController colorPickerController) {
+            ColorPickerController colorPickerController,
+            SearchController searchController) {
         this.frame = frame;
         
         this.resultsListController = resultsListController;
         this.recentListController = recentListController;
         this.colorPickerController = colorPickerController;
+        this.searchController = searchController;
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
@@ -137,6 +140,7 @@ public class ProjectController {
                         
                         //tell the project that it has been modified
                         setIsModified(true);
+                        setSearchElementsEnabled(true);
                         setInfoElementsEnabled(true);
                         //in this case, there is nothing to revert to
                         frame.getRevertButton().setEnabled(false);
@@ -367,6 +371,7 @@ public class ProjectController {
      */
     private void loadProject(Project newProject) {
         currentProject = newProject;
+        searchController.setCurrentProject(newProject);
         projectLocation = newProject.getProjectLocation();
         projectFile = newProject.getProjectFile();
         projectName = newProject.getName();
@@ -387,6 +392,7 @@ public class ProjectController {
             newProject.setCurrentEntity(allNewEntities.get(0));
             //load the entity into the info panel
             loadCurrentEntityIntoInfoPanel();
+            setSearchElementsEnabled(true);
             setInfoElementsEnabled(true);
         }
     }
@@ -479,6 +485,7 @@ public class ProjectController {
         //create the new project using the name, location, and file created
         //specifically for this project
         currentProject = new Project(projectName, projectLocation, projectFile);
+        searchController.setCurrentProject(currentProject);
         currentProject.addType(Utils.defaultType);
         updateTypeComboBox();
         //serialize the new project
@@ -650,6 +657,7 @@ public class ProjectController {
     public void enterNewProjectState() {
         resultsListController.clearEntities();
         recentListController.clearEntities();
+        setSearchElementsEnabled(false);
         setInfoElementsEnabled(false);
         setIsModified(false);
     }
@@ -696,11 +704,13 @@ public class ProjectController {
         colorPickerController.setColor(currentEntity.getR(), currentEntity.getG(), currentEntity.getB());
     }
     
-    private void setInfoElementsEnabled(boolean value) {
+    public void setSearchElementsEnabled(boolean value) {
         //search panel
         frame.getTypeComboBox().setEnabled(value);
         frame.getSearchTextField().setEnabled(value);
-        
+    }
+    
+    private void setInfoElementsEnabled(boolean value) {
         //info panel
         frame.getSelectButton().setEnabled(value);
         frame.getNameTextField().setEnabled(value);

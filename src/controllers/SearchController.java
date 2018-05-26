@@ -84,11 +84,11 @@ public class SearchController {
     private List<Entity> search(String searchString) {
         switch (searchMode) {
             case Name:
-                return searchByUnityPrefab(searchString);
+                return searchByName(searchString);
             case Type:
-                return searchByUnityPrefab(searchString);
+                return searchByType(searchString);
             case Color:
-                return searchByUnityPrefab(searchString);
+                return searchByColor(searchString);
             default:
                 return searchByUnityPrefab(searchString);
         }
