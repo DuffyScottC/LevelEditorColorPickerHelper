@@ -82,7 +82,7 @@ public class ProjectController {
      * @param resultsListController
      * @param recentListController 
      * @param colorPickerController 
-     * @param infoPanelController 
+     * @param searchController 
      */
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,
@@ -120,6 +120,14 @@ public class ProjectController {
         ActionListener addEntityActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //if the entity has been modified
+                if (isModified) {
+                    //if the user does not want to continue
+                    if (!shouldContinue("Discard changes?")) {
+                        //stop
+                        return;
+                    }
+                }
                 //if the user just opened the app and no project has been selected yet
                 if (currentProject != null) {
                     try {
