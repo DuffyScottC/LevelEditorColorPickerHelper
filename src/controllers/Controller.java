@@ -5,9 +5,6 @@
  */
 package controllers;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
 import views.MainFrame;
 
 public class Controller {
@@ -17,7 +14,7 @@ public class Controller {
     private final RecentListController recentListController;
 
     public Controller() {
-        frame.setTitle("No Project Open");
+        frame.setTitle("Level Editor Color Picker");
         frame.setLocationRelativeTo(null);
         // you can adjust the size with something like this:
         // frame.setSize(600, 500);

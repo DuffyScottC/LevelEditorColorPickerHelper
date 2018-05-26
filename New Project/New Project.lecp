@@ -11,5 +11,13 @@
         <b>0</b>
         <unityPrefab>Prefabs/Prefab1</unityPrefab>
     </entities>
+    <entities>
+        <name>Entity 1</name>
+        <type>Misc</type>
+        <r>0</r>
+        <g>0</g>
+        <b>1</b>
+        <unityPrefab>Prefabs/Prefab1</unityPrefab>
+    </entities>
     <types>Misc</types>
 </Project>
