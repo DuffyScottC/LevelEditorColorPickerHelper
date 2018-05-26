@@ -92,7 +92,13 @@ public class Entity {
     
     public void replaceValues(String image, String name, String type, 
             Color color, String unityPrefab) {
-        
+        this.image = image;
+        this.name = name;
+        this.type = type;
+        this.r = color.getRed();
+        this.g = color.getGreen();
+        this.b = color.getBlue();
+        this.unityPrefab = unityPrefab;
     }
     
     /**
