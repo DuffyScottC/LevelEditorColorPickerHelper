@@ -20,13 +20,16 @@ public class Controller {
         //Set up the Results List Controller
         ResultsListController resultsListController = new ResultsListController(frame);
         RecentListController recentListController = new RecentListController(frame);
-        ColorPickerController colorPickerController = new ColorPickerController(frame);
+        ModifiedController modifiedController = new ModifiedController(frame);
+        ColorPickerController colorPickerController = new ColorPickerController(frame,
+            modifiedController);
         SearchController searchController = new SearchController(frame, resultsListController);
         ProjectController projectController = new ProjectController(frame,
             resultsListController,
             recentListController,
             colorPickerController,
-            searchController);
+            searchController,
+            modifiedController);
         
         projectController.enterNewProjectState();
         

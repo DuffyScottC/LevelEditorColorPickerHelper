@@ -43,14 +43,9 @@ public class ColorPickerController {
     private final JCheckBox includeHashTagCheckBox;
     private boolean includeHashTag = false;
     
-    /**
-     * This is set by the actionlisteners, keyslisteners, and changelisteners
-     * on the color elements in the info panel, and checked by the 
-     * ProjectController.
-     */
-    private boolean isModified = false;
     
-    public ColorPickerController(MainFrame frame) {
+    public ColorPickerController(MainFrame frame,
+            ModifiedController modifiedController) {
         redSlider = frame.getRedSlider();
         greenSlider = frame.getGreenSlider();
         blueSlider = frame.getBlueSlider();
@@ -70,7 +65,7 @@ public class ColorPickerController {
             updateColorCodeTextField();
             updateColorPanel();
             redSpinner.setValue(r);
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         redSpinner.addChangeListener((ChangeEvent e) -> {
@@ -105,7 +100,7 @@ public class ColorPickerController {
             updateColorCodeTextField();
             updateColorPanel();
             redSlider.setValue(r);
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         greenSlider.addChangeListener((ChangeEvent e) -> {
@@ -113,7 +108,7 @@ public class ColorPickerController {
             updateColorCodeTextField();
             updateColorPanel();
             greenSpinner.setValue(g);
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         greenSpinner.addChangeListener((ChangeEvent e) -> {
@@ -148,7 +143,7 @@ public class ColorPickerController {
             updateColorCodeTextField();
             updateColorPanel();
             greenSlider.setValue(g);
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         blueSlider.addChangeListener((ChangeEvent e) -> {
@@ -156,7 +151,7 @@ public class ColorPickerController {
             updateColorCodeTextField();
             updateColorPanel();
             blueSpinner.setValue(b);
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         blueSpinner.addChangeListener((ChangeEvent e) -> {
@@ -191,12 +186,12 @@ public class ColorPickerController {
             updateColorCodeTextField();
             updateColorPanel();
             blueSlider.setValue(b);
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         colorCodeTextField.addActionListener((ActionEvent e) -> {
             parseUserHex();
-            isModified = true;
+            modifiedController.setModified(true);
         });
         
         includeHashTagCheckBox.addActionListener((ActionEvent e) -> {
@@ -315,14 +310,6 @@ public class ColorPickerController {
     
     public Color getColor() {
         return new Color(r, g, b);
-    }
-    
-    public boolean getIsModified() {
-        return isModified;
-    }
-    
-    public void setIsModified(boolean isModified) {
-        this.isModified = isModified;
     }
     
 }

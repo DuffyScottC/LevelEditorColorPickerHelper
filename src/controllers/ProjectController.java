@@ -59,6 +59,7 @@ public class ProjectController {
     private final RecentListController recentListController;
     private final ColorPickerController colorPickerController;
     private final SearchController searchController;
+    private final ModifiedController modifiedController;
     
     /**
      * initialized with user.dir just in case something goes wrong with loading
@@ -74,8 +75,6 @@ public class ProjectController {
             = new FileNameExtensionFilter("Project (.lecp)","lecp");
     private final NewProjectDialog newProjectDialog;
     
-    private boolean isModified = false;
-    
     /**
      * Set up the ProjectController
      * @param frame
@@ -88,13 +87,15 @@ public class ProjectController {
             ResultsListController resultsListController,
             RecentListController recentListController,
             ColorPickerController colorPickerController,
-            SearchController searchController) {
+            SearchController searchController,
+            ModifiedController modifiedController) {
         this.frame = frame;
         
         this.resultsListController = resultsListController;
         this.recentListController = recentListController;
         this.colorPickerController = colorPickerController;
         this.searchController = searchController;
+        this.modifiedController = modifiedController;
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
@@ -121,7 +122,7 @@ public class ProjectController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //if the entity has been modified
-                if (isModified) {
+                if (modifiedController.isModified()) {
                     //if the user does not want to continue
                     if (!shouldContinue("Discard changes?")) {
                         //stop
@@ -147,7 +148,7 @@ public class ProjectController {
                         loadCurrentEntityIntoInfoPanel();
                         
                         //tell the project that it has been modified
-                        setIsModified(true);
+                        modifiedController.setModified(true);
                         setSearchElementsEnabled(true);
                         setInfoElementsEnabled(true);
                         //in this case, there is nothing to revert to
@@ -172,7 +173,7 @@ public class ProjectController {
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
             loadEntityFromInfoPanelIntoProject();
             saveProject();
-            setIsModified(false);
+            modifiedController.setModified(false);
         });
         
         frame.getNewTypeButton().addActionListener((ActionEvent e) -> {
@@ -667,7 +668,7 @@ public class ProjectController {
         recentListController.clearEntities();
         setSearchElementsEnabled(false);
         setInfoElementsEnabled(false);
-        setIsModified(false);
+        modifiedController.setModified(false);
     }
     
     //MARK: Misc
@@ -736,24 +737,6 @@ public class ProjectController {
         frame.getUnityPrefabTextField().setEnabled(value);
     }
     
-    private void addModificationListenerToInfoElements() {
-        ActionListener modificationActionListener = (ActionEvent e) -> {
-            setIsModified(true);
-        };
-        
-        KeyAdapter modificationKeyAdapter = new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                setIsModified(true);
-            }
-        };
-        
-        frame.getNameTextField().addKeyListener(modificationKeyAdapter);
-        frame.getTypeComboBox().addActionListener(modificationActionListener);
-        frame.getChangeImageButton().addActionListener(modificationActionListener);
-        frame.getUnityPrefabTextField().addKeyListener(modificationKeyAdapter);
-    }
-    
     /**
      * Updates the typeComboBox to reflect the current open project's types
      */
@@ -810,26 +793,5 @@ public class ProjectController {
             JOptionPane.showMessageDialog(frame, "Unable to serialize project.\n" 
                     + ex.toString());
         }
-    }
-    
-    /**
-     * Set the isModified boolean, and calls setEnabled() with the passed in 
-     * value on the frame's revert and apply buttons. Also sets isModified
-     * for the ColorPickerController.
-     */
-    private void setIsModified(boolean isModified) {
-        this.isModified = isModified;
-        frame.getRevertButton().setEnabled(isModified);
-        frame.getApplyButton().setEnabled(isModified);
-    }
-    
-    /**
-     * Gets whether the currently open entity has been modified in the info
-     * panel elements. This requires checking both the info elements and the
-     * ColorPickerController's elements.
-     * @return 
-     */
-    private boolean getIsModified() {
-        return isModified || colorPickerController.getIsModified();
     }
 }
