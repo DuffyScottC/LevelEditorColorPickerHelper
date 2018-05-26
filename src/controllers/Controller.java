@@ -10,8 +10,6 @@ import views.MainFrame;
 public class Controller {
 
     private final MainFrame frame = new MainFrame();
-    private final ResultsListController resultsListController;
-    private final RecentListController recentListController;
 
     public Controller() {
         frame.setTitle("Level Editor Color Picker");
@@ -20,9 +18,10 @@ public class Controller {
         // frame.setSize(600, 500);
         
         //Set up the Results List Controller
-        resultsListController = new ResultsListController(frame);
-        recentListController = new RecentListController(frame);
+        ResultsListController resultsListController = new ResultsListController(frame);
+        RecentListController recentListController = new RecentListController(frame);
         ColorPickerController colorPickerController = new ColorPickerController(frame);
+        SearchController searchController = new SearchController(frame, resultsListController);
         ProjectController projectController = new ProjectController(frame,
             resultsListController,
             recentListController,

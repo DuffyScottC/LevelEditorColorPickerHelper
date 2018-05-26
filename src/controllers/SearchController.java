@@ -5,11 +5,20 @@
  */
 package controllers;
 
+import entities.Entity;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.JComboBox;
 import views.MainFrame;
+
+enum SearchMode {
+    Name,
+    Type,
+    Color,
+    UnityPrefab
+}
 
 /**
  * Handles the search engine, making it so that the user can search for objects
@@ -20,8 +29,10 @@ import views.MainFrame;
 public class SearchController {
     
     private final MainFrame frame;
+    private SearchMode searchMode = SearchMode.Name;
     
-    public SearchController(MainFrame frame) {
+    
+    public SearchController(MainFrame frame, ResultsListController resultsListController) {
         this.frame = frame;
         
         setUpSearchTypeComboBox();
@@ -29,7 +40,12 @@ public class SearchController {
         frame.getSearchTextField().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                
+                //get the search string from the user
+                String searchString = frame.getSearchTextField().getText();
+                //get the search results
+                List<Entity> searchResults = search(searchString);
+                //put the search results in the results JList
+                resultsListController.setEntitiesInResults(searchResults);
             }
         });
     }
@@ -42,8 +58,51 @@ public class SearchController {
         searchModeComboBox.addItem("Unity Prefab");
         
         searchModeComboBox.addActionListener((ActionEvent e) -> {
-            
+            int index = searchModeComboBox.getSelectedIndex();
+            switch (index) {
+                case 0:
+                    searchMode = SearchMode.Name;
+                    break;
+                case 1:
+                    searchMode = SearchMode.Type;
+                    break;
+                case 2:
+                    searchMode = SearchMode.Color;
+                    break;
+                default:
+                    searchMode = SearchMode.UnityPrefab;
+                    break;
+            }
         });
+    }
+    
+    private List<Entity> search(String searchString) {
+        switch (searchMode) {
+            case Name:
+                return searchByUnityPrefab(searchString);
+            case Type:
+                return searchByUnityPrefab(searchString);
+            case Color:
+                return searchByUnityPrefab(searchString);
+            default:
+                return searchByUnityPrefab(searchString);
+        }
+    }
+    
+    private List<Entity> searchByName(String searchString) {
+        return null;
+    }
+    
+    private List<Entity> searchByType(String searchString) {
+        return null;
+    }
+    
+    private List<Entity> searchByColor(String searchString) {
+        return null;
+    }
+    
+    private List<Entity> searchByUnityPrefab(String searchString) {
+        return null;
     }
     
 }
