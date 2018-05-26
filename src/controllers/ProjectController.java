@@ -142,7 +142,25 @@ public class ProjectController {
                         If the newly added entity matches the search string, then
                         we need to update the search results to include this entity
                         */
-                        System.out.println("TODO: update search results on Add Entity");
+                        searchController.search();
+                        /*
+                        Now we need to find out if the newly created entity matches
+                        the search criteria
+                        */
+                        //get the entities in results
+                        List<Entity> entitiesInResults 
+                                = resultsListController.getEntitiesInResults();
+                        //get the index of the newEntity if it exists
+                        int index = entitiesInResults.indexOf(newEntity);
+                        //if the newEntity is not in the results list
+                        if (index == -1) {
+                            //clear the selection
+                            resultsListController.clearSelection();
+                        } else {
+                            //if the newEntity is in the results list,
+                            //then update the selection
+                            resultsListController.setSelectedIndex(index);
+                        }
                         
                         //update the UI to reflect the creation of a new entity
                         loadCurrentEntityIntoInfoPanel();

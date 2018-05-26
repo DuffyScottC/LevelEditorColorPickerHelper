@@ -31,26 +31,21 @@ enum SearchMode {
 public class SearchController {
     
     private final MainFrame frame;
+    private final ResultsListController resultsListController;
     private Project currentProject = null;
     private SearchMode searchMode = SearchMode.Name;
     
     
     public SearchController(MainFrame frame, ResultsListController resultsListController) {
         this.frame = frame;
+        this.resultsListController = resultsListController;
         
         setUpSearchTypeComboBox();
         
         frame.getSearchTextField().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                //get the search string from the user
-                String text = frame.getSearchTextField().getText();
-                //convert the text to lowercase
-                String searchString = text.toLowerCase();
-                //get the search results
-                List<Entity> searchResults = search(searchString);
-                //put the search results in the results JList
-                resultsListController.setEntitiesInResults(searchResults);
+                search();
             }
         });
     }
@@ -81,22 +76,34 @@ public class SearchController {
         });
     }
     
-    private List<Entity> search(String searchString) {
-        //if the search string is empty, return all entities
+    public void search() {
+        //get the search string from the user
+        String text = frame.getSearchTextField().getText();
+        //convert the text to lowercase
+        String searchString = text.toLowerCase();
+        List<Entity> searchResults = null;
+        //if the search string is empty
         if (searchString.length() == 0) {
-            return currentProject.getEntities();
+            //get all the entities
+            searchResults = currentProject.getEntities();
+        } else {
+            //if the search string is NOT empty, check the searchMode
+            switch (searchMode) {
+                case Name:
+                    searchResults = searchByName(searchString);
+                    break;
+                case Type:
+                    searchResults = searchByType(searchString);
+                    break;
+                case Color:
+                    searchResults = searchByColor(searchString);
+                    break;
+                default:
+                    searchResults = searchByUnityPrefab(searchString);
+            }
         }
-        
-        switch (searchMode) {
-            case Name:
-                return searchByName(searchString);
-            case Type:
-                return searchByType(searchString);
-            case Color:
-                return searchByColor(searchString);
-            default:
-                return searchByUnityPrefab(searchString);
-        }
+        //put the search results in the results JList
+        resultsListController.setEntitiesInResults(searchResults);
     }
     
     private List<Entity> searchByName(String searchString) {
