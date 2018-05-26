@@ -736,6 +736,24 @@ public class ProjectController {
         frame.getUnityPrefabTextField().setEnabled(value);
     }
     
+    private void addModificationListenerToInfoElements() {
+        ActionListener modificationActionListener = (ActionEvent e) -> {
+            setIsModified(true);
+        };
+        
+        KeyAdapter modificationKeyAdapter = new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                setIsModified(true);
+            }
+        };
+        
+        frame.getNameTextField().addKeyListener(modificationKeyAdapter);
+        frame.getTypeComboBox().addActionListener(modificationActionListener);
+        frame.getChangeImageButton().addActionListener(modificationActionListener);
+        frame.getUnityPrefabTextField().addKeyListener(modificationKeyAdapter);
+    }
+    
     /**
      * Updates the typeComboBox to reflect the current open project's types
      */
@@ -796,11 +814,22 @@ public class ProjectController {
     
     /**
      * Set the isModified boolean, and calls setEnabled() with the passed in 
-     * value on the frame's revert and apply buttons.
+     * value on the frame's revert and apply buttons. Also sets isModified
+     * for the ColorPickerController.
      */
     private void setIsModified(boolean isModified) {
         this.isModified = isModified;
         frame.getRevertButton().setEnabled(isModified);
         frame.getApplyButton().setEnabled(isModified);
+    }
+    
+    /**
+     * Gets whether the currently open entity has been modified in the info
+     * panel elements. This requires checking both the info elements and the
+     * ColorPickerController's elements.
+     * @return 
+     */
+    private boolean getIsModified() {
+        return isModified || colorPickerController.getIsModified();
     }
 }
