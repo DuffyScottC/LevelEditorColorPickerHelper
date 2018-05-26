@@ -143,8 +143,8 @@ public class ProjectController {
                         frame.getRevertButton().setEnabled(false);
                     } catch (Exception ex) {
                         //the one with no explaination
-                        JOptionPane.showMessageDialog(frame,  "Technical "
-                                + "difficulties:\n"
+                        JOptionPane.showMessageDialog(frame,  
+                                "Technical difficulties:\n"
                                 + ex.toString());
                     }
                 } else {

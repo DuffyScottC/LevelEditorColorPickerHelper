@@ -144,7 +144,8 @@ public class Project {
         this.entitiesByUnityPrefab.put(newUnityPrefab, entity);
         
         //get the type list accociated with this entity's type
-        List<Entity> theTypeList = this.entitiesByType.get(entity.getType());
+        String type = entity.getType().toLowerCase();
+        List<Entity> theTypeList = this.entitiesByType.get(type);
         theTypeList.add(entity);
     }
 
