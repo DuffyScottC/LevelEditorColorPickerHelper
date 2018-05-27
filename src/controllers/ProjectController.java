@@ -555,6 +555,7 @@ public class ProjectController {
     private void loadProject(Project newProject) {
         currentProject = newProject;
         searchController.setCurrentProject(newProject);
+        newProject.createProjectLocation();
         projectLocation = newProject.getProjectLocation();
         projectFile = newProject.getProjectFile();
         projectName = newProject.getName();
@@ -668,7 +669,7 @@ public class ProjectController {
         //At this point, the name, locaiton, and file are assigned.
         //create the new project using the name, location, and file created
         //specifically for this project
-        currentProject = new Project(projectName, projectLocation, projectFile);
+        currentProject = new Project(projectName, projectFile);
         searchController.setCurrentProject(currentProject);
         currentProject.addType(Utils.defaultType);
         updateTypeComboBox();

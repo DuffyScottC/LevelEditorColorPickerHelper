@@ -30,13 +30,14 @@ public class Project {
      */
     private String name;
     /**
-     * The path to the directory containing all the project's assets
-     */
-    private File projectLocation;
-    /**
      * The path to the project's top directory
      */
     private File projectFile;
+    /**
+     * The path to the directory containing all the project's assets
+     */
+    @XmlTransient
+    private File projectLocation = null;
     /**
      * A list of all the entities in this project
      */
@@ -62,20 +63,19 @@ public class Project {
      */
     public Project() {
         this.name = null;
-        this.projectLocation = null;
         this.projectFile = null;
     }
     
     /**
      * Instantiates a new project
      * @param name The name of the project (the user sees this)
-     * @param projectLocation The path to the directory containing all the project's assets
      * @param projectFile The path to the project's top directory
      */
-    public Project(String name, File projectLocation, File projectFile) {
+    public Project(String name, File projectFile) {
         this.name = name;
-        this.projectLocation = projectLocation;
         this.projectFile = projectFile;
+        //find the directory where this file is located.
+        this.projectLocation = projectFile.getParentFile();
     }
     
     /**
@@ -96,12 +96,12 @@ public class Project {
         this.name = name;
     }
 
+    public void createProjectLocation() {
+        projectLocation = projectFile.getParentFile();
+    }
+    
     public File getProjectLocation() {
         return projectLocation;
-    }
-
-    public void setProjectLocation(File projectLocation) {
-        this.projectLocation = projectLocation;
     }
 
     public File getProjectFile() {
@@ -110,6 +110,7 @@ public class Project {
 
     public void setProjectFile(File projectFile) {
         this.projectFile = projectFile;
+        this.projectLocation = projectFile.getParentFile();
     }
 
     public List<Entity> getEntities() {
