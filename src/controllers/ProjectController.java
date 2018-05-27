@@ -88,6 +88,7 @@ public class ProjectController {
      * @param recentListController 
      * @param colorPickerController 
      * @param searchController 
+     * @param modifiedController 
      */
     public ProjectController(MainFrame frame,
             ResultsListController resultsListController,

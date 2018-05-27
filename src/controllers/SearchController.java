@@ -112,7 +112,7 @@ public class SearchController {
         for (Entity entity : currentProject.getEntities()) {
             //convert the name to lowercase
             String nameLower = entity.getName().toLowerCase();
-            //if the name of this entity partially matches the search string
+            //if the search string partially matches the name of this entity
             if (nameLower.contains(searchString)) {
                 results.add(entity);
             }
@@ -121,15 +121,91 @@ public class SearchController {
     }
     
     private List<Entity> searchByType(String searchString) {
-        return null;
+        List<Entity> results = new ArrayList();
+        for (Entity entity : currentProject.getEntities()) {
+            String typeLower = entity.getType().toLowerCase();
+            if (typeLower.contains(searchString)) {
+                results.add(entity);
+            }
+        }
+        return results;
     }
     
     private List<Entity> searchByColor(String searchString) {
-        return null;
+        List<Entity> results = new ArrayList();
+        String hex = parseUserHexString(searchString);
+        //if the user's hex could not be parsed
+        if (hex == null) {
+            //we have no matches
+            return results;
+        }
+        //if the user hex could be parsed, get the r, g, b color values from
+        //the hex string
+        int r = Integer.valueOf( hex.substring( 0, 2 ), 16 );
+        int g = Integer.valueOf( hex.substring( 2, 4 ), 16 );
+        int b = Integer.valueOf( hex.substring( 4, 6 ), 16 );
+        
+        //loop through all the entities
+        for (Entity entity : currentProject.getEntities()) {
+            //if the color values match
+            if (entity.getR() == r && entity.getG() == g && entity.getB() == b) {
+                //add the entity to the results list
+                results.add(entity);
+            }
+        }
+        return results;
+    }
+    
+    /**
+     * Takes the input string and converts it into a valid color code hex
+     * value (or returns null if the hex value could not be parsed)
+     * @param hexString The String to be parsed
+     * @return A valid hex string of 6 hexadecimal characters, or null if the
+     * hex string could not be parsed
+     */
+    private String parseUserHexString(String hexString) {
+        String hex = hexString;
+        //if this has a #
+        if (hex.charAt(0) == '#') {
+            //remove the #
+            hex = hex.substring(1, hex.length());
+        }
+        
+        //if the hex is not of length 6
+        if (hex.length() != 6) {
+            //correct the size by adding or removing bits
+            if (hex.length() < 6) {
+                //if the hex is less than 6 characters long
+                //find out how many characters are missing
+                int numOfZeros = 6 - hex.length();
+                //add on the appropriate number of zeros
+                hex += "000000".substring(0,numOfZeros);
+            } else if (hex.length() > 6) {
+                //if the hex is greater than 6 characters long
+                //take the first size characters
+                hex = hex.substring(0, 6);
+            }
+        }
+        //At this point, the hex is of the right size
+        //if the string is NOT made up of hex characters
+        if (!hex.matches("[0-9A-Fa-f]{6}")) {
+            return null;
+        }
+        //if the string is made up of hex characters
+        return hex;
     }
     
     private List<Entity> searchByUnityPrefab(String searchString) {
-        return null;
+        List<Entity> results = new ArrayList();
+        for (Entity entity : currentProject.getEntities()) {
+            //convert the unity prefab to lowercase
+            String unityPrefabLower = entity.getUnityPrefab().toLowerCase();
+            //if the search string partially matches the prefab of this entity
+            if (unityPrefabLower.contains(searchString)) {
+                results.add(entity);
+            }
+        }
+        return results;
     }
     
     public void setCurrentProject(Project currentProject) {
