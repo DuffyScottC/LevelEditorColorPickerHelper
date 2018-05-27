@@ -48,7 +48,6 @@ public class ProjectController {
     private Project currentProject = null;
     private File projectLocation = null;
     private File projectFile = null;
-    private File projectResourcesFolder = null;
     private String projectName = "New Project";
     
     /**
@@ -666,6 +665,15 @@ public class ProjectController {
         }
         //if the project file was successfully created
         
+        // Create the project Resources folder
+        //if the project Resources folder could NOT be created
+        if (!createNewProjectResourcesFolder()) {
+            //return without throwing an exception and without
+            //creating the new project, because the user chose
+            //not to continue.
+            return false;
+        }
+        
         //At this point, the name, locaiton, and file are assigned.
         //create the new project using the name, location, and file created
         //specifically for this project
@@ -714,6 +722,37 @@ public class ProjectController {
         //and the projectLocation to their temp values.
         projectLocation = tempProjectLocation;
         projectFile = tempFile;
+        return true;
+    }
+    
+    /**
+     * Creates the Resources folder in the project's directory. 
+     * 
+     * @return True if the folder was created with no problems, false if the
+     * file could not be created for some reason.
+     */
+    private boolean createNewProjectResourcesFolder() {
+        Path projectLocationPath = projectLocation.toPath();
+        Path tempResourcesPath 
+                = Paths.get(projectLocationPath.toString(), "Resources");
+        File tempResourcesFile = tempResourcesPath.toFile();
+        if (tempResourcesFile.exists()) {
+            //if the user does NOT want to continue
+            if (!shouldContinue("The folder " + tempResourcesFile.getName() 
+                    + "already exists at \n" 
+                    + tempResourcesFile.getAbsolutePath() 
+                    + ".\nWould you like to continue?\n"
+                    + "Please note: Keeping other files in the "
+                    + tempResourcesFile.getName()
+                    + " folder may cause problems.")) {
+                return false;
+            }
+            //if the user does want to continue, continue
+        }
+        //if the tempResourcesFile does not exist 
+        //or the user wants to overwrite this file, then
+        //create the folder
+        tempResourcesFile.mkdir();
         return true;
     }
     
