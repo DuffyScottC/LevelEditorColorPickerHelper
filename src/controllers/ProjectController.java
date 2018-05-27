@@ -48,6 +48,7 @@ public class ProjectController {
     private Project currentProject = null;
     private File projectLocation = null;
     private File projectFile = null;
+    private File projectResourcesFolder = null;
     private String projectName = "New Project";
     
     /**
@@ -352,11 +353,13 @@ public class ProjectController {
                     String name = newFile.getName();
                     //if the file is a valid image
                     if (hasImageExtension(name)) {
+                        //copy the image to be in the resources file
+                        File newImageFile = copyImageToResources(newFile);
                         //pass the new image to the imagePanel
                         frame.getImagePanel().setImagePath(newFile, 
                                 currentProject.getCurrentEntity().getColor());
                         //set the current image file
-                        currentImageFile = newFile;
+                        currentImageFile = null;
                         //mark this as a modified entity
                         modifiedController.setModified(true);
                     } else {
@@ -379,6 +382,15 @@ public class ProjectController {
     }
     
     //MARK: Add Entity
+    /**
+     * Copies the passed in image and stores it in the resources folder.
+     * @return The relative path from projectResourcesFolder to the copied 
+     * image.
+     */
+    private File copyImageToResources(File imageFile) {
+        return imageFile;
+    }
+    
     /**
      * Generates a new entity with default attributes.
      * @throws Exception if the user can't addEntity a new entity (the reason is
