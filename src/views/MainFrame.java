@@ -47,14 +47,15 @@ public class MainFrame extends javax.swing.JFrame {
         searchPanel = new javax.swing.JPanel();
         searchLabel = new javax.swing.JLabel();
         searchTextField = new javax.swing.JTextField();
+        addEntityButton = new javax.swing.JButton();
+        listsSplitPane = new javax.swing.JSplitPane();
         resultsPanel = new javax.swing.JPanel();
         resultsScrollPane = new javax.swing.JScrollPane();
         resultsList = new javax.swing.JList<>();
-        recentLabel = new javax.swing.JLabel();
         recentPanel = new javax.swing.JPanel();
         recentScrollPane = new javax.swing.JScrollPane();
         recentList = new javax.swing.JList<>();
-        addEntityButton = new javax.swing.JButton();
+        recentLabel = new javax.swing.JLabel();
         infoPanel = new javax.swing.JPanel();
         nameLabel = new javax.swing.JLabel();
         selectButton = new javax.swing.JButton();
@@ -93,9 +94,12 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
+        mainSplitPane.setResizeWeight(0.4);
+        mainSplitPane.setOneTouchExpandable(true);
+
         java.awt.GridBagLayout selectionPanelLayout = new java.awt.GridBagLayout();
         selectionPanelLayout.columnWidths = new int[] {0};
-        selectionPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        selectionPanelLayout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0};
         selectionPanel.setLayout(selectionPanelLayout);
 
         typePanel.setLayout(new java.awt.BorderLayout());
@@ -128,6 +132,17 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
         selectionPanel.add(searchPanel, gridBagConstraints);
 
+        addEntityButton.setText("Add Entity");
+        addEntityButton.setToolTipText("Add a new Entity to this project.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        selectionPanel.add(addEntityButton, gridBagConstraints);
+
+        listsSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        listsSplitPane.setResizeWeight(0.8);
+
         resultsPanel.setLayout(new java.awt.BorderLayout());
 
         resultsList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -139,22 +154,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         resultsPanel.add(resultsScrollPane, java.awt.BorderLayout.CENTER);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        selectionPanel.add(resultsPanel, gridBagConstraints);
-
-        recentLabel.setText("Recent:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        selectionPanel.add(recentLabel, gridBagConstraints);
+        listsSplitPane.setTopComponent(resultsPanel);
 
         recentPanel.setLayout(new java.awt.BorderLayout());
 
@@ -167,22 +167,18 @@ public class MainFrame extends javax.swing.JFrame {
 
         recentPanel.add(recentScrollPane, java.awt.BorderLayout.CENTER);
 
+        recentLabel.setText("Recent:");
+        recentPanel.add(recentLabel, java.awt.BorderLayout.PAGE_START);
+
+        listsSplitPane.setBottomComponent(recentPanel);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        selectionPanel.add(recentPanel, gridBagConstraints);
-
-        addEntityButton.setText("Add Entity");
-        addEntityButton.setToolTipText("Add a new Entity to this project.");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        selectionPanel.add(addEntityButton, gridBagConstraints);
+        selectionPanel.add(listsSplitPane, gridBagConstraints);
 
         mainSplitPane.setLeftComponent(selectionPanel);
 
@@ -213,9 +209,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sliderPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(greenSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                    .addComponent(redSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                    .addComponent(blueSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                    .addComponent(greenSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(redSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(blueSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -310,7 +306,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
-                        .addGap(0, 111, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(revertButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(applyButton))
@@ -322,7 +318,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameTextField)
                             .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(typeComboBox, 0, 133, Short.MAX_VALUE)
+                                .addComponent(typeComboBox, 0, 1, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(newTypeButton))))
                     .addGroup(infoPanelLayout.createSequentialGroup()
@@ -346,7 +342,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(includeHashTagCheckBox))
                             .addComponent(selectButton))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 46, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         infoPanelLayout.setVerticalGroup(
@@ -472,6 +468,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSplitPane listsSplitPane;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nameLabel;
