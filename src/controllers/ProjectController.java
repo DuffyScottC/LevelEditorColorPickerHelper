@@ -13,7 +13,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
@@ -48,6 +47,11 @@ public class ProjectController {
     private File projectFile = null;
     private String projectName = "New Project";
     
+    /**
+     * Stores the image that is currently being displayed in the ImagePanel
+     */
+    private File currentImage = null;
+    
     private final MainFrame frame;
     
     private final JMenuItem newProjectMenuItem;
@@ -61,6 +65,12 @@ public class ProjectController {
     private final SearchController searchController;
     private final ModifiedController modifiedController;
     
+    /**
+     * initialized with user.dir just in case something goes wrong with loading
+     * preferences
+     */
+    private final JFileChooser imageChooser 
+            = new JFileChooser(System.getProperty("user.dir"));
     /**
      * initialized with user.dir just in case something goes wrong with loading
      * preferences
@@ -110,10 +120,25 @@ public class ProjectController {
         deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
         
         //set up choosers
+        imageChooser.setMultiSelectionEnabled(false);
         newProjectChooser.setMultiSelectionEnabled(false);
         openProjectChooser.setMultiSelectionEnabled(false);
+        imageChooser.setDragEnabled(true);
         newProjectChooser.setDragEnabled(true);
         openProjectChooser.setDragEnabled(true);
+        
+        imageChooser.addChoosableFileFilter(
+                new FileNameExtensionFilter("PNG", "png"));
+        imageChooser.addChoosableFileFilter(
+                new FileNameExtensionFilter("JPEG", "jpeg"));
+        imageChooser.addChoosableFileFilter(
+                new FileNameExtensionFilter("JPG", "jpg"));
+        imageChooser.addChoosableFileFilter(
+                new FileNameExtensionFilter("GIF", "gif"));
+        imageChooser.addChoosableFileFilter(
+                new FileNameExtensionFilter("TIFF", "tiff"));
+        imageChooser.addChoosableFileFilter(
+                new FileNameExtensionFilter("TIF", "tif"));
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
