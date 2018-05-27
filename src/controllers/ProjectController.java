@@ -65,7 +65,13 @@ public class ProjectController {
      * initialized with user.dir just in case something goes wrong with loading
      * preferences
      */
-    private final JFileChooser chooser 
+    private final JFileChooser newProjectChooser 
+            = new JFileChooser(System.getProperty("user.dir"));
+    /**
+     * initialized with user.dir just in case something goes wrong with loading
+     * preferences
+     */
+    private final JFileChooser openProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
     /**
      * A file filter which only allows .lecp files (Project files) to be
@@ -103,7 +109,8 @@ public class ProjectController {
         deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
         
         //set up chooser
-        chooser.setMultiSelectionEnabled(false);
+        newProjectChooser.setMultiSelectionEnabled(false);
+        openProjectChooser.setMultiSelectionEnabled(false);
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
@@ -400,14 +407,12 @@ public class ProjectController {
     //MARK: Open Project
     private void openProject() {
         //only allow the user to open project files (.lecp)
-        chooser.setFileFilter(projectFileFilter);
+        openProjectChooser.setFileFilter(projectFileFilter);
         //allow the user to choose a file
-        int result = chooser.showOpenDialog(frame);
+        int result = openProjectChooser.showOpenDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
             //get the user's selected file
-            File tempFile = chooser.getSelectedFile();
-            //reset the chooser's file filters
-            chooser.resetChoosableFileFilters();
+            File tempFile = openProjectChooser.getSelectedFile();
             //if the file does NOT exist
             if (!tempFile.exists()) {
                 //tell the user the file does not exist
@@ -681,10 +686,10 @@ public class ProjectController {
         
         //If the user clicks the browse button
         newProjectDialog.getBrowseButton().addActionListener((ActionEvent e) -> {
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int result = chooser.showOpenDialog(frame);
+            newProjectChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = newProjectChooser.showOpenDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
-                File tempProjectLocation = chooser.getSelectedFile();
+                File tempProjectLocation = newProjectChooser.getSelectedFile();
                 if (tempProjectLocation.exists()) {
                     if (tempProjectLocation.isDirectory()) {
                         //assign the project location.
@@ -696,7 +701,6 @@ public class ProjectController {
                     }
                 }
             }
-            chooser.resetChoosableFileFilters();
         });
         
         pNameTextField.addKeyListener(new KeyAdapter() {
