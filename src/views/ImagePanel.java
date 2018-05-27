@@ -36,6 +36,7 @@ public class ImagePanel extends JPanel {
         int w = getSize().width;
         int h = getSize().height;
         
+        boolean noImage = false;
         //if the imageFile is not null
         if (imageFile != null) {
             //if the image exists
@@ -54,10 +55,13 @@ public class ImagePanel extends JPanel {
                 JOptionPane.showMessageDialog(null,
                         "Could not find image at\n" + imageFile + 
                         "\nFile does not exist.");
-                newImage = Utils.getBlankBufferedImage(w, h, color);
-                image = newImage;
+                noImage = true;
             }
         } else {
+            noImage = true;
+        }
+        
+        if (noImage) {
             newImage = Utils.getBlankBufferedImage(w, h, color);
             image = newImage;
         }
