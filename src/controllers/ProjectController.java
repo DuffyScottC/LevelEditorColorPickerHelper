@@ -357,6 +357,8 @@ public class ProjectController {
                                 currentProject.getCurrentEntity().getColor());
                         //set the current image file
                         currentImageFile = newFile;
+                        //mark this as a modified entity
+                        modifiedController.setModified(true);
                     } else {
                         JOptionPane.showMessageDialog(null, 
                                 "The selected image is not a supported "
