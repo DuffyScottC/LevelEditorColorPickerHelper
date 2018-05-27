@@ -165,12 +165,12 @@ public class ProjectController {
                         //update the UI to reflect the creation of a new entity
                         loadCurrentEntityIntoInfoPanel();
                         
-                        //tell the project that it has been modified
-                        modifiedController.setModified(true);
+                        //tell the project that it has not been modified
+                        modifiedController.setModified(false);
+                        //save the project
+                        saveProject();
                         setSearchElementsEnabled(true);
                         setInfoElementsEnabled(true);
-                        //in this case, there is nothing to revert to
-                        frame.getRevertButton().setEnabled(false);
                     } catch (Exception ex) {
                         //the one with no explaination
                         JOptionPane.showMessageDialog(frame,  
