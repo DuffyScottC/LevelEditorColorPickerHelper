@@ -53,7 +53,7 @@ public class ProjectController {
     /**
      * Stores the image that is currently being displayed in the ImagePanel
      */
-    private File currentImage = null;
+    private File currentImageFile = null;
     
     private final MainFrame frame;
     
@@ -338,6 +338,38 @@ public class ProjectController {
                 if(e.getClickCount()==2){
                     //Copy the color code to the clipboard
                     copyCurrentColorCodeToClipboard();
+                }
+            }
+        });
+        
+        frame.getChangeImageButton().addActionListener((ActionEvent e) -> {
+            int result = imageChooser.showOpenDialog(frame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                //get the user-selected file
+                File newFile = imageChooser.getSelectedFile();
+                //if the file exists
+                if (newFile.exists()) {
+                    String name = newFile.getName();
+                    //if the file is a valid image
+                    if (hasImageExtension(name)) {
+                        //pass the new image to the imagePanel
+                        frame.getImagePanel().setImagePath(newFile, 
+                                currentProject.getCurrentEntity().getColor());
+                        //set the current image file
+                        currentImageFile = newFile;
+                    } else {
+                        JOptionPane.showMessageDialog(null, 
+                                "The selected image is not a supported "
+                                        + "image format.", 
+                                "Unsupported Format", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, 
+                            "Could not find file:\n" 
+                                    + newFile.toString(), 
+                            "File Does Not Exist", 
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -810,6 +842,8 @@ public class ProjectController {
         //load the image file into the ImagePanel
         frame.getImagePanel().setImagePath(currentEntity.getImageFile(), 
                 currentEntity.getColor());
+        //set the current image
+        currentImageFile = currentEntity.getImageFile();
         colorPickerController.setColor(currentEntity.getR(), 
                 currentEntity.getG(), currentEntity.getB());
     }
@@ -870,13 +904,13 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
-        File newImage = null;
+        File newImageFile = currentImageFile;
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
         String newType = currentProject.getTypes().get(newTypeIndex);
         Color newColor = colorPickerController.getColor();
         String newUnityPrefab = frame.getUnityPrefabTextField().getText();
-        currentProject.getCurrentEntity().replaceValues(newImage, newName, 
+        currentProject.getCurrentEntity().replaceValues(newImageFile, newName, 
                 newType, newColor, newUnityPrefab);
     }
     
@@ -910,5 +944,12 @@ public class ProjectController {
         StringSelection stringSelection = new StringSelection(colorString);
         Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
         clpbrd.setContents(stringSelection, null);
+    }
+
+    private boolean hasImageExtension(String fileName) {
+        return fileName.matches(".*\\.png") ||
+                fileName.matches(".*\\.jpe?g") ||
+                fileName.matches(".*\\.gif") ||
+                fileName.matches(".*\\.tiff?");
     }
 }
