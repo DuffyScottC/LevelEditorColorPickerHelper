@@ -108,9 +108,11 @@ public class ProjectController {
         newEntityMenuItem = frame.getAddEntityMenuItem();
         deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
         
-        //set up chooser
+        //set up choosers
         newProjectChooser.setMultiSelectionEnabled(false);
         openProjectChooser.setMultiSelectionEnabled(false);
+        newProjectChooser.setDragEnabled(true);
+        openProjectChooser.setDragEnabled(true);
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
