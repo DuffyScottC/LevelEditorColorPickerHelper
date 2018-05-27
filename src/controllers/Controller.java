@@ -14,8 +14,7 @@ public class Controller {
     public Controller() {
         frame.setTitle("Level Editor Color Picker");
         frame.setLocationRelativeTo(null);
-        // you can adjust the size with something like this:
-        // frame.setSize(600, 500);
+        frame.setSize(550, 550);
         
         //Set up the Results List Controller
         ResultsListController resultsListController = new ResultsListController(frame);
@@ -36,6 +35,8 @@ public class Controller {
         //set up the type combo box
         frame.getTypeComboBox().removeAllItems();
         frame.getTypeComboBox().addItem(Utils.defaultType);
+        
+        frame.getMainSplitPane().setDividerLocation((double) 0.4);
     }
 
     public static void main(String[] args) {
