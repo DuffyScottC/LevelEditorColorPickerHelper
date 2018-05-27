@@ -21,7 +21,7 @@ public class Utils {
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bi.createGraphics();
         g2d.setColor(color);
-        g2d.drawRect(0, 0, width, height);
+        g2d.fillRect(0, 0, width, height);
         return bi;
     }
 }
