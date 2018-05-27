@@ -6,9 +6,6 @@
 package controllers;
 
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import javax.swing.JCheckBox;
