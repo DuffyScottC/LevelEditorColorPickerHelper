@@ -131,9 +131,6 @@
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JTextField" name="searchTextField">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Name"/>
-                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -1205,7 +1202,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="unityPrefabTextField">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Prefab"/>
+                <Property name="text" type="java.lang.String" value="Prefabs/APrefab"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="newTypeButton">

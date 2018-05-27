@@ -118,8 +118,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         searchLabel.setText("Search:");
         searchPanel.add(searchLabel, java.awt.BorderLayout.WEST);
-
-        searchTextField.setText("Name");
         searchPanel.add(searchTextField, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -300,7 +298,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Unity Prefab:");
 
-        unityPrefabTextField.setText("Prefab");
+        unityPrefabTextField.setText("Prefabs/APrefab");
 
         newTypeButton.setText("New");
 
