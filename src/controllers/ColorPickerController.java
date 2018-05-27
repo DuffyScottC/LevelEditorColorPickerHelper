@@ -199,14 +199,6 @@ public class ColorPickerController {
             updateColorCodeTextField();
         });
         
-        frame.getSelectButton().addActionListener((ActionEvent e) -> {
-            //Copy the color code to the clipboard
-            String wolfString = frame.getColorCodeTextField().getText();
-            StringSelection stringSelection = new StringSelection(wolfString);
-            Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clpbrd.setContents(stringSelection, null);
-        });
-        
     }
     
     private void updateColorCodeTextField() {
@@ -311,6 +303,10 @@ public class ColorPickerController {
     
     public Color getColor() {
         return new Color(r, g, b);
+    }
+    
+    public boolean getIncludeHashTag() {
+        return includeHashTag;
     }
     
 }

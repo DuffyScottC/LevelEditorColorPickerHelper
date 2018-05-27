@@ -7,6 +7,9 @@ package controllers;
 
 import entities.Entity;
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -278,6 +281,11 @@ public class ProjectController {
             }
         });
         
+        frame.getSelectButton().addActionListener((ActionEvent e) -> {
+            //Copy the color code to the clipboard
+            copyCurrentColorCodeToClipboard();
+        });
+        
         frame.getResultsList().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -314,10 +322,8 @@ public class ProjectController {
                 int index = resultsListController.getSelectedIndex();
                 //if there is no selection
                 if (index == -1) {
-                    //stop
                     return;
                 }
-                
                 //get the entity in the resultsList
                 Entity selectedEntity 
                         = resultsListController.getEntitiesInResults().get(index);
@@ -327,6 +333,12 @@ public class ProjectController {
                 loadCurrentEntityIntoInfoPanel();
                 //we are no longer modifed
                 modifiedController.setModified(false);
+                
+                //if the user double-clicked
+                if(e.getClickCount()==2){
+                    //Copy the color code to the clipboard
+                    copyCurrentColorCodeToClipboard();
+                }
             }
         });
         
@@ -882,5 +894,21 @@ public class ProjectController {
             JOptionPane.showMessageDialog(frame, "Unable to serialize project.\n" 
                     + ex.toString());
         }
+    }
+
+    private void copyCurrentColorCodeToClipboard() {
+        Entity currentEntity = currentProject.getCurrentEntity();
+        int r = currentEntity.getR();
+        int g = currentEntity.getG();
+        int b = currentEntity.getB();
+        String colorString = null;
+        if (colorPickerController.getIncludeHashTag()) {
+            colorString = String.format("#%02X%02X%02X", r, g, b);
+        } else {
+            colorString = String.format("%02X%02X%02X", r, g, b);
+        }
+        StringSelection stringSelection = new StringSelection(colorString);
+        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clpbrd.setContents(stringSelection, null);
     }
 }
