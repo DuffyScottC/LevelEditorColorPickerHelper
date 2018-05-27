@@ -5,15 +5,15 @@
  */
 package views;
 
-import controllers.Controller;
+import controllers.Utils;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -28,19 +28,40 @@ public class ImagePanel extends JPanel {
      * Give the image panel a new image path to display the image
      * associated with the selected entity in the side bar.
      * @param imageFile The file containing the image
+     * @param color
      */
-    public void setImagePath(File imageFile) {
+    public void setImagePath(File imageFile, Color color) {
         BufferedImage newImage = null;
-        try {
-            newImage = ImageIO.read(imageFile);
-        } catch (IOException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
         //Get the size of the panel that we are drawing to
         int w = getSize().width;
         int h = getSize().height;
-        image = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
-        image.getGraphics().drawImage(newImage, 0, 0, w, h, null);
+        
+        //if the imageFile is not null
+        if (imageFile != null) {
+            //if the image exists
+            if (imageFile.exists()) {
+                try {
+                    newImage = ImageIO.read(imageFile);
+                    image = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
+                    image.getGraphics().drawImage(newImage, 0, 0, w, h, null);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Could not read file:\n"
+                            + imageFile.toString(), "Warning", 
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                //if the image does not exist
+                JOptionPane.showMessageDialog(null,
+                        "Could not find image at\n" + imageFile + 
+                        "\nFile does not exist.");
+                newImage = Utils.getBlankBufferedImage(w, h, color);
+                image = newImage;
+            }
+        } else {
+            newImage = Utils.getBlankBufferedImage(w, h, color);
+            image = newImage;
+        }
+        this.repaint();
     }
     
     @Override
@@ -53,15 +74,5 @@ public class ImagePanel extends JPanel {
             g2d.drawImage(image, x, y, this);
             g2d.dispose();
         }
-    }
-    
-    /**
-     * Assigns the image of this image panel to the buffered image given and
-     * then repaints the panel.
-     * @param image 
-     */
-    public void setImage(BufferedImage image) {
-        this.image = image;
-        repaint();
     }
 }

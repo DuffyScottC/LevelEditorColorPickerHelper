@@ -12,7 +12,11 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -48,36 +52,37 @@ public class EntityListRenderer extends DefaultListCellRenderer {
         //Call the original super method
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
+        Entity entity = entitiesInList.get(index);
         //get the path to the image associated with the entity at this index
-        String imagePath = entitiesInList.get(index).getImage();
-        //check if the image exists
-        if (imageFileExists(imagePath)) {
-            //Create an ImageIcon with this image path
-            ImageIcon imageIcon = new ImageIcon(imagePath);
-            //set the label's icon to this image
-            label.setIcon(imageIcon);
+        File imageFile = entity.getImageFile();
+        BufferedImage newImage = null;
+        if (imageFile != null) {
+            //check if the image exists
+            if (imageFile.exists()) {
+                try {
+                    newImage = ImageIO.read(imageFile);
+                } catch (IOException ex) {
+                    System.err.println("Trouble reading file:\n" + imageFile.toString()
+                            + "\n" + ex.toString());
+                }
+            } else {
+                //Create a blank buffered image
+                newImage = Utils.getBlankBufferedImage(32, 32, entity.getColor());
+            }
         } else {
-            //Create a blank white buffered image
-            BufferedImage bi = Utils.getBlankBufferedImage(32, 32, Color.white);
-            //create an image icon from the blank white buffered image
-            ImageIcon imageIcon = new ImageIcon(bi);
-            //set the label's icon to this image
-            label.setIcon(imageIcon);
+            //Create a blank buffered image
+            newImage = Utils.getBlankBufferedImage(32, 32, entity.getColor());
         }
+        
+        //create an image icon from the new image
+        ImageIcon imageIcon = new ImageIcon(newImage);
+        //set the label's icon to this image
+        label.setIcon(imageIcon);
         
         label.setHorizontalTextPosition(JLabel.RIGHT);
         label.setFont(font);
 
         return label;
-    }
-
-    private boolean imageFileExists(String imagePath) {
-        if (imagePath != null) {
-            File file = new File(imagePath);
-            return file.exists();
-        } else {
-            return false;
-        }
     }
 
 }

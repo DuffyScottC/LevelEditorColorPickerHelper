@@ -770,38 +770,11 @@ public class ProjectController {
         int index = currentProject.getTypes().indexOf(currentEntity.getType());
         //set the selected type
         frame.getTypeComboBox().setSelectedIndex(index);
-        boolean noImage = false;
-        //if the entity has an image path
-        if (currentEntity.getImage() != null) {
-            //get the image path and turn it into a file
-            File imageFile = new File(currentEntity.getImage());
-            //if the image exists
-            if (imageFile.exists()) {
-                //set the image of the ImagePanel
-                frame.getImagePanel().setImagePath(imageFile);
-            } else {
-                //tell the user the image does not exist
-                JOptionPane.showMessageDialog(frame,
-                        "Could not find image for " + currentEntity.getName()
-                        + " at\n" + currentEntity.getImage() + "\nFile does not "
-                        + "exist.");
-                noImage = true;
-            }
-            
-        } else {
-            noImage = true;
-        }
-        
-        //if there was no image file associated with this entity
-        if (noImage) {
-            //create a blank image of the color of the entity
-            BufferedImage image 
-                    = Utils.getBlankBufferedImage(32, 32, currentEntity.getColor());
-            //set the image of the ImagePanel
-            frame.getImagePanel().setImage(image);
-        }
-        
-        colorPickerController.setColor(currentEntity.getR(), currentEntity.getG(), currentEntity.getB());
+        //load the image file into the ImagePanel
+        frame.getImagePanel().setImagePath(currentEntity.getImageFile(), 
+                currentEntity.getColor());
+        colorPickerController.setColor(currentEntity.getR(), 
+                currentEntity.getG(), currentEntity.getB());
     }
     
     public void setSearchElementsEnabled(boolean value) {
@@ -860,7 +833,7 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
-        String newImage = null;
+        File newImage = null;
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
         String newType = currentProject.getTypes().get(newTypeIndex);
