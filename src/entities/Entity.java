@@ -13,22 +13,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * An entity consists of an imageFile, a name, and a color.<>
+ * An entity consists of an image, a name, and a color.<>
  * These entities are displayed in the jLists, and stored in text files
  * so that they can be edited, shared, etc.
  * @author Scott
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"imageFile","name","type","r","g","b","unityPrefab"})
+@XmlType(propOrder={"image","name","type","r","g","b","unityPrefab"})
 public class Entity {
     /**
-     * The path of a the imageFile associated with this entity. This is null
- if there is no imageFile associated with this entity, and you should
+     * The path of a the image associated with this entity. This is null
+ if there is no image associated with this entity, and you should
  simply use the color associated with this entity to color the
- imageFile panel.
+ image panel.
      */
-    private File imageFile;
+    private String image;
     /**
      * The name associated with this entity
      */
@@ -61,7 +61,7 @@ public class Entity {
      * XML serializer, which requires a no-argument constructor.
      */
     public Entity() {
-        this.imageFile = null;
+        this.image = null;
         this.name = null;
         this.type = null;
         this.r = 0;
@@ -72,17 +72,17 @@ public class Entity {
     
     /**
      * Create a new entity using a Color object to assign the r, g, b values.
-     * @param image The path of the imageFile associated with this entity (pass in 
- null if you don't have an imageFile path for this entity, and the entity will
- simply use its own color as the imageFile)
+     * @param image The path of the image associated with this entity (pass in 
+ null if you don't have an image path for this entity, and the entity will
+ simply use its own color as the image)
      * @param name The name associated with this entity
      * @param type The name of the type or category associated with this entity
      * @param color The color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      */
-    public Entity (File image, String name, String type, 
+    public Entity (String image, String name, String type, 
             Color color, String unityPrefab) {
-        this.imageFile = image;
+        this.image = image;
         this.name = name;
         this.type = type;
         this.r = color.getRed();
@@ -91,9 +91,9 @@ public class Entity {
         this.unityPrefab = unityPrefab;
     }
     
-    public void replaceValues(File image, String name, String type, 
+    public void replaceValues(String image, String name, String type, 
             Color color, String unityPrefab) {
-        this.imageFile = image;
+        this.image = image;
         this.name = name;
         this.type = type;
         this.r = color.getRed();
@@ -104,15 +104,15 @@ public class Entity {
     
     /**
      * Create a new entity using the r, g, b values directly.
-     * @param image The path of the imageFile associated with this entity
+     * @param image The path of the image associated with this entity
      * @param name The name associated with this entity
      * @param r The r of the color associated with this entity
      * @param g The g of the color associated with this entity
      * @param b The b of the color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      */
-    public Entity (File image, String name, int r, int g, int b, String unityPrefab) {
-        this.imageFile = image;
+    public Entity (String image, String name, int r, int g, int b, String unityPrefab) {
+        this.image = image;
         this.name = name;
         this.r = r;
         this.g = g;
@@ -145,17 +145,17 @@ public class Entity {
     }
     
     /**
-     * The path of a the imageFile associated with this entity. This is null
- if there is no imageFile associated with this entity, and you should
+     * The path of a the image associated with this entity. This is null
+ if there is no image associated with this entity, and you should
  simply use the color associated with this entity to color the
- imageFile panel.
+ image panel.
      */
-    public File getImageFile() {
-        return imageFile;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageFile(File imageFile) {
-        this.imageFile = imageFile;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {

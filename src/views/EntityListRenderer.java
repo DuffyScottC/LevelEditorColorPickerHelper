@@ -54,7 +54,7 @@ public class EntityListRenderer extends DefaultListCellRenderer {
                 list, value, index, isSelected, cellHasFocus);
         Entity entity = entitiesInList.get(index);
         //get the path to the image associated with the entity at this index
-        File imageFile = entity.getImageFile();
+        File imageFile = entity.getImage();
         BufferedImage newImage = null;
         if (imageFile != null) {
             //check if the image exists
