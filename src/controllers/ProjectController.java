@@ -16,11 +16,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -352,13 +355,34 @@ public class ProjectController {
                     String name = newFile.getName();
                     //if the file is a valid image
                     if (hasImageExtension(name)) {
-                        //copy the image to be in the resources file
-                        File newImageFile = copyImageToResources(newFile);
+                        try {
+                            //copy the image to be in the resources file
+                            boolean success = copyImageToResources(newFile);
+                            //if the resources folder could not be found
+                            if (!success) {
+                                //make the new file null so that the entity can
+                                //be represented by its color.
+                                newFile = null;
+                            }
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Could not "
+                                + "copy image into Resources folder:\n" 
+                                + ex.toString(), "Image Read/Write Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        }
                         //pass the new image to the imagePanel
                         frame.getImagePanel().setImagePath(newFile, 
                                 currentProject.getCurrentEntity().getColor());
-                        //set the current image file
-                        currentImageFile = null;
+                        //if the image could not be created
+                        if (newFile == null) {
+                            //set the current image file to null
+                            currentImageFile = null;
+                        } else {
+                            //if the image was created successfully
+                            //set the current image file to the name of the
+                            //new image file
+                            currentImageFile = newFile;
+                        }
                         //mark this as a modified entity
                         modifiedController.setModified(true);
                     } else {
@@ -383,11 +407,66 @@ public class ProjectController {
     //MARK: Add Entity
     /**
      * Copies the passed in image and stores it in the resources folder.
-     * @return The relative path from projectResourcesFolder to the copied 
-     * image.
+     * 
+     * @return True if 1) the image was copied successfully or 2) the image
+     * already exists and the user wants to use that image instead (this means
+     * that the same image will be used for two different entities). False if
+     * the Resources Folder does not exist and we should abort the image adding
+     * process.
      */
-    private File copyImageToResources(File imageFile) {
-        return imageFile;
+    private boolean copyImageToResources(File originalImageFile) 
+            throws IOException {
+        ///get the name of the original image
+        String imageName = originalImageFile.getName();
+        //convert the projectLocation into a Path
+        Path projectLocationPath = projectLocation.toPath();
+        //find the resources path within the projectLocation
+        Path resourcesFolderPath 
+                = Paths.get(projectLocationPath.toString(), "Resources");
+        //convert the resources folder path to a string
+        File resourcesFolderFile = resourcesFolderPath.toFile();
+        //if the resources folder does not exist
+        if (!resourcesFolderFile.exists()) {
+            //tell the user that the resources folder does not exist
+            JOptionPane.showMessageDialog(null, 
+                    "The Resources folder could not be found at:\n"
+                        + resourcesFolderFile.toString(), 
+                    "Folder Not Found", 
+                    JOptionPane.ERROR_MESSAGE);
+            //exit with false - should abort
+            return false;
+        }
+        //create a new path where the copy of the original image will be saved
+        Path copiedImagePath 
+                = Paths.get(resourcesFolderPath.toString(), imageName);
+        File copiedImageFile = copiedImagePath.toFile();
+        if (copiedImageFile.exists()) {
+            //if the user does NOT want to continue
+            if (!shouldContinue("The image " + imageName + " already exists "
+                    + "in the project Resources folder. Are you sure you wish "
+                    + "to overwrite this image?")) {
+                //then the user does not want to overwrite the image
+                return true;
+            }
+            //if the user wants to overwrite the existing image
+        }
+        //if the image does not exist in the Resources folder or
+        //the user wants to overwrite the image
+        //save the file
+        
+        //retrieve the image data
+        BufferedImage bi = ImageIO.read(originalImageFile);
+        String extension = "";
+        //get the start of the extension
+        int i = imageName.lastIndexOf('.');
+        //if the imageName has an extension
+        if (i > 0) {
+            //get the extension
+            extension = imageName.substring(i+1);
+        }
+        //save the image to the Resources folder
+        ImageIO.write(bi, extension, copiedImageFile);
+        return true;
     }
     
     /**
