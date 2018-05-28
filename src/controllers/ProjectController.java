@@ -394,11 +394,11 @@ public class ProjectController {
      * False if the resources folder could not be found or if the image could 
      * not be copied.
      */
-    private boolean copyCurrentImageFileToResources() {
+    private String copyCurrentImageFileToResources() {
         //if there is no image
         if (currentImageFile == null) {
             //just return
-            return true;
+            return currentImageFile.getName();
         }
         ///get the name of the original image
         String imageName = currentImageFile.getName();
@@ -410,7 +410,7 @@ public class ProjectController {
                     "Folder Not Found", 
                     JOptionPane.ERROR_MESSAGE);
             //the file could not be copied
-            return false;
+            return null;
         }
         //create a new path where the copy of the original image will be saved
         Path copiedImagePath 
@@ -424,7 +424,7 @@ public class ProjectController {
                 //the user wants to use the already existing image as the image
                 //for this entity. (this way, two entities will likely be using
                 //the same image)
-                return true;
+                return currentImageFile.getName();
             }
             //if the user wants to overwrite the existing image
         }
@@ -450,10 +450,10 @@ public class ProjectController {
                 + ex.toString(), "Image Read/Write Error",
                 JOptionPane.ERROR_MESSAGE);
             //the image could not be copied
-            return false;
+            return null;
         }
         //the image was copied successfully
-        return true;
+        return currentImageFile.getName();
     }
     
     /**
@@ -1103,18 +1103,10 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
-        String newImage = null;
-        //copy the currentImageFile to the project Resources folder and get
-        //the file where the new copied image is (or get null if the image could
-        //not be created
-        boolean success = copyCurrentImageFileToResources();
-        //if the currentImage was copied (or there was already an identically
-        //named file that the user elected to use instead of the image they
-        //imported when they clicked "change image"
-        if (success) {
-            newImage = currentImageFile.getName();
-        }
-        //make the newImage string be the name of the currentImageFile
+        //copy the currentImageFile to the project Resources folder and get the
+        //name of the file where the new copied image is (or get null if the
+        //image could not be created)
+        String newImage = copyCurrentImageFileToResources();
         
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
