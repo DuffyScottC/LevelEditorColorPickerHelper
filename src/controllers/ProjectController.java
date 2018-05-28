@@ -166,9 +166,6 @@ public class ProjectController {
                 if (modifiedController.isModified()) {
                     //if the user does not want to continue
                     if (!shouldContinue("Discard changes?")) {
-                        //then we no longer need to keep track of the image that
-                        //was selected to replace the current entity's image
-                        currentImageFile = null;
                         return;
                     }
                 }
