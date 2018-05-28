@@ -389,10 +389,17 @@ public class ProjectController {
     /**
      * Copies the passed in image and stores it in the resources folder.
      * 
-     * @return The file where the currentImage was copied to (located within
-     * the project's resources folder). Null if the file could not be copied.
+     * @return True if there is no currentImage, if the user wants to overwrite
+     * any identically named image, or if the image was copied successfully. 
+     * False if the resources folder could not be found or if the image could 
+     * not be copied.
      */
     private boolean copyCurrentImageFileToResources() {
+        //if there is no image
+        if (currentImageFile == null) {
+            //just return
+            return true;
+        }
         ///get the name of the original image
         String imageName = currentImageFile.getName();
         Path resourcesFolderPath = getResourcesFolderPath();
