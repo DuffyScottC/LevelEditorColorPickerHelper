@@ -172,52 +172,56 @@ public class ProjectController {
                 }
                 //if the user just opened the app and no project has been selected yet
                 if (currentProject != null) {
-                    try {
-                        //generate a new default entity
-                        Entity newEntity = generateNewDefaultEntity();
-                        //add the new entity to the currentProject
-                        currentProject.addEntity(newEntity);
-                        currentProject.setCurrentEntity(newEntity);
-                        
-                        /*
-                        If the newly added entity matches the search string, then
-                        we need to update the search results to include this entity
-                        */
-                        searchController.search();
-                        /*
-                        Now we need to find out if the newly created entity matches
-                        the search criteria
-                        */
-                        //get the entities in results
-                        List<Entity> entitiesInResults 
-                                = resultsListController.getEntitiesInResults();
-                        //get the index of the newEntity if it exists
-                        int index = entitiesInResults.indexOf(newEntity);
-                        //if the newEntity is not in the results list
-                        if (index == -1) {
-                            //clear the selection
-                            resultsListController.clearSelection();
-                        } else {
-                            //if the newEntity is in the results list,
-                            //then update the selection
-                            resultsListController.setSelectedIndex(index);
-                        }
-                        
-                        //update the UI to reflect the creation of a new entity
-                        loadCurrentEntityIntoInfoPanel();
-                        
-                        //tell the project that it has not been modified
-                        modifiedController.setModified(false);
-                        //save the project
-                        saveProject();
-                        setSearchElementsEnabled(true);
-                        setInfoElementsEnabled(true);
-                    } catch (Exception ex) {
-                        //the one with no explaination
-                        JOptionPane.showMessageDialog(frame,  
-                                "Technical difficulties:\n"
-                                + ex.toString());
+                    //generate a new default entity
+                    Entity newEntity = generateNewDefaultEntity();
+                    if (newEntity == null) {
+                        JOptionPane.showMessageDialog(null, 
+                            "Oops! No more colors are available in the RGB spectrum!\n"
+                            + "Congratulations, you used all 16,581,375 possible color\n"
+                            + "combinations! Unfortunately, this means you can't add\n"
+                            + "more entities (at least no to this project).",
+                            "No More Colors",
+                            JOptionPane.ERROR_MESSAGE);
+                        //stop without saving the entity
+                        return;
                     }
+                    //add the new entity to the currentProject
+                    currentProject.addEntity(newEntity);
+                    currentProject.setCurrentEntity(newEntity);
+
+                    /*
+                    If the newly added entity matches the search string, then
+                    we need to update the search results to include this entity
+                    */
+                    searchController.search();
+                    /*
+                    Now we need to find out if the newly created entity matches
+                    the search criteria
+                    */
+                    //get the entities in results
+                    List<Entity> entitiesInResults 
+                            = resultsListController.getEntitiesInResults();
+                    //get the index of the newEntity if it exists
+                    int index = entitiesInResults.indexOf(newEntity);
+                    //if the newEntity is not in the results list
+                    if (index == -1) {
+                        //clear the selection
+                        resultsListController.clearSelection();
+                    } else {
+                        //if the newEntity is in the results list,
+                        //then update the selection
+                        resultsListController.setSelectedIndex(index);
+                    }
+
+                    //update the UI to reflect the creation of a new entity
+                    loadCurrentEntityIntoInfoPanel();
+
+                    //tell the project that it has not been modified
+                    modifiedController.setModified(false);
+                    //save the project
+                    saveProject();
+                    setSearchElementsEnabled(true);
+                    setInfoElementsEnabled(true);
                 } else {
                     //open the new project dialog
                     openNewProjectDialog();
@@ -471,17 +475,13 @@ public class ProjectController {
      * @throws Exception if the user can't addEntity a new entity (the reason is
  in the exception's description).
      */
-    private Entity generateNewDefaultEntity() throws Exception {
+    private Entity generateNewDefaultEntity() {
         // Set the color of the entity
         Color newColor = getUniqueDefaultColor();
         //if newColor is null
         if (newColor == null) {
             //tell the user they have run out of colors
-            throw new Exception(
-                    "Oops! No more colors are available in the RGB spectrum!\n"
-                    + "Congratulations, you used all 16,581,375 possible color\n"
-                    + "combinations! Unfortunately, this means you can't add\n"
-                    + "more entities (at least no to this project).");
+            return null;
         }
 
         String newType = currentProject.getTypes().get(0);
@@ -1020,18 +1020,23 @@ public class ProjectController {
             //the image file could not be found
             return null;
         }
-        //get the entity's image within the Resources folder
-        Path entityImagePath = Paths.get(resourcesFolderPath.toString(),
-                entity.getImage());
-        //convert the path into a file
-        File entityImageFile = entityImagePath.toFile();
-        //if the file exists
-        if (entityImageFile.exists()) {
-            //return the file with the entity's image
-            return entityImageFile;
-        } else {
-            //the image file does not exist
+        //if the entity's image is not null
+        if (entity.getImage() == null) {
             return null;
+        } else {
+            //get the entity's image within the Resources folder
+            Path entityImagePath = Paths.get(resourcesFolderPath.toString(),
+                    entity.getImage());
+            //convert the path into a file
+            File entityImageFile = entityImagePath.toFile();
+            //if the file exists
+            if (entityImageFile.exists()) {
+                //return the file with the entity's image
+                return entityImageFile;
+            } else {
+                //the image file does not exist
+                return null;
+            }
         }
     }
     
