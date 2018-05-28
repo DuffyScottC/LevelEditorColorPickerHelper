@@ -97,6 +97,9 @@ public class EntityListRenderer extends DefaultListCellRenderer {
      * image or if the project Resource folder does not exist or is set to null.
      */
     private File getEntityImageFile(Entity entity) {
+        if (entity.getImage() == null) {
+            return null;
+        }
         if (projectResourceLocation != null) {
             if (projectResourceLocation.exists()) {
                 Path projectResourcePath = projectResourceLocation.toPath();
