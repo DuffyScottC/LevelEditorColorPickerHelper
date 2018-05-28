@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.Entity;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -23,10 +24,9 @@ import views.MainFrame;
  */
 public class ResultsListController {
     
-    private final MainFrame frame;
-    
     private final DefaultListModel resultsListModel = new DefaultListModel();
     private final JList resultsList;
+    private final EntityListRenderer entityListRenderer;
     
     /**
      * All the entities that are in the resultsList, which is all the entities
@@ -35,12 +35,22 @@ public class ResultsListController {
     private final List<Entity> entitiesInResults;
     
     public ResultsListController(MainFrame frame) {
-        this.frame = frame;
         resultsList = frame.getResultsList();
         resultsList.setModel(resultsListModel);
         resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.entitiesInResults = new ArrayList();
-        resultsList.setCellRenderer(new EntityListRenderer(this.entitiesInResults));
+        entityListRenderer = new EntityListRenderer(this.entitiesInResults);
+        resultsList.setCellRenderer(entityListRenderer);
+    }
+    
+    /**
+     * Gives the list ResultsListController's resultsList's
+     * EntityListRenderer a reference to the project Resource location so
+     * that it can access the entity image files
+     * @param projectResourceLocation 
+     */
+    public void setProjectResourceLocation(File projectResourceLocation) {
+        entityListRenderer.setProjectResourceLocation(projectResourceLocation);
     }
     
     /**

@@ -632,6 +632,17 @@ public class ProjectController {
         searchController.setCurrentProject(newProject);
         newProject.createProjectLocation();
         projectLocation = newProject.getProjectLocation();
+        //get path to the resources folder
+        Path resourcesFolderPath = getResourcesFolderPath();
+        //if the resources folder could be found
+        if (resourcesFolderPath != null) {
+            //turn the resources folder path into a file
+            File resourcesFolderFile = resourcesFolderPath.toFile();
+            //give the resultsList's EntityListRenderer a reference to the
+            //resources folder file
+            resultsListController.setProjectResourceLocation(resourcesFolderFile);
+        }
+        
         projectFile = newProject.getProjectFile();
         projectName = newProject.getName();
         //update the typeComboBox with the new project's types
@@ -797,6 +808,16 @@ public class ProjectController {
         //At this point, everything is correct and we can assign the projectFile
         //and the projectLocation to their temp values.
         projectLocation = tempProjectLocation;
+        //get path to the resources folder
+        Path resourcesFolderPath = getResourcesFolderPath();
+        //if the resources folder could be found
+        if (resourcesFolderPath != null) {
+            //turn the resources folder path into a file
+            File resourcesFolderFile = resourcesFolderPath.toFile();
+            //give the resultsList's EntityListRenderer a reference to the
+            //resources folder file
+            resultsListController.setProjectResourceLocation(resourcesFolderFile);
+        }
         projectFile = tempFile;
         return true;
     }

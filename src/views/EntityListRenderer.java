@@ -7,15 +7,14 @@ package views;
 
 import controllers.Utils;
 import entities.Entity;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -33,6 +32,10 @@ public class EntityListRenderer extends DefaultListCellRenderer {
      */
     private List<Entity> entitiesInList;
     private Font font = new Font("helvitica", Font.PLAIN, 15);
+    /**
+     * Points to the project Resource folder
+     */
+    private File projectResourceLocation = null;
 
     /**
      * This is to be used in the lists that display the entities. You must pass
@@ -53,8 +56,10 @@ public class EntityListRenderer extends DefaultListCellRenderer {
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
         Entity entity = entitiesInList.get(index);
+        
         //get the path to the image associated with the entity at this index
-        File imageFile = entity.getImage();
+        File imageFile = getEntityImageFile(entity);
+        
         BufferedImage newImage = null;
         if (imageFile != null) {
             //check if the image exists
@@ -84,5 +89,37 @@ public class EntityListRenderer extends DefaultListCellRenderer {
 
         return label;
     }
+    
+    /**
+     * Gets the file where the entity's image should be
+     * @param entity
+     * @return A file object with the entity's image, null if the entity has no
+     * image or if the project Resource folder does not exist or is set to null.
+     */
+    private File getEntityImageFile(Entity entity) {
+        if (projectResourceLocation != null) {
+            if (projectResourceLocation.exists()) {
+                Path projectResourcePath = projectResourceLocation.toPath();
+                Path entityImageFile = Paths.get(projectResourcePath.toString(),
+                        entity.getImage());
+                return entityImageFile.toFile();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Gives the list renderer a reference to the project Resource location so
+     * that it can access the entity image files
+     * @param projectResourceLocation 
+     */
+    public void setProjectResourceLocation(File projectResourceLocation) {
+        this.projectResourceLocation = projectResourceLocation;
+    }
+    
+    
 
 }
