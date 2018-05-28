@@ -387,18 +387,20 @@ public class ProjectController {
     
     //MARK: Add Entity
     /**
-     * Copies the passed in image and stores it in the resources folder.
+     * Copies the passed in image and stores it in the resources folder. The
+     * result of this is passed directly to the entity to replace it's image
+     * value.
      * 
-     * @return True if there is no currentImage, if the user wants to overwrite
+     * @return The name of the currentImageFile if the user wants to overwrite
      * any identically named image, or if the image was copied successfully. 
-     * False if the resources folder could not be found or if the image could 
-     * not be copied.
+     * Null if the currentImageFile is null, if the resources folder could not
+     * be found, or if the image could not be copied.
      */
     private String copyCurrentImageFileToResources() {
-        //if there is no image
+        //if there is no image to copy
         if (currentImageFile == null) {
-            //just return
-            return currentImageFile.getName();
+            //just return null
+            return null;
         }
         ///get the name of the original image
         String imageName = currentImageFile.getName();
