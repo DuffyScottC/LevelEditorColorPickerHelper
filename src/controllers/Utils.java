@@ -94,7 +94,7 @@ public class Utils {
                     //create a BufferedImage the size of the display (ImagePanel
                     //or ImageIcon)
                     resultImage = new BufferedImage(width, height,
-                            BufferedImage.TYPE_INT_RGB);
+                            BufferedImage.TYPE_INT_ARGB);
                     //Draw the tempImage with the distance from the side and top
                     //and the new width and height calculated above
                     resultImage.getGraphics().drawImage(tempImage, 
