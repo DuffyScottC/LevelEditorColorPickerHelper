@@ -84,6 +84,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         unityPrefabTextField = new javax.swing.JTextField();
         newTypeButton = new javax.swing.JButton();
+        deleteImageButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProjectMenuItem = new javax.swing.JMenuItem();
@@ -291,13 +293,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        changeImageButton.setText("Change Image");
+        changeImageButton.setText("Change");
 
         jLabel5.setText("Unity Prefab:");
 
         unityPrefabTextField.setText("Prefabs/APrefab");
 
         newTypeButton.setText("New");
+
+        deleteImageButton.setText("Delete");
+
+        jLabel6.setText("Image:");
 
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
@@ -306,11 +312,6 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(infoPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(revertButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(applyButton))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameLabel)
@@ -335,7 +336,6 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(unityPrefabTextField))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(changeImageButton)
                             .addGroup(infoPanelLayout.createSequentialGroup()
                                 .addComponent(colorLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -343,7 +343,18 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(includeHashTagCheckBox))
                             .addComponent(selectButton))
-                        .addGap(0, 46, Short.MAX_VALUE)))
+                        .addGap(0, 46, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(revertButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(applyButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(changeImageButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteImageButton)))
                 .addContainerGap())
         );
         infoPanelLayout.setVerticalGroup(
@@ -361,7 +372,10 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newTypeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(changeImageButton)
+                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(changeImageButton)
+                    .addComponent(deleteImageButton)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(colorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -457,6 +471,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel colorLabel;
     private javax.swing.JPanel colorPanel;
     private javax.swing.JMenuItem deleteEntityMenuItem;
+    private javax.swing.JButton deleteImageButton;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JSlider greenSlider;
     private javax.swing.JSpinner greenSpinner;
@@ -468,6 +483,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSplitPane listsSplitPane;
     private javax.swing.JSplitPane mainSplitPane;
@@ -610,6 +626,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JButton getNewTypeButton() {
         return newTypeButton;
+    }
+
+    public JButton getDeleteImageButton() {
+        return deleteImageButton;
     }
     
 }

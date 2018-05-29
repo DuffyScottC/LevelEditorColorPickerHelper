@@ -383,23 +383,6 @@ public class ProjectController {
             }
         });
         
-        frame.getImagePanel().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                frame.getImagePanel().setRollover(true);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                frame.getImagePanel().setRollover(false);
-            }
-        });
-        
     }
     
     //MARK: Add Entity
