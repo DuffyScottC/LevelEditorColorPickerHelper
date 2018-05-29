@@ -52,11 +52,27 @@ public class Utils {
             if (imageFile.exists()) {
                 try {
                     BufferedImage tempImage = ImageIO.read(imageFile);
+                    
+                    /*
+                    In order to keep the ratio of the original image and
+                    expand it to fit the top and bottom but be centered on the
+                    top and sides, we need to calculate the distance from the
+                    left side and the new width of the image given that the new
+                    height of the image is the height of the display (ImagePanel
+                    or ImageIcon)
+                    */
+                    int newWidth 
+                            = height * tempImage.getWidth() / tempImage.getHeight();
+                    int distFromSide = (width - newWidth) / 2;
+                    
+                    //create a BufferedImage the size of the display (ImagePanel
+                    //or ImageIcon)
                     resultImage = new BufferedImage(width, height,
-                            BufferedImage.TYPE_INT_ARGB);
-                    resultImage.getGraphics().drawRect(0, 0, width, height);
+                            BufferedImage.TYPE_INT_RGB);
+                    //Draw the tempImage with the distance from the side and the
+                    //new width calculated above
                     resultImage.getGraphics().drawImage(tempImage, 
-                            0, 0, width, height, null);
+                            distFromSide, 0, newWidth, height, null);
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, 
                             "Could not read file:\n"
