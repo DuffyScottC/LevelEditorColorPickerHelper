@@ -1176,7 +1176,8 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
-        String newImage = null;
+        //initialize the newImage to the old image
+        String newImage = currentProject.getCurrentEntity().getImage();
         //if the user chose a new image and we should copy the currentImageFile
         if (shouldCopyCurrentImageFile) {
             //copy the currentImageFile to the project Resources folder and
@@ -1184,6 +1185,8 @@ public class ProjectController {
             //null if the image could not be created)
             newImage = copyCurrentImageFileToResources();
         }
+        //if the image hasn't changed or if the image did change and we have
+        //the newImage. 
         //reset the flag
         shouldCopyCurrentImageFile = false;
         
