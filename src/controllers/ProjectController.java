@@ -265,7 +265,14 @@ public class ProjectController {
             modifiedController.setModified(false);
         });
         
-        frame.getRevertButton();
+        frame.getRevertButton().addActionListener((ActionEvent e) -> {
+            //we no longer want to delete any files
+            imageFileToDelete = null;
+            //and we want to reload the current entity into the info panel
+            this.loadCurrentEntityIntoInfoPanel();
+            //mark this as unmodified
+            modifiedController.setModified(false);
+        });
         
         frame.getNewTypeButton().addActionListener((ActionEvent e) -> {
             //Get the new message type from the user
@@ -402,6 +409,20 @@ public class ProjectController {
                     currentProject.getCurrentEntity().getColor());
             modifiedController.setModified(true);
             shouldCopyCurrentImageFile = false;
+        });
+        
+        frame.getNameTextField().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                modifiedController.setModified(true);
+            }
+        });
+        
+        frame.getUnityPrefabTextField().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                modifiedController.setModified(true);
+            }
         });
         
     }
