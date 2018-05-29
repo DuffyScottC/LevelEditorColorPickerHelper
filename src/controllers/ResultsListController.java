@@ -112,5 +112,25 @@ public class ResultsListController {
     public int getSelectedIndex() {
         return resultsList.getSelectedIndex();
     }
+
+    void removeSelectedEntity() {
+        int oldIndex = resultsList.getSelectedIndex();
+        //remove the selected entity
+        entitiesInResults.remove(oldIndex);
+        //update the list model
+        updateListModel();
+        //set the index to one less than what it was
+        int newIndex = oldIndex - 1;
+        //if the index is less than 0
+        if (newIndex < 0) {
+            //set it to 0
+            newIndex = 0;
+        }
+        //if there are entities left
+        if (newIndex < entitiesInResults.size()) {
+            //select the the entity above the deleted entity
+            resultsList.setSelectedIndex(newIndex);
+        }
+    }
     
 }

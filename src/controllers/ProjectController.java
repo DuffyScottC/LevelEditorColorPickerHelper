@@ -173,64 +173,83 @@ public class ProjectController {
         });
         
         //action listener for add entity Button and add entity MenuItem
-        ActionListener addEntityActionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //if the entity has been modified
-                if (modifiedController.isModified()) {
-                    //if the user does not want to continue
-                    if (!shouldContinue("Discard changes?")) {
-                        return;
-                    }
+        ActionListener addEntityActionListener = (ActionEvent e) -> {
+            //if the entity has been modified
+            if (modifiedController.isModified()) {
+                //if the user does not want to continue
+                if (!shouldContinue("Discard changes?")) {
+                    return;
                 }
-                
-                //reset the image file to delete
-                imageFileToDelete = null;
-                
-                //if the user just opened the app and no project has been selected yet
-                if (currentProject != null) {
-                    //generate a new default entity
-                    Entity newEntity = generateNewDefaultEntity();
-                    if (newEntity == null) {
-                        JOptionPane.showMessageDialog(null, 
+            }
+            
+            //reset the image file to delete
+            imageFileToDelete = null;
+            
+            //if the user just opened the app and no project has been selected yet
+            if (currentProject != null) {
+                //generate a new default entity
+                Entity newEntity = generateNewDefaultEntity();
+                if (newEntity == null) { 
+                    JOptionPane.showMessageDialog(null,
                             "Oops! No more colors are available in the RGB spectrum!\n"
-                            + "Congratulations, you used all 16,581,375 possible color\n"
-                            + "combinations! Unfortunately, this means you can't add\n"
-                            + "more entities (at least no to this project).",
+                                    + "Congratulations, you used all 16,581,375 possible color\n"
+                                    + "combinations! Unfortunately, this means you can't add\n"
+                                    + "more entities (at least no to this project).",
                             "No More Colors",
                             JOptionPane.ERROR_MESSAGE);
-                        //stop without saving the entity
-                        return;
-                    }
-                    //add the new entity to the currentProject
-                    currentProject.addEntity(newEntity);
-                    currentProject.setCurrentEntity(newEntity);
-
-                    /*
-                    If the newly added entity matches the search string, then
-                    we need to update the search results to include this entity
-                    */
-                    updateSearchResultsToReflectEntityChangeOrAddition(newEntity);
-
-                    //update the UI to reflect the creation of a new entity
-                    loadCurrentEntityIntoInfoPanel();
-
-                    //tell the project that it has not been modified
-                    modifiedController.setModified(false);
-                    //save the project
-                    saveProject();
-                    setSearchElementsEnabled(true);
-                    setInfoElementsEnabled(true);
-                } else {
-                    //open the new project dialog
-                    openNewProjectDialog();
+                    //stop without saving the entity
+                    return;
                 }
+                //add the new entity to the currentProject
+                currentProject.addEntity(newEntity);
+                currentProject.setCurrentEntity(newEntity);
+                
+                /*
+                If the newly added entity matches the search string, then
+                we need to update the search results to include this entity
+                */
+                updateSearchResultsToReflectEntityChangeOrAddition(newEntity);
+                
+                //update the UI to reflect the creation of a new entity
+                loadCurrentEntityIntoInfoPanel();
+                
+                //tell the project that it has not been modified
+                modifiedController.setModified(false);
+                //save the project
+                saveProject();
+                setSearchElementsEnabled(true);
+                setInfoElementsEnabled(true);
+            } else {
+                //open the new project dialog
+                openNewProjectDialog();
             }
         };
         
         //add the action listener to both the button and the menu item
         frame.getAddEntityButton().addActionListener(addEntityActionListener);
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
+        
+        
+        frame.getDeleteEntityMenuItem().addActionListener((ActionEvent e) -> {
+            //if the user does not want to delete the entity
+            if (!shouldContinue("Are you sure you wish to delete \n"
+                    + currentProject.getCurrentEntity().getName() 
+                    + "\nand all its Resources (including its\n"
+                    + "image?) This action cannot be undone.")) {
+                //do nothing
+                return;
+            }
+            //remove the entity from the project
+            currentProject.removeCurrentEntity();
+            
+            //assign the imageFileToDelete to the current image
+            imageFileToDelete = currentImageFile;
+            deleteImageFileToDelete();
+            
+            resultsListController.removeSelectedEntity();
+            
+            saveProject();
+        });
         
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
             loadEntityFromInfoPanelIntoProject();

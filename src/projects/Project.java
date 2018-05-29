@@ -137,6 +137,10 @@ public class Project {
         this.currentEntity = currentEntity;
     }
     
+    public void removeCurrentEntity() {
+        entities.remove(currentEntity);
+    }
+    
     public void addType(String newType) {
         //add the type to the type list with the true case
         types.add(newType);
@@ -153,4 +157,5 @@ public class Project {
         s.append(projectFile);
         return s.toString();
     }
+    
 }
