@@ -1126,10 +1126,24 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
-        //copy the currentImageFile to the project Resources folder and get the
-        //name of the file where the new copied image is (or get null if the
-        //image could not be created)
-        String newImage = copyCurrentImageFileToResources();
+        String newImage = null;
+        //if the current image file is not null
+        if (currentImageFile != null) {
+            //get the name of the current entity's image
+            String currentEntityImage 
+                    = currentProject.getCurrentEntity().getImage();
+            //if the current image is different from the image already in the
+            //current entity
+            if (!currentImageFile.getName().equals(currentEntityImage)) {
+                //copy the currentImageFile to the project Resources folder and
+                //get the name of the file where the new copied image is (or get
+                //null if the image could not be created)
+                newImage = copyCurrentImageFileToResources();
+            }
+            //if the current image is the same as the currentImageFile
+        }
+        //if the current image is the same as the currentImageFile or the
+        //currentImageFile is null, continue
         
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
