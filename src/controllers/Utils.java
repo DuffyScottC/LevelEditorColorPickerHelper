@@ -31,6 +31,10 @@ public class Utils {
     }
     
     /**
+     * Fits the given image to the given height and width so that the image is
+     * the maximum size while still showing all of the image. Note: Right now,
+     * this algorithm only works for square displays, but the image can be any 
+     * dimension (square, or rectangle of north-south or east-west orientation).
      * 
      * @param width The width of the desired BufferedImage
      * @param height The height of the desired BufferedImage
@@ -43,7 +47,9 @@ public class Utils {
      * imageFile drawn onto it.
      */
     public static BufferedImage getBufferedImageFromFile(
-            int width, int height, File imageFile, Color color) {
+            int dim, File imageFile, Color color) {
+        int width = dim;
+        int height = dim;
         BufferedImage resultImage = null;
         boolean noImage = false;
         //if the imageFile is not null

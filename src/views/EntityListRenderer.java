@@ -64,7 +64,6 @@ public class EntityListRenderer extends DefaultListCellRenderer {
         BufferedImage newImage 
                 = Utils.getBufferedImageFromFile(
                         Utils.LIST_ICON_DIM, 
-                        Utils.LIST_ICON_DIM, 
                         imageFile, entity.getColor());
         
         //create an image icon from the new image

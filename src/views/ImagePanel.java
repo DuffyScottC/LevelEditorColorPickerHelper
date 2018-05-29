@@ -29,11 +29,12 @@ public class ImagePanel extends JPanel {
      * image could not be found.
      */
     public void setImagePath(File imageFile, Color color) {
-        //Get the size of the panel that we are drawing to
-        int w = getSize().width;
-        int h = getSize().height;
+        //Get the dimension of the square panel that we are drawing to
+        //(The panel must be square because that's the only way the
+        //algorithm Utils.getBufferedImageFromFile() works right now.)
+        int dim = getSize().width;
         
-        image = Utils.getBufferedImageFromFile(w, h, imageFile, color);
+        image = Utils.getBufferedImageFromFile(dim, imageFile, color);
         this.repaint();
     }
     
