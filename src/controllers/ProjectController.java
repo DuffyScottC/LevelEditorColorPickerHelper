@@ -298,6 +298,34 @@ public class ProjectController {
             }
         });
         
+        frame.getDeleteTypeButton().addActionListener((ActionEvent e) -> {
+            JComboBox typeComboBox = frame.getTypeComboBox();
+            int selectedIndex = typeComboBox.getSelectedIndex();
+            if (selectedIndex == 0) {
+                JOptionPane.showMessageDialog(null, "Can't delete type \"" 
+                        + Utils.DEFAULT_TYPE + "\"");
+                return;
+            }
+            //get the selected type
+            String selectedType = currentProject.getTypes().get(selectedIndex);
+            //if the user does not want to delete this type
+            if (!shouldContinue("Are you sure you wish to delete the type \""
+                    + selectedType
+                    + "\"?\n"
+                    + "All entities of this type will be switched to \""
+                    + Utils.DEFAULT_TYPE + "\"\n"
+                    + "This operation cannot be undone.")) {
+                return;
+            }
+            //remove the type from the types list and change all entities of
+            //that type to the default type
+            currentProject.removeType(selectedIndex);
+            //update the combo box
+            updateTypeComboBox();
+            //select the default type
+            typeComboBox.setSelectedIndex(0);
+        });
+        
         frame.getSelectButton().addActionListener((ActionEvent e) -> {
             //Copy the color code to the clipboard
             copyCurrentColorCodeToClipboard();
@@ -846,7 +874,7 @@ public class ProjectController {
         //specifically for this project
         currentProject = new Project(projectName, projectFile);
         searchController.setCurrentProject(currentProject);
-        currentProject.addType(Utils.defaultType);
+        currentProject.addType(Utils.DEFAULT_TYPE);
         updateTypeComboBox();
         //serialize the new project
         serializeNewProjectToXML();

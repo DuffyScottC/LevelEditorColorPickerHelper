@@ -37,7 +37,7 @@ public class Controller {
         
         //set up the type combo box
         frame.getTypeComboBox().removeAllItems();
-        frame.getTypeComboBox().addItem(Utils.defaultType);
+        frame.getTypeComboBox().addItem(Utils.DEFAULT_TYPE);
         
         JSplitPane mainSplitPane = frame.getMainSplitPane();
         mainSplitPane.setDividerLocation((double) 0.4);

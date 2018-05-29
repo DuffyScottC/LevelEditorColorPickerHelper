@@ -5,6 +5,7 @@
  */
 package projects;
 
+import controllers.Utils;
 import entities.Entity;
 import java.io.File;
 import java.util.ArrayList;
@@ -144,6 +145,22 @@ public class Project {
     public void addType(String newType) {
         //add the type to the type list with the true case
         types.add(newType);
+    }
+
+    /**
+     * Removes the indicated type at index from the project by removing it from
+     * the list of types and changing the type of all entities whose type
+     * matches the indicated type to the default type.
+     * @param index The index of the type to remove
+     */
+    public void removeType(int index) {
+        String typeToRemove = types.get(index);
+        for (Entity entity : entities) {
+            if (entity.getType().equals(typeToRemove)) {
+                entity.setType(Utils.DEFAULT_TYPE);
+            }
+        }
+        types.remove(index);
     }
     
     @Override

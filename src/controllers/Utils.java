@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Scott
  */
 public class Utils {
-    public static final String defaultType = "Misc";
+    public static final String DEFAULT_TYPE = "Misc";
     public static final int LIST_ICON_DIM = 32;
     
     public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
