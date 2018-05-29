@@ -61,6 +61,12 @@ public class ProjectController {
      */
     private File currentImageFile = null;
     /**
+     * Tells the program whether it should copy the currentImageFile to the
+     * resources folder (true) or if the currentImageFile is already in the
+     * resources folder (false)
+     */
+    private boolean shouldCopyCurrentImageFile = false;
+    /**
      * If the user chooses to delete the image, then we need to store the image
      * to delete so that we can delete it when the user presses the apply button
      */
@@ -342,6 +348,7 @@ public class ProjectController {
                         currentImageFile = newFile;
                         //mark this as a modified entity
                         modifiedController.setModified(true);
+                        shouldCopyCurrentImageFile = true;
                     } else {
                         JOptionPane.showMessageDialog(null, 
                                 "The selected image is not a supported "
@@ -373,6 +380,7 @@ public class ProjectController {
             frame.getImagePanel().setImagePath(null, 
                     currentProject.getCurrentEntity().getColor());
             modifiedController.setModified(true);
+            shouldCopyCurrentImageFile = false;
         });
         
     }
@@ -1127,23 +1135,15 @@ public class ProjectController {
      */
     private void loadEntityFromInfoPanelIntoProject() {
         String newImage = null;
-        //if the current image file is not null
-        if (currentImageFile != null) {
-            //get the name of the current entity's image
-            String currentEntityImage 
-                    = currentProject.getCurrentEntity().getImage();
-            //if the current image is different from the image already in the
-            //current entity
-            if (!currentImageFile.getName().equals(currentEntityImage)) {
-                //copy the currentImageFile to the project Resources folder and
-                //get the name of the file where the new copied image is (or get
-                //null if the image could not be created)
-                newImage = copyCurrentImageFileToResources();
-            }
-            //if the current image is the same as the currentImageFile
+        //if the user chose a new image and we should copy the currentImageFile
+        if (shouldCopyCurrentImageFile) {
+            //copy the currentImageFile to the project Resources folder and
+            //get the name of the file where the new copied image is (or get
+            //null if the image could not be created)
+            newImage = copyCurrentImageFileToResources();
         }
-        //if the current image is the same as the currentImageFile or the
-        //currentImageFile is null, continue
+        //reset the flag
+        shouldCopyCurrentImageFile = false;
         
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
