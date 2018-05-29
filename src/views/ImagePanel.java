@@ -6,15 +6,11 @@
 package views;
 
 import controllers.Utils;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -29,43 +25,15 @@ public class ImagePanel extends JPanel {
      * Give the image panel a new image path to display the image
      * associated with the selected entity in the side bar.
      * @param imageFile The file containing the image
-     * @param color
+     * @param color The backup color if there is no image or if the
+     * image could not be found.
      */
     public void setImagePath(File imageFile, Color color) {
-        BufferedImage newImage = null;
         //Get the size of the panel that we are drawing to
         int w = getSize().width;
         int h = getSize().height;
         
-        boolean noImage = false;
-        //if the imageFile is not null
-        if (imageFile != null) {
-            //if the image exists
-            if (imageFile.exists()) {
-                try {
-                    newImage = ImageIO.read(imageFile);
-                    image = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
-                    image.getGraphics().drawImage(newImage, 0, 0, w, h, null);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Could not read file:\n"
-                            + imageFile.toString(), "Warning", 
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            } else {
-                //if the image does not exist
-                JOptionPane.showMessageDialog(null,
-                        "Could not find image at\n" + imageFile + 
-                        "\nFile does not exist.");
-                noImage = true;
-            }
-        } else {
-            noImage = true;
-        }
-        
-        if (noImage) {
-            newImage = Utils.getBlankBufferedImage(w, h, color);
-            image = newImage;
-        }
+        image = Utils.getBufferedImageFromFile(w, h, imageFile, color);
         this.repaint();
     }
     

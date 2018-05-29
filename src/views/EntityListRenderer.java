@@ -30,8 +30,8 @@ public class EntityListRenderer extends DefaultListCellRenderer {
     /**
      * A reference to the entities in the result list
      */
-    private List<Entity> entitiesInList;
-    private Font font = new Font("helvitica", Font.PLAIN, 15);
+    private final List<Entity> entitiesInList;
+    private final Font font = new Font("helvitica", Font.PLAIN, 15);
     /**
      * Points to the project Resource folder
      */
@@ -67,12 +67,14 @@ public class EntityListRenderer extends DefaultListCellRenderer {
                 try {
                     newImage = ImageIO.read(imageFile);
                 } catch (IOException ex) {
-                    System.err.println("Trouble reading file:\n" + imageFile.toString()
+                    System.err.println("Trouble reading file:\n" 
+                            + imageFile.toString()
                             + "\n" + ex.toString());
                 }
             } else {
                 //Create a blank buffered image
-                newImage = Utils.getBlankBufferedImage(32, 32, entity.getColor());
+                newImage = Utils.getBlankBufferedImage(32, 32, 
+                        entity.getColor());
             }
         } else {
             //Create a blank buffered image
@@ -122,7 +124,4 @@ public class EntityListRenderer extends DefaultListCellRenderer {
     public void setProjectResourceLocation(File projectResourceLocation) {
         this.projectResourceLocation = projectResourceLocation;
     }
-    
-    
-
 }
