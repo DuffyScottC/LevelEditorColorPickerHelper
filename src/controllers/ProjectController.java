@@ -19,6 +19,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,6 +60,11 @@ public class ProjectController {
      * Stores the image that is currently being displayed in the ImagePanel
      */
     private File currentImageFile = null;
+    /**
+     * If the user chooses to delete the image, then we need to store the image
+     * to delete so that we can delete it when the user presses the apply button
+     */
+    private File imageFileToDelete = null;
     
     private final MainFrame frame;
     
@@ -235,6 +243,7 @@ public class ProjectController {
         
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
             loadEntityFromInfoPanelIntoProject();
+            deleteImageFileToDelete();
             saveProject();
             
             /*
@@ -381,6 +390,21 @@ public class ProjectController {
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
+        });
+        
+        frame.getDeleteImageButton().addActionListener((ActionEvent e) -> {
+            //if the user does not want to delete the image
+            if (!shouldContinue("Delete this image?")) {
+                //then stop
+                return;
+            }
+            //if the user does choose to delete this image
+            imageFileToDelete = currentImageFile;
+            //set the currentImageFile to null
+            currentImageFile = null;
+            //make the ImagePanel show the current entity's color.
+            frame.getImagePanel().setImagePath(null, 
+                    currentProject.getCurrentEntity().getColor());
         });
         
     }
@@ -1120,6 +1144,28 @@ public class ProjectController {
     }
     
     /**
+     * Delete the image that the user chose to delete
+     */
+    private void deleteImageFileToDelete() {
+        //if there is no image to delete
+        if (imageFileToDelete == null) {
+            return;
+        }
+        //get the path of the image to delete
+        Path path = imageFileToDelete.toPath();
+        try {
+            Files.delete(path);
+        } catch (NoSuchFileException x) {
+            System.err.format("%s: no such" + " file or directory%n", path);
+        } catch (DirectoryNotEmptyException x) {
+            System.err.format("%s not empty%n", path);
+        } catch (IOException x) {
+            // File permission problems are caught here.
+            System.err.println(x);
+        }
+    }
+    
+    /**
      * This is run when the user presses the apply button.
      */
     private void saveProject() {
@@ -1157,4 +1203,5 @@ public class ProjectController {
                 fileName.matches(".*\\.gif") ||
                 fileName.matches(".*\\.tiff?");
     }
+    
 }
