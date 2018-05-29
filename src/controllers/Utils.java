@@ -101,15 +101,14 @@ public class Utils {
                             distFromSide, distFromTop, 
                             newWidth, newHeight, null);
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, 
-                            "Could not read file:\n"
-                            + imageFile.toString(), "Warning", 
-                            JOptionPane.WARNING_MESSAGE);
+                    System.err.println("Could not read file:\n"
+                            + imageFile.toString());
+                    noImage = true;
                 }
             } else {
                 //if the image does not exist
-                JOptionPane.showMessageDialog(null,
-                        "Could not find image at\n" + imageFile + 
+                System.err.println("Could not find image at\n" 
+                        + imageFile.toString() + 
                         "\nFile does not exist.");
                 noImage = true;
             }

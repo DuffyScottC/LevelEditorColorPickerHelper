@@ -265,6 +265,8 @@ public class ProjectController {
             modifiedController.setModified(false);
         });
         
+        frame.getRevertButton();
+        
         frame.getNewTypeButton().addActionListener((ActionEvent e) -> {
             //Get the new message type from the user
             String newType = JOptionPane.showInputDialog(frame, "New type:", 
