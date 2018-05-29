@@ -204,25 +204,7 @@ public class ProjectController {
                     If the newly added entity matches the search string, then
                     we need to update the search results to include this entity
                     */
-                    searchController.search();
-                    /*
-                    Now we need to find out if the newly created entity matches
-                    the search criteria
-                    */
-                    //get the entities in results
-                    List<Entity> entitiesInResults 
-                            = resultsListController.getEntitiesInResults();
-                    //get the index of the newEntity if it exists
-                    int index = entitiesInResults.indexOf(newEntity);
-                    //if the newEntity is not in the results list
-                    if (index == -1) {
-                        //clear the selection
-                        resultsListController.clearSelection();
-                    } else {
-                        //if the newEntity is in the results list,
-                        //then update the selection
-                        resultsListController.setSelectedIndex(index);
-                    }
+                    updateSearchResultsToReflectEntityChangeOrAddition(newEntity);
 
                     //update the UI to reflect the creation of a new entity
                     loadCurrentEntityIntoInfoPanel();
@@ -248,30 +230,12 @@ public class ProjectController {
             loadEntityFromInfoPanelIntoProject();
             deleteImageFileToDelete();
             saveProject();
-            
             /*
-            If the newly added entity matches the search string, then
+            If the newly changed entity matches the search string, then
             we need to update the search results to include this entity
             */
-            searchController.search();
-            /*
-            Now we need to find out if the newly created entity matches
-            the search criteria
-            */
-            //get the entities in results
-            List<Entity> entitiesInResults 
-                    = resultsListController.getEntitiesInResults();
-            //get the index of the newEntity if it exists
-            int index = entitiesInResults.indexOf(currentProject.getCurrentEntity());
-            //if the newEntity is not in the results list
-            if (index == -1) {
-                //clear the selection
-                resultsListController.clearSelection();
-            } else {
-                //if the newEntity is in the results list,
-                //then update the selection
-                resultsListController.setSelectedIndex(index);
-            }
+            updateSearchResultsToReflectEntityChangeOrAddition(
+                    currentProject.getCurrentEntity());
             
             modifiedController.setModified(false);
         });
@@ -600,6 +564,35 @@ public class ProjectController {
         }
         //return the unique prefab string
         return prefabBase + num;
+    }
+    
+    /**
+     * When an entity is changed or a new entity is added, we must refresh the
+     * search results so that the change or addition is reflected in the results
+     * list JList side bar. 
+     * @param entity 
+     */
+    private void updateSearchResultsToReflectEntityChangeOrAddition(
+            Entity entity) {
+        searchController.search();
+        /*
+        Now we need to find out if the newly created entity matches
+        the search criteria
+        */
+        //get the entities in results
+        List<Entity> entitiesInResults 
+                = resultsListController.getEntitiesInResults();
+        //get the index of the newEntity if it exists
+        int index = entitiesInResults.indexOf(entity);
+        //if the newEntity is not in the results list
+        if (index == -1) {
+            //clear the selection
+            resultsListController.clearSelection();
+        } else {
+            //if the newEntity is in the results list,
+            //then update the selection
+            resultsListController.setSelectedIndex(index);
+        }
     }
     
     //MARK: Open Project
