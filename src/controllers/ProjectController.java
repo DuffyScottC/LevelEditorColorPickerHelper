@@ -405,6 +405,7 @@ public class ProjectController {
             //make the ImagePanel show the current entity's color.
             frame.getImagePanel().setImagePath(null, 
                     currentProject.getCurrentEntity().getColor());
+            modifiedController.setModified(true);
         });
         
     }
@@ -1163,6 +1164,8 @@ public class ProjectController {
             // File permission problems are caught here.
             System.err.println(x);
         }
+        //set the file to delete to null for next time
+        imageFileToDelete = null;
     }
     
     /**
