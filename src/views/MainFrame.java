@@ -10,8 +10,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
@@ -93,6 +95,10 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         addEntityMenuItem = new javax.swing.JMenuItem();
         deleteEntityMenuItem = new javax.swing.JMenuItem();
+        viewMenu = new javax.swing.JMenu();
+        layoutMenu = new javax.swing.JMenu();
+        swapMenuItem = new javax.swing.JMenuItem();
+        verticalMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -343,7 +349,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(includeHashTagCheckBox))
                             .addComponent(selectButton))
-                        .addGap(0, 46, Short.MAX_VALUE))
+                        .addGap(0, 51, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(revertButton)
@@ -419,6 +425,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
+        viewMenu.setText("View");
+
+        layoutMenu.setText("Layout");
+
+        swapMenuItem.setText("Swap Panels");
+        layoutMenu.add(swapMenuItem);
+
+        verticalMenuItem.setText("Vertical");
+        layoutMenu.add(verticalMenuItem);
+
+        viewMenu.add(layoutMenu);
+
+        menuBar.add(viewMenu);
+
         setJMenuBar(menuBar);
 
         pack();
@@ -485,6 +505,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenu layoutMenu;
     private javax.swing.JSplitPane listsSplitPane;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JMenuBar menuBar;
@@ -510,10 +531,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton selectButton;
     private javax.swing.JPanel selectionPanel;
     private javax.swing.JPanel sliderPanel;
+    private javax.swing.JMenuItem swapMenuItem;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
     private javax.swing.JTextField unityPrefabTextField;
+    private javax.swing.JMenuItem verticalMenuItem;
+    private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
 
     public JButton getAddEntityButton() {
@@ -630,6 +654,34 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JButton getDeleteImageButton() {
         return deleteImageButton;
+    }
+
+    public JSplitPane getListsSplitPane() {
+        return listsSplitPane;
+    }
+
+    public JMenu getFileMenu() {
+        return fileMenu;
+    }
+
+    public JMenuItem getSwapMenuItem() {
+        return swapMenuItem;
+    }
+
+    public JMenuItem getVerticalMenuItem() {
+        return verticalMenuItem;
+    }
+
+    public JPanel getInfoPanel() {
+        return infoPanel;
+    }
+
+    public JPopupMenu.Separator getjSeparator1() {
+        return jSeparator1;
+    }
+
+    public JPanel getSelectionPanel() {
+        return selectionPanel;
     }
     
 }
