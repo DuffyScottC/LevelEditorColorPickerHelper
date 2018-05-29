@@ -6,6 +6,7 @@
 package controllers;
 
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import views.MainFrame;
 
@@ -41,27 +42,23 @@ public class Controller {
         
         JSplitPane mainSplitPane = frame.getMainSplitPane();
         mainSplitPane.setDividerLocation((double) 0.4);
+        JPanel selectionPanel = frame.getSelectionPanel();
+        JPanel infoPanel = frame.getInfoPanel();
         
         frame.getSwapMenuItem().addActionListener((ActionEvent e) -> {
-            if (mainSplitPane.getOrientation() == JSplitPane.VERTICAL_SPLIT) {
-                if (swapped) {
-                    mainSplitPane.setTopComponent(frame.getSelectionPanel());
-                    mainSplitPane.setBottomComponent(frame.getInfoPanel());
-                } else {
-                    mainSplitPane.setTopComponent(frame.getInfoPanel());
-                    mainSplitPane.setBottomComponent(frame.getSelectionPanel());
-                }
+            mainSplitPane.removeAll();
+            if (swapped) {
+                //selection left or top
+                mainSplitPane.setLeftComponent(selectionPanel);
+                mainSplitPane.setRightComponent(infoPanel);
             } else {
-                if (swapped) {
-                    mainSplitPane.setLeftComponent(frame.getSelectionPanel());
-                    mainSplitPane.setRightComponent(frame.getInfoPanel());
-                } else {
-                    mainSplitPane.setLeftComponent(frame.getInfoPanel());
-                    mainSplitPane.setRightComponent(frame.getSelectionPanel());
-                }
+                //info left or top
+                mainSplitPane.setLeftComponent(infoPanel);
+                mainSplitPane.setRightComponent(selectionPanel);
             }
             //toggle the swapped boolean
             swapped = !swapped;
+            mainSplitPane.setDividerLocation((double) 0.4);
         });
         
         frame.getVerticalMenuItem().addActionListener((ActionEvent e) -> {
@@ -70,6 +67,7 @@ public class Controller {
             } else {
                 mainSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
             }
+            mainSplitPane.setDividerLocation((double) 0.4);
         });
     }
 
