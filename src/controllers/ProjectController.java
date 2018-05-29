@@ -453,6 +453,10 @@ public class ProjectController {
             }
         });
         
+        frame.getTypeComboBox().addActionListener((ActionEvent e) -> {
+            modifiedController.setModified(true);
+        });
+        
     }
     
     //MARK: Add Entity
