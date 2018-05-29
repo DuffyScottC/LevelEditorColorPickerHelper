@@ -51,28 +51,49 @@ public class Utils {
             //if the image exists
             if (imageFile.exists()) {
                 try {
+                    /*
+                    For commenting purposes, when I say "display" I mean the
+                    thing we're drawing on that has the passed in width and
+                    height above. This is likely an ImagePanel or an ImageIcon.
+                    */
                     BufferedImage tempImage = ImageIO.read(imageFile);
                     
-                    /*
-                    In order to keep the ratio of the original image and
-                    expand it to fit the top and bottom but be centered on the
-                    top and sides, we need to calculate the distance from the
-                    left side and the new width of the image given that the new
-                    height of the image is the height of the display (ImagePanel
-                    or ImageIcon)
-                    */
-                    int newWidth 
-                            = height * tempImage.getWidth() / tempImage.getHeight();
-                    int distFromSide = (width - newWidth) / 2;
+                    // Fit the image to the display:
+                    //get the width and height of the actual image
+                    int tempWidth = tempImage.getWidth();
+                    int tempHeight = tempImage.getHeight();
+                    
+                    //initialize the variables to the ideal (when the actual
+                    //image is a square and there is no distance from the side
+                    //or top.
+                    int newWidth = width;
+                    int newHeight = height;
+                    int distFromSide = 0;
+                    int distFromTop = 0;
+                    
+                    //decide what configuration the original image is in
+                    if (tempHeight > tempWidth) {
+                        //if the image is taller than it is wide
+                        newWidth = height * tempWidth / tempHeight;
+                        distFromSide = (width - newWidth) / 2;
+                    } else if (tempHeight < tempWidth) {
+                        //if the image is shorter than it is wide
+                        newHeight = tempHeight * width / tempWidth;
+                        distFromTop = (height - newHeight) / 2;
+                    }
+                    //if the image is a square like the display, then we don't
+                    //have to do any calculations and we can keep the variables
+                    //as they were initialized above.
                     
                     //create a BufferedImage the size of the display (ImagePanel
                     //or ImageIcon)
                     resultImage = new BufferedImage(width, height,
                             BufferedImage.TYPE_INT_RGB);
-                    //Draw the tempImage with the distance from the side and the
-                    //new width calculated above
+                    //Draw the tempImage with the distance from the side and top
+                    //and the new width and height calculated above
                     resultImage.getGraphics().drawImage(tempImage, 
-                            distFromSide, 0, newWidth, height, null);
+                            distFromSide, distFromTop, 
+                            newWidth, newHeight, null);
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, 
                             "Could not read file:\n"
