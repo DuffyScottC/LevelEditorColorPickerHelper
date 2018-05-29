@@ -5,8 +5,8 @@
  */
 package controllers;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import views.MainFrame;
 
@@ -42,32 +42,46 @@ public class Controller {
         
         JSplitPane mainSplitPane = frame.getMainSplitPane();
         mainSplitPane.setDividerLocation((double) 0.4);
-        JPanel selectionPanel = frame.getSelectionPanel();
-        JPanel infoPanel = frame.getInfoPanel();
         
         frame.getSwapMenuItem().addActionListener((ActionEvent e) -> {
-            mainSplitPane.removeAll();
-            if (swapped) {
-                //selection left or top
-                mainSplitPane.setLeftComponent(selectionPanel);
-                mainSplitPane.setRightComponent(infoPanel);
-            } else {
-                //info left or top
-                mainSplitPane.setLeftComponent(infoPanel);
-                mainSplitPane.setRightComponent(selectionPanel);
-            }
-            //toggle the swapped boolean
-            swapped = !swapped;
-            mainSplitPane.setDividerLocation((double) 0.4);
+            Component r = mainSplitPane.getRightComponent();
+            Component l = mainSplitPane.getLeftComponent();
+
+            // remove the components
+            mainSplitPane.setLeftComponent(null);
+            mainSplitPane.setRightComponent(null);
+
+            // add them swapped
+            mainSplitPane.setLeftComponent(r);
+            mainSplitPane.setRightComponent(l);
         });
         
         frame.getVerticalMenuItem().addActionListener((ActionEvent e) -> {
-            if (mainSplitPane.getOrientation() == JSplitPane.VERTICAL_SPLIT) {
-                mainSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-            } else {
+            if (mainSplitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT) {
+                Component r = mainSplitPane.getRightComponent();
+                Component l = mainSplitPane.getLeftComponent();
+                
+                // remove the components
+                mainSplitPane.setLeftComponent(null);
+                mainSplitPane.setRightComponent(null);
+
+                // add them back
+                mainSplitPane.setTopComponent(l);
+                mainSplitPane.setBottomComponent(r);
                 mainSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+            } else {
+                Component b = mainSplitPane.getBottomComponent();
+                Component t = mainSplitPane.getTopComponent();
+                
+                // remove the components
+                mainSplitPane.setTopComponent(null);
+                mainSplitPane.setBottomComponent(null);
+
+                // add them back
+                mainSplitPane.setLeftComponent(t);
+                mainSplitPane.setRightComponent(b);
+                mainSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
             }
-            mainSplitPane.setDividerLocation((double) 0.4);
         });
     }
 
