@@ -178,6 +178,9 @@ public class ProjectController {
                     }
                 }
                 
+                //reset the image file to delete
+                imageFileToDelete = null;
+                
                 //if the user just opened the app and no project has been selected yet
                 if (currentProject != null) {
                     //generate a new default entity
