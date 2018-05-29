@@ -7,6 +7,7 @@ package views;
 
 import controllers.Utils;
 import entities.Entity;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -60,26 +61,11 @@ public class EntityListRenderer extends DefaultListCellRenderer {
         //get the path to the image associated with the entity at this index
         File imageFile = getEntityImageFile(entity);
         
-        BufferedImage newImage = null;
-        if (imageFile != null) {
-            //check if the image exists
-            if (imageFile.exists()) {
-                try {
-                    newImage = ImageIO.read(imageFile);
-                } catch (IOException ex) {
-                    System.err.println("Trouble reading file:\n" 
-                            + imageFile.toString()
-                            + "\n" + ex.toString());
-                }
-            } else {
-                //Create a blank buffered image
-                newImage = Utils.getBlankBufferedImage(32, 32, 
-                        entity.getColor());
-            }
-        } else {
-            //Create a blank buffered image
-            newImage = Utils.getBlankBufferedImage(32, 32, entity.getColor());
-        }
+        BufferedImage newImage 
+                = Utils.getBufferedImageFromFile(
+                        Utils.LIST_ICON_DIM, 
+                        Utils.LIST_ICON_DIM, 
+                        imageFile, entity.getColor());
         
         //create an image icon from the new image
         ImageIcon imageIcon = new ImageIcon(newImage);

@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
     public static final String defaultType = "Misc";
+    public static final int LIST_ICON_DIM = 32;
     
     public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
         //Create a blank white image icon
@@ -31,8 +32,8 @@ public class Utils {
     
     /**
      * 
-     * @param w The width of the desired BufferedImage
-     * @param h The height of the desired BufferedImage
+     * @param width The width of the desired BufferedImage
+     * @param height The height of the desired BufferedImage
      * @param imageFile The file containing the image that you would like
      * to draw onto the desired BufferedImage (or null if you would just like
      * to use the color input)
@@ -42,7 +43,7 @@ public class Utils {
      * imageFile drawn onto it.
      */
     public static BufferedImage getBufferedImageFromFile(
-            int w, int h, File imageFile, Color color) {
+            int width, int height, File imageFile, Color color) {
         BufferedImage resultImage = null;
         boolean noImage = false;
         //if the imageFile is not null
@@ -51,10 +52,10 @@ public class Utils {
             if (imageFile.exists()) {
                 try {
                     BufferedImage tempImage = ImageIO.read(imageFile);
-                    resultImage = new BufferedImage(w, h,
+                    resultImage = new BufferedImage(width, height,
                             BufferedImage.TYPE_INT_RGB);
                     resultImage.getGraphics().drawImage(tempImage, 
-                            0, 0, w, h, null);
+                            0, 0, width, height, null);
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, 
                             "Could not read file:\n"
@@ -74,7 +75,7 @@ public class Utils {
         
         if (noImage) {
             //use the backup color passed in
-            resultImage = getBlankBufferedImage(w, h, color);
+            resultImage = getBlankBufferedImage(width, height, color);
         }
         return resultImage;
     }
