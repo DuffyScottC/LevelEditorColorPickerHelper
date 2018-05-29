@@ -53,7 +53,8 @@ public class Utils {
                 try {
                     BufferedImage tempImage = ImageIO.read(imageFile);
                     resultImage = new BufferedImage(width, height,
-                            BufferedImage.TYPE_INT_RGB);
+                            BufferedImage.TYPE_INT_ARGB);
+                    resultImage.getGraphics().drawRect(0, 0, width, height);
                     resultImage.getGraphics().drawImage(tempImage, 
                             0, 0, width, height, null);
                 } catch (IOException ex) {
