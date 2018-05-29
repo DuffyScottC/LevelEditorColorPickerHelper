@@ -169,6 +169,7 @@ public class ProjectController {
                         return;
                     }
                 }
+                
                 //if the user just opened the app and no project has been selected yet
                 if (currentProject != null) {
                     //generate a new default entity
@@ -379,6 +380,23 @@ public class ProjectController {
                             "File Does Not Exist", 
                             JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+        
+        frame.getImagePanel().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                frame.getImagePanel().setRollover(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                frame.getImagePanel().setRollover(false);
             }
         });
         

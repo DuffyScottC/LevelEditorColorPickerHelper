@@ -6,6 +6,7 @@
 package views;
 
 import controllers.Utils;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,6 +24,11 @@ import javax.swing.JPanel;
 public class ImagePanel extends JPanel {
     
     private BufferedImage image = null;
+    /**
+     * Tells the ImagePanel whether to highlight or not, such as when the
+     * user rolls over the panel
+     */
+    private boolean rollover = false;
     
     /**
      * Give the image panel a new image path to display the image
@@ -68,6 +74,15 @@ public class ImagePanel extends JPanel {
         this.repaint();
     }
     
+    /**
+     * Tells the paint component whether to highlight or not.
+     * @param rollover 
+     */
+    public void setRollover(boolean rollover) {
+        this.rollover = rollover;
+        this.repaint();
+    }
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -77,6 +92,27 @@ public class ImagePanel extends JPanel {
             int y = (getHeight() - image.getHeight()) / 2;
             g2d.drawImage(image, x, y, this);
             g2d.dispose();
+            //if we should highlight
+            if (rollover) {
+                //highlight the panel
+                highlight(g2d);
+            }
+        } else if (rollover) {
+            //if we should highlight
+            //get the g2d context
+            Graphics2D g2d = (Graphics2D) g.create();
+            //highlight the panel
+            highlight(g2d);
         }
+    }
+    
+    /**
+     * Highlights the panel
+     * @param g2d 
+     */
+    private void highlight(Graphics2D g2d) {
+        g2d.setStroke(new BasicStroke((float) 5.0));
+        g2d.setColor(Color.CYAN);
+        g2d.drawRect(0, 0, getSize().width-1, getSize().height-1);
     }
 }
