@@ -40,6 +40,7 @@ public class Controller {
         frame.getTypeComboBox().removeAllItems();
         frame.getTypeComboBox().addItem(Utils.DEFAULT_TYPE);
         
+        //set up the split pane
         JSplitPane mainSplitPane = frame.getMainSplitPane();
         mainSplitPane.setDividerLocation((double) 0.4);
         
@@ -69,7 +70,8 @@ public class Controller {
                 mainSplitPane.setTopComponent(l);
                 mainSplitPane.setBottomComponent(r);
                 mainSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-                frame.getVerticalMenuItem().setText("Horizontal");
+                frame.getVerticalMenuItem().setText("Horizontal Layout");
+                mainSplitPane.setDividerLocation((double) 0.4);
             } else {
                 Component b = mainSplitPane.getBottomComponent();
                 Component t = mainSplitPane.getTopComponent();
@@ -82,7 +84,8 @@ public class Controller {
                 mainSplitPane.setLeftComponent(t);
                 mainSplitPane.setRightComponent(b);
                 mainSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-                frame.getVerticalMenuItem().setText("Vertical");
+                mainSplitPane.setDividerLocation((double) 0.4);
+                frame.getVerticalMenuItem().setText("Vertical Layout");
             }
         });
     }

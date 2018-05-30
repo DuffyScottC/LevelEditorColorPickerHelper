@@ -38,19 +38,36 @@
             <Property name="text" type="java.lang.String" value="View"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="layoutMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="verticalMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Layout"/>
+                <Property name="text" type="java.lang.String" value="Vertical Layout"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="swapMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Swap Panels"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="toolsMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tools"/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="scriptMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Script"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="swapMenuItem">
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="useScriptCheckBoxMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Swap Panels"/>
+                    <Property name="text" type="java.lang.String" value="Use Script"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="verticalMenuItem">
+                <MenuItem class="javax.swing.JMenuItem" name="setScriptMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Vertical"/>
+                    <Property name="text" type="java.lang.String" value="Set Script"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
@@ -1045,9 +1062,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="unityPrefabTextField">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Prefabs/APrefab"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="newTypeButton">
               <Properties>

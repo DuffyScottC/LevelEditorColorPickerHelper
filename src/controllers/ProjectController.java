@@ -18,6 +18,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
@@ -26,6 +29,8 @@ import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -93,6 +98,12 @@ public class ProjectController {
      * initialized with user.dir just in case something goes wrong with loading
      * preferences
      */
+    private final JFileChooser scriptChooser 
+            = new JFileChooser(System.getProperty("user.dir"));
+    /**
+     * initialized with user.dir just in case something goes wrong with loading
+     * preferences
+     */
     private final JFileChooser newProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
     /**
@@ -108,6 +119,12 @@ public class ProjectController {
     private final FileFilter projectFileFilter 
             = new FileNameExtensionFilter("Project (.lecp)","lecp");
     private final NewProjectDialog newProjectDialog;
+    
+    /**
+     * True if we should use the double-click script assigned to this project,
+     * false if not.
+     */
+    private boolean useScript = false;
     
     /**
      * Set up the ProjectController
@@ -137,11 +154,18 @@ public class ProjectController {
         
         //set up choosers
         imageChooser.setMultiSelectionEnabled(false);
+        scriptChooser.setMultiSelectionEnabled(false);
         newProjectChooser.setMultiSelectionEnabled(false);
         openProjectChooser.setMultiSelectionEnabled(false);
         imageChooser.setDragEnabled(true);
+        scriptChooser.setDragEnabled(true);
         newProjectChooser.setDragEnabled(true);
         openProjectChooser.setDragEnabled(true);
+        imageChooser.setDialogTitle("Choose an Image");
+        scriptChooser.setDialogTitle("Choose a Script");
+        newProjectChooser.setDialogTitle("Choose a Location");
+        openProjectChooser.setDialogTitle("Choose a Project");
+        
         
         imageChooser.addChoosableFileFilter(
                 new FileNameExtensionFilter("PNG", "png"));
@@ -155,6 +179,9 @@ public class ProjectController {
                 new FileNameExtensionFilter("TIFF", "tiff"));
         imageChooser.addChoosableFileFilter(
                 new FileNameExtensionFilter("TIF", "tif"));
+        
+        scriptChooser.setFileFilter(
+                new FileNameExtensionFilter("Bash Script (.sh)", "sh"));
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
@@ -465,6 +492,123 @@ public class ProjectController {
             modifiedController.setModified(true);
         });
         
+        frame.getUseScriptCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
+            //if we are already using a script
+            if (useScript) {
+                //turn off using scripts
+                useScript = false;
+            }
+            Path resourcesFolderPath = getResourcesFolderPath();
+            if (resourcesFolderPath == null) {
+                //tell the user that the resources folder does not exist
+                JOptionPane.showMessageDialog(null, 
+                        "The Resources folder could not be found.", 
+                        "Folder Not Found", 
+                        JOptionPane.ERROR_MESSAGE);
+                frame.getUseScriptCheckBoxMenuItem().setSelected(false);
+                return;
+            }
+            //create the path to the doubleclick.sh script
+            Path scriptPath = Paths.get(resourcesFolderPath.toString(), 
+                    "doubleclick.sh");
+            //convert the scriptPath to a file
+            File scriptFile = scriptPath.toFile();
+            //if there is no script
+            if (!scriptFile.exists()) {
+                //if the user does not want to add a script
+                if (!shouldContinue("Could not find a double-click script."
+                        + "\nWould you like to add one?")) {
+                    frame.getUseScriptCheckBoxMenuItem().setSelected(false);
+                    return;
+                }
+                //if the user wants to add a script
+                setScript();
+            }
+            //turn on using scripts
+            useScript = true;
+        });
+        
+        frame.getSetScriptMenuItem().addActionListener((ActionEvent e) -> {
+            setScript();
+        });
+        
+    }
+    
+    //MARK: Script
+    private void setScript() {
+        int result = scriptChooser.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File script = scriptChooser.getSelectedFile();
+            //if the script does not exist
+            if (!script.exists()) {
+                JOptionPane.showMessageDialog(null,
+                        "The script was not found at\n" 
+                                + script.toString(), 
+                        "File Not Found", 
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            try {
+                //if the script exists
+                FileReader reader = new FileReader(script);
+                
+                char[] chars = new char[(int)script.length()];
+                reader.read(chars);
+                reader.close();
+                
+                String content = new String(chars);
+                
+                Path resourcePath = getResourcesFolderPath();
+                if (resourcePath == null) {
+                    //tell the user that the resources folder does not exist
+                    JOptionPane.showMessageDialog(null, 
+                            "The Resources folder could not be found.", 
+                            "Folder Not Found", 
+                            JOptionPane.ERROR_MESSAGE);
+                }
+                //get the path to the new doubleclick.sh script
+                Path scriptResourcePath = Paths.get(resourcePath.toString(), 
+                        "doubleclick.sh");
+                //convert the path to a file
+                File scriptResource = scriptResourcePath.toFile();
+                
+                //if the file already exists
+                if (scriptResource.exists()) {
+                    //if the user does NOT want to continue
+                    if (!shouldContinue("The file " + scriptResource.getName() 
+                            + " already exists at:\n"
+                            + scriptResource.toString()
+                            + "Are you sure you wish to overwrite it?\n"
+                            + "This operation cannot be undone.")) {
+                        return;
+                    }
+                }
+                
+                //create a file writer for the scriptResource file
+                FileWriter writer = new FileWriter(scriptResource);
+                //write all the content to that file
+                writer.write(content);
+                writer.close();
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "The script was not found at\n" 
+                                + script.toString(), 
+                        "File Not Found", 
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "The script could not be read.\n", 
+                        "Could Not Read File", 
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        JOptionPane.showMessageDialog(null, 
+                "This script will now run every time\n"
+                        + "you double-click an entity or choose\n"
+                        + "the \"Select\" button. (As long as\n"
+                        + "Tools>Use Script is checked off)", 
+                "Success", 
+                JOptionPane.PLAIN_MESSAGE);
     }
     
     //MARK: Add Entity

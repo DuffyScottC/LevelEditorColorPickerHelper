@@ -7,6 +7,7 @@ package views;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -97,9 +98,12 @@ public class MainFrame extends javax.swing.JFrame {
         addEntityMenuItem = new javax.swing.JMenuItem();
         deleteEntityMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
-        layoutMenu = new javax.swing.JMenu();
-        swapMenuItem = new javax.swing.JMenuItem();
         verticalMenuItem = new javax.swing.JMenuItem();
+        swapMenuItem = new javax.swing.JMenuItem();
+        toolsMenu = new javax.swing.JMenu();
+        scriptMenu = new javax.swing.JMenu();
+        useScriptCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        setScriptMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -304,8 +308,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Unity Prefab:");
 
-        unityPrefabTextField.setText("Prefabs/APrefab");
-
         newTypeButton.setText("New");
 
         deleteImageButton.setText("Delete");
@@ -432,17 +434,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         viewMenu.setText("View");
 
-        layoutMenu.setText("Layout");
+        verticalMenuItem.setText("Vertical Layout");
+        viewMenu.add(verticalMenuItem);
 
         swapMenuItem.setText("Swap Panels");
-        layoutMenu.add(swapMenuItem);
-
-        verticalMenuItem.setText("Vertical");
-        layoutMenu.add(verticalMenuItem);
-
-        viewMenu.add(layoutMenu);
+        viewMenu.add(swapMenuItem);
 
         menuBar.add(viewMenu);
+
+        toolsMenu.setText("Tools");
+
+        scriptMenu.setText("Script");
+
+        useScriptCheckBoxMenuItem.setText("Use Script");
+        scriptMenu.add(useScriptCheckBoxMenuItem);
+
+        setScriptMenuItem.setText("Set Script");
+        scriptMenu.add(setScriptMenuItem);
+
+        toolsMenu.add(scriptMenu);
+
+        menuBar.add(toolsMenu);
 
         setJMenuBar(menuBar);
 
@@ -511,7 +523,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JMenu layoutMenu;
     private javax.swing.JSplitPane listsSplitPane;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JMenuBar menuBar;
@@ -530,18 +541,22 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel resultsPanel;
     private javax.swing.JScrollPane resultsScrollPane;
     private javax.swing.JButton revertButton;
+    private javax.swing.JMenu scriptMenu;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JComboBox<String> searchModeComboBox;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JButton selectButton;
     private javax.swing.JPanel selectionPanel;
+    private javax.swing.JMenuItem setScriptMenuItem;
     private javax.swing.JPanel sliderPanel;
     private javax.swing.JMenuItem swapMenuItem;
+    private javax.swing.JMenu toolsMenu;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
     private javax.swing.JTextField unityPrefabTextField;
+    private javax.swing.JCheckBoxMenuItem useScriptCheckBoxMenuItem;
     private javax.swing.JMenuItem verticalMenuItem;
     private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
@@ -692,6 +707,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JButton getDeleteTypeButton() {
         return jButton1;
+    }
+
+    public JMenuItem getSetScriptMenuItem() {
+        return setScriptMenuItem;
+    }
+
+    public JCheckBoxMenuItem getUseScriptCheckBoxMenuItem() {
+        return useScriptCheckBoxMenuItem;
     }
     
 }
