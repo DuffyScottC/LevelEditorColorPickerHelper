@@ -17,17 +17,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -146,6 +146,7 @@ public class ProjectController {
         this.modifiedController = modifiedController;
         
         setCommandDialog = new SetCommandDialog(frame, true);
+        setUpSetCommandDialogActionListeners();
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
@@ -536,7 +537,54 @@ public class ProjectController {
     }
     
     private void runCommand() {
-        System.out.println("Run the command");
+        String command = currentProject.getCommand();
+        //this should never happen, but if it does, throw an error
+        if (command == null) {
+            System.err.println("Could not find command.");
+            return;
+        }
+        
+        //this should never happen, but if it does, throw an error
+        if (command.length() == 0) {
+            System.err.println("Could not find command.");
+            return;
+        }
+        
+        //get the current entity's attributes as arguments according to the
+        //current project's boolean command preferences.
+        List<String> commandList = getArguments(currentProject.getCurrentEntity());
+        //add the main command to the front of the list
+        commandList.add(0, command);
+        
+        //actually run the command now
+        String s = null;
+        StringBuilder outPut = new StringBuilder();
+        try {
+            ProcessBuilder pb = new ProcessBuilder(command); //build a command out of a array
+            Process p = pb.start();
+            p.waitFor();
+
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            // read the output from the command
+            System.out.println("Here is the standard output of the command:\n");
+            while ((s = stdInput.readLine()) != null) {
+                System.out.println(s);
+            }
+
+            // read any errors from the attempted command
+            System.out.println("Here is the standard error of the command (if any):\n");
+            while ((s = stdError.readLine()) != null) {
+                System.out.println(s);
+            }
+        } catch (IOException e) {
+            System.out.println("exception happened - here's what I know: ");
+            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            System.out.println("InterruptedException happened - here's what I know: ");
+            ex.printStackTrace();
+        }
     }
     
     private void setUpSetCommandDialogActionListeners() {
@@ -586,6 +634,8 @@ public class ProjectController {
                 currentProject.setCommand(command);
                 //close the dialog
                 setCommandDialog.setVisible(false);
+                //save the project
+                saveProject();
             } else {
                 JOptionPane.showMessageDialog(null, 
                         "Command cannot be blank.", 
@@ -606,14 +656,20 @@ public class ProjectController {
         Entity exampleEntity = new Entity(null, "Name", "Type", 
                 Color.pink, "Prefab");
         //get the arguments that the user desires using the exampleEntity
-        String arguments = getArguments(exampleEntity);
+        List<String> arguments = getArguments(exampleEntity);
         //get the user's command
         String command 
                 = setCommandDialog.getEnterCommandTextField().getText();
-        //trim the command and add on the arguments
-        command = command.trim() + arguments;
-        //put the command in the example textfield
-        setCommandDialog.getExampleTextField().setText(command);
+        //trim the command
+        command = command.trim();
+        //add the arguments to the command
+        StringBuilder s = new StringBuilder(command);
+        for (String arg : arguments) {
+            s.append(" ");
+            s.append(arg);
+        }
+        //put the full command in the example textfield
+        setCommandDialog.getExampleTextField().setText(s.toString());
     }
     
     /**
@@ -624,41 +680,34 @@ public class ProjectController {
      * @return A string with the entity's attributes separated by spaces (with
      * one space before the arguments).
      */
-    private String getArguments(Entity entity) {
-        StringBuilder s = new StringBuilder();
+    private List<String> getArguments(Entity entity) {
+        List<String> commandList = new ArrayList();
         int r = entity.getR();
         int g = entity.getG();
         int b = entity.getB();
         if (currentProject.isIncludeColorHex()) {
             String hex = String.format("%02X%02X%02X", r, g, b);
-            s.append(" ");
-            s.append(hex);
+            commandList.add(hex);
         }
         if (currentProject.isIncludeRed()) {
-            s.append(" ");
-            s.append(r);
+            commandList.add(Integer.toString(r));
         }
         if (currentProject.isIncludeGreen()) {
-            s.append(" ");
-            s.append(g);
+            commandList.add(Integer.toString(g));
         }
         if (currentProject.isIncludeBlue()) {
-            s.append(" ");
-            s.append(b);
+            commandList.add(Integer.toString(b));
         }
         if (currentProject.isIncludeName()) {
-            s.append(" ");
-            s.append(entity.getName());
+            commandList.add(entity.getName());
         }
         if (currentProject.isIncludeType()) {
-            s.append(" ");
-            s.append(entity.getType());
+            commandList.add(entity.getType());
         }
         if (currentProject.isIncludeUnityPrefab()) {
-            s.append(" ");
-            s.append(entity.getUnityPrefab());
+            commandList.add(entity.getUnityPrefab());
         }
-        return s.toString();
+        return commandList;
     }
     
     /**
