@@ -59,6 +59,16 @@ public class Project {
     @XmlElement(name="types", type=String.class)
     private final List<String> types = new ArrayList();
     
+    //MARK: Command
+    private String command = null;
+    private boolean includeColorHex = false;
+    private boolean includeRed = false;
+    private boolean includeGreen = false;
+    private boolean includeBlue = false;
+    private boolean includeName = false;
+    private boolean includeType = false;
+    private boolean includeUnityPrefab = false;
+    
     /**
      * The currently selected and displayed entity
      */
@@ -104,6 +114,51 @@ public class Project {
         this.name = name;
     }
 
+    public boolean isIncludeColorHex() {
+        return includeColorHex;
+    }
+
+    public boolean isIncludeRed() {
+        return includeRed;
+    }
+
+    public boolean isIncludeGreen() {
+        return includeGreen;
+    }
+
+    public boolean isIncludeBlue() {
+        return includeBlue;
+    }
+
+    public boolean isIncludeName() {
+        return includeName;
+    }
+
+    public boolean isIncludeType() {
+        return includeType;
+    }
+
+    public boolean isIncludeUnityPrefab() {
+        return includeUnityPrefab;
+    }
+    
+    public void setCommandBooleans(
+            boolean includeColorHex,
+            boolean includeRed,
+            boolean includeGreen,
+            boolean includeBlue,
+            boolean includeName,
+            boolean includeType,
+            boolean includeUnityPrefab) {
+        this.includeColorHex = includeColorHex;
+        this.includeRed = includeRed;
+        this.includeGreen = includeGreen;
+        this.includeBlue = includeBlue;
+        this.includeName = includeName;
+        this.includeType = includeType;
+        this.includeUnityPrefab = includeUnityPrefab;
+    }
+    
     public void createProjectLocationAndResourceFolder() {
         projectLocation = projectFile.getParentFile();
         Path resourcePath = projectLocation.toPath();
@@ -188,6 +243,14 @@ public class Project {
             }
         }
         types.remove(index);
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
     
     @Override

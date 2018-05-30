@@ -46,6 +46,7 @@ import javax.xml.bind.Unmarshaller;
 import projects.Project;
 import views.MainFrame;
 import views.NewProjectDialog;
+import views.SetCommandDialog;
 
 /**
  * Handles the creation, storage, opening, closing, and other management of all
@@ -98,12 +99,6 @@ public class ProjectController {
      * initialized with user.dir just in case something goes wrong with loading
      * preferences
      */
-    private final JFileChooser scriptChooser 
-            = new JFileChooser(System.getProperty("user.dir"));
-    /**
-     * initialized with user.dir just in case something goes wrong with loading
-     * preferences
-     */
     private final JFileChooser newProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
     /**
@@ -120,11 +115,12 @@ public class ProjectController {
             = new FileNameExtensionFilter("Project (.lecp)","lecp");
     private final NewProjectDialog newProjectDialog;
     
+    private SetCommandDialog setCommandDialog;
     /**
-     * True if we should use the double-click script assigned to this project,
+     * True if we should use the double-click command assigned to this project,
      * false if not.
      */
-    private boolean useScript = false;
+    private boolean useCommand = false;
     
     /**
      * Set up the ProjectController
@@ -149,20 +145,19 @@ public class ProjectController {
         this.searchController = searchController;
         this.modifiedController = modifiedController;
         
+        setCommandDialog = new SetCommandDialog(frame, true);
+        
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
         
         //set up choosers
         imageChooser.setMultiSelectionEnabled(false);
-        scriptChooser.setMultiSelectionEnabled(false);
         newProjectChooser.setMultiSelectionEnabled(false);
         openProjectChooser.setMultiSelectionEnabled(false);
         imageChooser.setDragEnabled(true);
-        scriptChooser.setDragEnabled(true);
         newProjectChooser.setDragEnabled(true);
         openProjectChooser.setDragEnabled(true);
         imageChooser.setDialogTitle("Choose an Image");
-        scriptChooser.setDialogTitle("Choose a Script");
         newProjectChooser.setDialogTitle("Choose a Location");
         openProjectChooser.setDialogTitle("Choose a Project");
         
@@ -179,9 +174,6 @@ public class ProjectController {
                 new FileNameExtensionFilter("TIFF", "tiff"));
         imageChooser.addChoosableFileFilter(
                 new FileNameExtensionFilter("TIF", "tif"));
-        
-        scriptChooser.setFileFilter(
-                new FileNameExtensionFilter("Bash Script (.sh)", "sh"));
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
@@ -492,127 +484,212 @@ public class ProjectController {
             modifiedController.setModified(true);
         });
         
-        frame.getUseScriptCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
-            //if we are already using a script
-            if (useScript) {
-                //turn off using scripts
-                useScript = false;
+        frame.getUseCommandCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
+            //if we are already using a command
+            if (useCommand) {
+                //turn off using commands
+                useCommand = false;
             }
-            Path resourcesFolderPath = getResourcesFolderPath();
-            if (resourcesFolderPath == null) {
-                //tell the user that the resources folder does not exist
-                JOptionPane.showMessageDialog(null, 
-                        "The Resources folder could not be found.", 
-                        "Folder Not Found", 
-                        JOptionPane.ERROR_MESSAGE);
-                frame.getUseScriptCheckBoxMenuItem().setSelected(false);
-                return;
-            }
-            //create the path to the doubleclick.sh script
-            Path scriptPath = Paths.get(resourcesFolderPath.toString(), 
-                    "doubleclick.sh");
-            //convert the scriptPath to a file
-            File scriptFile = scriptPath.toFile();
-            //if there is no script
-            if (!scriptFile.exists()) {
-                //if the user does not want to add a script
-                if (!shouldContinue("Could not find a double-click script."
-                        + "\nWould you like to add one?")) {
-                    frame.getUseScriptCheckBoxMenuItem().setSelected(false);
+            //if there is no command set for this project yet
+            if (currentProject.getCommand() == null) {
+                //if the user does not want to set the command
+                if (!shouldContinue("There is no command set. Would you like\n"
+                        + "to set a new command?")) {
+                    //deselect the menu item
+                    frame.getUseCommandCheckBoxMenuItem().setSelected(false);
                     return;
                 }
-                //if the user wants to add a script
-                setScript();
+                //if the user wants to set the command
+                setCommand();
+                //if the user set a valid command
+                if (currentProject.getCommand() != null) {
+                    useCommand = true;
+                } else {
+                    //if the user did not set a valid command
+                    //deselect the menu item
+                    frame.getUseCommandCheckBoxMenuItem().setSelected(false);
+                }
+            } else {
+                //if there is a command set
+                //turn on using commands
+                useCommand = true;
             }
-            //turn on using scripts
-            useScript = true;
         });
         
-        frame.getSetScriptMenuItem().addActionListener((ActionEvent e) -> {
-            setScript();
+        frame.getSetCommandMenuItem().addActionListener((ActionEvent e) -> {
+            setCommand();
         });
         
     }
     
-    //MARK: Script
-    private void setScript() {
-        int result = scriptChooser.showOpenDialog(frame);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File script = scriptChooser.getSelectedFile();
-            //if the script does not exist
-            if (!script.exists()) {
-                JOptionPane.showMessageDialog(null,
-                        "The script was not found at\n" 
-                                + script.toString(), 
-                        "File Not Found", 
+    //MARK: Command
+    /**
+     * Allows the user to set the double-click command by opening the 
+     * setCommandDialog. 
+     * @return True if the command was set, false if the user decided to
+     * cancel setting the command or if the user tried to set the command to
+     * a blank command.
+     */
+    private void setCommand() {
+        fillSetCommandDialogContents();
+        setCommandDialog.setVisible(true);
+    }
+    
+    private void runCommand() {
+        System.out.println("Run the command");
+    }
+    
+    private void setUpSetCommandDialogActionListeners() {
+        ActionListener checkBoxActionListener = (ActionEvent e) -> {
+            //set the command booleans appropriately using the checkboxes
+            currentProject.setCommandBooleans(
+                    setCommandDialog.getColorHexValueCheckBox().isSelected(), 
+                    setCommandDialog.getRedCheckBox().isSelected(), 
+                    setCommandDialog.getGreenCheckBox().isSelected(), 
+                    setCommandDialog.getBlueCheckBox().isSelected(), 
+                    setCommandDialog.getNameCheckBox().isSelected(), 
+                    setCommandDialog.getTypeCheckBox().isSelected(), 
+                    setCommandDialog.getUnityPrefabCheckBox().isSelected());
+            updateExampleCommandTextField();
+        };
+        
+        setCommandDialog.getColorHexValueCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getRedCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getGreenCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getBlueCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getNameCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getTypeCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getUnityPrefabCheckBox().addActionListener(
+                checkBoxActionListener);
+        
+        setCommandDialog.getEnterCommandTextField().addKeyListener(
+                new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                updateExampleCommandTextField();
+            }
+        });
+        
+        setCommandDialog.getSetButton().addActionListener((ActionEvent e) -> {
+            //get the command the user entered
+            String command 
+                = setCommandDialog.getEnterCommandTextField().getText();
+            
+            if (command.length() > 0) {
+                //set the command
+                currentProject.setCommand(command);
+                //close the dialog
+                setCommandDialog.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, 
+                        "Command cannot be blank.", 
+                        "Invalid Input", 
                         JOptionPane.ERROR_MESSAGE);
             }
-            try {
-                //if the script exists
-                FileReader reader = new FileReader(script);
-                
-                char[] chars = new char[(int)script.length()];
-                reader.read(chars);
-                reader.close();
-                
-                String content = new String(chars);
-                
-                Path resourcePath = getResourcesFolderPath();
-                if (resourcePath == null) {
-                    //tell the user that the resources folder does not exist
-                    JOptionPane.showMessageDialog(null, 
-                            "The Resources folder could not be found.", 
-                            "Folder Not Found", 
-                            JOptionPane.ERROR_MESSAGE);
-                }
-                //get the path to the new doubleclick.sh script
-                Path scriptResourcePath = Paths.get(resourcePath.toString(), 
-                        "doubleclick.sh");
-                //convert the path to a file
-                File scriptResource = scriptResourcePath.toFile();
-                
-                //if the file already exists
-                if (scriptResource.exists()) {
-                    //if the user does NOT want to continue
-                    if (!shouldContinue("The file " + scriptResource.getName() 
-                            + " already exists at:\n"
-                            + scriptResource.toString()
-                            + "Are you sure you wish to overwrite it?\n"
-                            + "This operation cannot be undone.")) {
-                        return;
-                    }
-                }
-                
-                //create a file writer for the scriptResource file
-                FileWriter writer = new FileWriter(scriptResource);
-                //write all the content to that file
-                writer.write(content);
-                writer.close();
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null,
-                        "The script was not found at\n" 
-                                + script.toString(), 
-                        "File Not Found", 
-                        JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null,
-                        "The script could not be read.\n", 
-                        "Could Not Read File", 
-                        JOptionPane.ERROR_MESSAGE);
-            }
+        });
+        
+        setCommandDialog.getCancelButton().addActionListener(
+                (ActionEvent e) -> {
+            //simply close the window
+            setCommandDialog.setVisible(false);
+        });
+    }
+    
+    private void updateExampleCommandTextField() {
+        //create an example entity
+        Entity exampleEntity = new Entity(null, "Name", "Type", 
+                Color.pink, "Prefab");
+        //get the arguments that the user desires using the exampleEntity
+        String arguments = getArguments(exampleEntity);
+        //get the user's command
+        String command 
+                = setCommandDialog.getEnterCommandTextField().getText();
+        //trim the command and add on the arguments
+        command = command.trim() + arguments;
+        //put the command in the example textfield
+        setCommandDialog.getExampleTextField().setText(command);
+    }
+    
+    /**
+     * Converts the passed in entity's attributes to arguments according to
+     * the currentProject's command boolean values.
+     * @param entity The entity whose attributes will be used to form the
+     * arguments
+     * @return A string with the entity's attributes separated by spaces (with
+     * one space before the arguments).
+     */
+    private String getArguments(Entity entity) {
+        StringBuilder s = new StringBuilder();
+        int r = entity.getR();
+        int g = entity.getG();
+        int b = entity.getB();
+        if (currentProject.isIncludeColorHex()) {
+            String hex = String.format("%02X%02X%02X", r, g, b);
+            s.append(" ");
+            s.append(hex);
         }
-        
-        JOptionPane.showMessageDialog(null, 
-                "This script will now run every time\n"
-                        + "you double-click an entity or choose\n"
-                        + "the \"Select\" button. (As long as\n"
-                        + "Tools>Use Script is checked off)", 
-                "Success", 
-                JOptionPane.PLAIN_MESSAGE);
+        if (currentProject.isIncludeRed()) {
+            s.append(" ");
+            s.append(r);
+        }
+        if (currentProject.isIncludeGreen()) {
+            s.append(" ");
+            s.append(g);
+        }
+        if (currentProject.isIncludeBlue()) {
+            s.append(" ");
+            s.append(b);
+        }
+        if (currentProject.isIncludeName()) {
+            s.append(" ");
+            s.append(entity.getName());
+        }
+        if (currentProject.isIncludeType()) {
+            s.append(" ");
+            s.append(entity.getType());
+        }
+        if (currentProject.isIncludeUnityPrefab()) {
+            s.append(" ");
+            s.append(entity.getUnityPrefab());
+        }
+        return s.toString();
     }
     
-    private void runScript() {
-        System.out.println("Run the script");
+    /**
+     * Fills the commandDialogContents with the currentProject's command and
+     * command booleans.
+     */
+    private void fillSetCommandDialogContents() {
+        String command = currentProject.getCommand();
+        if (command == null) {
+            //fill the command with nothing
+            setCommandDialog.getEnterCommandTextField().setText("");
+        }
+        setCommandDialog.getEnterCommandTextField().setText(command);
+        
+        //set up the checkboxes
+        setCommandDialog.getColorHexValueCheckBox().setSelected(
+                currentProject.isIncludeColorHex());
+        setCommandDialog.getRedCheckBox().setSelected(
+                currentProject.isIncludeRed());
+        setCommandDialog.getGreenCheckBox().setSelected(
+                currentProject.isIncludeGreen());
+        setCommandDialog.getBlueCheckBox().setSelected(
+                currentProject.isIncludeBlue());
+        setCommandDialog.getNameCheckBox().setSelected(
+                currentProject.isIncludeName());
+        setCommandDialog.getTypeCheckBox().setSelected(
+                currentProject.isIncludeType());
+        setCommandDialog.getUnityPrefabCheckBox().setSelected(
+                currentProject.isIncludeUnityPrefab());
+        
+        updateExampleCommandTextField();
     }
     
     //MARK: Add Entity
@@ -1425,8 +1502,8 @@ public class ProjectController {
     }
 
     private void doSelectAction() {
-        if (useScript) {
-            runScript();
+        if (useCommand) {
+            runCommand();
         } else {
             copyCurrentColorCodeToClipboard();
         }

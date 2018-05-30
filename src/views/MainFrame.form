@@ -55,19 +55,19 @@
             <Property name="text" type="java.lang.String" value="Tools"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="scriptMenu">
+            <Menu class="javax.swing.JMenu" name="commandMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Script"/>
+                <Property name="text" type="java.lang.String" value="Command"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="useScriptCheckBoxMenuItem">
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="useCommandCheckBoxMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Use Script"/>
+                    <Property name="text" type="java.lang.String" value="Use Command"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="setScriptMenuItem">
+                <MenuItem class="javax.swing.JMenuItem" name="setCommandMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Set Script"/>
+                    <Property name="text" type="java.lang.String" value="Set Command"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>

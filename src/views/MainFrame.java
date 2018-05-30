@@ -101,9 +101,9 @@ public class MainFrame extends javax.swing.JFrame {
         verticalMenuItem = new javax.swing.JMenuItem();
         swapMenuItem = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
-        scriptMenu = new javax.swing.JMenu();
-        useScriptCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
-        setScriptMenuItem = new javax.swing.JMenuItem();
+        commandMenu = new javax.swing.JMenu();
+        useCommandCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        setCommandMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -444,15 +444,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         toolsMenu.setText("Tools");
 
-        scriptMenu.setText("Script");
+        commandMenu.setText("Command");
 
-        useScriptCheckBoxMenuItem.setText("Use Script");
-        scriptMenu.add(useScriptCheckBoxMenuItem);
+        useCommandCheckBoxMenuItem.setText("Use Command");
+        commandMenu.add(useCommandCheckBoxMenuItem);
 
-        setScriptMenuItem.setText("Set Script");
-        scriptMenu.add(setScriptMenuItem);
+        setCommandMenuItem.setText("Set Command");
+        commandMenu.add(setCommandMenuItem);
 
-        toolsMenu.add(scriptMenu);
+        toolsMenu.add(commandMenu);
 
         menuBar.add(toolsMenu);
 
@@ -507,6 +507,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField colorCodeTextField;
     private javax.swing.JLabel colorLabel;
     private javax.swing.JPanel colorPanel;
+    private javax.swing.JMenu commandMenu;
     private javax.swing.JMenuItem deleteEntityMenuItem;
     private javax.swing.JButton deleteImageButton;
     private javax.swing.JMenu fileMenu;
@@ -541,14 +542,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel resultsPanel;
     private javax.swing.JScrollPane resultsScrollPane;
     private javax.swing.JButton revertButton;
-    private javax.swing.JMenu scriptMenu;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JComboBox<String> searchModeComboBox;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JButton selectButton;
     private javax.swing.JPanel selectionPanel;
-    private javax.swing.JMenuItem setScriptMenuItem;
+    private javax.swing.JMenuItem setCommandMenuItem;
     private javax.swing.JPanel sliderPanel;
     private javax.swing.JMenuItem swapMenuItem;
     private javax.swing.JMenu toolsMenu;
@@ -556,7 +556,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
     private javax.swing.JTextField unityPrefabTextField;
-    private javax.swing.JCheckBoxMenuItem useScriptCheckBoxMenuItem;
+    private javax.swing.JCheckBoxMenuItem useCommandCheckBoxMenuItem;
     private javax.swing.JMenuItem verticalMenuItem;
     private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
@@ -709,12 +709,12 @@ public class MainFrame extends javax.swing.JFrame {
         return jButton1;
     }
 
-    public JMenuItem getSetScriptMenuItem() {
-        return setScriptMenuItem;
+    public JMenuItem getSetCommandMenuItem() {
+        return setCommandMenuItem;
     }
 
-    public JCheckBoxMenuItem getUseScriptCheckBoxMenuItem() {
-        return useScriptCheckBoxMenuItem;
+    public JCheckBoxMenuItem getUseCommandCheckBoxMenuItem() {
+        return useCommandCheckBoxMenuItem;
     }
     
 }
