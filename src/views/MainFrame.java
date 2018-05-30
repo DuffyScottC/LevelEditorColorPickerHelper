@@ -88,7 +88,7 @@ public class MainFrame extends javax.swing.JFrame {
         newTypeButton = new javax.swing.JButton();
         deleteImageButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        deleteTypeButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProjectMenuItem = new javax.swing.JMenuItem();
@@ -312,7 +312,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Image:");
 
-        deleteTypeButton.setText("Delete");
+        jButton1.setText("Delete");
 
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
@@ -344,11 +344,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(typeComboBox, 0, 102, Short.MAX_VALUE)
+                        .addComponent(typeComboBox, 0, 101, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(newTypeButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteTypeButton))
+                        .addComponent(jButton1))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(infoPanelLayout.createSequentialGroup()
@@ -381,7 +381,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newTypeButton)
-                    .addComponent(deleteTypeButton))
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(changeImageButton)
@@ -497,13 +497,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel colorPanel;
     private javax.swing.JMenuItem deleteEntityMenuItem;
     private javax.swing.JButton deleteImageButton;
-    private javax.swing.JButton deleteTypeButton;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JSlider greenSlider;
     private javax.swing.JSpinner greenSpinner;
     private views.ImagePanel imagePanel;
     private javax.swing.JCheckBox includeHashTagCheckBox;
     private javax.swing.JPanel infoPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -691,7 +691,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     public JButton getDeleteTypeButton() {
-        return deleteTypeButton;
+        return jButton1;
     }
     
 }

@@ -69,6 +69,7 @@ public class Controller {
                 mainSplitPane.setTopComponent(l);
                 mainSplitPane.setBottomComponent(r);
                 mainSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+                frame.getVerticalMenuItem().setText("Horizontal");
             } else {
                 Component b = mainSplitPane.getBottomComponent();
                 Component t = mainSplitPane.getTopComponent();
@@ -81,6 +82,7 @@ public class Controller {
                 mainSplitPane.setLeftComponent(t);
                 mainSplitPane.setRightComponent(b);
                 mainSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+                frame.getVerticalMenuItem().setText("Vertical");
             }
         });
     }

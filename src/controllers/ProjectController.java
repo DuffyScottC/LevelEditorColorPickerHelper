@@ -76,8 +76,6 @@ public class ProjectController {
     
     private final JMenuItem newProjectMenuItem;
     private final JMenuItem openProjectMenuItem;
-    private final JMenuItem newEntityMenuItem;
-    private final JMenuItem deleteEntityMenuItem;
     
     private final ResultsListController resultsListController;
     private final RecentListController recentListController;
@@ -136,8 +134,6 @@ public class ProjectController {
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
-        newEntityMenuItem = frame.getAddEntityMenuItem();
-        deleteEntityMenuItem = frame.getDeleteEntityMenuItem();
         
         //set up choosers
         imageChooser.setMultiSelectionEnabled(false);
@@ -229,7 +225,6 @@ public class ProjectController {
         frame.getAddEntityButton().addActionListener(addEntityActionListener);
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
         
-        
         frame.getDeleteEntityMenuItem().addActionListener((ActionEvent e) -> {
             //if the user does not want to delete the entity
             if (!shouldContinue("Are you sure you wish to delete \n"
@@ -249,6 +244,19 @@ public class ProjectController {
             resultsListController.removeSelectedEntity();
             
             saveProject();
+        });
+        
+        frame.getFileMenu().addActionListener((ActionEvent e) -> {
+            //hide or show the deleteEntityMenuItem when neccessary
+            if (currentProject == null) {
+                frame.getDeleteEntityMenuItem().setEnabled(false);
+            } else {
+                if (currentProject.getEntities().isEmpty()) {
+                    frame.getDeleteEntityMenuItem().setEnabled(false);
+                } else {
+                    frame.getDeleteEntityMenuItem().setEnabled(true);
+                }
+            }
         });
         
         frame.getApplyButton().addActionListener((ActionEvent e) -> {
