@@ -8,6 +8,8 @@ package projects;
 import controllers.Utils;
 import entities.Entity;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -39,6 +41,11 @@ public class Project {
      */
     @XmlTransient
     private File projectLocation = null;
+    /**
+     * The path to the project's resource directory
+     */
+    @XmlTransient
+    private File projectResourceFolder = null;
     /**
      * A list of all the entities in this project
      */
@@ -97,8 +104,28 @@ public class Project {
         this.name = name;
     }
 
-    public void createProjectLocation() {
+    public void createProjectLocationAndResourceFolder() {
         projectLocation = projectFile.getParentFile();
+        Path resourcePath = projectLocation.toPath();
+        Path resourceFile = Paths.get(resourcePath.toString(), 
+                "Resources");
+        projectResourceFolder = resourceFile.toFile();
+    }
+    
+    /**
+     * Returns a file object pointing to the file with the given name within
+     * the Resource folder, or null if the Resource folder could not be found.
+     * @param resourceName
+     * @return The resource, or null if the resource folder could not be found.
+     */
+    public File getResource(String resourceName) {
+        if (!projectResourceFolder.exists()) {
+            return null;
+        }
+        Path resourceFolderPath = projectResourceFolder.toPath();
+        Path resourcePath = Paths.get(resourceFolderPath.toString(), 
+                resourceName);
+        return resourcePath.toFile();
     }
     
     public File getProjectLocation() {

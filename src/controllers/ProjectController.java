@@ -363,7 +363,7 @@ public class ProjectController {
         
         frame.getSelectButton().addActionListener((ActionEvent e) -> {
             //Copy the color code to the clipboard
-            copyCurrentColorCodeToClipboard();
+            doSelectAction();
         });
         
         frame.getResultsList().addMouseListener(new MouseAdapter() {
@@ -417,7 +417,7 @@ public class ProjectController {
                 //if the user double-clicked
                 if(e.getClickCount()==2){
                     //Copy the color code to the clipboard
-                    copyCurrentColorCodeToClipboard();
+                    doSelectAction();
                 }
             }
         });
@@ -611,6 +611,10 @@ public class ProjectController {
                 JOptionPane.PLAIN_MESSAGE);
     }
     
+    private void runScript() {
+        System.out.println("Run the script");
+    }
+    
     //MARK: Add Entity
     /**
      * Copies the passed in image and stores it in the resources folder. The
@@ -630,8 +634,8 @@ public class ProjectController {
         }
         ///get the name of the original image
         String imageName = currentImageFile.getName();
-        Path resourcesFolderPath = getResourcesFolderPath();
-        if (resourcesFolderPath == null) {
+        File copiedImageFile = currentProject.getResource(imageName);
+        if (copiedImageFile == null) {
             //tell the user that the resources folder does not exist
             JOptionPane.showMessageDialog(null, 
                     "The Resources folder could not be found.", 
@@ -640,10 +644,7 @@ public class ProjectController {
             //the file could not be copied
             return null;
         }
-        //create a new path where the copy of the original image will be saved
-        Path copiedImagePath 
-                = Paths.get(resourcesFolderPath.toString(), imageName);
-        File copiedImageFile = copiedImagePath.toFile();
+        
         if (copiedImageFile.exists()) {
             //if the user does NOT want to continue
             if (!shouldContinue("The image " + imageName + " already exists "
@@ -894,7 +895,7 @@ public class ProjectController {
     private void loadProject(Project newProject) {
         currentProject = newProject;
         searchController.setCurrentProject(newProject);
-        newProject.createProjectLocation();
+        newProject.createProjectLocationAndResourceFolder();
         projectLocation = newProject.getProjectLocation();
         //get path to the resources folder
         Path resourcesFolderPath = getResourcesFolderPath();
@@ -1423,6 +1424,14 @@ public class ProjectController {
         }
     }
 
+    private void doSelectAction() {
+        if (useScript) {
+            runScript();
+        } else {
+            copyCurrentColorCodeToClipboard();
+        }
+    }
+    
     private void copyCurrentColorCodeToClipboard() {
         Entity currentEntity = currentProject.getCurrentEntity();
         int r = currentEntity.getR();
