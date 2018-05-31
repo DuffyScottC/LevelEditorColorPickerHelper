@@ -35,6 +35,11 @@ public class Controller {
         
         projectController.enterNewProjectState();
         
+        frame.getAddEntityButton().setEnabled(false);
+        frame.getDeleteEntityMenuItem().setEnabled(false);
+        frame.getSetCommandMenuItem().setEnabled(false);
+        frame.getUseCommandCheckBoxMenuItem().setEnabled(false);
+        
         //set up the type combo box
         frame.getTypeComboBox().removeAllItems();
         frame.getTypeComboBox().addItem(Utils.DEFAULT_TYPE);

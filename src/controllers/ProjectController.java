@@ -187,26 +187,6 @@ public class ProjectController {
             openProject();
         });
         
-        frame.getFileMenu().addActionListener((ActionEvent e) -> {
-            if (currentProject == null) {
-                frame.getAddEntityButton().setEnabled(false);
-                frame.getDeleteEntityMenuItem().setEnabled(false);
-            } else {
-                frame.getAddEntityButton().setEnabled(true);
-                frame.getDeleteEntityMenuItem().setEnabled(true);
-            }
-        });
-        
-        frame.getCommandMenu().addActionListener((ActionEvent e) -> {
-            if (currentProject == null) {
-                frame.getSetCommandMenuItem().setEnabled(false);
-                frame.getUseCommandCheckBoxMenuItem().setEnabled(false);
-            } else {
-                frame.getSetCommandMenuItem().setEnabled(true);
-                frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
-            }
-        });
-        
         //action listener for add entity Button and add entity MenuItem
         ActionListener addEntityActionListener = (ActionEvent e) -> {
             //if the entity has been modified
@@ -1047,6 +1027,11 @@ public class ProjectController {
                 //deserialized from the file, and we can
                 //load the new project
                 loadProject(tempProject);
+                //enable the menu items
+                frame.getAddEntityButton().setEnabled(true);
+                frame.getDeleteEntityMenuItem().setEnabled(true);
+                frame.getSetCommandMenuItem().setEnabled(true);
+                frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
             } catch (JAXBException ex) {
                 //tell the user that you couldn't
                 JOptionPane.showMessageDialog(frame, "Could not deserialize"
