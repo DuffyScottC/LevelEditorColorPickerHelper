@@ -30,8 +30,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -187,6 +185,26 @@ public class ProjectController {
         
         openProjectMenuItem.addActionListener((ActionEvent e) -> {
             openProject();
+        });
+        
+        frame.getFileMenu().addActionListener((ActionEvent e) -> {
+            if (currentProject == null) {
+                frame.getAddEntityButton().setEnabled(false);
+                frame.getDeleteEntityMenuItem().setEnabled(false);
+            } else {
+                frame.getAddEntityButton().setEnabled(true);
+                frame.getDeleteEntityMenuItem().setEnabled(true);
+            }
+        });
+        
+        frame.getCommandMenu().addActionListener((ActionEvent e) -> {
+            if (currentProject == null) {
+                frame.getSetCommandMenuItem().setEnabled(false);
+                frame.getUseCommandCheckBoxMenuItem().setEnabled(false);
+            } else {
+                frame.getSetCommandMenuItem().setEnabled(true);
+                frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
+            }
         });
         
         //action listener for add entity Button and add entity MenuItem

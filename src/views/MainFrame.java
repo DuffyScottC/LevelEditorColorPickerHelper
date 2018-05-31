@@ -708,5 +708,9 @@ public class MainFrame extends javax.swing.JFrame {
     public JCheckBoxMenuItem getUseCommandCheckBoxMenuItem() {
         return useCommandCheckBoxMenuItem;
     }
+
+    public JMenu getCommandMenu() {
+        return commandMenu;
+    }
     
 }
