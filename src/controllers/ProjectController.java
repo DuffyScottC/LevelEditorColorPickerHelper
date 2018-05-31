@@ -559,27 +559,38 @@ public class ProjectController {
         
         
         //actually run the command now
-        String s = null;
-        StringBuilder outPut = new StringBuilder();
         try {
             ProcessBuilder pb = new ProcessBuilder(finalCommand); //build a command out of a array
             Process p = pb.start();
             p.waitFor();
 
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-
-            // read the output from the command
-            System.out.println("Here is the standard output of the command:\n");
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
+            BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            
+            //create a StringBuilder to hold the output
+            StringBuilder output = new StringBuilder();
+            
+            output.append("Command output:\n");
+            String line = null;
+            //read in each line of the stdin input
+            while ((line = stdin.readLine()) != null) {
+                output.append(line);
             }
 
-            // read any errors from the attempted command
-            System.out.println("Here is the standard error of the command (if any):\n");
-            while ((s = stdError.readLine()) != null) {
-                System.out.println(s);
+            //create a StringBuilder to hold the error output
+            StringBuilder error = new StringBuilder();
+            //read in each line of the stderr input
+            while ((line = stderr.readLine()) != null) {
+                error.append(line);
             }
+            //if there is some error output
+            if (error.length() < 0) {
+                //add a line to indicate the start off error output
+                output.append("Error:\n");
+                //append the error StringBuilder
+                output.append(error);
+            }
+            System.out.println(output.toString());
         } catch (IOException e) {
             System.out.println("exception happened - here's what I know: ");
             e.printStackTrace();

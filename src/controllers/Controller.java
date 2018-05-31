@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.JSplitPane;

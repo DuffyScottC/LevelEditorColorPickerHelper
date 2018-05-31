@@ -106,7 +106,6 @@ public class MainFrame extends javax.swing.JFrame {
         setCommandMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         mainSplitPane.setResizeWeight(0.4);
         mainSplitPane.setOneTouchExpandable(true);
@@ -346,7 +345,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(typeComboBox, 0, 101, Short.MAX_VALUE)
+                        .addComponent(typeComboBox, 0, 116, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(newTypeButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,7 +412,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainSplitPane.setRightComponent(infoPanel);
 
-        getContentPane().add(mainSplitPane);
+        getContentPane().add(mainSplitPane, java.awt.BorderLayout.CENTER);
 
         fileMenu.setText("File");
 
