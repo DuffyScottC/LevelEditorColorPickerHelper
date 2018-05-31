@@ -481,7 +481,9 @@ public class ProjectController {
         });
         
         frame.getTypeComboBox().addActionListener((ActionEvent e) -> {
-            modifiedController.setModified(true);
+            if (currentProject != null) {
+                modifiedController.setModified(true);
+            }
         });
         
         frame.getUseCommandCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
