@@ -538,30 +538,31 @@ public class ProjectController {
     }
     
     private void runCommand() {
-        List<String> command = currentProject.getCommand();
+        List<String> baseCommand = currentProject.getCommand();
         //this should never happen, but if it does, throw an error
-        if (command == null) {
+        if (baseCommand == null) {
             System.err.println("Could not find command.");
             return;
         }
         
         //this should never happen, but if it does, throw an error
-        if (command.isEmpty()) {
+        if (baseCommand.isEmpty()) {
             System.err.println("Could not find command.");
             return;
         }
         
         //get the current entity's attributes as arguments according to the
         //current project's boolean command preferences.
-        List<String> arguments = getArguments(currentProject.getCurrentEntity());
-        //add the args to the command list
-        command.addAll(arguments);
+        List<String> finalCommand = getArguments(currentProject.getCurrentEntity());
+        //add the baseCommand to the front of the command
+        finalCommand.addAll(0, baseCommand);
+        
         
         //actually run the command now
         String s = null;
         StringBuilder outPut = new StringBuilder();
         try {
-            ProcessBuilder pb = new ProcessBuilder(command); //build a command out of a array
+            ProcessBuilder pb = new ProcessBuilder(finalCommand); //build a command out of a array
             Process p = pb.start();
             p.waitFor();
 
@@ -664,12 +665,12 @@ public class ProjectController {
         //get the arguments that the user desires using the exampleEntity
         List<String> arguments = getArguments(exampleEntity);
         //get the user's command
-        String command 
+        String commandString 
                 = setCommandDialog.getEnterCommandTextField().getText();
         //trim the command
-        command = command.trim();
+        commandString = commandString.trim();
         //add the arguments to the command
-        StringBuilder s = new StringBuilder(command);
+        StringBuilder s = new StringBuilder(commandString);
         for (String arg : arguments) {
             s.append(" ");
             s.append(arg);
