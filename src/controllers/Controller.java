@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.JSplitPane;
@@ -14,7 +13,6 @@ import views.MainFrame;
 public class Controller {
 
     private final MainFrame frame = new MainFrame();
-    private boolean swapped = false;
 
     public Controller() {
         frame.setTitle("Level Editor Color Picker");
