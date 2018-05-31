@@ -591,12 +591,10 @@ public class ProjectController {
                 output.append(error);
             }
             System.out.println(output.toString());
-        } catch (IOException e) {
-            System.out.println("exception happened - here's what I know: ");
-            e.printStackTrace();
+        } catch (IOException ex) {
+            System.err.println("I/O Error.\n" + ex.toString());
         } catch (InterruptedException ex) {
-            System.out.println("InterruptedException happened - here's what I know: ");
-            ex.printStackTrace();
+            System.err.println("Script interrupted.\n" + ex.toString());
         }
     }
     
