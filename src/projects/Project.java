@@ -60,7 +60,7 @@ public class Project {
     private final List<String> types = new ArrayList();
     
     //MARK: Command
-    private String command = null;
+    private final List<String> command = new ArrayList();
     private boolean includeColorHex = false;
     private boolean includeRed = false;
     private boolean includeGreen = false;
@@ -245,12 +245,13 @@ public class Project {
         types.remove(index);
     }
 
-    public String getCommand() {
+    public List<String> getCommand() {
         return command;
     }
 
-    public void setCommand(String command) {
-        this.command = command;
+    public void setCommand(List<String> newCommand) {
+        command.clear();
+        command.addAll(newCommand);
     }
     
     @Override

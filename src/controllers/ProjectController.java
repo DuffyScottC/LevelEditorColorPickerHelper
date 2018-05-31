@@ -28,6 +28,7 @@ import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -537,7 +538,7 @@ public class ProjectController {
     }
     
     private void runCommand() {
-        String command = currentProject.getCommand();
+        List<String> command = currentProject.getCommand();
         //this should never happen, but if it does, throw an error
         if (command == null) {
             System.err.println("Could not find command.");
@@ -545,16 +546,16 @@ public class ProjectController {
         }
         
         //this should never happen, but if it does, throw an error
-        if (command.length() == 0) {
+        if (command.isEmpty()) {
             System.err.println("Could not find command.");
             return;
         }
         
         //get the current entity's attributes as arguments according to the
         //current project's boolean command preferences.
-        List<String> commandList = getArguments(currentProject.getCurrentEntity());
-        //add the main command to the front of the list
-        commandList.add(0, command);
+        List<String> arguments = getArguments(currentProject.getCurrentEntity());
+        //add the args to the command list
+        command.addAll(arguments);
         
         //actually run the command now
         String s = null;
@@ -626,11 +627,16 @@ public class ProjectController {
         
         setCommandDialog.getSetButton().addActionListener((ActionEvent e) -> {
             //get the command the user entered
-            String command 
+            String commandString 
                 = setCommandDialog.getEnterCommandTextField().getText();
+            //split the command using the spaces
+            String[] commandArray = commandString.split(" ");
+            //convert that split into a list
+            List<String> command = new ArrayList(Arrays.asList(commandArray));
             
-            if (command.length() > 0) {
-                //set the command
+            //if the command is not empty
+            if (!command.isEmpty()) {
+                //set the current command
                 currentProject.setCommand(command);
                 //close the dialog
                 setCommandDialog.setVisible(false);
@@ -715,12 +721,24 @@ public class ProjectController {
      * command booleans.
      */
     private void fillSetCommandDialogContents() {
-        String command = currentProject.getCommand();
-        if (command == null) {
-            //fill the command with nothing
-            setCommandDialog.getEnterCommandTextField().setText("");
+        List<String> commandList = currentProject.getCommand();
+        
+        //convert the command list into a string
+        StringBuilder s = new StringBuilder();
+        boolean first = true;
+        for (String part : commandList) {
+            //if this is not the first element in the list
+            if (!first) {
+                //append a space
+                s.append(" ");
+            }
+            //append this element of the list
+            s.append(part);
+            //this is no longer the first element in the list
+            first = false;
         }
-        setCommandDialog.getEnterCommandTextField().setText(command);
+        //put the final string in the textField
+        setCommandDialog.getEnterCommandTextField().setText(s.toString());
         
         //set up the checkboxes
         setCommandDialog.getColorHexValueCheckBox().setSelected(
