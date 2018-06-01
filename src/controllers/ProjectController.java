@@ -43,6 +43,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import projects.Project;
+import scriptgeneration.ScriptGenerator;
 import views.MainFrame;
 import views.NewProjectDialog;
 import views.SetCommandDialog;
@@ -520,6 +521,12 @@ public class ProjectController {
         
         frame.getSetCommandMenuItem().addActionListener((ActionEvent e) -> {
             setCommand();
+        });
+        
+        frame.getGenerateScriptsMenuItem().addActionListener((ActionEvent e) -> {
+            ScriptGenerator scriptGenerator 
+                    = new ScriptGenerator(currentProject, frame);
+            scriptGenerator.showDialog();
         });
         
     }
@@ -1030,7 +1037,7 @@ public class ProjectController {
                 //load the new project
                 loadProject(tempProject);
                 //enable the menu items
-                frame.getAddEntityButton().setEnabled(true);
+                frame.getAddEntityMenuItem().setEnabled(true);
                 frame.getDeleteEntityMenuItem().setEnabled(true);
                 frame.getSetCommandMenuItem().setEnabled(true);
                 frame.getUseCommandCheckBoxMenuItem().setEnabled(true);

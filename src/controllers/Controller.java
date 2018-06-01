@@ -35,7 +35,7 @@ public class Controller {
         
         projectController.enterNewProjectState();
         
-        frame.getAddEntityButton().setEnabled(false);
+        frame.getAddEntityMenuItem().setEnabled(false);
         frame.getDeleteEntityMenuItem().setEnabled(false);
         frame.getSetCommandMenuItem().setEnabled(false);
         frame.getUseCommandCheckBoxMenuItem().setEnabled(false);

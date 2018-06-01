@@ -182,6 +182,10 @@ public class Project {
                 resourceName);
         return resourcePath.toFile();
     }
+
+    public File getProjectResourceFolder() {
+        return projectResourceFolder;
+    }
     
     public File getProjectLocation() {
         return projectLocation;

@@ -102,6 +102,8 @@ public class MainFrame extends javax.swing.JFrame {
         commandMenu = new javax.swing.JMenu();
         useCommandCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         setCommandMenuItem = new javax.swing.JMenuItem();
+        toolsMenu = new javax.swing.JMenu();
+        generateScriptsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -449,6 +451,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         menuBar.add(commandMenu);
 
+        toolsMenu.setText("Tools");
+
+        generateScriptsMenuItem.setText("Generate Scripts");
+        toolsMenu.add(generateScriptsMenuItem);
+
+        menuBar.add(toolsMenu);
+
         setJMenuBar(menuBar);
 
         pack();
@@ -504,6 +513,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem deleteEntityMenuItem;
     private javax.swing.JButton deleteImageButton;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem generateScriptsMenuItem;
     private javax.swing.JSlider greenSlider;
     private javax.swing.JSpinner greenSpinner;
     private views.ImagePanel imagePanel;
@@ -544,6 +554,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem setCommandMenuItem;
     private javax.swing.JPanel sliderPanel;
     private javax.swing.JMenuItem swapMenuItem;
+    private javax.swing.JMenu toolsMenu;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
@@ -711,6 +722,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JMenu getCommandMenu() {
         return commandMenu;
+    }
+
+    public JMenuItem getGenerateScriptsMenuItem() {
+        return generateScriptsMenuItem;
     }
     
 }
