@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.Entity;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -22,12 +23,24 @@ public class RecentListController {
     private final JList recentList;
     private final List<Entity> entitiesInRecent;
     private int size = 5;
+    private final EntityListRenderer entityListRenderer;
     
     public RecentListController(MainFrame frame) {
         recentList = frame.getRecentList();
         recentList.setModel(recentListModel);
         this.entitiesInRecent = new ArrayList();
-        recentList.setCellRenderer(new EntityListRenderer(this.entitiesInRecent));
+        entityListRenderer = new EntityListRenderer(this.entitiesInRecent);
+        recentList.setCellRenderer(entityListRenderer);
+    }
+    
+    /**
+     * Gives the list ResultsListController's resultsList's
+     * EntityListRenderer a reference to the project Resource location so
+     * that it can access the entity image files
+     * @param projectResourceLocation 
+     */
+    public void setProjectResourceLocation(File projectResourceLocation) {
+        entityListRenderer.setProjectResourceLocation(projectResourceLocation);
     }
     
     /**

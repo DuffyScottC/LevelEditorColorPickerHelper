@@ -1102,6 +1102,7 @@ public class ProjectController {
             //give the resultsList's EntityListRenderer a reference to the
             //resources folder file
             resultsListController.setProjectResourceLocation(resourcesFolderFile);
+            recentListController.setProjectResourceLocation(resourcesFolderFile);
         }
         
         projectFile = newProject.getProjectFile();
