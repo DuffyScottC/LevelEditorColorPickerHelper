@@ -83,6 +83,11 @@ public class ProjectController {
     private final JMenuItem newProjectMenuItem;
     private final JMenuItem openProjectMenuItem;
     
+    /**
+     * True if the resultsList is selected, false if the recentList is selected
+     */
+    private boolean resultsListSelected = true;
+    
     private final ResultsListController resultsListController;
     private final RecentListController recentListController;
     private final ColorPickerController colorPickerController;
@@ -366,26 +371,7 @@ public class ProjectController {
                 if (modifiedController.isModified()) {
                     //if the user does not want to continue
                     if (!Utils.shouldContinue("Discard changes?", frame)) {
-                        /*
-                        We have to re-select the currently selected entity in
-                        the results list JList:
-                        */
-                        //get the entities in the results
-                        List<Entity> entitiesInResults 
-                                = resultsListController.getEntitiesInResults();
-                        //get the currently selected entity
-                        Entity currentEntity = currentProject.getCurrentEntity();
-                        //get the index of the currently selected entity
-                        int index 
-                                = entitiesInResults.indexOf(currentEntity);
-                        //if the currentEntity is NOT in the results list
-                        if (index == -1) {
-                            //exit this method
-                            return;
-                        }
-                        //if the currentEntity is in the results list
-                        //reset the selection to the currentEntity
-                        resultsListController.setSelectedIndex(index);
+                        reselectEntityInList();
                         //exit this method
                         return;
                     }
@@ -412,6 +398,47 @@ public class ProjectController {
                     //Copy the color code to the clipboard
                     doSelectAction();
                 }
+                
+                resultsListSelected = true;
+            }
+        });
+        
+        frame.getRecentList().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //if the current entity has been modified
+                if (modifiedController.isModified()) {
+                    //if the user does not want to continue
+                    if (!Utils.shouldContinue("Discard changes?", frame)) {
+                        reselectEntityInList();
+                        //exit this method
+                        return;
+                    }
+                }
+                
+                //get the clicked index
+                int index = recentListController.getSelectedIndex();
+                //if there is no selection
+                if (index == -1) {
+                    return;
+                }
+                //get the entity in the resultsList
+                Entity selectedEntity 
+                        = recentListController.getEntitiesInRecent().get(index);
+                //put the selected entity in the current entity position
+                currentProject.setCurrentEntity(selectedEntity);
+                //put the current entity into the info panel
+                loadCurrentEntityIntoInfoPanel();
+                //we are no longer modifed
+                modifiedController.setModified(false);
+                
+                //if the user double-clicked
+                if(e.getClickCount()==2){
+                    //Copy the color code to the clipboard
+                    doSelectAction();
+                }
+                
+                resultsListSelected = false;
             }
         });
         
@@ -1418,6 +1445,50 @@ public class ProjectController {
     }
     
     //MARK: Misc
+    private void reselectEntityInList() {
+            /*
+            We have to re-select the currently selected entity in
+            the results list JList:
+            */
+
+            List<Entity> listEntities;
+            //if the resultsList was the last one selected
+            if (resultsListSelected) {
+                //get the entities in the results
+                listEntities 
+                        = resultsListController.getEntitiesInResults();
+            } else {
+                //get the entities in the recent
+                listEntities 
+                        = resultsListController.getEntitiesInResults();
+            }
+
+            //get the currently selected entity in the list
+            Entity currentEntity = currentProject.getCurrentEntity();
+            //get the index of the currently selected entity
+            int index 
+                    = listEntities.indexOf(currentEntity);
+            //if the currentEntity is NOT in the list
+            if (index == -1) {
+                //exit this method
+                return;
+            }
+
+            //if the results list was the last selected list
+            if (resultsListSelected) {
+                //if the currentEntity is in the results list
+                //reset the selection to the currentEntity
+                resultsListController.setSelectedIndex(index);
+                recentListController.setSelectedIndex(-1);
+            } else {
+                //if the recent list was the last selected list
+                //if the currentEntity is in the recent list
+                //reset the selection to the currentEntity
+                recentListController.setSelectedIndex(index);
+                resultsListController.setSelectedIndex(-1);
+        }
+    }
+    
     private void loadCurrentEntityIntoInfoPanel() {
         Entity currentEntity = currentProject.getCurrentEntity();
         frame.getNameTextField().setText(currentEntity.getName());
@@ -1587,6 +1658,9 @@ public class ProjectController {
         } else {
             copyCurrentColorCodeToClipboard();
         }
+        
+        //add the currently selected entity to the recent list
+        recentListController.addEntity(currentProject.getCurrentEntity());
     }
     
     private void copyCurrentColorCodeToClipboard() {

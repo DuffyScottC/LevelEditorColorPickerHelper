@@ -62,4 +62,22 @@ public class RecentListController {
         entitiesInRecent.clear();
         updateListModel();
     }
+
+    public void setSelectedIndex(int index) {
+        //if the passed index is a valid index
+        if (0 <= index && index < recentListModel.size()) {
+            recentList.setSelectedIndex(index);
+            recentList.repaint();
+        }
+    }
+    
+    public int getSelectedIndex() {
+        return recentList.getSelectedIndex();
+    }
+
+    public List<Entity> getEntitiesInRecent() {
+        return entitiesInRecent;
+    }
+    
+    
 }
