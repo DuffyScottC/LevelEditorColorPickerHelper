@@ -217,48 +217,57 @@ public class ScriptGenerator {
             
             //get the project's entities
             List<Entity> projectEntities = project.getEntities();
-            
-            /*
-            The elements in the names array for the EntityArrayAttribute
-            arguments look like: 
-                "Name",
-            The elements in the colorToPrefabs array look like:
-                new Entity(new Color32(0, 0, 0, 255)),
-            but for each list the last element has no comma
-            */
-            
-            /*
-            allSBs is a list containing both namesSBs and entitySBs, split
-            evenly (since they both have the same number of elements).
-            */
-            List<StringBuilder> allSBs = constructEntityStringBuilders();
-            /*
-            The first half of allSBs. This holds all the names of the entities
-            
-            */
-            List<StringBuilder> namesSBs 
-                    = allSBs.subList(0, allSBs.size()/2 -1);
-            //the second half
-            List<StringBuilder> entitySBs 
-                    = allSBs.subList(allSBs.size()/2, allSBs.size() - 1);
-            
-            
-            StringBuilder complete = new StringBuilder();
-            complete.append(start);
-            //loop through all the StringBuilders
-            for (int i = 0; i < namesSBs.size(); i++) {
-                complete.append("#if UNITY_EDITOR\n");
-                complete.append("\n\t[EntityArrayAttribute(new string[] {\n");
-                complete.append(namesSBs.get(i));
-                complete.append("\t})]\n");
-                complete.append("#endif\n");
-                complete.append("\tpublic Entity[] entities = new Entity[] {\n");
-                complete.append(entitySBs.get(i));
-                complete.append("\t};\n");
+            //get the project's types
+            List<String> types;
+            //if the user wants to organize by type
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                //set types to be all the types in the project
+                types = project.getTypes();
+            } else {
+                //if the user does not want to organize by type
+                //initialize the types list
+                types = new ArrayList();
+                //add a single element called entities that will hold all the
+                //entities in the project.
+                types.add("entities");
             }
-            complete.append(end);
-            return complete;
             
+            List<StringBuilder> nameSBs = new ArrayList();
+            List<StringBuilder> entityObjectSBs = new ArrayList();
+            //initialize a StringBuilder for each type in the project and
+            //initialize the number of entities in each type to zero
+            for (int t = 0; t < types.size(); t++) {
+                nameSBs.add(new StringBuilder());
+                entityObjectSBs.add(new StringBuilder());
+            }
+            
+            for (int i = 0; i < projectEntities.size(); i++) {
+                //true if this is the last iteration
+                boolean last = (i == projectEntities.size() - 1);
+                //get the current entity
+                Entity e = projectEntities.get(i);
+                //get the index of this entity's type
+                int typeIndex = types.indexOf(e.getType());
+                //put e in the StringBuilders corrosponding to the typeIndex
+                addEntityToStringBuilders(e, nameSBs.get(typeIndex), 
+                        entityObjectSBs.get(typeIndex), last);
+            }
+            
+            //this will hold the final text
+            StringBuilder complete = new StringBuilder();
+            //add on the start file
+            complete.append(start);
+            //loop through all the types
+            for (int i = 0; i < types.size(); i++) {
+                //for each type, add the array of Entity objects
+                addTypeToComplete(types.get(i), nameSBs.get(i), 
+                        entityObjectSBs.get(i), complete);
+                complete.append("\n");
+            }
+            //add on the end file
+            complete.append(end);
+            //return the completed text
+            return complete;
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
@@ -266,17 +275,19 @@ public class ScriptGenerator {
         }
     }
     
-    private List<StringBuilder> constructEntityStringBuilders() {
-        //for each entity in the project
-        for (int i = 0; i < projectEntities.size(); i++) {
-            //get the current entity
-            Entity entity = projectEntities.get(i);
+    private void addTypeToComplete(String type, StringBuilder names, 
+            StringBuilder entityObjects, StringBuilder complete) {
+        complete.append("#if UNITY_EDITOR\n");
+        complete.append("\n\t[EntityArrayAttribute(new string[] {\n");
+        complete.append(names);
+        complete.append("\t})]\n");
+        complete.append("#endif\n");
 
-            //true if this is the last iteration
-            boolean last = (i == projectEntities.size() - 1);
-
-            addEntityToStringBuilders(entity, names, entityObjects, last);
-        }
+        complete.append("\tpublic Entity[] ");
+        complete.append(type);
+        complete.append("Entities = new Entity[] {\n");
+        complete.append(entityObjects);
+        complete.append("\t};\n");
     }
     
     /**
@@ -289,6 +300,15 @@ public class ScriptGenerator {
      */
     private void addEntityToStringBuilders(Entity entity, StringBuilder names, 
             StringBuilder entityObjects, boolean last) {
+        /*
+        The elements in the names array for the EntityArrayAttribute
+        arguments look like: 
+            "Name",
+        The elements in the colorToPrefabs array look like:
+            new Entity(new Color32(0, 0, 0, 255)),
+        but for each list the last element has no comma
+        */
+        
         //Add to the names array
         names.append("\t\t\"");
         names.append(entity.getName());
