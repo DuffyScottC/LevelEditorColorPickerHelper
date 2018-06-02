@@ -1,4 +1,4 @@
-    //start of end section
+    //start of middle section
     public void Start() {
           //run the GenerateLevel code
           GenerateLevel();
@@ -28,12 +28,4 @@
             // The pixel is transparrent. Let's ignore it!
             return;
         }
-          Debug.Log(pixelColor);
-          foreach (Entity entity in entities) {
-            if (entity.color.Equals(pixelColor)) {
-                    Vector2 position = new Vector2(x*gridSize, y*gridSize);
-                Instantiate(entity.prefab, position, Quaternion.identity, transform);
-            }
-        }
-    }
-}
+        //end of middle section

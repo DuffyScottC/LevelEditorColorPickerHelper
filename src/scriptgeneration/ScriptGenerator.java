@@ -146,8 +146,8 @@ public class ScriptGenerator {
             }
             
             if (dialog.getEntityArrayAttributeCheckBox().isSelected()) {
-                StringBuilder entityArrayAttribute = readResource("/resources/entityArrayAttribute.cs");
-                createFile(destination, "entityArrayAttribute.cs", entityArrayAttribute.toString());
+                StringBuilder entityArrayAttribute = readResource("/resources/EntityArrayAttribute.cs");
+                createFile(destination, "EntityArrayAttribute.cs", entityArrayAttribute.toString());
             }
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
@@ -213,7 +213,7 @@ public class ScriptGenerator {
             // The LevelGenerator Sctipt
             //get the start and end text
             StringBuilder start = readResource("/resources/start.cs");
-            StringBuilder end = readResource("/resources/end.cs");
+            StringBuilder middle = readResource("/resources/middle.cs");
             
             //get the project's entities
             List<Entity> projectEntities = project.getEntities();
@@ -274,7 +274,8 @@ public class ScriptGenerator {
                         entityObjectSBs.get(i), complete);
             }
             //add on the end of the file
-            complete.append(end);
+            complete.append(middle);
+            addLoopForEachTypeToCompleteSB(types, complete);
             //return the completed text
             return complete;
         } catch (IOException ex) {
@@ -284,21 +285,53 @@ public class ScriptGenerator {
         }
     }
     
+    /**
+     * Creates a for loop for each type array in the LevelGenerator script.
+     * @param types All the types in the LevelGenerator script
+     * @param complete the complete StringBuilder
+     */
+    private void addLoopForEachTypeToCompleteSB(List<String> types, 
+            StringBuilder complete) {
+        for (String type : types) {
+            complete.append("\t\tforeach (Entity entity in ");
+            complete.append(type);
+            complete.append(Utils.ARRAY_NAME_EXTENSION);
+            complete.append(") {\n");
+            complete.append("\t\t\tif (entity.color.Equals(pixelColor)) {\n");
+            complete.append("\t\t\t\tVector2 position = new Vector2(x*gridSize, y*gridSize);\n");
+            complete.append("\t\t\t\tInstantiate(entity.prefab, position, ");
+            complete.append("Quaternion.identity, transform);\n");
+            complete.append("\t\t}");
+            complete.append("\t}");
+            complete.append("}");
+            complete.append("\n");
+        }
+    }
+    
+    /**
+     * Adds the names and entityObjects StringBuilders' contents associated
+     * with the given type to the complete StringBuilder.
+     * @param type The name of the type that we're making an array for
+     * @param names
+     * @param entityObjects
+     * @param complete 
+     */
     private void addTypeToCompleteSB(String type, StringBuilder names, 
             StringBuilder entityObjects, StringBuilder complete) {
         //add a comment discribing the type
         complete.append("\t//");
         complete.append(type);
         
-        complete.append("#if UNITY_EDITOR\n");
-        complete.append("\n\t[EntityArrayAttribute(new string[] {\n");
+        complete.append("\n#if UNITY_EDITOR\n");
+        complete.append("\t[EntityArrayAttribute(new string[] {\n");
         complete.append(names);
         complete.append("\t})]\n");
         complete.append("#endif\n");
 
         complete.append("\tpublic Entity[] ");
         complete.append(type);
-        complete.append("Entities = new Entity[] {\n");
+        complete.append(Utils.ARRAY_NAME_EXTENSION);
+        complete.append(" = new Entity[] {\n");
         complete.append(entityObjects);
         complete.append("\t};\n");
         
