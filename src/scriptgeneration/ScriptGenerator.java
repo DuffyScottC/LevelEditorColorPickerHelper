@@ -17,8 +17,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import projects.Project;
@@ -45,11 +43,7 @@ public class ScriptGenerator {
         //make it so the user can press enter to generate
         dialog.getRootPane().setDefaultButton(dialog.getGenerateButton());
         
-        File resourceFolder = project.getProjectResourceFolder();
-        if (resourceFolder == null) {
-            resourceFolder = new File(System.getProperty("user.dir"));
-        }
-        JFileChooser chooser = new JFileChooser(resourceFolder);
+        JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
@@ -111,6 +105,7 @@ public class ScriptGenerator {
     }
 
     public void showDialog() {
+        dialog.getDesitnationFolderTextField().setText(System.getProperty("user.dir"));
         dialog.setVisible(true);
     }
     

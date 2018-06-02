@@ -1041,6 +1041,7 @@ public class ProjectController {
                 frame.getDeleteEntityMenuItem().setEnabled(true);
                 frame.getSetCommandMenuItem().setEnabled(true);
                 frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
+                frame.getGenerateScriptsMenuItem().setEnabled(true);
             } catch (JAXBException ex) {
                 //tell the user that you couldn't
                 JOptionPane.showMessageDialog(frame, "Could not deserialize"

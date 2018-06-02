@@ -39,6 +39,7 @@ public class Controller {
         frame.getDeleteEntityMenuItem().setEnabled(false);
         frame.getSetCommandMenuItem().setEnabled(false);
         frame.getUseCommandCheckBoxMenuItem().setEnabled(false);
+        frame.getGenerateScriptsMenuItem().setEnabled(false);
         
         //set up the type combo box
         frame.getTypeComboBox().removeAllItems();
