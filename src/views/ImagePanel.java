@@ -14,7 +14,7 @@ import java.io.File;
 import javax.swing.JPanel;
 
 /**
- *
+ * 
  * @author Scott
  */
 public class ImagePanel extends JPanel {

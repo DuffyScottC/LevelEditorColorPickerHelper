@@ -8,11 +8,11 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
-import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
+import views.ColorPanel;
 import views.MainFrame;
 
 /**
@@ -35,7 +35,7 @@ public class ColorPickerController {
     private final JSpinner blueSpinner;
     private final JSpinner alphaSpinner;
     
-    private final JPanel colorPanel;
+    private final ColorPanel colorPanel;
     
     private final JTextField colorCodeTextField;
     
@@ -267,7 +267,7 @@ public class ColorPickerController {
     }
     
     private void updateColorPanel() {
-        colorPanel.setBackground(new Color(r, g, b, a));
+        colorPanel.setColor(new Color(r, g, b, a));
     }
     
     private void parseUserHex() {
