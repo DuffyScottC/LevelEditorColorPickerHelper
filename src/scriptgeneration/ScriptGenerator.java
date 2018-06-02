@@ -301,9 +301,9 @@ public class ScriptGenerator {
             complete.append("\t\t\t\tVector2 position = new Vector2(x*gridSize, y*gridSize);\n");
             complete.append("\t\t\t\tInstantiate(entity.prefab, position, ");
             complete.append("Quaternion.identity, transform);\n");
-            complete.append("\t\t}");
-            complete.append("\t}");
-            complete.append("}");
+            complete.append("\t\t}\n");
+            complete.append("\t}\n");
+            complete.append("}\n");
             complete.append("\n");
         }
     }
