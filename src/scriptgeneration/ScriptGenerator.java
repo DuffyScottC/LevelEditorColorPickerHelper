@@ -8,8 +8,6 @@ package scriptgeneration;
 import controllers.Utils;
 import entities.Entity;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -412,7 +410,9 @@ public class ScriptGenerator {
         entityObjects.append(entity.getG());
         entityObjects.append(", ");
         entityObjects.append(entity.getB());
-        entityObjects.append(", 255))");
+        entityObjects.append(", ");
+        entityObjects.append(entity.getA());
+        entityObjects.append("))");
         if (!last) { //if not the last
             entityObjects.append(",");
         }
