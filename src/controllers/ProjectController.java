@@ -193,7 +193,7 @@ public class ProjectController {
             //if the entity has been modified
             if (modifiedController.isModified()) {
                 //if the user does not want to continue
-                if (!shouldContinue("Discard changes?")) {
+                if (!Utils.shouldContinue("Discard changes?", frame)) {
                     return;
                 }
             }
@@ -247,10 +247,10 @@ public class ProjectController {
         
         frame.getDeleteEntityMenuItem().addActionListener((ActionEvent e) -> {
             //if the user does not want to delete the entity
-            if (!shouldContinue("Are you sure you wish to delete \n"
+            if (!Utils.shouldContinue("Are you sure you wish to delete \n"
                     + currentProject.getCurrentEntity().getName() 
                     + "\nand all its Resources (including its\n"
-                    + "image?) This action cannot be undone.")) {
+                    + "image?) This action cannot be undone.", frame)) {
                 //do nothing
                 return;
             }
@@ -337,12 +337,12 @@ public class ProjectController {
             //get the selected type
             String selectedType = currentProject.getTypes().get(selectedIndex);
             //if the user does not want to delete this type
-            if (!shouldContinue("Are you sure you wish to delete the type \""
+            if (!Utils.shouldContinue("Are you sure you wish to delete the type \""
                     + selectedType
                     + "\"?\n"
                     + "All entities of this type will be switched to \""
                     + Utils.DEFAULT_TYPE + "\"\n"
-                    + "This operation cannot be undone.")) {
+                    + "This operation cannot be undone.", frame)) {
                 return;
             }
             //remove the type from the types list and change all entities of
@@ -365,7 +365,7 @@ public class ProjectController {
                 //if the current entity has been modified
                 if (modifiedController.isModified()) {
                     //if the user does not want to continue
-                    if (!shouldContinue("Discard changes?")) {
+                    if (!Utils.shouldContinue("Discard changes?", frame)) {
                         /*
                         We have to re-select the currently selected entity in
                         the results list JList:
@@ -452,7 +452,7 @@ public class ProjectController {
         
         frame.getDeleteImageButton().addActionListener((ActionEvent e) -> {
             //if the user does not want to delete the image
-            if (!shouldContinue("Delete this image?")) {
+            if (!Utils.shouldContinue("Delete this image?", frame)) {
                 //then stop
                 return;
             }
@@ -496,8 +496,8 @@ public class ProjectController {
             //if there is no command set for this project yet
             if (currentProject.getCommand() == null) {
                 //if the user does not want to set the command
-                if (!shouldContinue("There is no command set. Would you like\n"
-                        + "to set a new command?")) {
+                if (!Utils.shouldContinue("There is no command set. Would you like\n"
+                        + "to set a new command?", frame)) {
                     //deselect the menu item
                     frame.getUseCommandCheckBoxMenuItem().setSelected(false);
                     return;
@@ -808,9 +808,9 @@ public class ProjectController {
         
         if (copiedImageFile.exists()) {
             //if the user does NOT want to continue
-            if (!shouldContinue("The image " + imageName + " already exists "
+            if (!Utils.shouldContinue("The image " + imageName + " already exists "
                     + "in the project Resources folder. Are you sure you wish "
-                    + "to overwrite this image?")) {
+                    + "to overwrite this image?", frame)) {
                 //the user wants to use the already existing image as the image
                 //for this entity. (this way, two entities will likely be using
                 //the same image)
@@ -1119,29 +1119,31 @@ public class ProjectController {
     /**
      * Creates a new project in the current projectLocation by creating a new
      * folder and creating an XML serialized file representing the project.
-     * @returns True if this process was successful, false if there was a problem
-     * and you should stop creating a new project.
+     * @returns True if this process was successful, false if there was a
+     * problem and you should stop creating a new project.
      */
     private boolean createNewProject() throws JAXBException, Exception {
         // Create the directory that the user designated for the project:
         //Fist, convert the projectLocation to a path object
         Path tempProjectLocationPath = projectLocation.toPath();
         //add the projectName to the path to get the project folder
-        Path projectLocationPath = Paths.get(tempProjectLocationPath.toString(), projectName);
+        Path projectLocationPath = Paths.get(tempProjectLocationPath.toString(), 
+                projectName);
         //and store it in a file object
         File tempProjectLocation = projectLocationPath.toFile();
         //if the project location already exists
         if (tempProjectLocation.exists()) {
             //if the user wants to continue
-            if (shouldContinue("The project folder already exists at\n"
+            if (Utils.shouldContinue("The project folder already exists at\n"
                     + tempProjectLocation.getAbsolutePath()
-                    + "\nAre you sure you wish to continue?")) {
+                    + "\nAre you sure you wish to continue?", frame)) {
                 //if the projectLocation is not empty
                 if (tempProjectLocation.list().length > 0) {
                     //if the user does NOT want to continue
-                    if (!shouldContinue("The project folder at\n"
+                    if (!Utils.shouldContinue("The project folder at\n"
                             + tempProjectLocation.getAbsolutePath()
-                            + "\nis not empty. Are you sure you wish to continue?")) {
+                            + "\nis not empty. Are you sure you wish to continue?", 
+                            frame)) {
                         //return without throwing an exception and without
                         //creating the new project, because the user chose
                         //not to continue.
@@ -1225,11 +1227,12 @@ public class ProjectController {
         File tempFile = tempFilePath.toFile();
         if (tempFile.exists()) {
             //if the user does NOT want to continue
-            if (!shouldContinue("The file " + tempFile.getName() + "already exists "
+            if (!Utils.shouldContinue("The file " + tempFile.getName() + "already exists "
                     + "at \n" + tempFile.getAbsolutePath() + ".\nWould you like to "
                     + "overwrite this file?\n"
                     + "Please note: Overwriting this file will erase all data "
-                    + "in " + tempFile.getName() + ". This cannot be undone.")) {
+                    + "in " + tempFile.getName() + ". This cannot be undone.", 
+                    frame)) {
                 return false;
             }
             //if the user does want to continue, continue
@@ -1266,13 +1269,13 @@ public class ProjectController {
         File tempResourcesFile = tempResourcesPath.toFile();
         if (tempResourcesFile.exists()) {
             //if the user does NOT want to continue
-            if (!shouldContinue("The folder " + tempResourcesFile.getName() 
+            if (!Utils.shouldContinue("The folder " + tempResourcesFile.getName() 
                     + "already exists at \n" 
                     + tempResourcesFile.getAbsolutePath() 
                     + ".\nWould you like to continue?\n"
                     + "Please note: Keeping other files in the "
                     + tempResourcesFile.getName()
-                    + " folder may cause problems.")) {
+                    + " folder may cause problems.", frame)) {
                 return false;
             }
             //if the user does want to continue, continue
@@ -1507,21 +1510,6 @@ public class ProjectController {
         for (String type : currentProject.getTypes()) {
             typeComboBox.addItem(type);
         }
-    }
-    
-    /**
-     * Convenience method that asks a user if they want to continue
-     * 
-     * @return true if the process should continue, false if you should stop
-     * the process
-     */
-    private boolean shouldContinue(String message) {
-        //ask the user if they want to continue
-        int selection = JOptionPane.showConfirmDialog(frame, message);
-        //if the user did not choose "yes", then we should cancel the operation
-        //if the user did choose yes, then we should continue the operation
-        //if the file has been saved, then we can just return true
-        return selection == JOptionPane.YES_OPTION;
     }
     
     /**

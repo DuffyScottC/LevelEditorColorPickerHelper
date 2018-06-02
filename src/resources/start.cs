@@ -2,37 +2,23 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour {
 
-    public Texture2D map;
- 
-	public ColorToPrefab[] colorMappings = new ColorToPrefab[] {
-		new ColorToPrefab(new Color(0f, 0f, 0f, 100f))
-    };
+     [Tooltip("The texture that will be used to draw\n" +
+              "the level.")]
+    public Texture2D level;
 
-    public void Start() {
-		GenerateLevel();
-    }
+     [Tooltip("The size of a grid square in the game\n" +
+              "that corospond to the pixels")]
+     public float gridSize = 32f;
 
-    private void GenerateLevel () {
-        for (int x = 0; x < map.width; x++) {
-            for (int y = 0; y < map.height; y++) {
-                GenerateTile(x, y);
-            }
-        }
-    }
-
-    private void GenerateTile (int x, int y) {
-        Color pixelColor = map.GetPixel(x, y);
-
-        if (pixelColor.a == 0) {
-            // The pixel is transparrent. Let's ignore it!
-            return;
-        }
-
-        foreach (ColorToPrefab colorMapping in colorMappings) {
-            if (colorMapping.color.Equals(pixelColor)) {
-                Vector2 position = new Vector2(x, y);
-                Instantiate(colorMapping.prefab, position, Quaternion.identity, transform);
-            }
-        }
-    }
-}
+#if UNITY_EDITOR
+     /*
+     * This EntityAttribute is only neccessary for viewing
+     * the ColorToPrefab objects within the Inspector, so it
+     * is not included in the final build. The EntityAttribute
+     * holds the names of your entities to help you keep track
+     * of them in the inspector.
+     * 
+     * The entities array holds Entity objects that are initialized
+     * with the color you specified in your project.
+     */
+     //end of start section

@@ -5,13 +5,18 @@
  */
 package scriptgeneration;
 
+import controllers.Utils;
+import entities.Entity;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -110,25 +115,149 @@ public class ScriptGenerator {
     }
     
     /**
-     * Generates the scripts for the path at the given destination.
-     * @param destination The destination for the Scripts
+     * Generates the scripts for the path at the given destination directory.
+     * @param destination The destination directory for the Scripts
      */
     private void generateScripts(File destination) {
         try {
+            StringBuilder levelGenerator = getLevelGeneratorText();
+            createFile(destination, "LevelGenerator.cs", levelGenerator.toString());
             
+            StringBuilder colorToPrefab = readResource("/resources/ColorToPrefab.cs");
+            createFile(destination, "ColorToPrefab.cs", colorToPrefab.toString());
+            
+            StringBuilder entity = readResource("/resources/Entity.cs");
+            createFile(destination, "Entity.cs", entity.toString());
+            
+            StringBuilder entityArrayDrawer = readResource("/resources/EntityArrayDrawer.cs");
+            createFile(destination, "EntityArrayDrawer.cs", entityArrayDrawer.toString());
+            
+            StringBuilder entityArrayAttribute = readResource("/resources/entityArrayAttribute.cs");
+            createFile(destination, "entityArrayAttribute.cs", entityArrayAttribute.toString());
+        } catch (IOException ex) {
+            System.err.println("I/O Exception: Could not read file\n"
+                    + ex.toString());
+        }
+    }
+    
+    /**
+     * Creates the file at the given destination with the given name and the
+     * given contents.
+     * @param destination
+     * @param name
+     * @param contents 
+     */
+    private void createFile(File destination, String name, String contents) {
+        //create a writer up here so we can close it in the finally statement
+        FileWriter writer = null;
+        try {
+            //convert the destination to a path
+            Path destinationPath = destination.toPath();
+            //create a path to the file
+            Path filePath = Paths.get(destinationPath.toString(), name);
+            //convert the path to a file
+            File file = filePath.toFile();
+            
+            //if the file already exists
+            if (file.exists()) {
+                //if the user does NOt want to overwrite
+                if (!Utils.shouldContinue(
+                        "The file " + name + " already exists.\n"
+                        + "Would you like to overwrite this file?", dialog)) {
+                    return;
+                }
+            }
+            
+            //create a writer from the file
+            writer = new FileWriter(file);
+            //write the contents to the file
+            writer.write(contents);
+        } catch (IOException ex) {
+            System.err.println("I/O Exeption: Could not create file " + name 
+                    + "\n" + ex.toString());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+                System.err.println("I/O Exeption: Could not write to file "
+                    + name + "\n" + ex.toString());
+            }
+        }
+    }
+    
+    /**
+     * Generates the text for the LevelGenerator script using all of the
+     * entities.
+     * @return The text for the LevelGenerator.cs file
+     */
+    private StringBuilder getLevelGeneratorText() {
+        try {
+            
+            // The LevelGenerator Sctipt
+            //get the start and end text
             StringBuilder start = readResource("/resources/start.cs");
             StringBuilder end = readResource("/resources/end.cs");
             
-            /*
-            Add on elements of the format:
-            new ColorToPrefab(new Color(#f, #f, #f, 255f))
-            with commas in between
-            where # is the respective r, g, b value
-            */
+            //get the project's entities
+            List<Entity> entities = project.getEntities();
+            
+            //The elements in the names array for the EntityArrayAttribute
+            //arguments. They look like: 
+            //"Name",
+            //but the last one has no comma
+            StringBuilder names = new StringBuilder();
+            
+            //The elements in the colorToPrefabs array. They look like:
+            //new Entity(new Color32(0, 0, 0, 255)),
+            //but the last one has no comma
+            StringBuilder colorToPrefabs = new StringBuilder();
+            
+            //for each entity in the project
+            for (int i = 0; i < entities.size(); i++) {
+                //get the current entity
+                Entity entity = entities.get(i);
+                
+                //Add to the names array
+                names.append("\t\t\"");
+                names.append(entity.getName());
+                names.append("\"");
+                if (i != entities.size() - 1) { //if not the last
+                    names.append(",");
+                }
+                names.append("\n");
+                
+                //Add to the colorToPrefabs array
+                colorToPrefabs.append("\t\tnew Entity(new Color32(");
+                colorToPrefabs.append(entity.getR());
+                colorToPrefabs.append(", ");
+                colorToPrefabs.append(entity.getG());
+                colorToPrefabs.append(", ");
+                colorToPrefabs.append(entity.getB());
+                colorToPrefabs.append(", 255))");
+                if (i != entities.size() - 1) { //if not the last
+                    colorToPrefabs.append(",");
+                }
+                colorToPrefabs.append("\n");
+            }
+            
+            StringBuilder complete = new StringBuilder();
+            complete.append(start);
+            complete.append("\n\t[EntityArrayAttribute(new string[] {\n");
+            complete.append(names);
+            complete.append("\t})]\n");
+            complete.append("#endif\n");
+            complete.append("\tpublic Entity[] entities = new Entity[] {\n");
+            complete.append(colorToPrefabs);
+            complete.append("\t};");
+            complete.append(end);
+            return complete;
             
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
+            return null;
         }
     }
     

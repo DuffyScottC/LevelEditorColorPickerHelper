@@ -6,6 +6,7 @@
 package controllers;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -122,4 +123,22 @@ public class Utils {
         }
         return resultImage;
     }
+    
+    /**
+     * Convenience method that asks a user if they want to continue
+     * 
+     * @param message
+     * @param parent
+     * @return true if the process should continue, false if you should stop
+     * the process
+     */
+    public static boolean shouldContinue(String message, Component parent) {
+        //ask the user if they want to continue
+        int selection = JOptionPane.showConfirmDialog(parent, message);
+        //if the user did not choose "yes", then we should cancel the operation
+        //if the user did choose yes, then we should continue the operation
+        //if the file has been saved, then we can just return true
+        return selection == JOptionPane.YES_OPTION;
+    }
+    
 }
