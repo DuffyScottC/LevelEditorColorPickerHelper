@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"image","name","type","r","g","b","unityPrefab"})
+@XmlType(propOrder={"image","name","type","r","g","b","a","unityPrefab"})
 public class Entity {
     /**
      * The path of a the image associated with this entity. This is null
