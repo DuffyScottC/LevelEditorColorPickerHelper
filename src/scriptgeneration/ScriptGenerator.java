@@ -217,10 +217,13 @@ public class ScriptGenerator {
             
             //get the project's entities
             List<Entity> projectEntities = project.getEntities();
-            //get the project's types
+            //holds all the types that we want to organize the entities by
             List<String> types;
+            //get whether the user wants to group entities by type
+            boolean groupByType 
+                    = dialog.getGroupEntitiesByTypeCheckBox().isSelected();
             //if the user wants to organize by type
-            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+            if (groupByType) {
                 //set types to be all the types in the project
                 types = project.getTypes();
             } else {
@@ -241,30 +244,36 @@ public class ScriptGenerator {
                 entityObjectSBs.add(new StringBuilder());
             }
             
+            //loop through all the entities in the project
             for (int i = 0; i < projectEntities.size(); i++) {
                 //true if this is the last iteration
                 boolean last = (i == projectEntities.size() - 1);
-                //get the current entity
+                //get the entity at index i
                 Entity e = projectEntities.get(i);
-                //get the index of this entity's type
-                int typeIndex = types.indexOf(e.getType());
+                //initialize the typeIndex to 0
+                int typeIndex = 0;
+                //if the user wants to group by type
+                if (groupByType) {
+                    //get the index of this entity's type
+                    typeIndex = types.indexOf(e.getType());
+                } //leave it at 0 if the user is not grouping by type
                 //put e in the StringBuilders corrosponding to the typeIndex
                 addEntityToStringBuilders(e, nameSBs.get(typeIndex), 
                         entityObjectSBs.get(typeIndex), last);
             }
             
-            //this will hold the final text
+            //this will hold the final text of the file
             StringBuilder complete = new StringBuilder();
-            //add on the start file
+            //add on the start of the file
             complete.append(start);
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
-                //for each type, add the array of Entity objects
-                addTypeToComplete(types.get(i), nameSBs.get(i), 
+                //for each type, add the array of Entity objects with the title
+                //matching the corrosponding type
+                addTypeToCompleteSB(types.get(i), nameSBs.get(i), 
                         entityObjectSBs.get(i), complete);
-                complete.append("\n");
             }
-            //add on the end file
+            //add on the end of the file
             complete.append(end);
             //return the completed text
             return complete;
@@ -275,8 +284,12 @@ public class ScriptGenerator {
         }
     }
     
-    private void addTypeToComplete(String type, StringBuilder names, 
+    private void addTypeToCompleteSB(String type, StringBuilder names, 
             StringBuilder entityObjects, StringBuilder complete) {
+        //add a comment discribing the type
+        complete.append("\t//");
+        complete.append(type);
+        
         complete.append("#if UNITY_EDITOR\n");
         complete.append("\n\t[EntityArrayAttribute(new string[] {\n");
         complete.append(names);
@@ -288,6 +301,9 @@ public class ScriptGenerator {
         complete.append("Entities = new Entity[] {\n");
         complete.append(entityObjects);
         complete.append("\t};\n");
+        
+        //add a new line between each type
+        complete.append("\n");
     }
     
     /**
