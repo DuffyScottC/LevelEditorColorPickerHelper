@@ -71,7 +71,7 @@ public class ScriptGenerator {
             String gridText = dialog.getGridSizeTextField().getText();
             
             try {
-                double gridDouble = Double.parseDouble(gridText);
+                double gridDouble = Double.valueOf(gridText);
                 gridSize = gridDouble;
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(dialog, 
@@ -81,6 +81,7 @@ public class ScriptGenerator {
                         JOptionPane.ERROR_MESSAGE);
                 //reset back to last valiedgridSize
                 dialog.getGridSizeTextField().requestFocus();
+                return;
             }
             
             //get the user-entered text for the folder location
