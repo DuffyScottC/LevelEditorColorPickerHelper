@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 public class ColorPanel extends JPanel {
     
     private Color color = Color.black;
-    private final int dim = 16;
+    private final int dim = 14;
     
     @Override
     public void paintComponent(Graphics g) {
@@ -30,10 +30,10 @@ public class ColorPanel extends JPanel {
         
         //draw a checkered pattern
         boolean alt = true;
-//        int maxX = getSize().width * dim;
-//        int maxY = getSize().height * dim;
-        for (int x = 0; x <= getSize().width; x += dim) {
-            for (int y = 0; y <= getSize().height; y += dim) {
+        int maxX = getSize().width * dim;
+        int maxY = getSize().height * dim;
+        for (int x = 0; x < maxX; x += dim) {
+            for (int y = 0; y < maxY; y += dim) {
                 if (alt) { //white
                     g2.setColor(Color.white);
                 } else { //grey
