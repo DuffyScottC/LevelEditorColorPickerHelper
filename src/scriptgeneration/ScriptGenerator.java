@@ -294,18 +294,28 @@ public class ScriptGenerator {
             StringBuilder complete) {
         for (String type : types) {
             complete.append("\t\tforeach (Entity entity in ");
-            complete.append(type);
+            
+            //make the first letter lowercase
+            String firstLetter = "" + type.charAt(0);
+            firstLetter = firstLetter.toLowerCase();
+            String otherLetters = type.substring(1);
+            //add the type with a lowercase first letter
+            complete.append(firstLetter);
+            complete.append(otherLetters);
+        
             complete.append(Utils.ARRAY_NAME_EXTENSION);
             complete.append(") {\n");
             complete.append("\t\t\tif (entity.color.Equals(pixelColor)) {\n");
             complete.append("\t\t\t\tVector2 position = new Vector2(x*gridSize, y*gridSize);\n");
             complete.append("\t\t\t\tInstantiate(entity.prefab, position, ");
             complete.append("Quaternion.identity, transform);\n");
+            complete.append("\t\t\t}\n");
             complete.append("\t\t}\n");
-            complete.append("\t}\n");
-            complete.append("}\n");
-            complete.append("\n");
         }
+        //close the last braces
+        complete.append("\t}\n");
+        complete.append("}\n");
+        complete.append("\n");
     }
     
     /**
@@ -329,7 +339,15 @@ public class ScriptGenerator {
         complete.append("#endif\n");
 
         complete.append("\tpublic Entity[] ");
-        complete.append(type);
+        
+        //make the first letter lowercase
+        String firstLetter = "" + type.charAt(0);
+        firstLetter = firstLetter.toLowerCase();
+        String otherLetters = type.substring(1);
+        //add the type with a lowercase first letter
+        complete.append(firstLetter);
+        complete.append(otherLetters);
+        
         complete.append(Utils.ARRAY_NAME_EXTENSION);
         complete.append(" = new Entity[] {\n");
         complete.append(entityObjects);
