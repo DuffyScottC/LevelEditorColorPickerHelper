@@ -46,6 +46,8 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         levelGeneratorCheckBox = new javax.swing.JCheckBox();
         groupEntitiesByTypeCheckBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        gridSizeTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,6 +75,10 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         jLabel2.setText("Include:");
 
+        jLabel3.setText("Grid Size:");
+
+        gridSizeTextField.setText("32.0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,7 +103,12 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                             .addComponent(levelGeneratorCheckBox)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
-                                .addComponent(groupEntitiesByTypeCheckBox)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(gridSizeTextField))
+                                    .addComponent(groupEntitiesByTypeCheckBox))))
                         .addContainerGap(216, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +131,11 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addComponent(levelGeneratorCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(groupEntitiesByTypeCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(gridSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -185,9 +200,11 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox entityArrayDrawerCheckBox;
     private javax.swing.JCheckBox entityCheckBox;
     private javax.swing.JButton generateButton;
+    private javax.swing.JTextField gridSizeTextField;
     private javax.swing.JCheckBox groupEntitiesByTypeCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JCheckBox levelGeneratorCheckBox;
     // End of variables declaration//GEN-END:variables
 
@@ -225,6 +242,10 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
     public JCheckBox getGroupEntitiesByTypeCheckBox() {
         return groupEntitiesByTypeCheckBox;
+    }
+
+    public JTextField getGridSizeTextField() {
+        return gridSizeTextField;
     }
     
 }

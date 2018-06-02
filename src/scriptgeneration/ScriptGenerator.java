@@ -8,6 +8,8 @@ package scriptgeneration;
 import controllers.Utils;
 import entities.Entity;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -32,6 +34,7 @@ public class ScriptGenerator {
     
     private final Project project;
     private final ScriptGeneratorDialog dialog;
+    private double gridSize = 32;
     
     /**
      * Creates a new script generator for the passed in project.
@@ -65,6 +68,21 @@ public class ScriptGenerator {
         });
         
         dialog.getGenerateButton().addActionListener((ActionEvent e) -> {
+            String gridText = dialog.getGridSizeTextField().getText();
+            
+            try {
+                double gridDouble = Double.parseDouble(gridText);
+                gridSize = gridDouble;
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, 
+                        "Please enter a valid decimal\n"
+                                + "number as the Grid Size.", 
+                        "Not a Number", 
+                        JOptionPane.ERROR_MESSAGE);
+                //reset back to last valiedgridSize
+                dialog.getGridSizeTextField().requestFocus();
+            }
+            
             //get the user-entered text for the folder location
             String desitnationFolderText 
                     = dialog.getDesitnationFolderTextField().getText();
@@ -115,6 +133,7 @@ public class ScriptGenerator {
             }
             //disable this if not enabled, enable it if enabled
             dialog.getGroupEntitiesByTypeCheckBox().setEnabled(enabled);
+            dialog.getGridSizeTextField().setEnabled(enabled);
         });
     }
 
@@ -266,6 +285,10 @@ public class ScriptGenerator {
             StringBuilder complete = new StringBuilder();
             //add on the start of the file
             complete.append(start);
+            //add on the gridSize variable
+            complete.append("\tpublic float gridSize = ");
+            complete.append(gridSize);
+            complete.append("f;\n");
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
                 //for each type, add the array of Entity objects with the title
