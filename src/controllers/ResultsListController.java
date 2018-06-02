@@ -90,13 +90,15 @@ public class ResultsListController {
     
     /**
      * Sets the selected index in the visual JList
-     * @param index The index to be selected
+     * @param index The index to be selected (-1 if deselecting)
      */
     public void setSelectedIndex(int index) {
         //if the passed index is a valid index
         if (0 <= index && index < resultsListModel.size()) {
             resultsList.setSelectedIndex(index);
             resultsList.repaint();
+        } else if (index == -1) {
+            resultsList.clearSelection();
         }
     }
     

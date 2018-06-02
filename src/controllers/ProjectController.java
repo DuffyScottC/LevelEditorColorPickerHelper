@@ -400,6 +400,7 @@ public class ProjectController {
                 }
                 
                 resultsListSelected = true;
+                recentListController.setSelectedIndex(-1);
             }
         });
         
@@ -439,6 +440,7 @@ public class ProjectController {
                 }
                 
                 resultsListSelected = false;
+                resultsListController.setSelectedIndex(-1);
             }
         });
         

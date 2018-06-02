@@ -53,7 +53,7 @@ public class RecentListController {
             entitiesInRecent.remove(size - 1);
         }
         //add the new entity to the top
-        entitiesInRecent.add(entity);
+        entitiesInRecent.add(0, entity);
         //update the list model
         updateListModel();
     }
@@ -63,11 +63,17 @@ public class RecentListController {
         updateListModel();
     }
 
+    /**
+     * Sets the selected index in the visual JList
+     * @param index The index to be selected (-1 if deselecting)
+     */
     public void setSelectedIndex(int index) {
         //if the passed index is a valid index
         if (0 <= index && index < recentListModel.size()) {
             recentList.setSelectedIndex(index);
             recentList.repaint();
+        } else if (index == -1) {
+            recentList.clearSelection();
         }
     }
     
