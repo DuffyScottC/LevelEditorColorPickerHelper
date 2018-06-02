@@ -47,10 +47,17 @@ public class RecentListController {
      * @param entity 
      */
     public void addEntity(Entity entity) {
-        //if the entitiesInRecent is filled up
-        if (entitiesInRecent.size() == size) {
-            //remomve the last one in the list
-            entitiesInRecent.remove(size - 1);
+        int index = entitiesInRecent.indexOf(entity);
+        //if this entity is already in the list
+        if (index != -1) {
+            //remove the entity from the list
+            entitiesInRecent.remove(index);
+        } else {
+            //if the entitiesInRecent is filled up
+            if (entitiesInRecent.size() == size) {
+                //remove the last one in the list
+                entitiesInRecent.remove(size - 1);
+            }
         }
         //add the new entity to the top
         entitiesInRecent.add(0, entity);

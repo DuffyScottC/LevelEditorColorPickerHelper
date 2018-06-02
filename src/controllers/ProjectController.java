@@ -1661,8 +1661,10 @@ public class ProjectController {
             copyCurrentColorCodeToClipboard();
         }
         
-        //add the currently selected entity to the recent list
-        recentListController.addEntity(currentProject.getCurrentEntity());
+        if (resultsListSelected) {
+            //add the currently selected entity to the recent list
+            recentListController.addEntity(currentProject.getCurrentEntity());
+        }
     }
     
     private void copyCurrentColorCodeToClipboard() {
