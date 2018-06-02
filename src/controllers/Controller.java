@@ -17,7 +17,7 @@ public class Controller {
     public Controller() {
         frame.setTitle("Level Editor Color Picker");
         frame.setLocationRelativeTo(null);
-        frame.setSize(580, 550);
+        frame.setSize(600, 550);
         
         frame.getAlphaSpinner().setValue(255);
         
