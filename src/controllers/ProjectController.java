@@ -1507,8 +1507,11 @@ public class ProjectController {
                 currentEntity.getColor());
         //set the current image
         currentImageFile = imageFile;
-        colorPickerController.setColor(currentEntity.getR(), 
-                currentEntity.getG(), currentEntity.getB());
+        colorPickerController.setColor(
+                currentEntity.getR(), 
+                currentEntity.getG(),
+                currentEntity.getB(), 
+                currentEntity.getA());
     }
     
     /**
