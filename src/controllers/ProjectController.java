@@ -526,7 +526,7 @@ public class ProjectController {
         frame.getGenerateScriptsMenuItem().addActionListener((ActionEvent e) -> {
             ScriptGenerator scriptGenerator 
                     = new ScriptGenerator(currentProject, frame);
-            scriptGenerator.showDialog();
+            scriptGenerator.showDialog(frame);
         });
         
     }

@@ -37,8 +37,7 @@ public class Utils {
      * this algorithm only works for square displays, but the image can be any 
      * dimension (square, or rectangle of north-south or east-west orientation).
      * 
-     * @param width The width of the desired BufferedImage
-     * @param height The height of the desired BufferedImage
+     * @param dim
      * @param imageFile The file containing the image that you would like
      * to draw onto the desired BufferedImage (or null if you would just like
      * to use the color input)

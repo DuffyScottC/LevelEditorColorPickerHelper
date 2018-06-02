@@ -43,6 +43,8 @@ public class ScriptGenerator {
         //make it so the user can press enter to generate
         dialog.getRootPane().setDefaultButton(dialog.getGenerateButton());
         
+        
+        
         JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -102,10 +104,22 @@ public class ScriptGenerator {
             //hide the dialog
             dialog.setVisible(false);
         });
+        
+        dialog.getLevelGeneratorCheckBox().addActionListener((ActionEvent e) -> {
+            boolean enabled = dialog.getLevelGeneratorCheckBox().isSelected();
+            //if we are not generating the LevelGenerator script
+            if (!enabled) {
+                //deselect the GroupEntitiesByType check box
+                dialog.getGroupEntitiesByTypeCheckBox().setSelected(false);
+            }
+            //disable this if not enabled, enable it if enabled
+            dialog.getGroupEntitiesByTypeCheckBox().setEnabled(enabled);
+        });
     }
 
-    public void showDialog() {
+    public void showDialog(MainFrame frame) {
         dialog.getDesitnationFolderTextField().setText(System.getProperty("user.dir"));
+        dialog.setLocationRelativeTo(frame);
         dialog.setVisible(true);
     }
     
@@ -115,20 +129,25 @@ public class ScriptGenerator {
      */
     private void generateScripts(File destination) {
         try {
-            StringBuilder levelGenerator = getLevelGeneratorText();
-            createFile(destination, "LevelGenerator.cs", levelGenerator.toString());
+            if (dialog.getLevelGeneratorCheckBox().isSelected()) {
+                StringBuilder levelGenerator = getLevelGeneratorText();
+                createFile(destination, "LevelGenerator.cs", levelGenerator.toString());
+            }
             
-            StringBuilder colorToPrefab = readResource("/resources/ColorToPrefab.cs");
-            createFile(destination, "ColorToPrefab.cs", colorToPrefab.toString());
+            if (dialog.getEntityCheckBox().isSelected()) {
+                StringBuilder entity = readResource("/resources/Entity.cs");
+                createFile(destination, "Entity.cs", entity.toString());
+            }
             
-            StringBuilder entity = readResource("/resources/Entity.cs");
-            createFile(destination, "Entity.cs", entity.toString());
+            if (dialog.getEntityArrayDrawerCheckBox().isSelected()) {
+                StringBuilder entityArrayDrawer = readResource("/resources/EntityArrayDrawer.cs");
+                createFile(destination, "EntityArrayDrawer.cs", entityArrayDrawer.toString());
+            }
             
-            StringBuilder entityArrayDrawer = readResource("/resources/EntityArrayDrawer.cs");
-            createFile(destination, "EntityArrayDrawer.cs", entityArrayDrawer.toString());
-            
-            StringBuilder entityArrayAttribute = readResource("/resources/entityArrayAttribute.cs");
-            createFile(destination, "entityArrayAttribute.cs", entityArrayAttribute.toString());
+            if (dialog.getEntityArrayAttributeCheckBox().isSelected()) {
+                StringBuilder entityArrayAttribute = readResource("/resources/entityArrayAttribute.cs");
+                createFile(destination, "entityArrayAttribute.cs", entityArrayAttribute.toString());
+            }
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
@@ -196,7 +215,7 @@ public class ScriptGenerator {
             StringBuilder end = readResource("/resources/end.cs");
             
             //get the project's entities
-            List<Entity> entities = project.getEntities();
+            List<Entity> projectEntities = project.getEntities();
             
             //The elements in the names array for the EntityArrayAttribute
             //arguments. They look like: 
@@ -207,34 +226,17 @@ public class ScriptGenerator {
             //The elements in the colorToPrefabs array. They look like:
             //new Entity(new Color32(0, 0, 0, 255)),
             //but the last one has no comma
-            StringBuilder colorToPrefabs = new StringBuilder();
+            StringBuilder entityObjects = new StringBuilder();
             
             //for each entity in the project
-            for (int i = 0; i < entities.size(); i++) {
+            for (int i = 0; i < projectEntities.size(); i++) {
                 //get the current entity
-                Entity entity = entities.get(i);
+                Entity entity = projectEntities.get(i);
                 
-                //Add to the names array
-                names.append("\t\t\"");
-                names.append(entity.getName());
-                names.append("\"");
-                if (i != entities.size() - 1) { //if not the last
-                    names.append(",");
-                }
-                names.append("\n");
+                //true if this is the last iteration
+                boolean last = (i == projectEntities.size() - 1);
                 
-                //Add to the colorToPrefabs array
-                colorToPrefabs.append("\t\tnew Entity(new Color32(");
-                colorToPrefabs.append(entity.getR());
-                colorToPrefabs.append(", ");
-                colorToPrefabs.append(entity.getG());
-                colorToPrefabs.append(", ");
-                colorToPrefabs.append(entity.getB());
-                colorToPrefabs.append(", 255))");
-                if (i != entities.size() - 1) { //if not the last
-                    colorToPrefabs.append(",");
-                }
-                colorToPrefabs.append("\n");
+                addEntityToStringBuilders(entity, names, entityObjects, last);
             }
             
             StringBuilder complete = new StringBuilder();
@@ -244,7 +246,7 @@ public class ScriptGenerator {
             complete.append("\t})]\n");
             complete.append("#endif\n");
             complete.append("\tpublic Entity[] entities = new Entity[] {\n");
-            complete.append(colorToPrefabs);
+            complete.append(entityObjects);
             complete.append("\t};");
             complete.append(end);
             return complete;
@@ -254,6 +256,42 @@ public class ScriptGenerator {
                     + ex.toString());
             return null;
         }
+    }
+    
+    /**
+     * Adds the passed in Entity to the names and entityObject StringBuilders,
+     * including a comma afterwards unless told this is the last iteration.
+     * @param entity The Entity to add
+     * @param names The names StringBuilder
+     * @param entityObjects the entityObjects StringBuilder
+     * @param last Specifies whether this is the last iteration
+     */
+    private void addEntityToStringBuilders(Entity entity, StringBuilder names, 
+            StringBuilder entityObjects, boolean last) {
+        
+                
+        //Add to the names array
+        names.append("\t\t\"");
+        names.append(entity.getName());
+        names.append("\"");
+        if (!last) { //if not the last
+            names.append(",");
+        }
+        names.append("\n");
+
+        //Add to the colorToPrefabs array
+        entityObjects.append("\t\tnew Entity(new Color32(");
+        entityObjects.append(entity.getR());
+        entityObjects.append(", ");
+        entityObjects.append(entity.getG());
+        entityObjects.append(", ");
+        entityObjects.append(entity.getB());
+        entityObjects.append(", 255))");
+        if (!last) { //if not the last
+            entityObjects.append(",");
+        }
+        entityObjects.append("\n");
+        
     }
     
     /**

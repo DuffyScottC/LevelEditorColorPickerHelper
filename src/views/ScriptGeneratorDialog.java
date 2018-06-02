@@ -6,6 +6,8 @@
 package views;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 /**
@@ -38,6 +40,12 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         browseButton = new javax.swing.JButton();
         generateButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        entityCheckBox = new javax.swing.JCheckBox();
+        entityArrayDrawerCheckBox = new javax.swing.JCheckBox();
+        entityArrayAttributeCheckBox = new javax.swing.JCheckBox();
+        levelGeneratorCheckBox = new javax.swing.JCheckBox();
+        groupEntitiesByTypeCheckBox = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,6 +57,22 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancel");
 
+        entityCheckBox.setSelected(true);
+        entityCheckBox.setText("Entity.cs");
+
+        entityArrayDrawerCheckBox.setSelected(true);
+        entityArrayDrawerCheckBox.setText("EntityArrayDrawer.cs");
+
+        entityArrayAttributeCheckBox.setSelected(true);
+        entityArrayAttributeCheckBox.setText("EntityArrayAttribute.cs");
+
+        levelGeneratorCheckBox.setSelected(true);
+        levelGeneratorCheckBox.setText("LevelGenerator.cs");
+
+        groupEntitiesByTypeCheckBox.setText("Group Entities by Type");
+
+        jLabel2.setText("Include:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -57,26 +81,52 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(desitnationFolderTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                        .addComponent(desitnationFolderTextField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(browseButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(generateButton))))
+                        .addComponent(generateButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(entityCheckBox)
+                            .addComponent(entityArrayDrawerCheckBox)
+                            .addComponent(entityArrayAttributeCheckBox)
+                            .addComponent(levelGeneratorCheckBox)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(groupEntitiesByTypeCheckBox)))
+                        .addContainerGap(216, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(entityCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(entityArrayDrawerCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(entityArrayAttributeCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(levelGeneratorCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(groupEntitiesByTypeCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(desitnationFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
                     .addComponent(browseButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(generateButton)
                     .addComponent(cancelButton)))
@@ -131,8 +181,14 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JButton browseButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField desitnationFolderTextField;
+    private javax.swing.JCheckBox entityArrayAttributeCheckBox;
+    private javax.swing.JCheckBox entityArrayDrawerCheckBox;
+    private javax.swing.JCheckBox entityCheckBox;
     private javax.swing.JButton generateButton;
+    private javax.swing.JCheckBox groupEntitiesByTypeCheckBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JCheckBox levelGeneratorCheckBox;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBrowseButton() {
@@ -150,4 +206,25 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     public JButton getGenerateButton() {
         return generateButton;
     }
+
+    public JCheckBox getEntityArrayAttributeCheckBox() {
+        return entityArrayAttributeCheckBox;
+    }
+
+    public JCheckBox getEntityArrayDrawerCheckBox() {
+        return entityArrayDrawerCheckBox;
+    }
+
+    public JCheckBox getEntityCheckBox() {
+        return entityCheckBox;
+    }
+
+    public JCheckBox getLevelGeneratorCheckBox() {
+        return levelGeneratorCheckBox;
+    }
+
+    public JCheckBox getGroupEntitiesByTypeCheckBox() {
+        return groupEntitiesByTypeCheckBox;
+    }
+    
 }
