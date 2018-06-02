@@ -1,7 +1,3 @@
-Allow user to import levels and have the app print out a C# script that will interpret and generate the levels
-
 Allow users to specify a transform offset for their entities, so that they can add elements that are not strictly within the grid.
-
-Allow users to specify pixels per unit, grid size, and other aspects of their unity level.
 
 Allow users to organize entities by layer as well (e.g. background)
