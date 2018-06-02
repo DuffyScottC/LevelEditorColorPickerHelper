@@ -21,6 +21,7 @@ public class RecentListController {
     private final DefaultListModel recentListModel = new DefaultListModel();
     private final JList recentList;
     private final List<Entity> entitiesInRecent;
+    private int size = 5;
     
     public RecentListController(MainFrame frame) {
         recentList = frame.getRecentList();
@@ -39,8 +40,25 @@ public class RecentListController {
         }
         recentList.repaint();
     }
-
-    void clearEntities() {
+    
+    /**
+     * Adds an entity to the top of the list and removes the entity
+     * at the bottom of the list, if applicable.
+     * @param entity 
+     */
+    public void addEntity(Entity entity) {
+        //if the entitiesInRecent is filled up
+        if (entitiesInRecent.size() == size) {
+            //remomve the last one in the list
+            entitiesInRecent.remove(size - 1);
+        }
+        //add the new entity to the top
+        entitiesInRecent.add(entity);
+        //update the list model
+        updateListModel();
+    }
+    
+    public void clearEntities() {
         entitiesInRecent.clear();
         updateListModel();
     }
