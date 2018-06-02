@@ -17,6 +17,22 @@
     }
 
     /// <summary>
+    /// Instantiates the entity's prefab at the given (x,y) position if the 
+    /// passed in pixelColor matches the entity's color.
+    /// </summary>
+    /// <param name="entity">The Entity to instantiate.</param>
+    /// <param name="pixelColor">The pixelColor to match with the Entity's 
+    /// color.</param>
+    /// <param name="x">The x coordinate of the pixel's position.</param>
+    /// <param name="y">The y coordinate of the pixel's position.</param>
+    private void instantiateIfMatch(Entity entity, Color pixelColor, int x, int y) {
+    if (entity.color.Equals(pixelColor)) {
+            Vector2 position = new Vector2(x * gridSize, y * gridSize);
+            Instantiate(entity.prefab, position, Quaternion.identity, transform);
+        }
+    }
+
+    /// <summary>
     /// Generates the tile using the color of the passed-in tileCoordinate
     /// </summary>
     /// <param name="x">The x coordinate.</param>
@@ -25,7 +41,7 @@
         Color pixelColor = level.GetPixel(x, y);      
 
         if (pixelColor.a == 0) {
-            // The pixel is transparrent. Let's ignore it!
+            //ignore transparent pixels
             return;
         }
         //end of middle section

@@ -305,11 +305,7 @@ public class ScriptGenerator {
         
             complete.append(Utils.ARRAY_NAME_EXTENSION);
             complete.append(") {\n");
-            complete.append("\t\t\tif (entity.color.Equals(pixelColor)) {\n");
-            complete.append("\t\t\t\tVector2 position = new Vector2(x*gridSize, y*gridSize);\n");
-            complete.append("\t\t\t\tInstantiate(entity.prefab, position, ");
-            complete.append("Quaternion.identity, transform);\n");
-            complete.append("\t\t\t}\n");
+            complete.append("\t\t\tinstantiateIfMatch(entity, pixelColor, x, y);\n");
             complete.append("\t\t}\n");
         }
         //close the last braces
