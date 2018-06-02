@@ -8,7 +8,6 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -24,21 +23,24 @@ public class ColorPickerController {
     private int r = 0;
     private int g = 0;
     private int b = 0;
+    private int a = 255;
     
     private final JSlider redSlider;
     private final JSlider greenSlider;
     private final JSlider blueSlider;
+    private final JSlider alphaSlider;
     
     private final JSpinner redSpinner;
     private final JSpinner greenSpinner;
     private final JSpinner blueSpinner;
+    private final JSpinner alphaSpinner;
     
     private final JPanel colorPanel;
     
     private final JTextField colorCodeTextField;
     
-    private final JCheckBox includeHashTagCheckBox;
     private boolean includeHashTag = false;
+    private boolean includeAlpha = false;
     
     
     public ColorPickerController(MainFrame frame,
@@ -46,16 +48,16 @@ public class ColorPickerController {
         redSlider = frame.getRedSlider();
         greenSlider = frame.getGreenSlider();
         blueSlider = frame.getBlueSlider();
+        alphaSlider = frame.getAlphaSlider();
         
         redSpinner = frame.getRedSpinner();
         greenSpinner = frame.getGreenSpinner();
         blueSpinner = frame.getBlueSpinner();
+        alphaSpinner = frame.getAlphaSpinner();
         
         colorPanel = frame.getColorPanel();
         
         colorCodeTextField = frame.getColorCodeTextField();
-        
-        includeHashTagCheckBox = frame.getIncludeHashTagCheckBox();
         
         redSlider.addChangeListener((ChangeEvent e) -> {
             r = redSlider.getValue();
@@ -186,13 +188,61 @@ public class ColorPickerController {
             modifiedController.setModified(true);
         });
         
+        alphaSlider.addChangeListener((ChangeEvent e) -> {
+            a = alphaSlider.getValue();
+            updateColorCodeTextField();
+            updateColorPanel();
+            alphaSpinner.setValue(a);
+            modifiedController.setModified(true);
+        });
+        
+        alphaSpinner.addChangeListener((ChangeEvent e) -> {
+            //"ensure manually typed values with the editor 
+            //are propagated to the model"
+            try {
+                //add manually typed value to the model
+                alphaSpinner.commitEdit();
+            } catch (ParseException ex ) {
+                //if the manually typed value is not formatted properly
+                System.err.println(ex.toString());
+                //reset the spinner to the previous r value
+                alphaSpinner.setValue(a);
+            }
+            //get the spinner value
+            int val = (Integer) alphaSpinner.getValue();
+            //if val is at least 0
+            if (0 <= val) {
+                if (val <= 255) {
+                    //set r to the value in the spinner
+                    a = val;
+                } else {
+                    //if val is greater than 255
+                    a = 255;
+                    alphaSpinner.setValue(255);
+                }
+            } else {
+                //if val is less than 0
+                a = 0;
+                alphaSpinner.setValue(0);
+            }
+            updateColorCodeTextField();
+            updateColorPanel();
+            alphaSlider.setValue(a);
+            modifiedController.setModified(true);
+        });
+        
         colorCodeTextField.addActionListener((ActionEvent e) -> {
             parseUserHex();
             modifiedController.setModified(true);
         });
         
-        includeHashTagCheckBox.addActionListener((ActionEvent e) -> {
-            includeHashTag = includeHashTagCheckBox.isSelected();
+        frame.getIncludeHashTagCheckBox().addActionListener((ActionEvent e) -> {
+            includeHashTag = frame.getIncludeHashTagCheckBox().isSelected();
+            updateColorCodeTextField();
+        });
+        
+        frame.getIncludAlphaCheckBox().addActionListener((ActionEvent e) -> {
+            includeAlpha = frame.getIncludAlphaCheckBox().isSelected();
             updateColorCodeTextField();
         });
         
@@ -201,15 +251,23 @@ public class ColorPickerController {
     private void updateColorCodeTextField() {
         String hex;
         if (includeHashTag) {
-            hex = String.format("#%02X%02X%02X", r, g, b);
+            if (includeAlpha) {
+                hex = String.format("#%02X%02X%02X%02X", r, g, b, a);
+            } else {
+                hex = String.format("#%02X%02X%02X", r, g, b);
+            }
         } else {
-            hex = String.format("%02X%02X%02X", r, g, b);
+            if (includeAlpha) {
+                hex = String.format("%02X%02X%02X%02X", r, g, b, a);
+            } else {
+                hex = String.format("%02X%02X%02X", r, g, b);
+            }
         }
         colorCodeTextField.setText(hex);
     }
     
     private void updateColorPanel() {
-        colorPanel.setBackground(new Color(r, g, b));
+        colorPanel.setBackground(new Color(r, g, b, a));
     }
     
     private void parseUserHex() {
@@ -219,6 +277,7 @@ public class ColorPickerController {
             r = 0;
             g = 0;
             b = 0;
+            a = 0;
             updateAll();
             return;
         }
@@ -228,26 +287,42 @@ public class ColorPickerController {
             if (hex.charAt(0) == '#') {
                 //remove the #
                 hex = hex.substring(1, hex.length());
+                //if the only thing entered was the #
+                if (hex.length() == 0) {
+                    r = 0;
+                    g = 0;
+                    b = 0;
+                    a = 0;
+                    updateAll();
+                    return;
+                }
             }
         }
-        //if the hex is not of length 6
-        if (hex.length() != 6) {
+        
+        int properLength = 6;
+        String zeros = "000000";
+        if (includeAlpha) {
+            properLength = 8;
+            zeros = "00000000";
+        }
+        //if the hex is not of length properLength
+        if (hex.length() != properLength) {
             //correct the size by adding or removing bits
-            if (hex.length() < 6) {
-                //if the hex is less than 6 characters long
+            if (hex.length() < properLength) {
+                //if the hex is less than properLength characters long
                 //find out how many characters are missing
-                int numOfZeros = 6 - hex.length();
+                int numOfZeros = properLength - hex.length();
                 //add on the appropriate number of zeros
-                hex += "000000".substring(0,numOfZeros);
-            } else if (hex.length() > 6) {
-                //if the hex is greater than 6 characters long
+                hex += zeros.substring(0,numOfZeros);
+            } else if (hex.length() > properLength) {
+                //if the hex is greater than properLength characters long
                 //take the first size characters
-                hex = hex.substring(0, 6);
+                hex = hex.substring(0, properLength);
             }
         }
         //At this point, the hex is of the right size
         //if the string is NOT made up of hex characters
-        if (!hex.matches("[0-9A-Fa-f]{6}")) {
+        if (!hex.matches("[0-9A-Fa-f]{" + properLength + "}")) {
             //reset the textfield to the old code
             updateColorCodeTextField();
             return;
@@ -256,6 +331,9 @@ public class ColorPickerController {
         r = Integer.valueOf( hex.substring( 0, 2 ), 16 );
         g = Integer.valueOf( hex.substring( 2, 4 ), 16 );
         b = Integer.valueOf( hex.substring( 4, 6 ), 16 );
+        if (includeAlpha) {
+            a = Integer.valueOf( hex.substring( 7, 8 ), 16);
+        }
         updateAll();
     }
     
@@ -279,10 +357,11 @@ public class ColorPickerController {
      * @param g
      * @param b 
      */
-    public void setColor(int r, int g, int b) {
+    public void setColor(int r, int g, int b, int a) {
         this.r = r;
         this.g = g;
         this.b = b;
+        this.a = a;
         updateAll();
     }
     
@@ -295,15 +374,20 @@ public class ColorPickerController {
         r = color.getRed();
         g = color.getGreen();
         b = color.getBlue();
+        a = color.getAlpha();
         updateAll();
     }
     
     public Color getColor() {
-        return new Color(r, g, b);
+        return new Color(r, g, b, a);
     }
-    
-    public boolean getIncludeHashTag() {
+
+    public boolean includeHashTag() {
         return includeHashTag;
+    }
+
+    public boolean includeAlpha() {
+        return includeAlpha;
     }
     
 }

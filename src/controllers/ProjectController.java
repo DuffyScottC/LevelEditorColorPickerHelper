@@ -737,8 +737,9 @@ public class ProjectController {
         int r = entity.getR();
         int g = entity.getG();
         int b = entity.getB();
+        int a = entity.getA();
         if (currentProject.isIncludeColorHex()) {
-            String hex = String.format("%02X%02X%02X", r, g, b);
+            String hex = String.format("%02X%02X%02X%02X", r, g, b, a);
             commandList.add(hex);
         }
         if (currentProject.isIncludeRed()) {
@@ -923,9 +924,9 @@ public class ProjectController {
     private Color getUniqueDefaultColor() {
         List<Entity> entities = currentProject.getEntities();
         boolean colorIsTaken = false;
-        for (int r = 0; r < 255; r++) {
+        for (int b = 0; b < 255; b++) {
             for (int g = 0; g < 255; g++) {
-                for (int b = 0; b < 255; b++) {
+                for (int r = 0; r < 255; r++) {
                     //create a new color from these values
                     Color color = new Color(r, g, b);
                     
@@ -1566,12 +1567,15 @@ public class ProjectController {
         frame.getDeleteImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);
         frame.getIncludeHashTagCheckBox().setEnabled(value);
+        frame.getIncludAlphaCheckBox().setEnabled(value);
         frame.getRedSlider().setEnabled(value);
         frame.getRedSpinner().setEnabled(value);
         frame.getGreenSlider().setEnabled(value);
         frame.getGreenSpinner().setEnabled(value);
         frame.getBlueSlider().setEnabled(value);
         frame.getBlueSpinner().setEnabled(value);
+        frame.getAlphaSlider().setEnabled(value);
+        frame.getAlphaSpinner().setEnabled(value);
         frame.getUnityPrefabTextField().setEnabled(value);
     }
     
@@ -1673,11 +1677,20 @@ public class ProjectController {
         int r = currentEntity.getR();
         int g = currentEntity.getG();
         int b = currentEntity.getB();
-        String colorString = null;
-        if (colorPickerController.getIncludeHashTag()) {
-            colorString = String.format("#%02X%02X%02X", r, g, b);
+        int a = currentEntity.getA();
+        String colorString;
+        if (colorPickerController.includeHashTag()) {
+            if (colorPickerController.includeAlpha()) {
+                colorString = String.format("#%02X%02X%02X%02X", r, g, b, a);
+            } else {
+                colorString = String.format("#%02X%02X%02X", r, g, b);
+            }
         } else {
-            colorString = String.format("%02X%02X%02X", r, g, b);
+            if (colorPickerController.includeAlpha()) {
+                colorString = String.format("%02X%02X%02X%02X", r, g, b, a);
+            } else {
+                colorString = String.format("%02X%02X%02X", r, g, b);
+            }
         }
         StringSelection stringSelection = new StringSelection(colorString);
         Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();

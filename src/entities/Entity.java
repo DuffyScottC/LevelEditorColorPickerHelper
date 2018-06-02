@@ -49,6 +49,10 @@ public class Entity {
      */
     private int b;
     /**
+     * The a of the color associated with this entity
+     */
+    private int a;
+    /**
      * The path of the Unity Prefab associated with this entity. This is 
      * meant to be in the form of a path to the prefab 
      * (e.g. "Prefabs/Prafabname").
@@ -66,6 +70,7 @@ public class Entity {
         this.r = 0;
         this.g = 0;
         this.b = 0;
+        this.a = 255;
         this.unityPrefab = null;
     }
     
@@ -87,6 +92,7 @@ public class Entity {
         this.r = color.getRed();
         this.g = color.getGreen();
         this.b = color.getBlue();
+        this.a = color.getAlpha();
         this.unityPrefab = unityPrefab;
     }
     
@@ -98,6 +104,7 @@ public class Entity {
         this.r = color.getRed();
         this.g = color.getGreen();
         this.b = color.getBlue();
+        this.a = color.getAlpha();
         this.unityPrefab = unityPrefab;
     }
     
@@ -110,12 +117,13 @@ public class Entity {
      * @param b The b of the color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      */
-    public Entity (String image, String name, int r, int g, int b, String unityPrefab) {
+    public Entity (String image, String name, int r, int g, int b, int a, String unityPrefab) {
         this.image = image;
         this.name = name;
         this.r = r;
         this.g = g;
         this.b = b;
+        this.a = a;
         this.unityPrefab = unityPrefab;
     }
     
@@ -133,7 +141,7 @@ public class Entity {
         if (obj instanceof Entity) {
             Entity e = (Entity) obj;
             if (this.name.equals(e.name)) {
-                if (this.r == e.r && this.g == e.g && this.b == e.b) {
+                if (this.r == e.r && this.g == e.g && this.b == e.b && this.a == e.a) {
                     if (this.unityPrefab.equals(e.unityPrefab)) {
                         return true;
                     }
@@ -196,15 +204,24 @@ public class Entity {
     public void setB(int b) {
         this.b = b;
     }
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
     
     public Color getColor() {
-        return new Color(r, g, b);
+        return new Color(r, g, b, a);
     }
     
     public void setColor(Color color) {
         r = color.getRed();
         g = color.getGreen();
         b = color.getBlue();
+        a = color.getAlpha();
     }
 
     public String getUnityPrefab() {
