@@ -19,6 +19,7 @@ public class Controller {
         frame.setLocationRelativeTo(null);
         frame.setSize(600, 550);
         
+        //initialize spinner value
         frame.getAlphaSpinner().setValue(255);
         
         //Set up the Results List Controller
