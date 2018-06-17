@@ -5,10 +5,16 @@
  */
 package entities;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Stores the offset of the entity.
  * @author Scott
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Offset {
     private float x;
     private float y;

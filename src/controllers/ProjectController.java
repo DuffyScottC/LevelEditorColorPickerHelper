@@ -1582,6 +1582,8 @@ public class ProjectController {
         frame.getAlphaSlider().setEnabled(value);
         frame.getAlphaSpinner().setEnabled(value);
         frame.getUnityPrefabTextField().setEnabled(value);
+        frame.getxOffsetTextField().setEnabled(value);
+        frame.getyOffsetTextField().setEnabled(value);
     }
     
     /**
