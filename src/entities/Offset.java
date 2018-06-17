@@ -22,4 +22,20 @@ public class Offset {
         this.x = x;
         this.y = y;
     }
+    
+    @Override
+    public boolean equals (Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Offset) {
+            Offset o = (Offset) obj;
+            if (this.x == o.x) {
+                if (this.y == o.y) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

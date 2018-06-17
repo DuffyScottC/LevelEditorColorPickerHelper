@@ -58,7 +58,10 @@ public class Entity {
      * (e.g. "Prefabs/Prafabname").
      */
     private String unityPrefab;
-    
+    /**
+     * The offset associated with this entity
+     */
+    private Offset offset;
     /**
      * Instantiates an empty entity. This is only used by the JAXB
      * XML serializer, which requires a no-argument constructor.
@@ -72,6 +75,7 @@ public class Entity {
         this.b = 0;
         this.a = 255;
         this.unityPrefab = null;
+        this.offset = new Offset(); //0,0
     }
     
     /**
@@ -83,9 +87,10 @@ public class Entity {
      * @param type The name of the type or category associated with this entity
      * @param color The color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
+     * @param offset The offset of the entity
      */
     public Entity (String image, String name, String type, 
-            Color color, String unityPrefab) {
+            Color color, String unityPrefab, Offset offset) {
         this.image = image;
         this.name = name;
         this.type = type;
@@ -94,10 +99,11 @@ public class Entity {
         this.b = color.getBlue();
         this.a = color.getAlpha();
         this.unityPrefab = unityPrefab;
+        this.offset = offset;
     }
     
     public void replaceValues(String image, String name, String type, 
-            Color color, String unityPrefab) {
+            Color color, String unityPrefab, Offset offset) {
         this.image = image;
         this.name = name;
         this.type = type;
@@ -106,6 +112,7 @@ public class Entity {
         this.b = color.getBlue();
         this.a = color.getAlpha();
         this.unityPrefab = unityPrefab;
+        this.offset = offset;
     }
     
     /**
@@ -116,8 +123,10 @@ public class Entity {
      * @param g The g of the color associated with this entity
      * @param b The b of the color associated with this entity
      * @param unityPrefab The path of the Unity Prefab associated with this entity
+     * @param offset The offset of the Entity
      */
-    public Entity (String image, String name, int r, int g, int b, int a, String unityPrefab) {
+    public Entity (String image, String name, int r, int g, int b, int a, 
+            String unityPrefab, Offset offset) {
         this.image = image;
         this.name = name;
         this.r = r;
@@ -125,6 +134,7 @@ public class Entity {
         this.b = b;
         this.a = a;
         this.unityPrefab = unityPrefab;
+        this.offset = offset;
     }
     
     /**
@@ -143,7 +153,9 @@ public class Entity {
             if (this.name.equals(e.name)) {
                 if (this.r == e.r && this.g == e.g && this.b == e.b && this.a == e.a) {
                     if (this.unityPrefab.equals(e.unityPrefab)) {
-                        return true;
+                        if (this.offset.equals(offset)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -230,6 +242,14 @@ public class Entity {
 
     public void setUnityPrefab(String unityPrefab) {
         this.unityPrefab = unityPrefab;
+    }
+
+    public Offset getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Offset offset) {
+        this.offset = offset;
     }
     
     @Override
