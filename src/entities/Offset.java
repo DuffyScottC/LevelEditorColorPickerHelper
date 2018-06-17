@@ -13,6 +13,11 @@ public class Offset {
     private float x;
     private float y;
     
+    /**
+     * A shortcut for the offset (0,0)
+     */
+    public static final Offset zero = new Offset();
+    
     public Offset() {
         x = 0;
         y = 0;

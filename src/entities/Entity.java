@@ -75,7 +75,7 @@ public class Entity {
         this.b = 0;
         this.a = 255;
         this.unityPrefab = null;
-        this.offset = new Offset(); //0,0
+        this.offset = Offset.zero;
     }
     
     /**
@@ -168,6 +168,7 @@ public class Entity {
  if there is no image associated with this entity, and you should
  simply use the color associated with this entity to color the
  image panel.
+     * @return 
      */
     public String getImage() {
         return image;
