@@ -385,6 +385,10 @@ public class ColorPickerController {
     public boolean includeHashTag() {
         return includeHashTag;
     }
+    
+    public void setIncludeHashTag(boolean includeHashTag) {
+        this.includeHashTag = includeHashTag;
+    }
 
     public boolean includeAlpha() {
         return includeAlpha;
