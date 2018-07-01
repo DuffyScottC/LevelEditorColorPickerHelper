@@ -5,6 +5,9 @@
  */
 package views;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
 /**
  *
  * @author Scott
@@ -31,10 +34,10 @@ public class PreferencesDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
         applyButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        hashCheckBox = new javax.swing.JCheckBox();
+        alphaCheckBox = new javax.swing.JCheckBox();
+        offsetCheckBox = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -44,13 +47,13 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancel");
 
-        jCheckBox1.setText("Include hash in color hex code");
+        hashCheckBox.setText("Include hash in color hex code");
 
-        jCheckBox2.setText("Include alpha in color");
+        alphaCheckBox.setText("Include alpha in color");
 
-        jLabel1.setText("Layout:");
+        offsetCheckBox.setText("Include offset");
 
-        jCheckBox3.setText("Include offset");
+        jLabel2.setText("Attributes:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,10 +71,13 @@ public class PreferencesDialog extends javax.swing.JDialog {
                         .addComponent(okButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
-                            .addComponent(jLabel1)
-                            .addComponent(jCheckBox3))
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(alphaCheckBox)
+                                    .addComponent(hashCheckBox)
+                                    .addComponent(offsetCheckBox))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -79,14 +85,14 @@ public class PreferencesDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(hashCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
+                .addComponent(alphaCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(offsetCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(applyButton)
@@ -140,12 +146,37 @@ public class PreferencesDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox alphaCheckBox;
     private javax.swing.JButton applyButton;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox hashCheckBox;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JCheckBox offsetCheckBox;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
+
+    public JCheckBox getAlphaCheckBox() {
+        return alphaCheckBox;
+    }
+
+    public JButton getApplyButton() {
+        return applyButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JCheckBox getHashCheckBox() {
+        return hashCheckBox;
+    }
+
+    public JCheckBox getOffsetCheckBox() {
+        return offsetCheckBox;
+    }
+
+    public JButton getOkButton() {
+        return okButton;
+    }
+    
 }
