@@ -93,11 +93,11 @@ public class MainFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         includAlphaCheckBox = new javax.swing.JCheckBox();
         colorPanel = new views.ColorPanel();
-        yOffsetTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        xOffsetTextField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        yOffsetSpinner = new javax.swing.JSpinner();
+        xOffsetSpinner = new javax.swing.JSpinner();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProjectMenuItem = new javax.swing.JMenuItem();
@@ -338,11 +338,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        yOffsetTextField.setText("0");
-
         jLabel8.setText("y:");
-
-        xOffsetTextField.setText("0");
 
         jLabel9.setText("x:");
 
@@ -406,11 +402,11 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(xOffsetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(xOffsetSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yOffsetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(yOffsetSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         infoPanelLayout.setVerticalGroup(
@@ -451,12 +447,12 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(unityPrefabTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(yOffsetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yOffsetSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(xOffsetSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(xOffsetTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(applyButton)
                     .addComponent(revertButton))
@@ -622,8 +618,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem useCommandCheckBoxMenuItem;
     private javax.swing.JMenuItem verticalMenuItem;
     private javax.swing.JMenu viewMenu;
-    private javax.swing.JTextField xOffsetTextField;
-    private javax.swing.JTextField yOffsetTextField;
+    private javax.swing.JSpinner xOffsetSpinner;
+    private javax.swing.JSpinner yOffsetSpinner;
     // End of variables declaration//GEN-END:variables
 
     public JButton getAddEntityButton() {
@@ -802,12 +798,12 @@ public class MainFrame extends javax.swing.JFrame {
         return includAlphaCheckBox;
     }
 
-    public JTextField getxOffsetTextField() {
-        return xOffsetTextField;
+    public JSpinner getxOffsetSpinner() {
+        return xOffsetSpinner;
     }
 
-    public JTextField getyOffsetTextField() {
-        return yOffsetTextField;
+    public JSpinner getyOffsetSpinner() {
+        return yOffsetSpinner;
     }
     
 }

@@ -381,7 +381,7 @@ public class ColorPickerController {
     public Color getColor() {
         return new Color(r, g, b, a);
     }
-
+    
     public boolean includeHashTag() {
         return includeHashTag;
     }
