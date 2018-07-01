@@ -784,10 +784,6 @@
                                               <Component id="colorLabel" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="colorCodeTextField" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="includeHashTagCheckBox" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="includAlphaCheckBox" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
@@ -797,7 +793,7 @@
                                               <Component id="deleteImageButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="117" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -844,8 +840,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="colorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="colorCodeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="includeHashTagCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="includAlphaCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="sliderPanel" min="-2" pref="137" max="-2" attributes="0"/>
@@ -1072,11 +1066,6 @@
                 <Property name="text" type="java.lang.String" value="Revert"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="includeHashTagCheckBox">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Include #"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Type:"/>
@@ -1129,11 +1118,6 @@
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Delete"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="includAlphaCheckBox">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Include Alpha"/>
               </Properties>
             </Component>
             <Container class="views.ColorPanel" name="colorPanel">

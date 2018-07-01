@@ -81,7 +81,6 @@ public class MainFrame extends javax.swing.JFrame {
         imagePanel = new views.ImagePanel();
         applyButton = new javax.swing.JButton();
         revertButton = new javax.swing.JButton();
-        includeHashTagCheckBox = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
         typeComboBox = new javax.swing.JComboBox<>();
@@ -92,7 +91,6 @@ public class MainFrame extends javax.swing.JFrame {
         deleteImageButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        includAlphaCheckBox = new javax.swing.JCheckBox();
         colorPanel = new views.ColorPanel();
         offsetPanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -324,8 +322,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         revertButton.setText("Revert");
 
-        includeHashTagCheckBox.setText("Include #");
-
         jLabel4.setText("Type:");
 
         typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -341,8 +337,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel6.setText("Image:");
 
         jButton1.setText("Delete");
-
-        includAlphaCheckBox.setText("Include Alpha");
 
         javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
         colorPanel.setLayout(colorPanelLayout);
@@ -425,18 +419,14 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addGroup(infoPanelLayout.createSequentialGroup()
                                         .addComponent(colorLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(colorCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(includeHashTagCheckBox)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(includAlphaCheckBox))
+                                        .addComponent(colorCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(infoPanelLayout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(changeImageButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(deleteImageButton)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 117, Short.MAX_VALUE))
                             .addGroup(infoPanelLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(revertButton)
@@ -471,9 +461,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(colorLabel)
-                    .addComponent(colorCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(includeHashTagCheckBox)
-                    .addComponent(includAlphaCheckBox))
+                    .addComponent(colorCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sliderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -599,8 +587,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSlider greenSlider;
     private javax.swing.JSpinner greenSpinner;
     private views.ImagePanel imagePanel;
-    private javax.swing.JCheckBox includAlphaCheckBox;
-    private javax.swing.JCheckBox includeHashTagCheckBox;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -836,6 +822,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JSpinner getyOffsetSpinner() {
         return yOffsetSpinner;
+    }
+
+    public JPanel getAlphaPanel() {
+        return alphaPanel;
+    }
+
+    public JPanel getOffsetPanel() {
+        return offsetPanel;
     }
     
 }
