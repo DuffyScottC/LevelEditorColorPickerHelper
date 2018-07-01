@@ -1,3 +1,1 @@
 Allow users to specify a transform offset for their entities, so that they can add elements that are not strictly within the grid.
-
-Allow users to organize entities by layer as well (e.g. background)

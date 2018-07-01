@@ -6,6 +6,7 @@
 package controllers;
 
 import entities.Entity;
+import entities.Offset;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -706,7 +707,7 @@ public class ProjectController {
     private void updateExampleCommandTextField() {
         //create an example entity
         Entity exampleEntity = new Entity(null, "Name", "Type", 
-                Color.pink, "Prefab");
+                Color.pink, "Prefab", Offset.zero);
         //get the arguments that the user desires using the exampleEntity
         List<String> arguments = getArguments(exampleEntity);
         //get the user's command
@@ -918,7 +919,8 @@ public class ProjectController {
         String newUnityPrefab = getUniqueDefaultUnityPrefab();
 
         //create and return a new entity with the attributes created above
-        return new Entity(null, newName, newType, newColor, newUnityPrefab);
+        return new Entity(null, newName, newType, newColor, 
+                newUnityPrefab, Offset.zero);
     }
     
     private Color getUniqueDefaultColor() {
@@ -1580,6 +1582,8 @@ public class ProjectController {
         frame.getAlphaSlider().setEnabled(value);
         frame.getAlphaSpinner().setEnabled(value);
         frame.getUnityPrefabTextField().setEnabled(value);
+        frame.getxOffsetTextField().setEnabled(value);
+        frame.getyOffsetTextField().setEnabled(value);
     }
     
     /**
@@ -1618,8 +1622,9 @@ public class ProjectController {
         String newType = currentProject.getTypes().get(newTypeIndex);
         Color newColor = colorPickerController.getColor();
         String newUnityPrefab = frame.getUnityPrefabTextField().getText();
+        Offset newOffset = Offset.zero; //placeholder for now
         currentProject.getCurrentEntity().replaceValues(newImage, newName, 
-                newType, newColor, newUnityPrefab);
+                newType, newColor, newUnityPrefab, newOffset);
     }
     
     /**
