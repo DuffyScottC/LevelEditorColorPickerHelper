@@ -47,6 +47,7 @@ import projects.Project;
 import scriptgeneration.ScriptGenerator;
 import views.MainFrame;
 import views.NewProjectDialog;
+import views.PreferencesDialog;
 import views.SetCommandDialog;
 
 /**
@@ -128,6 +129,12 @@ public class ProjectController {
      */
     private boolean useCommand = false;
     
+    //MARK: Preferences
+    private PreferencesDialog preferencesDialog;
+    private boolean includeHashTag = false;
+    private boolean includeAlpha = true;
+    private boolean includeOffset = true;
+    
     /**
      * Set up the ProjectController
      * @param frame
@@ -153,6 +160,9 @@ public class ProjectController {
         
         setCommandDialog = new SetCommandDialog(frame, true);
         setUpSetCommandDialogActionListeners();
+        
+        preferencesDialog = new PreferencesDialog(frame, true);
+        setUpPreferencesDialogActionListeners();
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
@@ -559,6 +569,10 @@ public class ProjectController {
             scriptGenerator.showDialog(frame);
         });
         
+        frame.getPreferencesMenuItem().addActionListener((ActionEvent e) -> {
+            showPreferencesDialog();
+        });
+        
     }
     
     //MARK: Command
@@ -805,6 +819,69 @@ public class ProjectController {
                 currentProject.isIncludeUnityPrefab());
         
         updateExampleCommandTextField();
+    }
+    
+    //MARK: Preferences
+    /**
+     * Sets up the preferences to match the user's preferences, then displays
+     * the Preferences dialog.
+     */
+    private void showPreferencesDialog() {
+        //set up the checkboxes to reflect the current preferences state
+        preferencesDialog.getHashCheckBox().setSelected(
+                colorPickerController.includeHashTag());
+        preferencesDialog.getAlphaCheckBox().setSelected(
+                colorPickerController.includeAlpha());
+        preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
+        
+        //Make it so the user can press enter to select "OK"
+        preferencesDialog.getRootPane().setDefaultButton(
+                preferencesDialog.getOkButton());
+        
+        preferencesDialog.setVisible(true);
+    }
+    
+    private void setUpPreferencesDialogActionListeners() {
+        //add actionlisteners to edit the 
+        preferencesDialog.getHashCheckBox().addActionListener((ActionEvent e) -> {
+            includeHashTag = preferencesDialog.getHashCheckBox().isSelected();
+        });
+        
+        preferencesDialog.getAlphaCheckBox().addActionListener((ActionEvent e) -> {
+            includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
+        });
+        
+        preferencesDialog.getOffsetCheckBox().addActionListener((ActionEvent e) -> {
+            includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
+        });
+        
+        preferencesDialog.getCancelButton().addActionListener((ActionEvent e) -> {
+            preferencesDialog.setVisible(false);
+        });
+        
+        preferencesDialog.getOkButton().addActionListener((ActionEvent e) -> {
+            applyPreferencesChanges();
+            //hide the window
+            preferencesDialog.setVisible(false);
+        });
+        
+        preferencesDialog.getApplyButton().addActionListener((ActionEvent e) -> {
+            applyPreferencesChanges();
+        });
+    }
+    
+    private void applyPreferencesChanges() {
+        //include alpha
+        colorPickerController.setIncludeAlpha(includeAlpha);
+        //show/hide the slider depending on the value the user checked
+        frame.getAlphaPanel().setVisible(includeAlpha);
+
+        //include hashtag
+        colorPickerController.setIncludeHashTag(includeHashTag);
+
+        //include offset
+        //show/hide the offset panel depending on the value the user checked
+        frame.getOffsetPanel().setVisible(includeOffset);
     }
     
     //MARK: Add Entity
@@ -1571,8 +1648,6 @@ public class ProjectController {
         frame.getChangeImageButton().setEnabled(value);
         frame.getDeleteImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);
-        frame.getIncludeHashTagCheckBox().setEnabled(value);
-        frame.getIncludAlphaCheckBox().setEnabled(value);
         frame.getRedSlider().setEnabled(value);
         frame.getRedSpinner().setEnabled(value);
         frame.getGreenSlider().setEnabled(value);
@@ -1582,8 +1657,8 @@ public class ProjectController {
         frame.getAlphaSlider().setEnabled(value);
         frame.getAlphaSpinner().setEnabled(value);
         frame.getUnityPrefabTextField().setEnabled(value);
-        frame.getxOffsetTextField().setEnabled(value);
-        frame.getyOffsetTextField().setEnabled(value);
+        frame.getxOffsetSpinner().setEnabled(value);
+        frame.getyOffsetSpinner().setEnabled(value);
     }
     
     /**
