@@ -131,9 +131,9 @@ public class ProjectController {
     
     //MARK: Preferences
     private PreferencesDialog preferencesDialog;
-    private boolean includeHashTag;
-    private boolean includeAlpha;
-    private boolean includeOffset;
+    private boolean includeHashTag = false;
+    private boolean includeAlpha = true;
+    private boolean includeOffset = true;
     
     /**
      * Set up the ProjectController
@@ -822,6 +822,10 @@ public class ProjectController {
     }
     
     //MARK: Preferences
+    /**
+     * Sets up the preferences to match the user's preferences, then displays
+     * the Preferences dialog.
+     */
     private void showPreferencesDialog() {
         //set up the checkboxes to reflect the current preferences state
         preferencesDialog.getHashCheckBox().setSelected(
