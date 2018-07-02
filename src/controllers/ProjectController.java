@@ -1571,8 +1571,6 @@ public class ProjectController {
         frame.getChangeImageButton().setEnabled(value);
         frame.getDeleteImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);
-        frame.getIncludeHashTagCheckBox().setEnabled(value);
-        frame.getIncludAlphaCheckBox().setEnabled(value);
         frame.getRedSlider().setEnabled(value);
         frame.getRedSpinner().setEnabled(value);
         frame.getGreenSlider().setEnabled(value);

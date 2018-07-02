@@ -6,7 +6,6 @@
 package views;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -707,10 +706,6 @@ public class MainFrame extends javax.swing.JFrame {
     public JSlider getRedSlider() {
         return redSlider;
     }
-    
-    public JCheckBox getIncludeHashTagCheckBox() {
-        return includeHashTagCheckBox;
-    }
 
     public JMenuItem getDeleteEntityMenuItem() {
         return deleteEntityMenuItem;
@@ -810,10 +805,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JSpinner getAlphaSpinner() {
         return alphaSpinner;
-    }
-
-    public JCheckBox getIncludAlphaCheckBox() {
-        return includAlphaCheckBox;
     }
 
     public JSpinner getxOffsetSpinner() {
