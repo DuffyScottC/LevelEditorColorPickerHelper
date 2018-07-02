@@ -569,6 +569,10 @@ public class ProjectController {
             scriptGenerator.showDialog(frame);
         });
         
+        frame.getPreferencesMenuItem().addActionListener((ActionEvent e) -> {
+            showPreferencesDialog();
+        });
+        
     }
     
     //MARK: Command
@@ -818,12 +822,22 @@ public class ProjectController {
     }
     
     //MARK: Preferences
-    private void setUpPreferencesDialogActionListeners() {
+    private void showPreferencesDialog() {
         //set up the checkboxes to reflect the current preferences state
-        preferencesDialog.getHashCheckBox().setSelected(colorPickerController.includeHashTag());
-        preferencesDialog.getAlphaCheckBox().setSelected(colorPickerController.includeAlpha());
+        preferencesDialog.getHashCheckBox().setSelected(
+                colorPickerController.includeHashTag());
+        preferencesDialog.getAlphaCheckBox().setSelected(
+                colorPickerController.includeAlpha());
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
         
+        //Make it so the user can press enter to select "OK"
+        preferencesDialog.getRootPane().setDefaultButton(
+                preferencesDialog.getOkButton());
+        
+        preferencesDialog.setVisible(true);
+    }
+    
+    private void setUpPreferencesDialogActionListeners() {
         //add actionlisteners to edit the 
         preferencesDialog.getHashCheckBox().addActionListener((ActionEvent e) -> {
             includeHashTag = preferencesDialog.getHashCheckBox().isSelected();

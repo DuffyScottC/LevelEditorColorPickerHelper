@@ -104,6 +104,8 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         addEntityMenuItem = new javax.swing.JMenuItem();
         deleteEntityMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        preferencesMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
         verticalMenuItem = new javax.swing.JMenuItem();
         swapMenuItem = new javax.swing.JMenuItem();
@@ -494,6 +496,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         deleteEntityMenuItem.setText("Delete Entity");
         fileMenu.add(deleteEntityMenuItem);
+        fileMenu.add(jSeparator2);
+
+        preferencesMenuItem.setText("Preferences");
+        fileMenu.add(preferencesMenuItem);
 
         menuBar.add(fileMenu);
 
@@ -599,6 +605,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSplitPane listsSplitPane;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JMenuBar menuBar;
@@ -608,6 +615,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton newTypeButton;
     private javax.swing.JPanel offsetPanel;
     private javax.swing.JMenuItem openProjectMenuItem;
+    private javax.swing.JMenuItem preferencesMenuItem;
     private javax.swing.JLabel recentLabel;
     private javax.swing.JList<String> recentList;
     private javax.swing.JPanel recentPanel;
@@ -821,6 +829,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JPanel getOffsetPanel() {
         return offsetPanel;
+    }
+
+    public JMenuItem getPreferencesMenuItem() {
+        return preferencesMenuItem;
     }
     
 }
