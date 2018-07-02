@@ -236,16 +236,6 @@ public class ColorPickerController {
             modifiedController.setModified(true);
         });
         
-        frame.getIncludeHashTagCheckBox().addActionListener((ActionEvent e) -> {
-            includeHashTag = frame.getIncludeHashTagCheckBox().isSelected();
-            updateColorCodeTextField();
-        });
-        
-        frame.getIncludAlphaCheckBox().addActionListener((ActionEvent e) -> {
-            includeAlpha = frame.getIncludAlphaCheckBox().isSelected();
-            updateColorCodeTextField();
-        });
-        
     }
     
     private void updateColorCodeTextField() {
@@ -388,6 +378,7 @@ public class ColorPickerController {
     
     public void setIncludeHashTag(boolean includeHashTag) {
         this.includeHashTag = includeHashTag;
+        updateColorCodeTextField();
     }
 
     public boolean includeAlpha() {

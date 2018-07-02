@@ -47,6 +47,7 @@ import projects.Project;
 import scriptgeneration.ScriptGenerator;
 import views.MainFrame;
 import views.NewProjectDialog;
+import views.PreferencesDialog;
 import views.SetCommandDialog;
 
 /**
@@ -128,6 +129,8 @@ public class ProjectController {
      */
     private boolean useCommand = false;
     
+    private PreferencesDialog preferencesDialog;
+    
     /**
      * Set up the ProjectController
      * @param frame
@@ -153,6 +156,9 @@ public class ProjectController {
         
         setCommandDialog = new SetCommandDialog(frame, true);
         setUpSetCommandDialogActionListeners();
+        
+        preferencesDialog = new PreferencesDialog(frame, true);
+        setUpPreferencesDialogActionListeners();
         
         newProjectMenuItem = frame.getNewProjectMenuItem();
         openProjectMenuItem = frame.getOpenProjectMenuItem();
@@ -702,6 +708,10 @@ public class ProjectController {
             //simply close the window
             setCommandDialog.setVisible(false);
         });
+    }
+    
+    private void setUpPreferencesDialogActionListeners() {
+        
     }
     
     private void updateExampleCommandTextField() {
