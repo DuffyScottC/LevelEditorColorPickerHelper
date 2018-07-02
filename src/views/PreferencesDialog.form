@@ -41,7 +41,7 @@
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="alphaCheckBox" min="-2" max="-2" attributes="0"/>
-                                  <Component id="hashCheckBox" min="-2" max="-2" attributes="0"/>
+                                  <Component id="hashTagCheckBox" min="-2" max="-2" attributes="0"/>
                                   <Component id="offsetCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -59,7 +59,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="hashCheckBox" min="-2" max="-2" attributes="0"/>
+              <Component id="hashTagCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="alphaCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -91,9 +91,9 @@
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="hashCheckBox">
+    <Component class="javax.swing.JCheckBox" name="hashTagCheckBox">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Include hash in color hex code"/>
+        <Property name="text" type="java.lang.String" value="Include hashtag in color hex code"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="alphaCheckBox">

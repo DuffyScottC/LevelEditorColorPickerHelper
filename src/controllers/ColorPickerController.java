@@ -385,4 +385,9 @@ public class ColorPickerController {
         return includeAlpha;
     }
     
+    public void setIncludeAlpha(boolean includeAlpha) {
+        this.includeAlpha = includeAlpha;
+        updateColorCodeTextField();
+    }
+    
 }

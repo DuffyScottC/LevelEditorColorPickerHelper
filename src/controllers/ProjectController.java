@@ -129,7 +129,11 @@ public class ProjectController {
      */
     private boolean useCommand = false;
     
+    //MARK: Preferences
     private PreferencesDialog preferencesDialog;
+    private boolean includeHashTag;
+    private boolean includeAlpha;
+    private boolean includeOffset;
     
     /**
      * Set up the ProjectController
@@ -710,10 +714,6 @@ public class ProjectController {
         });
     }
     
-    private void setUpPreferencesDialogActionListeners() {
-        
-    }
-    
     private void updateExampleCommandTextField() {
         //create an example entity
         Entity exampleEntity = new Entity(null, "Name", "Type", 
@@ -815,6 +815,55 @@ public class ProjectController {
                 currentProject.isIncludeUnityPrefab());
         
         updateExampleCommandTextField();
+    }
+    
+    //MARK: Preferences
+    private void setUpPreferencesDialogActionListeners() {
+        //set up the checkboxes to reflect the current preferences state
+        preferencesDialog.getHashCheckBox().setSelected(colorPickerController.includeHashTag());
+        preferencesDialog.getAlphaCheckBox().setSelected(colorPickerController.includeAlpha());
+        preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
+        
+        //add actionlisteners to edit the 
+        preferencesDialog.getHashCheckBox().addActionListener((ActionEvent e) -> {
+            includeHashTag = preferencesDialog.getHashCheckBox().isSelected();
+        });
+        
+        preferencesDialog.getAlphaCheckBox().addActionListener((ActionEvent e) -> {
+            includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
+        });
+        
+        preferencesDialog.getOffsetCheckBox().addActionListener((ActionEvent e) -> {
+            includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
+        });
+        
+        preferencesDialog.getCancelButton().addActionListener((ActionEvent e) -> {
+            preferencesDialog.setVisible(false);
+        });
+        
+        preferencesDialog.getOkButton().addActionListener((ActionEvent e) -> {
+            applyPreferencesChanges();
+            //hide the window
+            preferencesDialog.setVisible(false);
+        });
+        
+        preferencesDialog.getApplyButton().addActionListener((ActionEvent e) -> {
+            applyPreferencesChanges();
+        });
+    }
+    
+    private void applyPreferencesChanges() {
+        //include alpha
+        colorPickerController.setIncludeAlpha(includeAlpha);
+        //show/hide the slider depending on the value the user checked
+        frame.getAlphaPanel().setVisible(includeAlpha);
+
+        //include hashtag
+        colorPickerController.setIncludeHashTag(includeHashTag);
+
+        //include offset
+        //show/hide the offset panel depending on the value the user checked
+        frame.getOffsetPanel().setVisible(includeOffset);
     }
     
     //MARK: Add Entity

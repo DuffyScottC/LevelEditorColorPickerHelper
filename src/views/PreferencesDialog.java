@@ -34,7 +34,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
         applyButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        hashCheckBox = new javax.swing.JCheckBox();
+        hashTagCheckBox = new javax.swing.JCheckBox();
         alphaCheckBox = new javax.swing.JCheckBox();
         offsetCheckBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
@@ -47,7 +47,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancel");
 
-        hashCheckBox.setText("Include hash in color hex code");
+        hashTagCheckBox.setText("Include hashtag in color hex code");
 
         alphaCheckBox.setText("Include alpha in color");
 
@@ -76,7 +76,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(alphaCheckBox)
-                                    .addComponent(hashCheckBox)
+                                    .addComponent(hashTagCheckBox)
                                     .addComponent(offsetCheckBox))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -87,7 +87,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(hashCheckBox)
+                .addComponent(hashTagCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(alphaCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -149,7 +149,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox alphaCheckBox;
     private javax.swing.JButton applyButton;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JCheckBox hashCheckBox;
+    private javax.swing.JCheckBox hashTagCheckBox;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JCheckBox offsetCheckBox;
     private javax.swing.JButton okButton;
@@ -168,7 +168,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
     }
 
     public JCheckBox getHashCheckBox() {
-        return hashCheckBox;
+        return hashTagCheckBox;
     }
 
     public JCheckBox getOffsetCheckBox() {
