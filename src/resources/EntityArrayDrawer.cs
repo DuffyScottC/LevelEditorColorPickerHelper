@@ -15,7 +15,8 @@ public class EntityArrayDrawer : PropertyDrawer {
 	private readonly float space = 3f;
 
     /// <summary>
-    /// The number of properties in an Entity object
+	/// The number of Entity attributes that are to be displayed vertically
+	/// in the EditorGUI property. 
     /// </summary>
 	private readonly float numOfProps = 2f;
 
@@ -45,13 +46,18 @@ public class EntityArrayDrawer : PropertyDrawer {
 			                          position.y + space, 
 			                          position.width, 
 			                          position.height / numOfProps - space);
-			var colorRect = new Rect(position.x, 
+			var offsetRect = new Rect(position.x, 
 			                         position.y + position.height / numOfProps + space, 
-			                         position.width, 
+			                         position.width / 2 - space, 
 			                         position.height / numOfProps - space);
+			var colorRect = new Rect(position.x + position.width / 2 + space,
+                                     position.y + position.height / numOfProps + space,
+                                     position.width / 2 - space,
+                                     position.height / numOfProps - space);
 
             //get the properties of the current entity object
 			var prefabProperty = property.FindPropertyRelative("prefab");
+            var offsetProperty = property.FindPropertyRelative("offset");
 			var colorProperty = property.FindPropertyRelative("color");
 
             /*
@@ -59,6 +65,7 @@ public class EntityArrayDrawer : PropertyDrawer {
              * GUIContent.none means the field will not be labeled
              */
 			EditorGUI.PropertyField(prefabRect, prefabProperty, GUIContent.none);
+            EditorGUI.PropertyField(offsetRect, offsetProperty, GUIContent.none);
 			EditorGUI.PropertyField(colorRect, colorProperty, GUIContent.none);
 			         
             //reset the indent to the default, saved above
