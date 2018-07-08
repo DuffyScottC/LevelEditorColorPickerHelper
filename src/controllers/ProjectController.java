@@ -39,6 +39,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBContext;
@@ -159,6 +160,8 @@ public class ProjectController {
         this.colorPickerController = colorPickerController;
         this.searchController = searchController;
         this.modifiedController = modifiedController;
+        
+        setUpOffsetSpinners();
         
         setCommandDialog = new SetCommandDialog(frame, true);
         setUpSetCommandDialogActionListeners();
@@ -1110,6 +1113,15 @@ public class ProjectController {
         }
     }
     
+    private void setUpOffsetSpinners() {
+        SpinnerNumberModel xOffsetSpinnerModel 
+                = new SpinnerNumberModel(0, -Double.MAX_VALUE, Double.MAX_VALUE, 0.5);
+        SpinnerNumberModel yOffsetSpinnerModel 
+                = new SpinnerNumberModel(0, -Double.MAX_VALUE, Double.MAX_VALUE, 0.5);
+        frame.getxOffsetSpinner().setModel(xOffsetSpinnerModel);
+        frame.getyOffsetSpinner().setModel(yOffsetSpinnerModel);
+    }
+    
     //MARK: Open Project
     private void openProject() {
         //only allow the user to open project files (.lecp)
@@ -1741,8 +1753,8 @@ public class ProjectController {
                     currentProject.getCurrentEntity().getOffset().getY());
         }
         //get the spinner values and create an Offset object from them
-        float xVal = (Float) frame.getxOffsetSpinner().getValue();
-        float yVal = (Float) frame.getyOffsetSpinner().getValue();
+        double xVal = (Double) frame.getxOffsetSpinner().getValue();
+        double yVal = (Double) frame.getyOffsetSpinner().getValue();
         return new Offset(xVal, yVal);
     }
     
