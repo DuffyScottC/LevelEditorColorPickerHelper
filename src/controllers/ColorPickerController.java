@@ -331,10 +331,12 @@ public class ColorPickerController {
         redSlider.setValue(r);
         greenSlider.setValue(g);
         blueSlider.setValue(b);
+        alphaSlider.setValue(a);
         
         redSpinner.setValue(r);
         greenSpinner.setValue(g);
-        blueSlider.setValue(b);
+        blueSpinner.setValue(b);
+        alphaSpinner.setValue(a);
         
         updateColorPanel();
         updateColorCodeTextField();
