@@ -1,4 +1,4 @@
-    //start of middle section
+//start of middle section
     public void Start() {
           //run the GenerateLevel code
           GenerateLevel();
@@ -27,10 +27,10 @@
     /// <param name="y">The y coordinate of the pixel's position.</param>
     private void instantiateIfMatch(Entity entity, Color pixelColor, int x, int y) {
     if (entity.color.Equals(pixelColor)) {
-            //convert the grid position into actuall world coordinates
-            Vector2 position = new Vector2(x * gridSize, y * gridSize);
+			//convert the grid position into actuall world coordinates
+			Vector2 position = new Vector2(x * gridSize, y * gridSize);
             //add the entity's offset to the position
-            position += entity.offset;
+			position += entity.offset;
             //instantiate the prefab
             Instantiate(entity.prefab, position, Quaternion.identity, transform);
         }
@@ -48,7 +48,7 @@
             //ignore transparent pixels
             return;
         }
-        if(pixelColor.r > 0) {
-            Debug.Log(pixelColor);
-        }
+		if(pixelColor.r > 0) {
+			Debug.Log(pixelColor);
+		}
         //end of middle section
