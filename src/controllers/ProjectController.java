@@ -1592,11 +1592,15 @@ public class ProjectController {
                 currentEntity.getColor());
         //set the current image
         currentImageFile = imageFile;
+        //set the color values
         colorPickerController.setColor(
                 currentEntity.getR(), 
                 currentEntity.getG(),
                 currentEntity.getB(), 
                 currentEntity.getA());
+        //set the offset values
+        frame.getxOffsetSpinner().setValue(currentEntity.getOffset().getX());
+        frame.getyOffsetSpinner().setValue(currentEntity.getOffset().getY());
     }
     
     /**
