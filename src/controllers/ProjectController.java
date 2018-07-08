@@ -1113,6 +1113,10 @@ public class ProjectController {
         }
     }
     
+    /**
+     * Sets up the spinner models so that the offset spinners can handle
+     * decimal numbers. 
+     */
     private void setUpOffsetSpinners() {
         SpinnerNumberModel xOffsetSpinnerModel 
                 = new SpinnerNumberModel(0, -Double.MAX_VALUE, Double.MAX_VALUE, 0.5);
