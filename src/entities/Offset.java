@@ -35,6 +35,18 @@ public class Offset {
     }
     
     @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        //e.g. (101, 30)
+        s.append("(");
+        s.append(x);
+        s.append(", ");
+        s.append(y);
+        s.append(")");
+        return s.toString();
+    }
+    
+    @Override
     public boolean equals (Object obj) {
         if (obj == null) {
             return false;

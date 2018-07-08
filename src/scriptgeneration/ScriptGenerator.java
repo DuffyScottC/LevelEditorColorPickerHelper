@@ -7,6 +7,7 @@ package scriptgeneration;
 
 import controllers.Utils;
 import entities.Entity;
+import entities.Offset;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -412,7 +413,13 @@ public class ScriptGenerator {
         entityObjects.append(entity.getB());
         entityObjects.append(", ");
         entityObjects.append(entity.getA());
-        entityObjects.append("))");
+        if (entity.getOffset().equals(Offset.zero)) { //if it's just (0,0)
+            entityObjects.append("))"); //use the color-only constructor
+        } else { //if it's not (0,0)
+            entityObjects.append("), new Vector2");
+            entityObjects.append(entity.getOffset().toString()); //e.g. "(15, 5)"
+            entityObjects.append(")");
+        }
         if (!last) { //if not the last
             entityObjects.append(",");
         }
