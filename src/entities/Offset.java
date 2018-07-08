@@ -16,8 +16,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Offset {
-    private float x;
-    private float y;
+    private double x;
+    private double y;
     
     /**
      * A shortcut for the offset (0,0)
@@ -29,16 +29,16 @@ public class Offset {
         y = 0;
     }
     
-    public Offset(float x, float y) {
+    public Offset(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
     
