@@ -28,6 +28,7 @@ import java.nio.file.NoSuchFileException;
 import javax.swing.filechooser.FileFilter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -525,6 +527,10 @@ public class ProjectController {
             if (currentProject != null) {
                 modifiedController.setModified(true);
             }
+        });
+        
+        frame.getxOffsetSpinner().addChangeListener((ChangeEvent e) -> {
+            modifiedController.setModified(true);
         });
         
         frame.getUseCommandCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
@@ -1697,9 +1703,39 @@ public class ProjectController {
         String newType = currentProject.getTypes().get(newTypeIndex);
         Color newColor = colorPickerController.getColor();
         String newUnityPrefab = frame.getUnityPrefabTextField().getText();
-        Offset newOffset = Offset.zero; //placeholder for now
+        Offset newOffset = getOffsetFromInfoPanel();
+        //load all the new values into the currentEntity
         currentProject.getCurrentEntity().replaceValues(newImage, newName, 
                 newType, newColor, newUnityPrefab, newOffset);
+    }
+    
+    /**
+     * Checks to make sure that the values in the offset panels are valid
+     * and returns the appropriate offset value.
+     * 
+     * @return The new offset if the spinner values are valid, the old offset
+     * if not.
+     */
+    private Offset getOffsetFromInfoPanel() {
+        //"ensure manually typed values with the editor 
+        //are propagated to the models"
+        try {
+            //add manually typed value to the models
+            frame.getxOffsetSpinner().commitEdit();
+            frame.getyOffsetSpinner().commitEdit();
+        } catch (ParseException ex ) {
+            //if the manually typed values are not formatted properly
+            System.err.println(ex.toString());
+            //reset the spinners to the previous offset values
+            frame.getxOffsetSpinner().setValue(
+                    currentProject.getCurrentEntity().getOffset().getX());
+            frame.getyOffsetSpinner().setValue(
+                    currentProject.getCurrentEntity().getOffset().getY());
+        }
+        //get the spinner values and create an Offset object from them
+        float xVal = (Float) frame.getxOffsetSpinner().getValue();
+        float yVal = (Float) frame.getyOffsetSpinner().getValue();
+        return new Offset(xVal, yVal);
     }
     
     /**

@@ -29,9 +29,17 @@ public class Offset {
         y = 0;
     }
     
-    public Offset(int x, int y) {
+    public Offset(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
     
     @Override
