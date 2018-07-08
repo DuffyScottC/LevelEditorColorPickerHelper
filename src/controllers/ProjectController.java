@@ -533,6 +533,10 @@ public class ProjectController {
             modifiedController.setModified(true);
         });
         
+        frame.getyOffsetSpinner().addChangeListener((ChangeEvent e) -> {
+            modifiedController.setModified(true);
+        });
+        
         frame.getUseCommandCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
             //if we are already using a command
             if (useCommand) {
