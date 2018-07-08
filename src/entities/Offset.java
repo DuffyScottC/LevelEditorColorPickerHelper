@@ -48,9 +48,9 @@ public class Offset {
         //e.g. (101, 30)
         s.append("(");
         s.append(x);
-        s.append(", ");
+        s.append("f, ");
         s.append(y);
-        s.append(")");
+        s.append("f)");
         return s.toString();
     }
     
