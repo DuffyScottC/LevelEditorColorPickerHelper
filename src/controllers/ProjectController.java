@@ -904,7 +904,7 @@ public class ProjectController {
             //just return null
             return null;
         }
-        ///get the name of the original image
+        //get the name of the original image
         String imageName = currentImageFile.getName();
         File copiedImageFile = currentProject.getResource(imageName);
         if (copiedImageFile == null) {
@@ -1698,14 +1698,46 @@ public class ProjectController {
      * replacing the project's currentEntity info with that info.
      */
     private void loadEntityFromInfoPanelIntoProject() {
+        //put the current entity in a variable for easy access
+        Entity currentEntity = currentProject.getCurrentEntity();
         //initialize the newImage to the old image
-        String newImage = currentProject.getCurrentEntity().getImage();
+        String newImage = currentEntity.getImage();
         //if the user chose a new image and we should copy the currentImageFile
         if (shouldCopyCurrentImageFile) {
             //copy the currentImageFile to the project Resources folder and
             //get the name of the file where the new copied image is (or get
             //null if the image could not be created)
             newImage = copyCurrentImageFileToResources();
+            
+            /*
+            Now we have to delete the old, unused image so that we
+            don't collect a bunch of useless image files.
+            */
+            boolean shouldDeleteImage = true;
+            //cycle through all the current project's entities
+            for (Entity e : currentProject.getEntities()) {
+                //if e's imageName matches currentEntity's imageName
+                if (e.getImage().equals(currentEntity.getImage())) {
+                    //if e is NOT the currentEntity
+                    if (!e.equals(currentEntity)) {
+                        //this image is being used by another entity and we
+                        //should NOT delete it.
+                        shouldDeleteImage = false;
+                        //get out of the loop
+                        break;
+                    }
+                }
+            }
+            
+            //if we should delete the image, because it's not being used by any
+            //of the other entities
+            if (shouldDeleteImage) {
+                //get the file that we are deleting
+                File imageToDelete 
+                        = currentProject.getResource(currentEntity.getImage());
+                //delete the image
+                imageToDelete.delete();
+            }
         }
         //if the image hasn't changed or if the image did change and we have
         //the newImage. 
@@ -1719,7 +1751,7 @@ public class ProjectController {
         String newUnityPrefab = frame.getUnityPrefabTextField().getText();
         Offset newOffset = getOffsetFromInfoPanel();
         //load all the new values into the currentEntity
-        currentProject.getCurrentEntity().replaceValues(newImage, newName, 
+        currentEntity.replaceValues(newImage, newName, 
                 newType, newColor, newUnityPrefab, newOffset);
     }
     
