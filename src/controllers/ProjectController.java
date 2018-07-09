@@ -960,10 +960,15 @@ public class ProjectController {
     
     /**
      * Deletes the old image (that is about to be replaced by the new image), 
-     * but only if the old image is not being used by any other entities.
+     * but only if the old image is not being used by any other entities. If
+     * the old image does not exist, then this simply does nothing.
      */
     private void deleteOldImageFileFromResources() {
         Entity currentEntity = currentProject.getCurrentEntity();
+        //if there is no image to delete
+        if (currentEntity.getImage() == null) {
+            return;
+        }
         /*
         Now we have to delete the old, unused image so that we
         don't collect a bunch of useless image files.
@@ -971,15 +976,19 @@ public class ProjectController {
         boolean shouldDeleteImage = true;
         //cycle through all the current project's entities
         for (Entity e : currentProject.getEntities()) {
-            //if e's imageName matches currentEntity's imageName
-            if (e.getImage().equals(currentEntity.getImage())) {
-                //if e is NOT the currentEntity
-                if (!e.equals(currentEntity)) {
-                    //this image is being used by another entity and we
-                    //should NOT delete it.
-                    shouldDeleteImage = false;
-                    //get out of the loop
-                    break;
+            //if e's image is null, then it does not match the currentEntity's
+            //image file and we can skip this e.
+            if (e.getImage() != null) {
+                //if e's imageName matches currentEntity's imageName
+                if (e.getImage().equals(currentEntity.getImage())) {
+                    //if e is NOT the currentEntity
+                    if (!e.equals(currentEntity)) {
+                        //this image is being used by another entity and we
+                        //should NOT delete it.
+                        shouldDeleteImage = false;
+                        //get out of the loop
+                        break;
+                    }
                 }
             }
         }
