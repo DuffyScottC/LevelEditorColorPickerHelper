@@ -46,8 +46,6 @@ public class ScriptGenerator {
         //make it so the user can press enter to generate
         dialog.getRootPane().setDefaultButton(dialog.getGenerateButton());
         
-        
-        
         JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -70,6 +68,7 @@ public class ScriptGenerator {
             String gridText = dialog.getGridSizeTextField().getText();
             
             try {
+                //get the value of the grid size field
                 double gridDouble = Double.valueOf(gridText);
                 gridSize = gridDouble;
             } catch (NumberFormatException ex) {
@@ -158,16 +157,6 @@ public class ScriptGenerator {
                 StringBuilder entity = readResource("/resources/Entity.cs");
                 createFile(destination, "Entity.cs", entity.toString());
             }
-            
-            if (dialog.getEntityArrayDrawerCheckBox().isSelected()) {
-                StringBuilder entityArrayDrawer = readResource("/resources/EntityArrayDrawer.cs");
-                createFile(destination, "EntityArrayDrawer.cs", entityArrayDrawer.toString());
-            }
-            
-            if (dialog.getEntityArrayAttributeCheckBox().isSelected()) {
-                StringBuilder entityArrayAttribute = readResource("/resources/EntityArrayAttribute.cs");
-                createFile(destination, "EntityArrayAttribute.cs", entityArrayAttribute.toString());
-            }
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
@@ -236,7 +225,7 @@ public class ScriptGenerator {
             
             //get the project's entities
             List<Entity> projectEntities = project.getEntities();
-            //holds all the types that we want to organize the entities by
+            //this holds all the types that we want to organize the entities by
             List<String> types;
             //get whether the user wants to group entities by type
             boolean groupByType 
@@ -254,12 +243,10 @@ public class ScriptGenerator {
                 types.add("entities");
             }
             
-            List<StringBuilder> nameSBs = new ArrayList();
             List<StringBuilder> entityObjectSBs = new ArrayList();
             //initialize a StringBuilder for each type in the project and
             //initialize the number of entities in each type to zero
             for (int t = 0; t < types.size(); t++) {
-                nameSBs.add(new StringBuilder());
                 entityObjectSBs.add(new StringBuilder());
             }
             
@@ -277,7 +264,7 @@ public class ScriptGenerator {
                     typeIndex = types.indexOf(e.getType());
                 } //leave it at 0 if the user is not grouping by type
                 //put e in the StringBuilders corrosponding to the typeIndex
-                addEntityToStringBuilders(e, nameSBs.get(typeIndex), 
+                addEntityToStringBuilder(e, 
                         entityObjectSBs.get(typeIndex), last);
             }
             
@@ -285,19 +272,27 @@ public class ScriptGenerator {
             StringBuilder complete = new StringBuilder();
             //add on the start of the file
             complete.append(start);
-            //add on the gridSize variable
+            
+            // Add on the gridSize variable
             complete.append("\tpublic float gridSize = ");
             complete.append(gridSize);
             complete.append("f;\n");
+            
+//            // Add on the multOffsetByGridSize variable
+//            complete.append("\tprivate boolean gridSize = ");
+//            complete.append(multOffsetByGridSize);
+//            complete.append(";\n");
+            
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
                 //for each type, add the array of Entity objects with the title
                 //matching the corrosponding type
-                addTypeToCompleteSB(types.get(i), nameSBs.get(i), 
+                addTypeToCompleteSB(types.get(i), 
                         entityObjectSBs.get(i), complete);
             }
-            //add on the end of the file
+            //add on the middle of the file
             complete.append(middle);
+            //add on the loops
             addLoopForEachTypeToCompleteSB(types, complete);
             //return the completed text
             return complete;
@@ -338,28 +333,21 @@ public class ScriptGenerator {
     }
     
     /**
-     * Adds the names and entityObjects StringBuilders' contents associated
+     * Adds the entityObjects StringBuilder's contents associated
      * with the given type to the complete StringBuilder.
      * @param type The name of the type that we're making an array for
-     * @param names
      * @param entityObjects
      * @param complete 
      */
-    private void addTypeToCompleteSB(String type, StringBuilder names, 
+    private void addTypeToCompleteSB(String type, 
             StringBuilder entityObjects, StringBuilder complete) {
         //add a comment discribing the type
         complete.append("\t//");
         complete.append(type);
-        
-        complete.append("\n#if UNITY_EDITOR\n");
-        complete.append("\t[EntityArrayAttribute(new string[] {\n");
-        complete.append(names);
-        complete.append("\t})]\n");
-        complete.append("#endif\n");
 
         complete.append("\tpublic Entity[] ");
         
-        //make the first letter lowercase
+        // Make the first letter lowercase
         String firstLetter = "" + type.charAt(0);
         firstLetter = firstLetter.toLowerCase();
         String otherLetters = type.substring(1);
@@ -377,35 +365,24 @@ public class ScriptGenerator {
     }
     
     /**
-     * Adds the passed in Entity to the names and entityObject StringBuilders,
+     * Adds the passed in Entity to the entityObject StringBuilder,
      * including a comma afterwards unless told this is the last iteration.
      * @param entity The Entity to add
-     * @param names The names StringBuilder
      * @param entityObjects the entityObjects StringBuilder
      * @param last Specifies whether this is the last iteration
      */
-    private void addEntityToStringBuilders(Entity entity, StringBuilder names, 
+    private void addEntityToStringBuilder(Entity entity, 
             StringBuilder entityObjects, boolean last) {
         /*
-        The elements in the names array for the EntityArrayAttribute
-        arguments look like: 
-            "Name",
         The elements in the colorToPrefabs array look like:
-            new Entity(new Color32(0, 0, 0, 255)),
-        but for each list the last element has no comma
+            new Entity("Name", new Color32(0, 0, 0, 255)),
+        but the last element has no comma at the end
         */
-        
-        //Add to the names array
-        names.append("\t\t\"");
-        names.append(entity.getName());
-        names.append("\"");
-        if (!last) { //if not the last
-            names.append(",");
-        }
-        names.append("\n");
 
         //Add to the colorToPrefabs array
-        entityObjects.append("\t\tnew Entity(new Color32(");
+        entityObjects.append("\t\tnew Entity(\"");
+        entityObjects.append(entity.getName());
+        entityObjects.append("\", new Color32(");
         entityObjects.append(entity.getR());
         entityObjects.append(", ");
         entityObjects.append(entity.getG());
