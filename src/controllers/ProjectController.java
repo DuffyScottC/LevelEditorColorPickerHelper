@@ -69,6 +69,7 @@ public class ProjectController {
     
     /**
      * Stores the image that is currently being displayed in the ImagePanel
+     * (not to be confused with the currentProject's currentEntity's image)
      */
     private File currentImageFile = null;
     /**
@@ -958,6 +959,43 @@ public class ProjectController {
     }
     
     /**
+     * Deletes the old image (that is about to be replaced by the new image), 
+     * but only if the old image is not being used by any other entities.
+     */
+    private void deleteOldImageFileFromResources() {
+        Entity currentEntity = currentProject.getCurrentEntity();
+        /*
+        Now we have to delete the old, unused image so that we
+        don't collect a bunch of useless image files.
+        */
+        boolean shouldDeleteImage = true;
+        //cycle through all the current project's entities
+        for (Entity e : currentProject.getEntities()) {
+            //if e's imageName matches currentEntity's imageName
+            if (e.getImage().equals(currentEntity.getImage())) {
+                //if e is NOT the currentEntity
+                if (!e.equals(currentEntity)) {
+                    //this image is being used by another entity and we
+                    //should NOT delete it.
+                    shouldDeleteImage = false;
+                    //get out of the loop
+                    break;
+                }
+            }
+        }
+
+        //if we should delete the image, because it's not being used by any
+        //of the other entities
+        if (shouldDeleteImage) {
+            //get the file that we are deleting
+            File imageToDelete 
+                    = currentProject.getResource(currentEntity.getImage());
+            //delete the image
+            imageToDelete.delete();
+        }
+    }
+    
+    /**
      * Get the path representing the project Resources folder
      * @return The Path object representing the project Resources folder, or
      * null if the resources folder could not be found
@@ -1708,36 +1746,8 @@ public class ProjectController {
             //get the name of the file where the new copied image is (or get
             //null if the image could not be created)
             newImage = copyCurrentImageFileToResources();
-            
-            /*
-            Now we have to delete the old, unused image so that we
-            don't collect a bunch of useless image files.
-            */
-            boolean shouldDeleteImage = true;
-            //cycle through all the current project's entities
-            for (Entity e : currentProject.getEntities()) {
-                //if e's imageName matches currentEntity's imageName
-                if (e.getImage().equals(currentEntity.getImage())) {
-                    //if e is NOT the currentEntity
-                    if (!e.equals(currentEntity)) {
-                        //this image is being used by another entity and we
-                        //should NOT delete it.
-                        shouldDeleteImage = false;
-                        //get out of the loop
-                        break;
-                    }
-                }
-            }
-            
-            //if we should delete the image, because it's not being used by any
-            //of the other entities
-            if (shouldDeleteImage) {
-                //get the file that we are deleting
-                File imageToDelete 
-                        = currentProject.getResource(currentEntity.getImage());
-                //delete the image
-                imageToDelete.delete();
-            }
+            //delete the old image file if it's not being used
+            deleteOldImageFileFromResources();
         }
         //if the image hasn't changed or if the image did change and we have
         //the newImage. 
