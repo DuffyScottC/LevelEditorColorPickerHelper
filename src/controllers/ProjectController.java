@@ -878,8 +878,6 @@ public class ProjectController {
         
         //include alpha
         colorPickerController.setIncludeAlpha(includeAlpha);
-        //show/hide the slider depending on the value the user checked
-        frame.getAlphaPanel().setVisible(includeAlpha);
 
         //include hashtag
         colorPickerController.setIncludeHashTag(includeHashTag);

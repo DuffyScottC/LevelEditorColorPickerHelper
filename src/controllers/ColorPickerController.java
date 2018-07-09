@@ -8,6 +8,7 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -36,6 +37,7 @@ public class ColorPickerController {
     private final JSpinner alphaSpinner;
     
     private final ColorPanel colorPanel;
+    private final JPanel alphaPanel;
     
     private final JTextField colorCodeTextField;
     
@@ -56,6 +58,7 @@ public class ColorPickerController {
         alphaSpinner = frame.getAlphaSpinner();
         
         colorPanel = frame.getColorPanel();
+        alphaPanel = frame.getAlphaPanel();
         
         colorCodeTextField = frame.getColorCodeTextField();
         
@@ -389,6 +392,8 @@ public class ColorPickerController {
     
     public void setIncludeAlpha(boolean includeAlpha) {
         this.includeAlpha = includeAlpha;
+        //show/hide the slider depending on the value the user checked
+        alphaPanel.setVisible(includeAlpha);
         updateColorCodeTextField();
     }
     
