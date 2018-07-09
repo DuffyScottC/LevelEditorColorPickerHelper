@@ -40,7 +40,7 @@ public class ColorPickerController {
     private final JTextField colorCodeTextField;
     
     private boolean includeHashTag = false;
-    private boolean includeAlpha = false;
+    private boolean includeAlpha = true;
     
     
     public ColorPickerController(MainFrame frame,
