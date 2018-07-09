@@ -855,19 +855,6 @@ public class ProjectController {
     }
     
     private void setUpPreferencesDialogActionListeners() {
-        //add actionlisteners to edit the 
-        preferencesDialog.getHashCheckBox().addActionListener((ActionEvent e) -> {
-            includeHashTag = preferencesDialog.getHashCheckBox().isSelected();
-        });
-        
-        preferencesDialog.getAlphaCheckBox().addActionListener((ActionEvent e) -> {
-            includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
-        });
-        
-        preferencesDialog.getOffsetCheckBox().addActionListener((ActionEvent e) -> {
-            includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
-        });
-        
         preferencesDialog.getCancelButton().addActionListener((ActionEvent e) -> {
             preferencesDialog.setVisible(false);
         });
@@ -884,6 +871,11 @@ public class ProjectController {
     }
     
     private void applyPreferencesChanges() {
+        //make the booleans match the checkboxes in the preferences window
+        includeHashTag = preferencesDialog.getHashCheckBox().isSelected();
+        includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
+        includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
+        
         //include alpha
         colorPickerController.setIncludeAlpha(includeAlpha);
         //show/hide the slider depending on the value the user checked
