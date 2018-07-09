@@ -345,7 +345,7 @@ public class ScriptGenerator {
         complete.append("\t//");
         complete.append(type);
 
-        complete.append("\tpublic Entity[] ");
+        complete.append("\n\tpublic Entity[] ");
         
         // Make the first letter lowercase
         String firstLetter = "" + type.charAt(0);
