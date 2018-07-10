@@ -6,8 +6,10 @@
 package controllers;
 
 import entities.Entity;
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -27,6 +29,42 @@ public class ResultsListController {
     private final DefaultListModel resultsListModel = new DefaultListModel();
     private final JList resultsList;
     private final EntityListRenderer entityListRenderer;
+    /**
+     * This searchMode is synced with the searchMode in the SearchController
+     */
+    private SearchMode searchMode = SearchMode.Name;
+    //Different Comparators for different search types
+    private final Comparator nameComp = (Comparator) (Object o1, Object o2) -> {
+        if (areEntities(o1, o2)) {
+            return ((Entity) o1).getName().compareTo(((Entity) o2).getName());
+        }
+        return -1;
+    };
+    private final Comparator typeComp = (Comparator) (Object o1, Object o2) -> {
+        if (areEntities(o1, o2)) {
+            return ((Entity) o1).getType().compareTo(((Entity) o2).getType());
+        }
+        return -1;
+    };
+    private final Comparator colorComp = (Comparator) (Object o1, Object o2) -> {
+        if (areEntities(o1, o2)) {
+            return ((Entity) o1).getColor().getRGB() 
+                    - ((Entity) o2).getColor().getRGB();
+        }
+        return -1;
+    };
+    private final Comparator unityPrefabComp 
+            = (Comparator) (Object o1, Object o2) -> {
+        if (areEntities(o1, o2)) {
+            return ((Entity) o1).getUnityPrefab()
+                    .compareTo(((Entity) o2).getUnityPrefab());
+        }
+        return -1;
+    };
+    
+    private boolean areEntities(Object o1, Object o2) {
+        return (o1 instanceof Entity) && (o2 instanceof Entity);
+    }
     
     /**
      * All the entities that are in the resultsList, which is all the entities
@@ -64,6 +102,24 @@ public class ResultsListController {
         }
         resultsList.repaint();
         resultsList.setSelectedIndex(0);
+        //sort the results
+        sortEntitiesInResults();
+    }
+    
+    public void sortEntitiesInResults() {
+        switch (searchMode) {
+            case Name:
+                entitiesInResults.sort(nameComp);
+                break;
+            case Type:
+                entitiesInResults.sort(typeComp);
+                break;
+            case Color:
+                entitiesInResults.sort(colorComp);
+                break;
+            default:
+                entitiesInResults.sort(unityPrefabComp);
+        }
     }
     
     /**
@@ -74,6 +130,10 @@ public class ResultsListController {
     public void clearEntities() {
         entitiesInResults.clear();
         updateListModel();
+    }
+
+    public void setSearchMode(SearchMode searchMode) {
+        this.searchMode = searchMode;
     }
     
     public void setEntitiesInResults(List<Entity> entitiesInResults) {

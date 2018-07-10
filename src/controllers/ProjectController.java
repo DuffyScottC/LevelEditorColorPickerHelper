@@ -1772,7 +1772,6 @@ public class ProjectController {
         //load all the new values into the currentEntity
         currentEntity.replaceValues(newImage, newName, 
                 newType, newColor, newUnityPrefab, newOffset);
-        currentProject.getEntities().sort(null);
     }
     
     /**

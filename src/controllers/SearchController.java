@@ -62,19 +62,24 @@ public class SearchController {
             int index = searchModeComboBox.getSelectedIndex();
             switch (index) {
                 case 0:
-                    searchMode = SearchMode.Name;
+                    setSearchMode(SearchMode.Name);
                     break;
                 case 1:
-                    searchMode = SearchMode.Type;
+                    setSearchMode(SearchMode.Type);
                     break;
                 case 2:
-                    searchMode = SearchMode.Color;
+                    setSearchMode(SearchMode.Color);
                     break;
                 default:
-                    searchMode = SearchMode.UnityPrefab;
+                    setSearchMode(SearchMode.UnityPrefab);
                     break;
             }
         });
+    }
+    
+    private void setSearchMode(SearchMode searchMode) {
+        this.searchMode = searchMode;
+        resultsListController.setSearchMode(searchMode);
     }
     
     public void search() {
@@ -210,6 +215,10 @@ public class SearchController {
     
     public void setCurrentProject(Project currentProject) {
         this.currentProject = currentProject;
+    }
+
+    public SearchMode getSearchMode() {
+        return searchMode;
     }
     
 }
