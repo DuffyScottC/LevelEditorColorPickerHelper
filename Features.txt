@@ -1,1 +1,1 @@
-Allow users to specify a transform offset for their entities, so that they can add elements that are not strictly within the grid.
+Allow users to export in two ways: 1. as a tileset, 2. as a prefab set.

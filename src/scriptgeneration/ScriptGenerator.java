@@ -320,8 +320,12 @@ public class ScriptGenerator {
             //add the type with a lowercase first letter
             complete.append(firstLetter);
             complete.append(otherLetters);
-        
-            complete.append(Utils.ARRAY_NAME_EXTENSION);
+            
+            //if the user wants to group entities by type
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                //add on the word "Entities" to the name of the array
+                complete.append(Utils.ARRAY_NAME_EXTENSION);   
+            }
             complete.append(") {\n");
             complete.append("\t\t\tinstantiateIfMatch(entity, pixelColor, x, y);\n");
             complete.append("\t\t}\n");
@@ -337,10 +341,11 @@ public class ScriptGenerator {
      * with the given type to the complete StringBuilder.
      * @param type The name of the type that we're making an array for
      * @param entityObjects
-     * @param complete 
+     * @param complete
      */
     private void addTypeToCompleteSB(String type, 
-            StringBuilder entityObjects, StringBuilder complete) {
+            StringBuilder entityObjects, 
+            StringBuilder complete) {
         //add a comment discribing the type
         complete.append("\t//");
         complete.append(type);
@@ -355,7 +360,11 @@ public class ScriptGenerator {
         complete.append(firstLetter);
         complete.append(otherLetters);
         
-        complete.append(Utils.ARRAY_NAME_EXTENSION);
+        //if the user wants to group entities by type
+        if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+            //add on the word "Entities" to the name of the array
+            complete.append(Utils.ARRAY_NAME_EXTENSION);   
+        }
         complete.append(" = new Entity[] {\n");
         complete.append(entityObjects);
         complete.append("\t};\n");
