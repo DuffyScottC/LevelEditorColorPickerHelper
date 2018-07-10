@@ -6,7 +6,6 @@
 package controllers;
 
 import entities.Entity;
-import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,7 +35,7 @@ public class ResultsListController {
     /**
      * This compares passed in entities based on the current search type.
      */
-    private final Comparator comp = (Comparator) (Object o1, Object o2) -> {
+    private final Comparator compareEntities = (Comparator) (Object o1, Object o2) -> {
         if ((o1 instanceof Entity) && (o2 instanceof Entity)) {
             Entity e1 = (Entity) o1;
             Entity e2 = (Entity) o2;
@@ -91,11 +90,7 @@ public class ResultsListController {
         resultsList.repaint();
         resultsList.setSelectedIndex(0);
         //sort the results
-        sortEntitiesInResults();
-    }
-    
-    public void sortEntitiesInResults() {
-        entitiesInResults.sort(comp);
+        entitiesInResults.sort(compareEntities);
     }
     
     /**
