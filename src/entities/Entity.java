@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder={"image","name","type","r","g","b","a","unityPrefab","offset"})
-public class Entity {
+public class Entity implements Comparable<Entity> {
     /**
      * The path of a the image associated with this entity. This is null
  if there is no image associated with this entity, and you should
@@ -135,6 +135,12 @@ public class Entity {
         this.a = a;
         this.unityPrefab = unityPrefab;
         this.offset = offset;
+    }
+    
+    @Override
+    public int compareTo(Entity e) {
+        //compare the names
+        return this.name.compareTo(e.name);
     }
     
     /**
