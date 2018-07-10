@@ -33,38 +33,26 @@ public class ResultsListController {
      * This searchMode is synced with the searchMode in the SearchController
      */
     private SearchMode searchMode = SearchMode.Name;
-    //Different Comparators for different search types
-    private final Comparator nameComp = (Comparator) (Object o1, Object o2) -> {
-        if (areEntities(o1, o2)) {
-            return ((Entity) o1).getName().compareTo(((Entity) o2).getName());
+    /**
+     * This compares passed in entities based on the current search type.
+     */
+    private final Comparator comp = (Comparator) (Object o1, Object o2) -> {
+        if ((o1 instanceof Entity) && (o2 instanceof Entity)) {
+            Entity e1 = (Entity) o1;
+            Entity e2 = (Entity) o2;
+            switch (searchMode) {
+                case Name:
+                    return e1.getName().compareTo(e2.getName());
+                case Type:
+                    return e1.getType().compareTo(e2.getType());
+                case Color:
+                    return e1.getColor().getRGB() - e2.getColor().getRGB();
+                default:
+                    return e1.getUnityPrefab().compareTo(e2.getUnityPrefab());
+            }
         }
         return -1;
     };
-    private final Comparator typeComp = (Comparator) (Object o1, Object o2) -> {
-        if (areEntities(o1, o2)) {
-            return ((Entity) o1).getType().compareTo(((Entity) o2).getType());
-        }
-        return -1;
-    };
-    private final Comparator colorComp = (Comparator) (Object o1, Object o2) -> {
-        if (areEntities(o1, o2)) {
-            return ((Entity) o1).getColor().getRGB() 
-                    - ((Entity) o2).getColor().getRGB();
-        }
-        return -1;
-    };
-    private final Comparator unityPrefabComp 
-            = (Comparator) (Object o1, Object o2) -> {
-        if (areEntities(o1, o2)) {
-            return ((Entity) o1).getUnityPrefab()
-                    .compareTo(((Entity) o2).getUnityPrefab());
-        }
-        return -1;
-    };
-    
-    private boolean areEntities(Object o1, Object o2) {
-        return (o1 instanceof Entity) && (o2 instanceof Entity);
-    }
     
     /**
      * All the entities that are in the resultsList, which is all the entities
@@ -107,19 +95,7 @@ public class ResultsListController {
     }
     
     public void sortEntitiesInResults() {
-        switch (searchMode) {
-            case Name:
-                entitiesInResults.sort(nameComp);
-                break;
-            case Type:
-                entitiesInResults.sort(typeComp);
-                break;
-            case Color:
-                entitiesInResults.sort(colorComp);
-                break;
-            default:
-                entitiesInResults.sort(unityPrefabComp);
-        }
+        entitiesInResults.sort(comp);
     }
     
     /**
