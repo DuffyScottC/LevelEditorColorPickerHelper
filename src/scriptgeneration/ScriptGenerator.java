@@ -39,8 +39,14 @@ public class ScriptGenerator {
     
     private final Project project;
     private final ScriptGeneratorDialog dialog;
-    private double gridSize = 32;
     private ScriptType scriptType = ScriptType.GameObject;
+    
+    //GameObject
+    private double gridSize = 32;
+    
+    //Tilemap
+    private Three cellSize = new Three(1, 1, 0);
+    private Three cellGap = new Three(0, 0, 0);
     
     /**
      * Creates a new script generator for the passed in project.
@@ -91,9 +97,8 @@ public class ScriptGenerator {
         });
         
         dialog.getGenerateButton().addActionListener((ActionEvent e) -> {
-            String gridText = dialog.getGridSizeTextField().getText();
-            
             try {
+                String gridText = dialog.getGridSizeTextField().getText();
                 //get the value of the grid size field
                 double gridDouble = Double.valueOf(gridText);
                 gridSize = gridDouble;
@@ -105,6 +110,28 @@ public class ScriptGenerator {
                         JOptionPane.ERROR_MESSAGE);
                 //reset back to last valiedgridSize
                 dialog.getGridSizeTextField().requestFocus();
+                return;
+            }
+            
+            try {
+                //get the values of the cell size field
+                double sx = Double.valueOf(dialog.getxCellSizeTextField().getText());
+                double sy = Double.valueOf(dialog.getyCellSizeTextField().getText());
+                double sz = Double.valueOf(dialog.getzCellSizeTextField().getText());
+                cellSize = new Three(sx, sy, sz);
+                
+                //get the values of the cell gap field
+                double gx = Double.valueOf(dialog.getxCellGapTextField().getText());
+                double gy = Double.valueOf(dialog.getyCellGapTextField().getText());
+                double gz = Double.valueOf(dialog.getzCellGapTextField().getText());
+                cellGap = new Three(gx, gy, gz);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, 
+                        "Please enter a valid decimal number\n"
+                                + "for the Cell Size and Gap.", 
+                        "Not a Number", 
+                        JOptionPane.ERROR_MESSAGE);
+                //reset back to last valiedgridSize
                 return;
             }
             
