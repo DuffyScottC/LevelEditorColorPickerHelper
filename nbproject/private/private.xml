@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="20">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="23">
         <file>
             <url>src/controllers/ProjectController.java</url>
-            <bookmark id="18">
+            <bookmark id="23">
                 <name/>
-                <line>534</line>
-                <key/>
-            </bookmark>
-            <bookmark id="16">
-                <name/>
-                <line>1727</line>
+                <line>1865</line>
                 <key/>
             </bookmark>
         </file>
@@ -30,12 +25,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/views/MainFrame.java</file>
-            <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/controllers/ColorPickerController.java</file>
             <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/controllers/ProjectController.java</file>
-            <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/scriptgeneration/ScriptGenerator.java</file>
             <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/controllers/Controller.java</file>
-            <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/resources/Entity.cs</file>
         </group>
     </open-files>
 </project-private>
