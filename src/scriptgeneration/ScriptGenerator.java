@@ -26,6 +26,11 @@ import projects.Project;
 import views.MainFrame;
 import views.ScriptGeneratorDialog;
 
+enum ScriptType {
+    GameObject,
+    Tilemap
+}
+
 /**
  * Handles generating scripts
  * @author Scott
@@ -35,6 +40,7 @@ public class ScriptGenerator {
     private final Project project;
     private final ScriptGeneratorDialog dialog;
     private double gridSize = 32;
+    private ScriptType scriptType = ScriptType.GameObject;
     
     /**
      * Creates a new script generator for the passed in project.
@@ -59,14 +65,14 @@ public class ScriptGenerator {
         typeComboBox.addItem("Tilemap");
         
         //initialize the type as GameObject
-        chooseType(true);
+        chooseType(ScriptType.GameObject);
         
         typeComboBox.addActionListener((ActionEvent e) -> {
             int index = typeComboBox.getSelectedIndex();
             if (index == 0) { //GameObject
-                chooseType(true);
+                chooseType(ScriptType.GameObject);
             } else { //Tilemap
-                chooseType(false);
+                chooseType(ScriptType.Tilemap);
             }
         });
         
@@ -462,11 +468,13 @@ public class ScriptGenerator {
     }
     
     /**
-     * Shows or hides the panels associated with the passed in type.
-     * @param type true = GameObject, false = Tilemap
+     * Shows or hides the panels associated with the passed in type. Also
+     * sets the scriptType variable.
+     * @param type the script type
      */
-    private void chooseType(boolean type) {
-        if (type) { //GameObject
+    private void chooseType(ScriptType type) {
+        scriptType = type;
+        if (type == ScriptType.GameObject) { //GameObject
             dialog.getGamObjectScriptsPanel().setVisible(true);
             dialog.getTileScriptsPanel().setVisible(false);
         } else { //tilemap
