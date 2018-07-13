@@ -200,21 +200,27 @@ public class ScriptGenerator {
      */
     private void generateScripts(File destination) {
         try {
+            boolean shouldLevelGenerator 
+                    = dialog.getLevelGeneratorCheckBox().isSelected();
+            boolean shouldEntity = dialog.getEntityCheckBox().isSelected();
             String levelGeneratorFileName = "LevelGenerator.cs";
             String entityResourceFileName = "/resources/gameobject/Entity.cs";
             String entityFileName = "Entity.cs";
             if (scriptType == ScriptType.Tilemap) {
+                shouldLevelGenerator 
+                    = dialog.getTileLevelGeneratorCheckBox().isSelected();
+                shouldEntity = dialog.getTileEntityCheckBox().isSelected();
                 levelGeneratorFileName = "TileLevelGenerator.cs";
                 entityResourceFileName = "/resources/tilemap/TileEntity.cs";
                 entityFileName = "TileEntity.cs";
             }
             
-            if (dialog.getLevelGeneratorCheckBox().isSelected()) {
+            if (shouldLevelGenerator) {
                 StringBuilder levelGenerator = getLevelGeneratorText();
                 createFile(destination, levelGeneratorFileName, levelGenerator.toString());
             }
             
-            if (dialog.getEntityCheckBox().isSelected()) {
+            if (shouldEntity) {
                 StringBuilder entity = readResource(entityResourceFileName);
                 createFile(destination, entityFileName, entity.toString());
             }
