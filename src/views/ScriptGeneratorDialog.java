@@ -8,6 +8,7 @@ package views;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -43,28 +44,28 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         groupEntitiesByTypeCheckBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        typeComboBox = new javax.swing.JComboBox<>();
         gridSizePanel = new javax.swing.JPanel();
         gridSizeTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cellSizeGapPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        xCellSizeTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        zCellSizeTextField = new javax.swing.JTextField();
+        yCellSizeTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        xCellGapTextField = new javax.swing.JTextField();
+        yCellGapTextField = new javax.swing.JTextField();
+        zCellGapTextField = new javax.swing.JTextField();
         scriptsPanel = new javax.swing.JPanel();
         levelGeneratorCheckBox = new javax.swing.JCheckBox();
         entityCheckBox = new javax.swing.JCheckBox();
         tileScriptsPanel = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        tileEntityCheckBox = new javax.swing.JCheckBox();
+        tileLevelGeneratorCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,7 +83,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         jLabel4.setText("Include:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         gridSizeTextField.setText("32.0");
 
@@ -111,13 +112,13 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Cell Size:");
 
-        jTextField1.setText("1");
+        xCellSizeTextField.setText("1");
 
         jLabel6.setText("Cell Gap:");
 
-        jTextField2.setText("0");
+        zCellSizeTextField.setText("0");
 
-        jTextField3.setText("1");
+        yCellSizeTextField.setText("1");
 
         jLabel7.setText("x");
 
@@ -125,11 +126,11 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         jLabel9.setText("z");
 
-        jTextField4.setText("0");
+        xCellGapTextField.setText("0");
 
-        jTextField5.setText("0");
+        yCellGapTextField.setText("0");
 
-        jTextField6.setText("0");
+        zCellGapTextField.setText("0");
 
         javax.swing.GroupLayout cellSizeGapPanelLayout = new javax.swing.GroupLayout(cellSizeGapPanel);
         cellSizeGapPanel.setLayout(cellSizeGapPanelLayout);
@@ -143,22 +144,22 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(cellSizeGapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cellSizeGapPanelLayout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(xCellSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(yCellSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(cellSizeGapPanelLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel8))
                     .addGroup(cellSizeGapPanelLayout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(xCellGapTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(yCellGapTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(cellSizeGapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(zCellSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zCellGapTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         cellSizeGapPanelLayout.setVerticalGroup(
@@ -172,14 +173,14 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(cellSizeGapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(xCellSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yCellSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zCellSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(cellSizeGapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(xCellGapTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yCellGapTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zCellGapTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -210,11 +211,11 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("TileEntity.cs");
+        tileEntityCheckBox.setSelected(true);
+        tileEntityCheckBox.setText("TileEntity.cs");
 
-        jCheckBox2.setSelected(true);
-        jCheckBox2.setText("TileLevelGenerator.cs");
+        tileLevelGeneratorCheckBox.setSelected(true);
+        tileLevelGeneratorCheckBox.setText("TileLevelGenerator.cs");
 
         javax.swing.GroupLayout tileScriptsPanelLayout = new javax.swing.GroupLayout(tileScriptsPanel);
         tileScriptsPanel.setLayout(tileScriptsPanelLayout);
@@ -223,17 +224,17 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
             .addGroup(tileScriptsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tileScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2))
+                    .addComponent(tileEntityCheckBox)
+                    .addComponent(tileLevelGeneratorCheckBox))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tileScriptsPanelLayout.setVerticalGroup(
             tileScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tileScriptsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
+                .addComponent(tileEntityCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2))
+                .addComponent(tileLevelGeneratorCheckBox))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,7 +257,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(scriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tileScriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
@@ -275,7 +276,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -355,9 +356,6 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JPanel gridSizePanel;
     private javax.swing.JTextField gridSizeTextField;
     private javax.swing.JCheckBox groupEntitiesByTypeCheckBox;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -367,15 +365,18 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JCheckBox levelGeneratorCheckBox;
     private javax.swing.JPanel scriptsPanel;
+    private javax.swing.JCheckBox tileEntityCheckBox;
+    private javax.swing.JCheckBox tileLevelGeneratorCheckBox;
     private javax.swing.JPanel tileScriptsPanel;
+    private javax.swing.JComboBox<String> typeComboBox;
+    private javax.swing.JTextField xCellGapTextField;
+    private javax.swing.JTextField xCellSizeTextField;
+    private javax.swing.JTextField yCellGapTextField;
+    private javax.swing.JTextField yCellSizeTextField;
+    private javax.swing.JTextField zCellGapTextField;
+    private javax.swing.JTextField zCellSizeTextField;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBrowseButton() {
@@ -408,6 +409,58 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
     public JTextField getGridSizeTextField() {
         return gridSizeTextField;
+    }
+
+    public JPanel getCellSizeGapPanel() {
+        return cellSizeGapPanel;
+    }
+
+    public JPanel getGridSizePanel() {
+        return gridSizePanel;
+    }
+
+    public JPanel getScriptsPanel() {
+        return scriptsPanel;
+    }
+
+    public JCheckBox getTileEntityCheckBox() {
+        return tileEntityCheckBox;
+    }
+
+    public JCheckBox getTileLevelGeneratorCheckBox() {
+        return tileLevelGeneratorCheckBox;
+    }
+
+    public JPanel getTileScriptsPanel() {
+        return tileScriptsPanel;
+    }
+
+    public JComboBox<String> getTypeComboBox() {
+        return typeComboBox;
+    }
+
+    public JTextField getxCellGapTextField() {
+        return xCellGapTextField;
+    }
+
+    public JTextField getxCellSizeTextField() {
+        return xCellSizeTextField;
+    }
+
+    public JTextField getyCellGapTextField() {
+        return yCellGapTextField;
+    }
+
+    public JTextField getyCellSizeTextField() {
+        return yCellSizeTextField;
+    }
+
+    public JTextField getzCellGapTextField() {
+        return zCellGapTextField;
+    }
+
+    public JTextField getzCellSizeTextField() {
+        return zCellSizeTextField;
     }
     
 }
