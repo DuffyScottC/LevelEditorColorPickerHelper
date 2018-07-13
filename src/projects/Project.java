@@ -191,14 +191,14 @@ public class Project {
         return projectLocation;
     }
 
-    public File getProjectFile() {
-        return projectFile;
-    }
-
-    public void setProjectFile(File projectFile) {
-        this.projectFile = projectFile;
-        this.projectLocation = projectFile.getParentFile();
-    }
+//    public File getProjectFile() {
+//        return projectFile;
+//    }
+//
+//    public void setProjectFile(File projectFile) {
+//        this.projectFile = projectFile;
+//        this.projectLocation = projectFile.getParentFile();
+//    }
 
     public List<Entity> getEntities() {
         return entities;
