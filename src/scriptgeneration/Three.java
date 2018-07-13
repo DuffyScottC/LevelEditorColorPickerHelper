@@ -12,9 +12,9 @@ package scriptgeneration;
  * @author Scott
  */
 public class Three {
-    double x;
-    double y;
-    double z;
+    private double x;
+    private double y;
+    private double z;
     
     public Three (double x, double y, double z) {
         this.x = x;

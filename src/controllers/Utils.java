@@ -23,6 +23,7 @@ public class Utils {
     public static final int LIST_ICON_DIM = 32;
     
     public static final String ARRAY_NAME_EXTENSION = "Entities";
+    public static final String ARRAY_TILE_NAME_EXTENSION = "Entities";
     
     public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
         //Create a blank white image icon

@@ -131,7 +131,6 @@ public class ScriptGenerator {
                                 + "for the Cell Size and Gap.", 
                         "Not a Number", 
                         JOptionPane.ERROR_MESSAGE);
-                //reset back to last valiedgridSize
                 return;
             }
             
@@ -201,14 +200,23 @@ public class ScriptGenerator {
      */
     private void generateScripts(File destination) {
         try {
+            String levelGeneratorFileName = "LevelGenerator.cs";
+            String entityResourceFileName = "/resources/gameobject/Entity.cs";
+            String entityFileName = "Entity.cs";
+            if (scriptType == ScriptType.Tilemap) {
+                levelGeneratorFileName = "TileLevelGenerator.cs";
+                entityResourceFileName = "/resources/tilemap/TileEntity.cs";
+                entityFileName = "TileEntity.cs";
+            }
+            
             if (dialog.getLevelGeneratorCheckBox().isSelected()) {
                 StringBuilder levelGenerator = getLevelGeneratorText();
-                createFile(destination, "LevelGenerator.cs", levelGenerator.toString());
+                createFile(destination, levelGeneratorFileName, levelGenerator.toString());
             }
             
             if (dialog.getEntityCheckBox().isSelected()) {
-                StringBuilder entity = readResource("/resources/Entity.cs");
-                createFile(destination, "Entity.cs", entity.toString());
+                StringBuilder entity = readResource(entityResourceFileName);
+                createFile(destination, entityFileName, entity.toString());
             }
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
@@ -271,10 +279,17 @@ public class ScriptGenerator {
     private StringBuilder getLevelGeneratorText() {
         try {
             
+            String startFileName = "/resources/gameobject/start.cs";
+            String middleFileName = "/resources/gameobject/middle.cs";
+            if (scriptType == ScriptType.Tilemap) {
+                startFileName = "/resources/tilemap/start.cs";
+                middleFileName = "/resources/tilemap/middle.cs";
+            }
+            
             // The LevelGenerator Sctipt
             //get the start and end text
-            StringBuilder start = readResource("/resources/start.cs");
-            StringBuilder middle = readResource("/resources/middle.cs");
+            StringBuilder start = readResource(startFileName);
+            StringBuilder middle = readResource(middleFileName);
             
             //get the project's entities
             List<Entity> projectEntities = project.getEntities();
@@ -293,7 +308,11 @@ public class ScriptGenerator {
                 types = new ArrayList();
                 //add a single element called entities that will hold all the
                 //entities in the project.
-                types.add("entities");
+                if (scriptType == ScriptType.GameObject) {
+                    types.add("entities");
+                } else {
+                    types.add("tileEntities");
+                }
             }
             
             List<StringBuilder> entityObjectSBs = new ArrayList();
@@ -326,15 +345,29 @@ public class ScriptGenerator {
             //add on the start of the file
             complete.append(start);
             
-            // Add on the gridSize variable
-            complete.append("\tpublic float gridSize = ");
-            complete.append(gridSize);
-            complete.append("f;\n");
-            
-//            // Add on the multOffsetByGridSize variable
-//            complete.append("\tprivate boolean gridSize = ");
-//            complete.append(multOffsetByGridSize);
-//            complete.append(";\n");
+            if (scriptType == ScriptType.GameObject) {
+                // Add on the gridSize variable
+                complete.append("\tpublic float gridSize = ");
+                complete.append(gridSize);
+                complete.append("f;\n");
+            } else {
+                //add on the cellSize variable
+                complete.append("\tpublic Vector3 cellSize = new Vector3(");
+                complete.append(cellSize.getX());
+                complete.append("f, ");
+                complete.append(cellSize.getY());
+                complete.append("f, ");
+                complete.append(cellSize.getZ());
+                complete.append("f);\n");
+                //add on the cellGap variable
+                complete.append("\tpublic Vector3 cellGap = new Vector3(");
+                complete.append(cellGap.getX());
+                complete.append("f, ");
+                complete.append(cellGap.getY());
+                complete.append("f, ");
+                complete.append(cellGap.getZ());
+                complete.append("f);\n");
+            }
             
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
@@ -364,7 +397,13 @@ public class ScriptGenerator {
     private void addLoopForEachTypeToCompleteSB(List<String> types, 
             StringBuilder complete) {
         for (String type : types) {
-            complete.append("\t\tforeach (Entity entity in ");
+            complete.append("\t\tforeach (");
+            if (scriptType == ScriptType.GameObject) {
+                complete.append("Entity entity");
+            } else {
+                complete.append("TileEntity tileEntity");
+            }
+            complete.append(" in ");
             
             //make the first letter lowercase
             String firstLetter = "" + type.charAt(0);
@@ -379,8 +418,12 @@ public class ScriptGenerator {
                 //add on the word "Entities" to the name of the array
                 complete.append(Utils.ARRAY_NAME_EXTENSION);   
             }
-            complete.append(") {\n");
-            complete.append("\t\t\tinstantiateIfMatch(entity, pixelColor, x, y);\n");
+            complete.append(") {\n\t\t\t");
+            if (scriptType == ScriptType.GameObject) {
+                complete.append("instantiateIfMatch(entity, pixelColor, x, y);\n");
+            } else {
+                complete.append("placeTileIfMatch(tileEntity, pixelColor, x, y, index);\n");
+            }
             complete.append("\t\t}\n");
         }
         //close the last braces
@@ -403,7 +446,11 @@ public class ScriptGenerator {
         complete.append("\t//");
         complete.append(type);
 
-        complete.append("\n\tpublic Entity[] ");
+        if (scriptType == ScriptType.GameObject) {
+            complete.append("\n\tpublic Entity[] ");
+        } else {
+            complete.append("\n\tpublic TileEntity[] ");
+        }
         
         // Make the first letter lowercase
         String firstLetter = "" + type.charAt(0);
@@ -415,10 +462,21 @@ public class ScriptGenerator {
         
         //if the user wants to group entities by type
         if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-            //add on the word "Entities" to the name of the array
-            complete.append(Utils.ARRAY_NAME_EXTENSION);   
+            if (scriptType == ScriptType.GameObject) {
+                //add on the word "Entities" to the name of the array
+                complete.append(Utils.ARRAY_NAME_EXTENSION);
+            }  else {
+                //add on the word "TileEntities" to the name of the array
+                complete.append(Utils.ARRAY_TILE_NAME_EXTENSION);
+            }
         }
-        complete.append(" = new Entity[] {\n");
+        complete.append(" = new ");
+        if (scriptType == ScriptType.GameObject) {
+            complete.append("Entity");
+        }  else {
+            complete.append("TileEntity");
+        }
+        complete.append("[] {\n");
         complete.append(entityObjects);
         complete.append("\t};\n");
         
@@ -442,7 +500,13 @@ public class ScriptGenerator {
         */
 
         //Add to the colorToPrefabs array
-        entityObjects.append("\t\tnew Entity(\"");
+        entityObjects.append("\t\tnew ");
+        if (scriptType == ScriptType.GameObject) {
+            entityObjects.append("Entity");
+        } else {
+            entityObjects.append("TileEntity");
+        }
+        entityObjects.append("(\"");
         entityObjects.append(entity.getName());
         entityObjects.append("\", new Color32(");
         entityObjects.append(entity.getR());
