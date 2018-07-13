@@ -1235,6 +1235,8 @@ public class ProjectController {
         currentProject = newProject;
         searchController.setCurrentProject(newProject);
         newProject.createProjectLocationAndResourceFolder();
+        resultsListController.setProjectResourceLocation(
+                newProject.getProjectResourceFolder());
         projectLocation = newProject.getProjectLocation();
         //get path to the resources folder
         Path resourcesFolderPath = getResourcesFolderPath();
@@ -1373,6 +1375,8 @@ public class ProjectController {
         //specifically for this project
         currentProject = new Project(projectName, projectFile);
         currentProject.createProjectLocationAndResourceFolder();
+        resultsListController.setProjectResourceLocation(
+                currentProject.getProjectResourceFolder());
         searchController.setCurrentProject(currentProject);
         currentProject.addType(Utils.DEFAULT_TYPE);
         updateTypeComboBox();
