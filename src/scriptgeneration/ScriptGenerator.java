@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import projects.Project;
@@ -49,6 +50,25 @@ public class ScriptGenerator {
         JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
+        //setup the combo box
+        JComboBox typeComboBox = dialog.getTypeComboBox();
+        //remove all items in the type combo box
+        typeComboBox.removeAllItems();
+        typeComboBox.addItem("GameObject");
+        typeComboBox.addItem("Tilemap");
+        
+        //initialize the type as GameObject
+        chooseType(true);
+        
+        typeComboBox.addActionListener((ActionEvent e) -> {
+            int index = typeComboBox.getSelectedIndex();
+            if (index == 0) { //GameObject
+                chooseType(true);
+            } else { //Tilemap
+                chooseType(false);
+            }
+        });
         
         dialog.getBrowseButton().addActionListener((ActionEvent e) -> {
             int result = chooser.showOpenDialog(frame);
@@ -439,6 +459,20 @@ public class ScriptGenerator {
         reader.close();
         //return the contents of the resource
         return s;
+    }
+    
+    /**
+     * Shows or hides the panels associated with the passed in type.
+     * @param type true = GameObject, false = Tilemap
+     */
+    private void chooseType(boolean type) {
+        if (type) { //GameObject
+            dialog.getGamObjectScriptsPanel().setVisible(true);
+            dialog.getTileScriptsPanel().setVisible(false);
+        } else { //tilemap
+            dialog.getGamObjectScriptsPanel().setVisible(false);
+            dialog.getTileScriptsPanel().setVisible(true);
+        }
     }
     
 }

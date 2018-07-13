@@ -60,7 +60,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         xCellGapTextField = new javax.swing.JTextField();
         yCellGapTextField = new javax.swing.JTextField();
         zCellGapTextField = new javax.swing.JTextField();
-        scriptsPanel = new javax.swing.JPanel();
+        gameObjectScriptsPanel = new javax.swing.JPanel();
         levelGeneratorCheckBox = new javax.swing.JCheckBox();
         entityCheckBox = new javax.swing.JCheckBox();
         tileScriptsPanel = new javax.swing.JPanel();
@@ -84,6 +84,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         jLabel4.setText("Include:");
 
         typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typeComboBox.setToolTipText("Choose the type of level generator\\nthat this project should be.");
 
         gridSizeTextField.setText("32.0");
 
@@ -191,19 +192,19 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         entityCheckBox.setSelected(true);
         entityCheckBox.setText("Entity.cs");
 
-        javax.swing.GroupLayout scriptsPanelLayout = new javax.swing.GroupLayout(scriptsPanel);
-        scriptsPanel.setLayout(scriptsPanelLayout);
-        scriptsPanelLayout.setHorizontalGroup(
-            scriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scriptsPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout gameObjectScriptsPanelLayout = new javax.swing.GroupLayout(gameObjectScriptsPanel);
+        gameObjectScriptsPanel.setLayout(gameObjectScriptsPanelLayout);
+        gameObjectScriptsPanelLayout.setHorizontalGroup(
+            gameObjectScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameObjectScriptsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(scriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(gameObjectScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(entityCheckBox)
                     .addComponent(levelGeneratorCheckBox)))
         );
-        scriptsPanelLayout.setVerticalGroup(
-            scriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(scriptsPanelLayout.createSequentialGroup()
+        gameObjectScriptsPanelLayout.setVerticalGroup(
+            gameObjectScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gameObjectScriptsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(entityCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -258,7 +259,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(scriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gameObjectScriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tileScriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
@@ -280,7 +281,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(gameObjectScriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tileScriptsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -352,6 +353,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JPanel cellSizeGapPanel;
     private javax.swing.JTextField desitnationFolderTextField;
     private javax.swing.JCheckBox entityCheckBox;
+    private javax.swing.JPanel gameObjectScriptsPanel;
     private javax.swing.JButton generateButton;
     private javax.swing.JPanel gridSizePanel;
     private javax.swing.JTextField gridSizeTextField;
@@ -366,7 +368,6 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JCheckBox levelGeneratorCheckBox;
-    private javax.swing.JPanel scriptsPanel;
     private javax.swing.JCheckBox tileEntityCheckBox;
     private javax.swing.JCheckBox tileLevelGeneratorCheckBox;
     private javax.swing.JPanel tileScriptsPanel;
@@ -419,8 +420,8 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         return gridSizePanel;
     }
 
-    public JPanel getScriptsPanel() {
-        return scriptsPanel;
+    public JPanel getGamObjectScriptsPanel() {
+        return gameObjectScriptsPanel;
     }
 
     public JCheckBox getTileEntityCheckBox() {
