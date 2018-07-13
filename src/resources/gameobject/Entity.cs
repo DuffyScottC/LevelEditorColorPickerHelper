@@ -21,7 +21,7 @@ public class Entity
         this.offset = offset;
     }
 
-	public string ToString() {
+	public override string ToString() {
 		return name;
 	}
 

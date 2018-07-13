@@ -1372,6 +1372,7 @@ public class ProjectController {
         //create the new project using the name, location, and file created
         //specifically for this project
         currentProject = new Project(projectName, projectFile);
+        currentProject.createProjectLocationAndResourceFolder();
         searchController.setCurrentProject(currentProject);
         currentProject.addType(Utils.DEFAULT_TYPE);
         updateTypeComboBox();

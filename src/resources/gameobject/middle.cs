@@ -48,7 +48,5 @@
             //ignore transparent pixels
             return;
         }
-        if(pixelColor.r > 0) {
-            Debug.Log(pixelColor);
-        }
+
         //end of middle section
