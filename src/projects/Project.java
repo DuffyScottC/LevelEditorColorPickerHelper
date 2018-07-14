@@ -11,6 +11,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -72,6 +73,21 @@ public class Project {
     private Entity currentEntity = null;
     
     /**
+     * Compares entities by their names
+     */
+    @XmlTransient
+    private Comparator alphabeticalComp = (Object o1, Object o2) -> {
+        if (o1 instanceof Entity) {
+            if (o2 instanceof Entity) {
+                Entity e1 = (Entity) o1;
+                Entity e2 = (Entity) o2;
+                return e1.getName().compareTo(e2.getName());
+            }
+        }
+        return -1;
+    };
+    
+    /**
      * Instantiates an empty project. This is only used by the JAXB
      * XML serializer, which requires a no-argument constructor.
      */
@@ -97,6 +113,8 @@ public class Project {
     public void addEntity(Entity entity) {
         //place the entity in the list of all entities
         this.entities.add(entity);
+        //sort the entities by name.
+        entities.sort(alphabeticalComp);
     }
 
     public String getName() {
@@ -193,6 +211,8 @@ public class Project {
 
     public void setEntities(List<Entity> entities) {
         this.entities.addAll(entities);
+        //sort the entities by name.
+        entities.sort(alphabeticalComp);
     }
 
     public List<String> getTypes() {
