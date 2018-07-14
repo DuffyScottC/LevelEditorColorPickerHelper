@@ -28,6 +28,7 @@ public class ModifiedController {
     /**
      * Set the isModified boolean, and calls setEnabled() with the passed in 
      * value on the frame's revert and apply buttons.
+     * @param modified
      */
     public void setModified(boolean modified) {
         this.modified = modified;

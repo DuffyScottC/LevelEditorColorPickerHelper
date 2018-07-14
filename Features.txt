@@ -1,3 +1,1 @@
-Sort entities alphabetically when generating scripts
-
-Fix the not remembering which folder to save new projects to
+Fix the recent list not showing images

@@ -1420,6 +1420,8 @@ public class ProjectController {
         //reset the info panel
         Entity blankEntity = generateNewDefaultEntity();
         loadEntityIntoInfoPanel(blankEntity);
+        //make sure the modified is set to false
+        modifiedController.setModified(false);
         return true;
     }
     
