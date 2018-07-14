@@ -574,9 +574,15 @@ public class ScriptGenerator {
         if (type == ScriptType.GameObject) { //GameObject
             dialog.getGamObjectScriptsPanel().setVisible(true);
             dialog.getTileScriptsPanel().setVisible(false);
+            
+            dialog.getGridSizePanel().setVisible(true);
+            dialog.getCellSizeGapPanel().setVisible(false);
         } else { //tilemap
             dialog.getGamObjectScriptsPanel().setVisible(false);
             dialog.getTileScriptsPanel().setVisible(true);
+            
+            dialog.getGridSizePanel().setVisible(false);
+            dialog.getCellSizeGapPanel().setVisible(true);
         }
     }
     
