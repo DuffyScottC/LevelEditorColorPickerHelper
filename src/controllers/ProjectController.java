@@ -191,6 +191,8 @@ public class ProjectController {
         imageChooser.addChoosableFileFilter(
                 new FileNameExtensionFilter("TIF", "tif"));
         
+        loadPreferences();
+        
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
         setUpNewProjectDialogActionListeners(frame);
@@ -1533,11 +1535,16 @@ public class ProjectController {
         pNameTextField.selectAll();
         
         //initialize the project location
-        projectLocation = new File(System.getProperty("user.dir"));
+//        projectLocation = new File(System.getProperty("user.dir"));
+        System.out.println("would assign projectLocation here");
         
         pNameTextField.setText("New Project");
         pLocationTextField.setText(System.getProperty("user.dir"));
-        Path defaultPath = Paths.get(System.getProperty("user.dir"), "New Project");
+        String newProjectLocation = prefs.get(Utils.NEW_PROJECT_CHOOSER_PATH, 
+                System.getProperty("user.dir"));
+        File newProjectLocationFile = new File(newProjectLocation);
+        Path defaultPath 
+                = Paths.get(newProjectLocationFile.toString(), "New Project");
         pFolderTextField.setText(defaultPath.toString());
     }
     
