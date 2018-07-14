@@ -33,10 +33,6 @@ public class Project {
      */
     private String name;
     /**
-     * The path to the project's top directory
-     */
-    private File projectFile;
-    /**
      * The path to the directory containing all the project's assets
      */
     @XmlTransient
@@ -81,19 +77,16 @@ public class Project {
      */
     public Project() {
         this.name = null;
-        this.projectFile = null;
     }
     
     /**
      * Instantiates a new project
      * @param name The name of the project (the user sees this)
-     * @param projectFile The path to the project's top directory
+     * @param projectLocation The path to the project's directory
      */
-    public Project(String name, File projectFile) {
+    public Project(String name, File projectLocation) {
         this.name = name;
-        this.projectFile = projectFile;
-        //find the directory where this file is located.
-        this.projectLocation = projectFile.getParentFile();
+        this.projectLocation = projectLocation;
     }
     
     /**
@@ -160,7 +153,6 @@ public class Project {
     }
     
     public void createProjectLocationAndResourceFolder() {
-        projectLocation = projectFile.getParentFile();
         Path resourcePath = projectLocation.toPath();
         Path resourceFile = Paths.get(resourcePath.toString(), 
                 "Resources");
@@ -190,15 +182,10 @@ public class Project {
     public File getProjectLocation() {
         return projectLocation;
     }
-
-//    public File getProjectFile() {
-//        return projectFile;
-//    }
-//
-//    public void setProjectFile(File projectFile) {
-//        this.projectFile = projectFile;
-//        this.projectLocation = projectFile.getParentFile();
-//    }
+    
+    public void setProjectLocation(File projectLocation) {
+        this.projectLocation = projectLocation;
+    }
 
     public List<Entity> getEntities() {
         return entities;
@@ -265,8 +252,6 @@ public class Project {
         s.append(name);
         s.append("\nProject Location: ");
         s.append(projectLocation);
-        s.append("\nProject File: ");
-        s.append(projectFile);
         return s.toString();
     }
     

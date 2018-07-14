@@ -64,7 +64,6 @@ public class ProjectController {
      */
     private Project currentProject = null;
     private File projectLocation = null;
-    private File projectFile = null;
     private String projectName = "New Project";
     
     /**
@@ -1207,7 +1206,7 @@ public class ProjectController {
                 //if the tempProject is not null, then it is a valid project
                 //deserialized from the file, and we can
                 //load the new project
-                loadProject(tempProject);
+                loadProject(tempProject, tempFile.getParentFile());
                 //enable the menu items
                 frame.getAddEntityMenuItem().setEnabled(true);
                 frame.getDeleteEntityMenuItem().setEnabled(true);
@@ -1229,15 +1228,19 @@ public class ProjectController {
      * This function is called once the project is successfully unmarshalled, 
      * or deserialized, from xml .lecp file to a project object. This sets up
      * the project for use, loads data into the JLists, sets up the GUI, etc.
+     * 
      * @param newProject A project recently deserialized from .lecp xml format.
+     * @param projectLocationFile The file that holds the project's location,
+     * or parent directory.
      */
-    private void loadProject(Project newProject) {
+    private void loadProject(Project newProject, File projectLocationFile) {
         currentProject = newProject;
         searchController.setCurrentProject(newProject);
+        newProject.setProjectLocation(projectLocationFile);
         newProject.createProjectLocationAndResourceFolder();
         resultsListController.setProjectResourceLocation(
                 newProject.getProjectResourceFolder());
-        projectLocation = newProject.getProjectLocation();
+        projectLocation = projectLocationFile;
         //get path to the resources folder
         Path resourcesFolderPath = getResourcesFolderPath();
         //if the resources folder could be found
@@ -1250,7 +1253,6 @@ public class ProjectController {
             recentListController.setProjectResourceLocation(resourcesFolderFile);
         }
         
-        projectFile = newProject.getProjectFile();
         projectName = newProject.getName();
         //update the typeComboBox with the new project's types
         updateTypeComboBox();
@@ -1370,10 +1372,10 @@ public class ProjectController {
             return false;
         }
         
-        //At this point, the name, locaiton, and file are assigned.
-        //create the new project using the name, location, and file created
+        //At this point, the name and location are assigned.
+        //create the new project using the name and location created
         //specifically for this project
-        currentProject = new Project(projectName, projectFile);
+        currentProject = new Project(projectName, projectLocation);
         currentProject.createProjectLocationAndResourceFolder();
         resultsListController.setProjectResourceLocation(
                 currentProject.getProjectResourceFolder());
@@ -1431,7 +1433,6 @@ public class ProjectController {
             //resources folder file
             resultsListController.setProjectResourceLocation(resourcesFolderFile);
         }
-        projectFile = tempFile;
         return true;
     }
     
@@ -1476,6 +1477,10 @@ public class ProjectController {
         JAXBContext context = JAXBContext.newInstance(Project.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        Path projectLocationPath = currentProject.getProjectLocation().toPath();
+        File projectFile
+                = Paths.get(projectLocationPath.toString(), 
+                        currentProject.getName()).toFile();
         marshaller.marshal(currentProject, projectFile);
     }
     
