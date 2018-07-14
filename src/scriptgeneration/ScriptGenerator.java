@@ -583,13 +583,34 @@ public class ScriptGenerator {
     }
 
     private String formatType(String type) {
-        //make the first letter lowercase
-        String firstLetter = "" + type.charAt(0);
-        firstLetter = firstLetter.toLowerCase();
-        String otherLetters = type.substring(1);
-        String formattedType = firstLetter + otherLetters;
-        //replace all instances of Space with Underscore
-        formattedType = formattedType.replace(" ", "_");
+        if (type.isEmpty()) {
+            return type;
+        }
+        char[] chars = type.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            //if this is a space
+            if (chars[i] == ' ') {
+                //if this is not the last char in the array
+                if (i < chars.length - 1) {
+                    //if it's lowercase
+                    if (97 <= chars[i + 1] && chars[i + 1] <= 122) {
+                        //make it uppercase
+                        chars[i + 1] = (char) (chars[i + 1] - 32);
+                    }
+                }
+            }
+        }
+        
+        //if the first character is lowercase
+        if (97 <= chars[0] && chars[0] <= 122) {
+            //make it uppercase
+            chars[0] = (char) (chars[0] - 32);
+        }
+        
+        //convert the chars back into this
+        String formattedType = new String(chars);
+        //remove all spaces
+        formattedType = formattedType.replaceAll(" ", "");
         return formattedType;
     }
     
