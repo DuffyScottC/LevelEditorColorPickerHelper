@@ -1541,12 +1541,14 @@ public class ProjectController {
         projectLocation = new File(System.getProperty("user.dir"));
         
         pNameTextField.setText("New Project");
-        pLocationTextField.setText(System.getProperty("user.dir"));
+        //get the user's pref for project location
         String newProjectLocation = prefs.get(Utils.NEW_PROJECT_CHOOSER_PATH, 
                 System.getProperty("user.dir"));
-        File newProjectLocationFile = new File(newProjectLocation);
-        Path defaultPath 
-                = Paths.get(newProjectLocationFile.toString(), "New Project");
+        //fill in the project location that the user prefs had
+        pLocationTextField.setText(newProjectLocation);
+        //add on the project name
+        Path defaultPath = Paths.get(newProjectLocation, "New Project");
+        //update the project folder with the user's prefs
         pFolderTextField.setText(defaultPath.toString());
     }
     
