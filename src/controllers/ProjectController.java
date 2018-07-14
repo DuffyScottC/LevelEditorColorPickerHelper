@@ -908,8 +908,8 @@ public class ProjectController {
         File openProjectChooserFile = new File(openProjectChooserFilePath);
         
         imageChooser.setCurrentDirectory(imageChooserFile);
-        imageChooser.setCurrentDirectory(newProjectChooserFile);
-        imageChooser.setCurrentDirectory(openProjectChooserFile);
+        newProjectChooser.setCurrentDirectory(newProjectChooserFile);
+        openProjectChooser.setCurrentDirectory(openProjectChooserFile);
     }
     
     //MARK: Add Entity
