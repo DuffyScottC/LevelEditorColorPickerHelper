@@ -903,8 +903,8 @@ public class ProjectController {
                 = prefs.get(Utils.OPEN_PROJECT_CHOOSER_PATH, 
                         System.getProperty("user.dir"));
         
-        File imageChooserFile = new File(openProjectChooserFilePath);
-        File newProjectChooserFile = new File(openProjectChooserFilePath);
+        File imageChooserFile = new File(imageChooserFilePath);
+        File newProjectChooserFile = new File(newProjectChooserFilePath);
         File openProjectChooserFile = new File(openProjectChooserFilePath);
         
         imageChooser.setCurrentDirectory(imageChooserFile);
@@ -1535,8 +1535,7 @@ public class ProjectController {
         pNameTextField.selectAll();
         
         //initialize the project location
-//        projectLocation = new File(System.getProperty("user.dir"));
-        System.out.println("would assign projectLocation here");
+        projectLocation = new File(System.getProperty("user.dir"));
         
         pNameTextField.setText("New Project");
         pLocationTextField.setText(System.getProperty("user.dir"));
@@ -1571,16 +1570,14 @@ public class ProjectController {
                 if (tempProjectLocation.exists()) {
                     if (tempProjectLocation.isDirectory()) {
                         //assign the project location.
-//                        projectLocation = tempProjectLocation;
-                        System.out.println("This is when you would prematurely"
-                                + " assign projectlocation.");
+                        projectLocation = tempProjectLocation;
                         //save the new starting directory to the user's prefs
                         prefs.put(Utils.NEW_PROJECT_CHOOSER_PATH, 
                                 tempProjectLocation.toString());
                         //set the project location
-                        pLocationTextField.setText(tempProjectLocation.getAbsolutePath());
+                        pLocationTextField.setText(projectLocation.getAbsolutePath());
                         
-                        updateNewProjectFolderTextBox(tempProjectLocation.toPath());
+                        updateNewProjectFolderTextBox();
                     }
                 }
             }
@@ -1598,7 +1595,7 @@ public class ProjectController {
         cancelButton.addActionListener((ActionEvent e) -> {
             newProjectDialog.setVisible(false);
         });
-        //this is where I have to set the projectLocation variable to what's in the dialog textfield
+        
         finishButton.addActionListener((ActionEvent e) -> {
             try {
                 //if we successfully create a new project
@@ -1622,10 +1619,10 @@ public class ProjectController {
         });
     }
     
-    public void updateNewProjectFolderTextBox(Path projectLocationPath) {
+    public void updateNewProjectFolderTextBox() {
         JTextField pFolderTextField = newProjectDialog.getProjectFolderTextField();
         //Convert the projectLocation to a path object
-//        Path projectLocationPath = projectLocation.toPath();
+        Path projectLocationPath = projectLocation.toPath();
         //add the projectName to the path to get the project folder
         Path projectFolderPath = Paths.get(projectLocationPath.toString(), projectName);
         //convert the path to a file object
