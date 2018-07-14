@@ -1417,6 +1417,9 @@ public class ProjectController {
         serializeNewProjectToXML();
         enterNewProjectState();
         projectOpenEnableMenuItems();
+        //reset the info panel
+        Entity blankEntity = generateNewDefaultEntity();
+        loadEntityIntoInfoPanel(blankEntity);
         return true;
     }
     
@@ -1641,8 +1644,6 @@ public class ProjectController {
         setSearchElementsEnabled(false);
         setInfoElementsEnabled(false);
         modifiedController.setModified(false);
-        Entity blankEntity = generateNewDefaultEntity();
-        loadEntityIntoInfoPanel(blankEntity);
     }
     
     //MARK: Misc
