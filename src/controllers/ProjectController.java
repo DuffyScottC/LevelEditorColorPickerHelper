@@ -1207,12 +1207,7 @@ public class ProjectController {
                 //deserialized from the file, and we can
                 //load the new project
                 loadProject(tempProject, tempFile.getParentFile());
-                //enable the menu items
-                frame.getAddEntityMenuItem().setEnabled(true);
-                frame.getDeleteEntityMenuItem().setEnabled(true);
-                frame.getSetCommandMenuItem().setEnabled(true);
-                frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
-                frame.getGenerateScriptsMenuItem().setEnabled(true);
+                projectOpenEnableMenuItems();
             } catch (JAXBException ex) {
                 //tell the user that you couldn't
                 JOptionPane.showMessageDialog(frame, "Could not deserialize"
@@ -1222,6 +1217,15 @@ public class ProjectController {
             
         }
         
+    }
+    
+    private void projectOpenEnableMenuItems() {
+        //enable the menu items
+        frame.getAddEntityMenuItem().setEnabled(true);
+        frame.getDeleteEntityMenuItem().setEnabled(true);
+        frame.getSetCommandMenuItem().setEnabled(true);
+        frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
+        frame.getGenerateScriptsMenuItem().setEnabled(true);
     }
     
     /**
@@ -1385,6 +1389,7 @@ public class ProjectController {
         //serialize the new project
         serializeNewProjectToXML();
         enterNewProjectState();
+        projectOpenEnableMenuItems();
         return true;
     }
     
