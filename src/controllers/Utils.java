@@ -19,6 +19,11 @@ import javax.swing.JOptionPane;
  * @author Scott
  */
 public class Utils {
+    //Preferences keys:
+    public static final String IMAGE_CHOOSER_PATH = "LECPImageChooserPath";
+    public static final String NEW_PROJECT_CHOOSER_PATH = "LECPNewProjectChooserPath";
+    public static final String OPEN_PROJECT_CHOOSER_PATH = "LECPOpenProjectChooserPath";
+    
     public static final String DEFAULT_TYPE = "Misc";
     public static final int LIST_ICON_DIM = 32;
     

@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.prefs.Preferences;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -99,24 +100,22 @@ public class ProjectController {
     private final SearchController searchController;
     private final ModifiedController modifiedController;
     
+    //MARK: Preferences
+    private PreferencesDialog preferencesDialog;
+    private boolean includeHashTag = false;
+    private boolean includeAlpha = true;
+    private boolean includeOffset = true;
     /**
-     * initialized with user.dir just in case something goes wrong with loading
-     * preferences
+     * Holds all user preferences for this application
      */
+    private Preferences prefs;
     private final JFileChooser imageChooser 
             = new JFileChooser(System.getProperty("user.dir"));
-    /**
-     * initialized with user.dir just in case something goes wrong with loading
-     * preferences
-     */
     private final JFileChooser newProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
-    /**
-     * initialized with user.dir just in case something goes wrong with loading
-     * preferences
-     */
     private final JFileChooser openProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
+    
     /**
      * A file filter which only allows .lecp files (Project files) to be
      * chosen.
@@ -132,11 +131,6 @@ public class ProjectController {
      */
     private boolean useCommand = false;
     
-    //MARK: Preferences
-    private PreferencesDialog preferencesDialog;
-    private boolean includeHashTag = false;
-    private boolean includeAlpha = true;
-    private boolean includeOffset = true;
     
     /**
      * Set up the ProjectController
@@ -465,6 +459,7 @@ public class ProjectController {
             if (result == JFileChooser.APPROVE_OPTION) {
                 //get the user-selected file
                 File newFile = imageChooser.getSelectedFile();
+                prefs.put(Utils.IMAGE_CHOOSER_PATH, newFile.toString());
                 //if the file exists
                 if (newFile.exists()) {
                     String name = newFile.getName();
@@ -887,6 +882,34 @@ public class ProjectController {
         frame.getOffsetPanel().setVisible(includeOffset);
     }
     
+    /**
+     * Loads all user preferences from the system
+     */
+    private void loadPreferences() {
+        // This will define a node in which the preferences can be stored
+        prefs = Preferences.userRoot().node(this.getClass().getName());
+
+        //Get the file paths from user preferences (return the current directory if 
+        //no preference was set yet):
+        String imageChooserFilePath 
+                = prefs.get(Utils.IMAGE_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        String newProjectChooserFilePath 
+                = prefs.get(Utils.NEW_PROJECT_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        String openProjectChooserFilePath 
+                = prefs.get(Utils.OPEN_PROJECT_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        
+        File imageChooserFile = new File(openProjectChooserFilePath);
+        File newProjectChooserFile = new File(openProjectChooserFilePath);
+        File openProjectChooserFile = new File(openProjectChooserFilePath);
+        
+        imageChooser.setCurrentDirectory(imageChooserFile);
+        imageChooser.setCurrentDirectory(newProjectChooserFile);
+        imageChooser.setCurrentDirectory(openProjectChooserFile);
+    }
+    
     //MARK: Add Entity
     /**
      * Copies the passed in image and stores it in the resources folder. The
@@ -1171,6 +1194,8 @@ public class ProjectController {
         if (result == JFileChooser.APPROVE_OPTION) {
             //get the user's selected file
             File tempFile = openProjectChooser.getSelectedFile();
+            //save the current directory to the user's preferences
+            prefs.put(Utils.OPEN_PROJECT_CHOOSER_PATH, tempFile.toString());
             //if the file does NOT exist
             if (!tempFile.exists()) {
                 //tell the user the file does not exist
@@ -1540,6 +1565,9 @@ public class ProjectController {
                     if (tempProjectLocation.isDirectory()) {
                         //assign the project location.
                         projectLocation = tempProjectLocation;
+                        //save the new starting directory to the user's prefs
+                        prefs.put(Utils.NEW_PROJECT_CHOOSER_PATH, 
+                                tempProjectLocation.toString());
                         //set the project location
                         pLocationTextField.setText(projectLocation.getAbsolutePath());
                         
