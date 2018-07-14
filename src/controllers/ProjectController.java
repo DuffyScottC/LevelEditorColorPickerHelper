@@ -244,7 +244,7 @@ public class ProjectController {
                 updateSearchResultsToReflectEntityChangeOrAddition(newEntity);
                 
                 //update the UI to reflect the creation of a new entity
-                loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
+                loadEntityIntoInfoPanel(newEntity);
                 
                 //tell the project that it has not been modified
                 modifiedController.setModified(false);
@@ -1301,7 +1301,7 @@ public class ProjectController {
             //set the current entity
             newProject.setCurrentEntity(allNewEntities.get(0));
             //load the entity into the info panel
-            loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
+            loadEntityIntoInfoPanel(newProject.getCurrentEntity());
             setSearchElementsEnabled(true);
             setInfoElementsEnabled(true);
         }
