@@ -1480,7 +1480,7 @@ public class ProjectController {
         Path projectLocationPath = currentProject.getProjectLocation().toPath();
         File projectFile
                 = Paths.get(projectLocationPath.toString(), 
-                        currentProject.getName()).toFile();
+                        currentProject.getName() + ".lecp").toFile();
         marshaller.marshal(currentProject, projectFile);
     }
     
