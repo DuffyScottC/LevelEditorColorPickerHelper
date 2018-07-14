@@ -1537,13 +1537,12 @@ public class ProjectController {
         pNameTextField.requestFocus();
         pNameTextField.selectAll();
         
-        //initialize the project location
-        projectLocation = new File(System.getProperty("user.dir"));
-        
-        pNameTextField.setText("New Project");
         //get the user's pref for project location
         String newProjectLocation = prefs.get(Utils.NEW_PROJECT_CHOOSER_PATH, 
                 System.getProperty("user.dir"));
+        //initialize the project location to the user's prefs
+        projectLocation = new File(newProjectLocation);
+        pNameTextField.setText("New Project");
         //fill in the project location that the user prefs had
         pLocationTextField.setText(newProjectLocation);
         //add on the project name
