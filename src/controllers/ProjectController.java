@@ -1571,14 +1571,16 @@ public class ProjectController {
                 if (tempProjectLocation.exists()) {
                     if (tempProjectLocation.isDirectory()) {
                         //assign the project location.
-                        projectLocation = tempProjectLocation;
+//                        projectLocation = tempProjectLocation;
+                        System.out.println("This is when you would prematurely"
+                                + " assign projectlocation.");
                         //save the new starting directory to the user's prefs
                         prefs.put(Utils.NEW_PROJECT_CHOOSER_PATH, 
                                 tempProjectLocation.toString());
                         //set the project location
-                        pLocationTextField.setText(projectLocation.getAbsolutePath());
+                        pLocationTextField.setText(tempProjectLocation.getAbsolutePath());
                         
-                        updateNewProjectFolderTextBox();
+                        updateNewProjectFolderTextBox(tempProjectLocation.toPath());
                     }
                 }
             }
@@ -1596,7 +1598,7 @@ public class ProjectController {
         cancelButton.addActionListener((ActionEvent e) -> {
             newProjectDialog.setVisible(false);
         });
-        
+        //this is where I have to set the projectLocation variable to what's in the dialog textfield
         finishButton.addActionListener((ActionEvent e) -> {
             try {
                 //if we successfully create a new project
@@ -1620,10 +1622,10 @@ public class ProjectController {
         });
     }
     
-    public void updateNewProjectFolderTextBox() {
+    public void updateNewProjectFolderTextBox(Path projectLocationPath) {
         JTextField pFolderTextField = newProjectDialog.getProjectFolderTextField();
         //Convert the projectLocation to a path object
-        Path projectLocationPath = projectLocation.toPath();
+//        Path projectLocationPath = projectLocation.toPath();
         //add the projectName to the path to get the project folder
         Path projectFolderPath = Paths.get(projectLocationPath.toString(), projectName);
         //convert the path to a file object
