@@ -39,6 +39,8 @@ public class ScriptGenerator {
     
     private final Project project;
     private final ScriptGeneratorDialog dialog;
+    private List<String>  types;
+    private List<String>  formattedTypes;
     private ScriptType scriptType = ScriptType.GameObject;
     
     //GameObject
@@ -299,8 +301,6 @@ public class ScriptGenerator {
             
             //get the project's entities
             List<Entity> projectEntities = project.getEntities();
-            //this holds all the types that we want to organize the entities by
-            List<String> types;
             //get whether the user wants to group entities by type
             boolean groupByType 
                     = dialog.getGroupEntitiesByTypeCheckBox().isSelected();
@@ -308,16 +308,23 @@ public class ScriptGenerator {
             if (groupByType) {
                 //set types to be all the types in the project
                 types = project.getTypes();
+                //cycle through all the types
+                for (String type : types) {
+                    formattedTypes.add(formatType(type));
+                }
             } else {
                 //if the user does not want to organize by type
                 //initialize the types list
                 types = new ArrayList();
+                formattedTypes = new ArrayList();
                 //add a single element called entities that will hold all the
                 //entities in the project.
                 if (scriptType == ScriptType.GameObject) {
-                    types.add("entities");
+                    types.add("Entities");
+                    formattedTypes.add("entities");
                 } else {
-                    types.add("tileEntities");
+                    types.add("Tile Entities");
+                    formattedTypes.add("tileEntities");
                 }
             }
             
@@ -379,13 +386,13 @@ public class ScriptGenerator {
             for (int i = 0; i < types.size(); i++) {
                 //for each type, add the array of Entity objects with the title
                 //matching the corrosponding type
-                addTypeToCompleteSB(types.get(i), 
+                addTypeToCompleteSB(i, 
                         entityObjectSBs.get(i), complete);
             }
             //add on the middle of the file
             complete.append(middle);
             //add on the loops
-            addLoopForEachTypeToCompleteSB(types, complete);
+            addLoopForEachTypeToCompleteSB(complete);
             //return the completed text
             return complete;
         } catch (IOException ex) {
@@ -400,9 +407,8 @@ public class ScriptGenerator {
      * @param types All the types in the LevelGenerator script
      * @param complete the complete StringBuilder
      */
-    private void addLoopForEachTypeToCompleteSB(List<String> types, 
-            StringBuilder complete) {
-        for (String type : types) {
+    private void addLoopForEachTypeToCompleteSB(StringBuilder complete) {
+        for (int i = 0; i < types.size(); i++) {
             complete.append("\t\tforeach (");
             if (scriptType == ScriptType.GameObject) {
                 complete.append("Entity entity");
@@ -411,13 +417,8 @@ public class ScriptGenerator {
             }
             complete.append(" in ");
             
-            //make the first letter lowercase
-            String firstLetter = "" + type.charAt(0);
-            firstLetter = firstLetter.toLowerCase();
-            String otherLetters = type.substring(1);
-            //add the type with a lowercase first letter
-            complete.append(firstLetter);
-            complete.append(otherLetters);
+            //use the formatted type name as a variable name
+            complete.append(formattedTypes.get(i));
             
             //if the user wants to group entities by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
@@ -445,12 +446,12 @@ public class ScriptGenerator {
      * @param entityObjects
      * @param complete
      */
-    private void addTypeToCompleteSB(String type, 
+    private void addTypeToCompleteSB(int typeIndex, 
             StringBuilder entityObjects, 
             StringBuilder complete) {
         //add a comment discribing the type
         complete.append("\t//");
-        complete.append(type);
+        complete.append(types.get(typeIndex));
 
         if (scriptType == ScriptType.GameObject) {
             complete.append("\n\tpublic Entity[] ");
@@ -458,13 +459,8 @@ public class ScriptGenerator {
             complete.append("\n\tpublic TileEntity[] ");
         }
         
-        // Make the first letter lowercase
-        String firstLetter = "" + type.charAt(0);
-        firstLetter = firstLetter.toLowerCase();
-        String otherLetters = type.substring(1);
-        //add the type with a lowercase first letter
-        complete.append(firstLetter);
-        complete.append(otherLetters);
+        //use the formatted type name as a variable name
+        complete.append(formattedTypes.get(typeIndex));
         
         //if the user wants to group entities by type
         if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
@@ -584,6 +580,17 @@ public class ScriptGenerator {
             dialog.getGridSizePanel().setVisible(false);
             dialog.getCellSizeGapPanel().setVisible(true);
         }
+    }
+
+    private String formatType(String type) {
+        //make the first letter lowercase
+        String firstLetter = "" + type.charAt(0);
+        firstLetter = firstLetter.toLowerCase();
+        String otherLetters = type.substring(1);
+        String formattedType = firstLetter + otherLetters;
+        //replace all instances of Space with Underscore
+        formattedType = formattedType.replace(" ", "_");
+        return formattedType;
     }
     
 }
