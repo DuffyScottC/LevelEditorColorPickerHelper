@@ -1,1 +1,3 @@
-Allow users to export in two ways: 1. as a tileset, 2. as a prefab set.
+Sort entities alphabetically when generating scripts
+
+Fix the not remembering which folder to save new projects to

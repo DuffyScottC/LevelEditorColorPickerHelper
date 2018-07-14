@@ -244,7 +244,7 @@ public class ProjectController {
                 updateSearchResultsToReflectEntityChangeOrAddition(newEntity);
                 
                 //update the UI to reflect the creation of a new entity
-                loadCurrentEntityIntoInfoPanel();
+                loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
                 
                 //tell the project that it has not been modified
                 modifiedController.setModified(false);
@@ -314,7 +314,7 @@ public class ProjectController {
             //we no longer want to delete any files
             imageFileToDelete = null;
             //and we want to reload the current entity into the info panel
-            this.loadCurrentEntityIntoInfoPanel();
+            loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
             //mark this as unmodified
             modifiedController.setModified(false);
         });
@@ -401,7 +401,7 @@ public class ProjectController {
                 //put the selected entity in the current entity position
                 currentProject.setCurrentEntity(selectedEntity);
                 //put the current entity into the info panel
-                loadCurrentEntityIntoInfoPanel();
+                loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
                 //we are no longer modifed
                 modifiedController.setModified(false);
                 
@@ -441,7 +441,7 @@ public class ProjectController {
                 //put the selected entity in the current entity position
                 currentProject.setCurrentEntity(selectedEntity);
                 //put the current entity into the info panel
-                loadCurrentEntityIntoInfoPanel();
+                loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
                 //we are no longer modifed
                 modifiedController.setModified(false);
                 
@@ -1301,7 +1301,7 @@ public class ProjectController {
             //set the current entity
             newProject.setCurrentEntity(allNewEntities.get(0));
             //load the entity into the info panel
-            loadCurrentEntityIntoInfoPanel();
+            loadEntityIntoInfoPanel(currentProject.getCurrentEntity());
             setSearchElementsEnabled(true);
             setInfoElementsEnabled(true);
         }
@@ -1641,6 +1641,8 @@ public class ProjectController {
         setSearchElementsEnabled(false);
         setInfoElementsEnabled(false);
         modifiedController.setModified(false);
+        Entity blankEntity = generateNewDefaultEntity();
+        loadEntityIntoInfoPanel(blankEntity);
     }
     
     //MARK: Misc
@@ -1688,29 +1690,28 @@ public class ProjectController {
         }
     }
     
-    private void loadCurrentEntityIntoInfoPanel() {
-        Entity currentEntity = currentProject.getCurrentEntity();
-        frame.getNameTextField().setText(currentEntity.getName());
+    private void loadEntityIntoInfoPanel(Entity entity) {
+        frame.getNameTextField().setText(entity.getName());
         //get the index of this entity's type
-        int index = currentProject.getTypes().indexOf(currentEntity.getType());
+        int index = currentProject.getTypes().indexOf(entity.getType());
         //set the selected type
         frame.getTypeComboBox().setSelectedIndex(index);
         //get the image file within the Resources folder
-        File imageFile = getEntityImageFile(currentEntity);
+        File imageFile = getEntityImageFile(entity);
         //load the image file into the ImagePanel
         frame.getImagePanel().setImagePath(imageFile, 
-                currentEntity.getColor());
+                entity.getColor());
         //set the current image
         currentImageFile = imageFile;
         //set the color values
         colorPickerController.setColor(
-                currentEntity.getR(), 
-                currentEntity.getG(),
-                currentEntity.getB(), 
-                currentEntity.getA());
+                entity.getR(), 
+                entity.getG(),
+                entity.getB(), 
+                entity.getA());
         //set the offset values
-        frame.getxOffsetSpinner().setValue(currentEntity.getOffset().getX());
-        frame.getyOffsetSpinner().setValue(currentEntity.getOffset().getY());
+        frame.getxOffsetSpinner().setValue(entity.getOffset().getX());
+        frame.getyOffsetSpinner().setValue(entity.getOffset().getY());
     }
     
     /**
