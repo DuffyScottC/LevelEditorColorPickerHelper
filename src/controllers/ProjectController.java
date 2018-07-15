@@ -1271,6 +1271,8 @@ public class ProjectController {
         newProject.createProjectLocationAndResourceFolder();
         resultsListController.setProjectResourceLocation(
                 newProject.getProjectResourceFolder());
+        recentListController.setProjectResourceLocation(
+                newProject.getProjectResourceFolder());
         projectLocation = projectLocationFile;
         //get path to the resources folder
         Path resourcesFolderPath = getResourcesFolderPath();
@@ -1410,6 +1412,8 @@ public class ProjectController {
         currentProject.createProjectLocationAndResourceFolder();
         resultsListController.setProjectResourceLocation(
                 currentProject.getProjectResourceFolder());
+        recentListController.setProjectResourceLocation(
+                currentProject.getProjectResourceFolder());
         searchController.setCurrentProject(currentProject);
         currentProject.addType(Utils.DEFAULT_TYPE);
         updateTypeComboBox();
@@ -1469,6 +1473,7 @@ public class ProjectController {
             //give the resultsList's EntityListRenderer a reference to the
             //resources folder file
             resultsListController.setProjectResourceLocation(resourcesFolderFile);
+            recentListController.setProjectResourceLocation(resourcesFolderFile);
         }
         return true;
     }

@@ -7,23 +7,20 @@ package views;
 
 import controllers.Utils;
 import entities.Entity;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
 /**
- *
+ * 
  * @author Scott
  */
 public class EntityListRenderer extends DefaultListCellRenderer {
