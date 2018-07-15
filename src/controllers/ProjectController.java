@@ -1172,6 +1172,25 @@ public class ProjectController {
             //then update the selection
             resultsListController.setSelectedIndex(index);
         }
+        
+        /*
+        Now we need to find out if the newly modified entity is still in
+        the recent list
+        */
+        //get the entities in recent
+        List<Entity> entitiesInRecent 
+                = recentListController.getEntitiesInRecent();
+        //get the index of the newEntity if it exists
+        index = entitiesInRecent.indexOf(entity);
+        //if the newEntity is not in the recent list
+        if (index == -1) {
+            //clear the selection
+            recentListController.clearSelection();
+        } else {
+            //if the newEntity is in the recent list,
+            //then update the selection
+            recentListController.setSelectedIndex(index);
+        }
     }
     
     /**

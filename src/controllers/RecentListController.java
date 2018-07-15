@@ -105,5 +105,8 @@ public class RecentListController {
         return entitiesInRecent;
     }
     
+    public void clearSelection() {
+        recentList.clearSelection();
+    }
     
 }
