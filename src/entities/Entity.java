@@ -17,9 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  * so that they can be edited, shared, etc.
  * @author Scott
  */
-@XmlRootElement
+@XmlRootElement(name="Entity")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"image","name","type","r","g","b","a","unityPrefab","offset"})
+@XmlType(propOrder={"image","name","typeIndex","r","g","b","a","unityPrefab","offset"})
 public class Entity implements Comparable<Entity> {
     /**
      * The path of a the image associated with this entity. This is null
