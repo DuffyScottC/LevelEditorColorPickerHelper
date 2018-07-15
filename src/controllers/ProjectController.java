@@ -551,7 +551,7 @@ public class ProjectController {
                 useCommand = false;
             }
             //if there is no command set for this project yet
-            if (currentProject.getCommand() == null) {
+            if (currentProject.getCommand().isEmpty()) {
                 //if the user does not want to set the command
                 if (!Utils.shouldContinue("There is no command set. Would you like\n"
                         + "to set a new command?", frame)) {
