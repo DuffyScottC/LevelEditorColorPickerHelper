@@ -131,6 +131,12 @@ public class ProjectController {
      */
     private boolean useCommand = false;
     
+    /**
+     * Makes sure the user isn't spammed with "resource folder can not be
+     * found" messages. 
+     */
+    private boolean firstOpen = true;
+    
     
     /**
      * Set up the ProjectController
@@ -1254,6 +1260,7 @@ public class ProjectController {
                 //load the new project
                 loadProject(tempProject, tempFile.getParentFile());
                 projectOpenEnableMenuItems();
+                firstOpen = true;
             } catch (JAXBException ex) {
                 //tell the user that you couldn't
                 JOptionPane.showMessageDialog(frame, "Could not deserialize"
@@ -1635,6 +1642,7 @@ public class ProjectController {
                 //if we successfully create a new project
                 if (createNewProject()) {
                     newProjectDialog.setVisible(false);
+                    firstOpen = true;
                 }
             } catch (JAXBException ex) {
                 //if the creation of the project was not successful,
@@ -1753,11 +1761,14 @@ public class ProjectController {
     public File getEntityImageFile(Entity entity) {
         Path resourcesFolderPath = getResourcesFolderPath();
         if (resourcesFolderPath == null) {
-            //tell the user that the resources folder does not exist
-            JOptionPane.showMessageDialog(null, 
-                    "The Resources folder could not be found.", 
-                    "Folder Not Found", 
-                    JOptionPane.ERROR_MESSAGE);
+            if (firstOpen) {
+                //tell the user that the resources folder does not exist
+                JOptionPane.showMessageDialog(null, 
+                        "The Resources folder could not be found.", 
+                        "Folder Not Found", 
+                        JOptionPane.ERROR_MESSAGE);
+                firstOpen = false;
+            }
             //the image file could not be found
             return null;
         }

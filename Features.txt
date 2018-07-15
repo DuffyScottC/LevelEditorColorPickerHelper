@@ -1,1 +1,3 @@
 Fix the recent list not showing images
+
+Make types be represented by an index, not a string, within entities. 
