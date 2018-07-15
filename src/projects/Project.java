@@ -247,10 +247,9 @@ public class Project {
      * @param index The index of the type to remove
      */
     public void removeType(int index) {
-        String typeToRemove = types.get(index);
         for (Entity entity : entities) {
-            if (entity.getType().equals(typeToRemove)) {
-                entity.setType(Utils.DEFAULT_TYPE);
+            if (entity.getTypeIndex() == index) {
+                entity.setTypeIndex(0);
             }
         }
         types.remove(index);

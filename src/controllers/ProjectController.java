@@ -737,7 +737,7 @@ public class ProjectController {
     
     private void updateExampleCommandTextField() {
         //create an example entity
-        Entity exampleEntity = new Entity(null, "Name", "Type", 
+        Entity exampleEntity = new Entity(null, "Name", 1, 
                 Color.pink, "Prefab", Offset.zero);
         //get the arguments that the user desires using the exampleEntity
         List<String> arguments = getArguments(exampleEntity);
@@ -787,7 +787,8 @@ public class ProjectController {
             commandList.add(entity.getName());
         }
         if (currentProject.isIncludeType()) {
-            commandList.add(entity.getType());
+            commandList.add(
+                    currentProject.getTypes().get(entity.getTypeIndex()));
         }
         if (currentProject.isIncludeUnityPrefab()) {
             commandList.add(entity.getUnityPrefab());
@@ -1070,7 +1071,7 @@ public class ProjectController {
             return null;
         }
 
-        String newType = currentProject.getTypes().get(0);
+        int newType = 0;
 
         String newName = getUniqueDefaultName();
 
@@ -1729,10 +1730,8 @@ public class ProjectController {
     
     private void loadEntityIntoInfoPanel(Entity entity) {
         frame.getNameTextField().setText(entity.getName());
-        //get the index of this entity's type
-        int index = currentProject.getTypes().indexOf(entity.getType());
         //set the selected type
-        frame.getTypeComboBox().setSelectedIndex(index);
+        frame.getTypeComboBox().setSelectedIndex(entity.getTypeIndex());
         //get the image file within the Resources folder
         File imageFile = getEntityImageFile(entity);
         //load the image file into the ImagePanel
@@ -1859,13 +1858,12 @@ public class ProjectController {
         
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
-        String newType = currentProject.getTypes().get(newTypeIndex);
         Color newColor = colorPickerController.getColor();
         String newUnityPrefab = frame.getUnityPrefabTextField().getText();
         Offset newOffset = getOffsetFromInfoPanel();
         //load all the new values into the currentEntity
         currentEntity.replaceValues(newImage, newName, 
-                newType, newColor, newUnityPrefab, newOffset);
+                newTypeIndex, newColor, newUnityPrefab, newOffset);
     }
     
     /**

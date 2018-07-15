@@ -17,7 +17,6 @@ import views.MainFrame;
 
 enum SearchMode {
     Name,
-    Type,
     Color,
     UnityPrefab
 }
@@ -54,7 +53,6 @@ public class SearchController {
         JComboBox searchModeComboBox = frame.getSearchModeComboBox();
         searchModeComboBox.removeAllItems();
         searchModeComboBox.addItem("Name");
-        searchModeComboBox.addItem("Type");
         searchModeComboBox.addItem("Color");
         searchModeComboBox.addItem("Unity Prefab");
         
@@ -65,9 +63,6 @@ public class SearchController {
                     setSearchMode(SearchMode.Name);
                     break;
                 case 1:
-                    setSearchMode(SearchMode.Type);
-                    break;
-                case 2:
                     setSearchMode(SearchMode.Color);
                     break;
                 default:
@@ -98,9 +93,6 @@ public class SearchController {
                 case Name:
                     searchResults = searchByName(searchString);
                     break;
-                case Type:
-                    searchResults = searchByType(searchString);
-                    break;
                 case Color:
                     searchResults = searchByColor(searchString);
                     break;
@@ -119,17 +111,6 @@ public class SearchController {
             String nameLower = entity.getName().toLowerCase();
             //if the search string partially matches the name of this entity
             if (nameLower.contains(searchString)) {
-                results.add(entity);
-            }
-        }
-        return results;
-    }
-    
-    private List<Entity> searchByType(String searchString) {
-        List<Entity> results = new ArrayList();
-        for (Entity entity : currentProject.getEntities()) {
-            String typeLower = entity.getType().toLowerCase();
-            if (typeLower.contains(searchString)) {
                 results.add(entity);
             }
         }

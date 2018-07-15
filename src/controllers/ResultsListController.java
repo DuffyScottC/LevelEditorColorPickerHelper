@@ -42,8 +42,6 @@ public class ResultsListController {
             switch (searchMode) {
                 case Name:
                     return e1.getName().compareTo(e2.getName());
-                case Type:
-                    return e1.getType().compareTo(e2.getType());
                 case Color:
                     return e1.getColor().getRGB() - e2.getColor().getRGB();
                 default:

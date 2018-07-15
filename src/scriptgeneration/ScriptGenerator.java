@@ -18,7 +18,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -347,7 +346,7 @@ public class ScriptGenerator {
                 //if the user wants to group by type
                 if (groupByType) {
                     //get the index of this entity's type
-                    typeIndex = types.indexOf(e.getType());
+                    typeIndex = e.getTypeIndex();
                 } //leave it at 0 if the user is not grouping by type
                 //put e in the StringBuilders corrosponding to the typeIndex
                 addEntityToStringBuilder(e, 

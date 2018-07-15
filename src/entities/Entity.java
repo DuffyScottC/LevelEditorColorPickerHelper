@@ -35,7 +35,7 @@ public class Entity implements Comparable<Entity> {
     /**
      * The name of the type or category associated with this entity
      */
-    private String type;
+    private int typeIndex;
     /**
      * The r of the color associated with this entity
      */
@@ -69,7 +69,7 @@ public class Entity implements Comparable<Entity> {
     public Entity() {
         this.image = null;
         this.name = null;
-        this.type = null;
+        this.typeIndex = 0;
         this.r = 0;
         this.g = 0;
         this.b = 0;
@@ -89,11 +89,11 @@ public class Entity implements Comparable<Entity> {
      * @param unityPrefab The path of the Unity Prefab associated with this entity
      * @param offset The offset of the entity
      */
-    public Entity (String image, String name, String type, 
+    public Entity (String image, String name, int typeIndex, 
             Color color, String unityPrefab, Offset offset) {
         this.image = image;
         this.name = name;
-        this.type = type;
+        this.typeIndex = typeIndex;
         this.r = color.getRed();
         this.g = color.getGreen();
         this.b = color.getBlue();
@@ -102,11 +102,11 @@ public class Entity implements Comparable<Entity> {
         this.offset = offset;
     }
     
-    public void replaceValues(String image, String name, String type, 
+    public void replaceValues(String image, String name, int typeIndex, 
             Color color, String unityPrefab, Offset offset) {
         this.image = image;
         this.name = name;
-        this.type = type;
+        this.typeIndex = typeIndex;
         this.r = color.getRed();
         this.g = color.getGreen();
         this.b = color.getBlue();
@@ -192,12 +192,12 @@ public class Entity implements Comparable<Entity> {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public int getTypeIndex() {
+        return typeIndex;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeIndex(int typeIndex) {
+        this.typeIndex = typeIndex;
     }
 
     public int getR() {
