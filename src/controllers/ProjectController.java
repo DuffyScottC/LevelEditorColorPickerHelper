@@ -131,6 +131,7 @@ public class ProjectController {
      */
     private boolean useCommand = false;
     
+    //MARK: Misc
     /**
      * Makes sure the user isn't spammed with "resource folder can not be
      * found" messages. 
