@@ -677,7 +677,9 @@ public class ProjectController {
                     setCommandDialog.getBlueCheckBox().isSelected(), 
                     setCommandDialog.getNameCheckBox().isSelected(), 
                     setCommandDialog.getTypeCheckBox().isSelected(), 
-                    setCommandDialog.getUnityPrefabCheckBox().isSelected());
+                    setCommandDialog.getUnityPrefabCheckBox().isSelected(),
+                    setCommandDialog.getxOffsetCheckBox().isSelected(),
+                    setCommandDialog.getyOffsetCheckBox().isSelected());
             updateExampleCommandTextField();
         };
         
