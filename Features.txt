@@ -1,5 +1,0 @@
-Fix the recent list not showing images
-
-Make types be represented by an index, not a string, within entities. 
-
-Set the type of a new entity to the type of the last selected entity (or the last created type).
