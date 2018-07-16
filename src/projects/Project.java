@@ -64,6 +64,8 @@ public class Project {
     private boolean includeName = false;
     private boolean includeType = false;
     private boolean includeUnityPrefab = false;
+    private boolean includexOffset = false;
+    private boolean includeyOffset = false;
     
     /**
      * The currently selected and displayed entity
@@ -151,6 +153,14 @@ public class Project {
     public boolean isIncludeUnityPrefab() {
         return includeUnityPrefab;
     }
+
+    public boolean isIncludexOffset() {
+        return includexOffset;
+    }
+
+    public boolean isIncludeyOffset() {
+        return includeyOffset;
+    }
     
     public void setCommandBooleans(
             boolean includeColorHex,
@@ -159,7 +169,9 @@ public class Project {
             boolean includeBlue,
             boolean includeName,
             boolean includeType,
-            boolean includeUnityPrefab) {
+            boolean includeUnityPrefab,
+            boolean includexOffset,
+            boolean includeyOffset) {
         this.includeColorHex = includeColorHex;
         this.includeRed = includeRed;
         this.includeGreen = includeGreen;
@@ -167,6 +179,8 @@ public class Project {
         this.includeName = includeName;
         this.includeType = includeType;
         this.includeUnityPrefab = includeUnityPrefab;
+        this.includexOffset = includexOffset;
+        this.includeyOffset = includeyOffset;
     }
     
     public void createProjectLocationAndResourceFolder() {

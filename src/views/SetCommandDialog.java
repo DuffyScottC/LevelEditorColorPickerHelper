@@ -46,6 +46,8 @@ public class SetCommandDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         setButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        xOffsetCheckBox = new javax.swing.JCheckBox();
+        yOffsetCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,6 +75,10 @@ public class SetCommandDialog extends javax.swing.JDialog {
 
         cancelButton.setText("Cancel");
 
+        xOffsetCheckBox.setText("Offset X");
+
+        yOffsetCheckBox.setText("Offset Y");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,31 +91,39 @@ public class SetCommandDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(blueCheckBox)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(greenCheckBox)
-                                    .addComponent(redCheckBox)
-                                    .addComponent(colorHexValueCheckBox))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(greenCheckBox)
+                                            .addComponent(redCheckBox))
+                                        .addGap(33, 33, 33)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(typeCheckBox)
+                                            .addComponent(nameCheckBox)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(colorHexValueCheckBox)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(blueCheckBox)))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nameCheckBox)
-                                    .addComponent(typeCheckBox)
-                                    .addComponent(unityPrefabCheckBox)))
+                                    .addComponent(unityPrefabCheckBox)
+                                    .addComponent(xOffsetCheckBox)
+                                    .addComponent(yOffsetCheckBox)))
                             .addComponent(jLabel3))
-                        .addGap(0, 303, Short.MAX_VALUE))
-                    .addComponent(exampleTextField)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 115, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(setButton)))
+                        .addComponent(setButton))
+                    .addComponent(exampleTextField))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(enterCommandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,25 +132,32 @@ public class SetCommandDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(colorHexValueCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(nameCheckBox))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(unityPrefabCheckBox)
+                        .addComponent(blueCheckBox)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(typeCheckBox)
-                    .addComponent(redCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(unityPrefabCheckBox)
-                    .addComponent(greenCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(blueCheckBox)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(redCheckBox)
+                            .addComponent(xOffsetCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(greenCheckBox)
+                            .addComponent(yOffsetCheckBox)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(nameCheckBox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(typeCheckBox)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exampleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(setButton)
-                    .addComponent(cancelButton)))
+                    .addComponent(cancelButton))
+                .addContainerGap())
         );
 
         pack();
@@ -157,6 +178,8 @@ public class SetCommandDialog extends javax.swing.JDialog {
     private javax.swing.JButton setButton;
     private javax.swing.JCheckBox typeCheckBox;
     private javax.swing.JCheckBox unityPrefabCheckBox;
+    private javax.swing.JCheckBox xOffsetCheckBox;
+    private javax.swing.JCheckBox yOffsetCheckBox;
     // End of variables declaration//GEN-END:variables
 
     public JCheckBox getBlueCheckBox() {
@@ -193,6 +216,14 @@ public class SetCommandDialog extends javax.swing.JDialog {
 
     public JCheckBox getUnityPrefabCheckBox() {
         return unityPrefabCheckBox;
+    }
+
+    public JCheckBox getxOffsetCheckBox() {
+        return xOffsetCheckBox;
+    }
+
+    public JCheckBox getyOffsetCheckBox() {
+        return yOffsetCheckBox;
     }
 
     public JButton getCancelButton() {
