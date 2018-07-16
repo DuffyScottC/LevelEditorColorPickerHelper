@@ -199,6 +199,7 @@ public class ProjectController {
                 new FileNameExtensionFilter("TIF", "tif"));
         
         loadPreferences();
+        applyPreferencesChanges();
         
         //set up new project dialog
         newProjectDialog = new NewProjectDialog(frame, true);
@@ -846,12 +847,9 @@ public class ProjectController {
      */
     private void showPreferencesDialog() {
         //set up the checkboxes to reflect the current preferences state
-        preferencesDialog.getHashCheckBox().setSelected(
-                prefs.getBoolean(Utils.INCLUDE_HASHTAG, includeHashTag));
-        preferencesDialog.getAlphaCheckBox().setSelected(
-                prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha));
-        preferencesDialog.getOffsetCheckBox().setSelected(
-                prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset));
+        preferencesDialog.getHashCheckBox().setSelected(includeHashTag);
+        preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
+        preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
         
         //Make it so the user can press enter to select "OK"
         preferencesDialog.getRootPane().setDefaultButton(
@@ -924,6 +922,11 @@ public class ProjectController {
         imageChooser.setCurrentDirectory(imageChooserFile);
         newProjectChooser.setCurrentDirectory(newProjectChooserFile);
         openProjectChooser.setCurrentDirectory(openProjectChooserFile);
+        
+        //preferences dialog
+        includeHashTag = prefs.getBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
+        includeHashTag = prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
+        includeHashTag = prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset);
     }
     
     //MARK: Add Entity
