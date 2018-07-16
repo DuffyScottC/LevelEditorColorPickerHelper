@@ -847,10 +847,11 @@ public class ProjectController {
     private void showPreferencesDialog() {
         //set up the checkboxes to reflect the current preferences state
         preferencesDialog.getHashCheckBox().setSelected(
-                colorPickerController.includeHashTag());
+                prefs.getBoolean(Utils.INCLUDE_HASHTAG, includeHashTag));
         preferencesDialog.getAlphaCheckBox().setSelected(
-                colorPickerController.includeAlpha());
-        preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
+                prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha));
+        preferencesDialog.getOffsetCheckBox().setSelected(
+                prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset));
         
         //Make it so the user can press enter to select "OK"
         preferencesDialog.getRootPane().setDefaultButton(
@@ -880,6 +881,11 @@ public class ProjectController {
         includeHashTag = preferencesDialog.getHashCheckBox().isSelected();
         includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
         includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
+        
+        //save the user's preferences
+        prefs.putBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
+        prefs.putBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
+        prefs.putBoolean(Utils.INCLUDE_OFFSET, includeOffset);
         
         //include alpha
         colorPickerController.setIncludeAlpha(includeAlpha);
