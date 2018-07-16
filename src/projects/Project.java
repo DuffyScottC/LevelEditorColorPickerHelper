@@ -61,6 +61,7 @@ public class Project {
     private boolean includeRed = false;
     private boolean includeGreen = false;
     private boolean includeBlue = false;
+    private boolean includeAlpha = false;
     private boolean includeName = false;
     private boolean includeType = false;
     private boolean includeUnityPrefab = false;
@@ -142,6 +143,10 @@ public class Project {
         return includeBlue;
     }
 
+    public boolean isIncludeAlpha() {
+        return includeAlpha;
+    }
+
     public boolean isIncludeName() {
         return includeName;
     }
@@ -167,6 +172,7 @@ public class Project {
             boolean includeRed,
             boolean includeGreen,
             boolean includeBlue,
+            boolean includeAlpha,
             boolean includeName,
             boolean includeType,
             boolean includeUnityPrefab,
@@ -176,6 +182,7 @@ public class Project {
         this.includeRed = includeRed;
         this.includeGreen = includeGreen;
         this.includeBlue = includeBlue;
+        this.includeAlpha = includeAlpha;
         this.includeName = includeName;
         this.includeType = includeType;
         this.includeUnityPrefab = includeUnityPrefab;

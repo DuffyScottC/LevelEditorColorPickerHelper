@@ -674,7 +674,8 @@ public class ProjectController {
                     setCommandDialog.getColorHexValueCheckBox().isSelected(), 
                     setCommandDialog.getRedCheckBox().isSelected(), 
                     setCommandDialog.getGreenCheckBox().isSelected(), 
-                    setCommandDialog.getBlueCheckBox().isSelected(), 
+                    setCommandDialog.getBlueCheckBox().isSelected(),
+                    setCommandDialog.getAlphaCheckBox().isSelected(),
                     setCommandDialog.getNameCheckBox().isSelected(), 
                     setCommandDialog.getTypeCheckBox().isSelected(), 
                     setCommandDialog.getUnityPrefabCheckBox().isSelected(),
@@ -691,11 +692,17 @@ public class ProjectController {
                 checkBoxActionListener);
         setCommandDialog.getBlueCheckBox().addActionListener(
                 checkBoxActionListener);
+        setCommandDialog.getAlphaCheckBox().addActionListener(
+                checkBoxActionListener);
         setCommandDialog.getNameCheckBox().addActionListener(
                 checkBoxActionListener);
         setCommandDialog.getTypeCheckBox().addActionListener(
                 checkBoxActionListener);
         setCommandDialog.getUnityPrefabCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getxOffsetCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getyOffsetCheckBox().addActionListener(
                 checkBoxActionListener);
         
         setCommandDialog.getEnterCommandTextField().addKeyListener(
