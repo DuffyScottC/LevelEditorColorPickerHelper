@@ -923,10 +923,14 @@ public class ProjectController {
         newProjectChooser.setCurrentDirectory(newProjectChooserFile);
         openProjectChooser.setCurrentDirectory(openProjectChooserFile);
         
-        //preferences dialog
+        //get the includeBlank stuff from prefs
         includeHashTag = prefs.getBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
-        includeHashTag = prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
-        includeHashTag = prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset);
+        includeAlpha = prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
+        includeOffset = prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset);
+        //update the preferences dialog to reflect this
+        preferencesDialog.getHashCheckBox().setSelected(includeHashTag);
+        preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
+        preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
     }
     
     //MARK: Add Entity
