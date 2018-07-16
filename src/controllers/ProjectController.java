@@ -748,8 +748,8 @@ public class ProjectController {
     private void updateExampleCommandTextField() {
         //create an example entity
         Entity exampleEntity = new Entity(null, "Name", 1, 
-                Color.pink, "Prefab", Offset.zero);
-        //get the arguments that the user desires using the exampleEntity
+                Color.pink, "Prefab", new Offset(1.5, 2)); 
+       //get the arguments that the user desires using the exampleEntity
         List<String> arguments = getArguments(exampleEntity);
         //get the user's command
         String commandString 
@@ -793,6 +793,9 @@ public class ProjectController {
         if (currentProject.isIncludeBlue()) {
             commandList.add(Integer.toString(b));
         }
+        if (currentProject.isIncludeAlpha()) {
+            commandList.add(Integer.toString(a));
+        }
         if (currentProject.isIncludeName()) {
             commandList.add(entity.getName());
         }
@@ -802,6 +805,12 @@ public class ProjectController {
         }
         if (currentProject.isIncludeUnityPrefab()) {
             commandList.add(entity.getUnityPrefab());
+        }
+        if (currentProject.isIncludexOffset()) {
+            commandList.add(Double.toString(entity.getOffset().getX()));
+        }
+        if (currentProject.isIncludeyOffset()) {
+            commandList.add(Double.toString(entity.getOffset().getY()));
         }
         return commandList;
     }
