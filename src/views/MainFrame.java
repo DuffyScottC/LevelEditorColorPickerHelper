@@ -108,11 +108,11 @@ public class MainFrame extends javax.swing.JFrame {
         viewMenu = new javax.swing.JMenu();
         verticalMenuItem = new javax.swing.JMenuItem();
         swapMenuItem = new javax.swing.JMenuItem();
+        toolsMenu = new javax.swing.JMenu();
+        generateScriptsMenuItem = new javax.swing.JMenuItem();
         commandMenu = new javax.swing.JMenu();
         useCommandCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         setCommandMenuItem = new javax.swing.JMenuItem();
-        toolsMenu = new javax.swing.JMenu();
-        generateScriptsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -231,9 +231,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sliderPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(greenSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                    .addComponent(redSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                    .addComponent(blueSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                    .addComponent(greenSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(redSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(blueSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -355,7 +355,7 @@ public class MainFrame extends javax.swing.JFrame {
         alphaPanelLayout.setHorizontalGroup(
             alphaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alphaPanelLayout.createSequentialGroup()
-                .addComponent(alphaSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addComponent(alphaSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -513,6 +513,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         menuBar.add(viewMenu);
 
+        toolsMenu.setText("Tools");
+
+        generateScriptsMenuItem.setText("Generate Scripts");
+        toolsMenu.add(generateScriptsMenuItem);
+
         commandMenu.setText("Command");
 
         useCommandCheckBoxMenuItem.setText("Use Command");
@@ -521,12 +526,7 @@ public class MainFrame extends javax.swing.JFrame {
         setCommandMenuItem.setText("Set Command");
         commandMenu.add(setCommandMenuItem);
 
-        menuBar.add(commandMenu);
-
-        toolsMenu.setText("Tools");
-
-        generateScriptsMenuItem.setText("Generate Scripts");
-        toolsMenu.add(generateScriptsMenuItem);
+        toolsMenu.add(commandMenu);
 
         menuBar.add(toolsMenu);
 

@@ -57,23 +57,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="commandMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Command"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="useCommandCheckBoxMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Use Command"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="setCommandMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Set Command"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="toolsMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tools"/>
@@ -84,6 +67,23 @@
                 <Property name="text" type="java.lang.String" value="Generate Scripts"/>
               </Properties>
             </MenuItem>
+            <Menu class="javax.swing.JMenu" name="commandMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Command"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JCheckBoxMenuItem" name="useCommandCheckBoxMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Use Command"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="setCommandMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Set Command"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
           </SubComponents>
         </Menu>
       </SubComponents>
@@ -872,9 +872,9 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="greenSlider" alignment="0" pref="166" max="32767" attributes="0"/>
-                              <Component id="redSlider" alignment="0" pref="166" max="32767" attributes="0"/>
-                              <Component id="blueSlider" alignment="0" pref="166" max="32767" attributes="0"/>
+                              <Component id="greenSlider" alignment="0" pref="168" max="32767" attributes="0"/>
+                              <Component id="redSlider" alignment="0" pref="168" max="32767" attributes="0"/>
+                              <Component id="blueSlider" alignment="0" pref="168" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -1118,7 +1118,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="alphaSlider" pref="172" max="32767" attributes="0"/>
+                          <Component id="alphaSlider" pref="174" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>

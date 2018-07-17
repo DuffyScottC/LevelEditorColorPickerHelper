@@ -1,3 +1,7 @@
 remember the user's preferences regarding app size and layout
 
-serialize the project when deleting types, or prepare for cancel
+merge projects
+
+analyze images for scripts to only generate the ones that are needed
+
+generate only a text file with the array elements, not the whole script
