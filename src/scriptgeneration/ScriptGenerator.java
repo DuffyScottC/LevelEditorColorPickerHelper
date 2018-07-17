@@ -80,6 +80,7 @@ public class ScriptGenerator {
         
         //initialize the type as GameObject
         chooseType(ScriptType.GameObject);
+        dialog.getDescriptionPanel().setVisible(false);
         
         typeComboBox.addActionListener((ActionEvent e) -> {
             int index = typeComboBox.getSelectedIndex();
@@ -171,7 +172,7 @@ public class ScriptGenerator {
             if (dialog.getUseImagesCheckBox().isSelected()) {
                 //get the user-entered text for the folder location
                 String imageDestinationFolderText 
-                        = dialog.getDesitnationFolderTextField().getText();
+                        = dialog.getImageFolderTextField().getText();
                 imageFolder = getFolderFile(imageDestinationFolderText);
                 //if there was an error
                 if (imageFolder == null) {
