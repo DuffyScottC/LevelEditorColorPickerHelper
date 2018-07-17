@@ -31,7 +31,6 @@
                       <Component id="jScrollPane3" min="-2" pref="187" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="removeButton" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="addButton" min="-2" pref="41" max="-2" attributes="0"/>
@@ -46,7 +45,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              <Component id="doneButton" min="-2" max="-2" attributes="0"/>
+              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,7 +65,7 @@
                   <Component id="newTypeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="doneButton" min="-2" max="-2" attributes="0"/>
+              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -79,7 +78,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jList3">
+        <Component class="javax.swing.JList" name="typesList">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="5">
@@ -116,9 +115,9 @@
     </Component>
     <Component class="javax.swing.JTextField" name="newTypeTextField">
     </Component>
-    <Component class="javax.swing.JButton" name="doneButton">
+    <Component class="javax.swing.JButton" name="closeButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Done"/>
+        <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
     </Component>
   </SubComponents>

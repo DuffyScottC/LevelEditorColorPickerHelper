@@ -5,6 +5,10 @@
  */
 package views;
 
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Scott
@@ -27,24 +31,23 @@ public class TypesDialog extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        typesList = new javax.swing.JList<>();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         newTypeTextField = new javax.swing.JTextField();
-        doneButton = new javax.swing.JButton();
+        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
+        typesList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane3.setViewportView(jList3);
+        jScrollPane3.setViewportView(typesList);
 
         addButton.setText("+");
         addButton.setEnabled(false);
@@ -54,7 +57,7 @@ public class TypesDialog extends javax.swing.JDialog {
 
         jLabel1.setText("New Type:");
 
-        doneButton.setText("Done");
+        closeButton.setText("Close");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +70,6 @@ public class TypesDialog extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -78,7 +80,7 @@ public class TypesDialog extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(doneButton))
+                .addComponent(closeButton))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +96,7 @@ public class TypesDialog extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(newTypeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(doneButton))
+                .addComponent(closeButton))
         );
 
         pack();
@@ -103,13 +105,32 @@ public class TypesDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton doneButton;
+    private javax.swing.JButton closeButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField newTypeTextField;
     private javax.swing.JButton removeButton;
+    private javax.swing.JList<String> typesList;
     // End of variables declaration//GEN-END:variables
 
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public JTextField getNewTypeTextField() {
+        return newTypeTextField;
+    }
+
+    public JButton getRemoveButton() {
+        return removeButton;
+    }
+
+    public JList<String> getTypesList() {
+        return typesList;
+    }
+
+    public JButton getCloseButton() {
+        return closeButton;
+    }
 
 }

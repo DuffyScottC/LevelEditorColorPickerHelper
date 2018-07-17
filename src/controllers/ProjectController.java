@@ -138,6 +138,7 @@ public class ProjectController {
      */
     private boolean firstOpen = true;
     
+    private TypesController typesController;
     
     /**
      * Set up the ProjectController
@@ -163,6 +164,8 @@ public class ProjectController {
         this.modifiedController = modifiedController;
         
         setUpOffsetSpinners();
+        
+        typesController = new TypesController(frame);
         
         setCommandDialog = new SetCommandDialog(frame, true);
         setUpSetCommandDialogActionListeners();
@@ -340,7 +343,8 @@ public class ProjectController {
                         //add the new type to the project
                         currentProject.addType(newType);
                         //update the combo box
-                        updateTypeComboBox();
+                        typesController.updateTypeComboBox(
+                                currentProject.getTypes());
                     } else {
                         //tell the user that the type already exists
                         JOptionPane.showMessageDialog(frame, "This type already "
@@ -374,7 +378,7 @@ public class ProjectController {
             //that type to the default type
             currentProject.removeType(selectedIndex);
             //update the combo box
-            updateTypeComboBox();
+            typesController.updateTypeComboBox(currentProject.getTypes());
             //select the default type
             typeComboBox.setSelectedIndex(0);
         });
@@ -533,7 +537,15 @@ public class ProjectController {
         
         frame.getTypeComboBox().addActionListener((ActionEvent e) -> {
             if (currentProject != null) {
-                modifiedController.setModified(true);
+                int index = frame.getTypeComboBox().getSelectedIndex();
+                int size = currentProject.getTypes().size();
+                //if the user clicked "Edit..."
+                if (index == size) {
+                    typesController.showTypesDialog(currentProject);
+                } else {
+                    //the user selected a new type, so setModified
+                    modifiedController.setModified(true);
+                }
             }
         });
         
@@ -1102,14 +1114,14 @@ public class ProjectController {
             return null;
         }
 
-        int newType = 0;
+        int newTypeIndex = currentProject.getCurrentEntity().getTypeIndex();
 
         String newName = getUniqueDefaultName();
 
         String newUnityPrefab = getUniqueDefaultUnityPrefab();
 
         //create and return a new entity with the attributes created above
-        return new Entity(null, newName, newType, newColor, 
+        return new Entity(null, newName, newTypeIndex, newColor, 
                 newUnityPrefab, Offset.zero);
     }
     
@@ -1347,7 +1359,7 @@ public class ProjectController {
         
         projectName = newProject.getName();
         //update the typeComboBox with the new project's types
-        updateTypeComboBox();
+        typesController.updateTypeComboBox(currentProject.getTypes());
         
         //empty the searchTextField
         frame.getSearchTextField().setText("");
@@ -1475,7 +1487,7 @@ public class ProjectController {
                 currentProject.getProjectResourceFolder());
         searchController.setCurrentProject(currentProject);
         currentProject.addType(Utils.DEFAULT_TYPE);
-        updateTypeComboBox();
+        typesController.updateTypeComboBox(currentProject.getTypes());
         //serialize the new project
         serializeNewProjectToXML();
         enterNewProjectState();
@@ -1825,7 +1837,7 @@ public class ProjectController {
     
     public void setSearchElementsEnabled(boolean value) {
         //search panel
-        frame.getTypeComboBox().setEnabled(value);
+        frame.getSearchModeComboBox().setEnabled(value);
         frame.getSearchTextField().setEnabled(value);
     }
     
@@ -1850,18 +1862,6 @@ public class ProjectController {
         frame.getUnityPrefabTextField().setEnabled(value);
         frame.getxOffsetSpinner().setEnabled(value);
         frame.getyOffsetSpinner().setEnabled(value);
-    }
-    
-    /**
-     * Updates the typeComboBox to reflect the current open project's types
-     */
-    public void updateTypeComboBox() {
-        JComboBox typeComboBox = frame.getTypeComboBox();
-        //remove all items in the type combo box
-        typeComboBox.removeAllItems();
-        for (String type : currentProject.getTypes()) {
-            typeComboBox.addItem(type);
-        }
     }
     
     /**

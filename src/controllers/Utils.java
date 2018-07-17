@@ -33,6 +33,8 @@ public class Utils {
     public static final String ARRAY_NAME_EXTENSION = "Entities";
     public static final String ARRAY_TILE_NAME_EXTENSION = "Entities";
     
+    public static final String EDIT_TYPES_ITEM = "Edit...";
+    
     public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
         //Create a blank white image icon
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
