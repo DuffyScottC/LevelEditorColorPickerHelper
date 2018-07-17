@@ -80,7 +80,6 @@ public class ScriptGenerator {
         
         //initialize the type as GameObject
         chooseType(ScriptType.GameObject);
-        dialog.getDescriptionPanel().setVisible(false);
         
         typeComboBox.addActionListener((ActionEvent e) -> {
             int index = typeComboBox.getSelectedIndex();
@@ -208,9 +207,6 @@ public class ScriptGenerator {
         });
         
         dialog.getUseImagesCheckBox().addActionListener((ActionEvent e) -> {
-            //show/hide the description
-            dialog.getDescriptionPanel().setVisible(
-                    dialog.getUseImagesCheckBox().isSelected());
             //enable/disable the textfield
             dialog.getImageFolderTextField().setEnabled(
                     dialog.getUseImagesCheckBox().isSelected());
