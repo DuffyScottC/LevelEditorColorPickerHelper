@@ -1622,8 +1622,10 @@ public class ProjectController {
         cancelButton.addActionListener((ActionEvent e) -> {
             //if the user does not want to create a new project, then we
             //have to restore some of the variables we changed.
-            projectLocation = currentProject.getProjectLocation();
-            projectName = currentProject.getName();
+            if (currentProject != null) {
+                projectLocation = currentProject.getProjectLocation();
+                projectName = currentProject.getName();
+            }
             newProjectDialog.setVisible(false);
         });
         
