@@ -17,6 +17,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -38,6 +40,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -112,6 +115,17 @@ public class ProjectController {
             = new JFileChooser(System.getProperty("user.dir"));
     private final JFileChooser openProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
+    //Layout prefs:
+    /**
+     * This is set in the controller class, when the user clicks the
+     * Vertical Layout menu item
+     */
+    private boolean layoutVertical = false;
+    /**
+     * This is set in the controller class, when the user clicks the
+     * Swap Panels menu item
+     */
+    private boolean layoutSwap = false;
     
     /**
      * A file filter which only allows .lecp files (Project files) to be
@@ -549,6 +563,49 @@ public class ProjectController {
             showPreferencesDialog();
         });
         
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                //if the user tried to close without saving
+                if (modifiedController.isModified()) {
+                    //if the user wants to close the window without saving
+                    if (Utils.shouldContinue("OK to discard changes?", frame)) {
+                        saveLayoutToPrefs();
+                        System.exit(0); //the window should close
+                    }
+                    //if the user does not want to continue, then don't close
+                } else { //if the user has closed the program after saving
+                    saveLayoutToPrefs();
+                    System.exit(0); //the window should close
+                }
+            }
+        });
+        
+    }
+    
+    private void saveLayoutToPrefs() {
+        prefs.putBoolean(Utils.LAYOUT_VERTICAL, layoutVertical);
+        prefs.putBoolean(Utils.LAYOUT_SWAP, layoutSwap);
+        prefs.putInt(Utils.LAYOUT_WIDTH, frame.getWidth());
+        prefs.putInt(Utils.LAYOUT_HEIGHT, frame.getHeight());
+        prefs.putInt(Utils.LAYOUT_POS_X, frame.getX());
+        prefs.putInt(Utils.LAYOUT_POS_Y, frame.getY());
+        
+        //Main
+        double mainDivLoc = (double) frame.getMainSplitPane().getDividerLocation();
+        double length = (double) frame.getMainSplitPane().getWidth();
+        if (layoutVertical) {
+            length = frame.getMainSplitPane().getHeight();
+        }
+        double mainPercentage = mainDivLoc/length;
+        prefs.putDouble(Utils.LAYOUT_MAIN_SPLIT_POS, mainPercentage);
+        
+        //Lists
+        double listsDivLoc 
+                = (double) frame.getListsSplitPane().getDividerLocation();
+        double listsHeight = (double) frame.getListsSplitPane().getHeight();
+        double listsPercentage = listsDivLoc/listsHeight;
+        prefs.putDouble(Utils.LAYOUT_LISTS_SPLIT_POS, listsPercentage);
     }
     
     //MARK: Command
@@ -1957,6 +2014,14 @@ public class ProjectController {
                 fileName.matches(".*\\.jpe?g") ||
                 fileName.matches(".*\\.gif") ||
                 fileName.matches(".*\\.tiff?");
+    }
+    
+    void setLayoutVertical(boolean layoutVertical) {
+        this.layoutSwap = layoutVertical;
+    }
+    
+    void setLayoutSwap(boolean layoutSwap) {
+        this.layoutSwap = layoutSwap;
     }
     
 }

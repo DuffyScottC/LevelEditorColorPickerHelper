@@ -105,8 +105,8 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         preferencesMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
-        verticalMenuItem = new javax.swing.JMenuItem();
-        swapMenuItem = new javax.swing.JMenuItem();
+        verticalCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        swapCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         toolsMenu = new javax.swing.JMenu();
         generateScriptsMenuItem = new javax.swing.JMenuItem();
         commandMenu = new javax.swing.JMenu();
@@ -496,11 +496,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         viewMenu.setText("View");
 
-        verticalMenuItem.setText("Vertical Layout");
-        viewMenu.add(verticalMenuItem);
+        verticalCheckBoxMenuItem.setText("Vertical Layout");
+        viewMenu.add(verticalCheckBoxMenuItem);
 
-        swapMenuItem.setText("Swap Panels");
-        viewMenu.add(swapMenuItem);
+        swapCheckBoxMenuItem.setText("Swap Panels");
+        viewMenu.add(swapCheckBoxMenuItem);
 
         menuBar.add(viewMenu);
 
@@ -587,7 +587,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel selectionPanel;
     private javax.swing.JMenuItem setCommandMenuItem;
     private javax.swing.JPanel sliderPanel;
-    private javax.swing.JMenuItem swapMenuItem;
+    private javax.swing.JCheckBoxMenuItem swapCheckBoxMenuItem;
     private javax.swing.JMenu toolsMenu;
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
@@ -595,7 +595,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel unityPrefabPanel;
     private javax.swing.JTextField unityPrefabTextField;
     private javax.swing.JCheckBoxMenuItem useCommandCheckBoxMenuItem;
-    private javax.swing.JMenuItem verticalMenuItem;
+    private javax.swing.JCheckBoxMenuItem verticalCheckBoxMenuItem;
     private javax.swing.JMenu viewMenu;
     private javax.swing.JSpinner xOffsetSpinner;
     private javax.swing.JSpinner yOffsetSpinner;
@@ -717,12 +717,12 @@ public class MainFrame extends javax.swing.JFrame {
         return fileMenu;
     }
 
-    public JMenuItem getSwapMenuItem() {
-        return swapMenuItem;
+    public JMenuItem getSwapCheckBoxMenuItem() {
+        return swapCheckBoxMenuItem;
     }
 
-    public JMenuItem getVerticalMenuItem() {
-        return verticalMenuItem;
+    public JMenuItem getVerticalCheckBoxMenuItem() {
+        return verticalCheckBoxMenuItem;
     }
 
     public JPanel getInfoPanel() {

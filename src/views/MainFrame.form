@@ -45,12 +45,12 @@
             <Property name="text" type="java.lang.String" value="View"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="verticalMenuItem">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="verticalCheckBoxMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Vertical Layout"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="swapMenuItem">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="swapCheckBoxMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Swap Panels"/>
               </Properties>

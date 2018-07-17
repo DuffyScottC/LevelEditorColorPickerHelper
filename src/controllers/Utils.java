@@ -23,11 +23,24 @@ public class Utils {
     public static final String IMAGE_CHOOSER_PATH = "LECPImageChooserPath";
     public static final String NEW_PROJECT_CHOOSER_PATH = "LECPNewProjectChooserPath";
     public static final String OPEN_PROJECT_CHOOSER_PATH = "LECPOpenProjectChooserPath";
+    
     public static final String INCLUDE_HASHTAG = "LECPIncludeHashtag";
     public static final String INCLUDE_ALPHA = "LECPIncludeAlpha";
     public static final String INCLUDE_UNITY_PREFAB = "LECPIncludeUnityPrefab";
     public static final String INCLUDE_OFFSET = "LECPIncludeOffset";
     
+    public static final String LAYOUT_VERTICAL = "LECPLayoutVertical";
+    public static final String LAYOUT_SWAP = "LECPLayoutSwap";
+    public static final String LAYOUT_WIDTH = "LECPLayoutWidth";
+    public static final String LAYOUT_HEIGHT = "LECPLayoutHeight";
+    public static final String LAYOUT_POS_X = "LECPLayoutPosX";
+    public static final String LAYOUT_POS_Y = "LECPLayoutPosY";
+    public static final String LAYOUT_MAIN_SPLIT_POS = "LECPLayoutMainSplitPos";
+    public static final String LAYOUT_LISTS_SPLIT_POS = "LECPLayoutListsSplitPos";
+    
+    
+    
+    //Other:
     public static final String DEFAULT_TYPE = "Misc";
     public static final int LIST_ICON_DIM = 32;
     
