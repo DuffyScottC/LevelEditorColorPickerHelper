@@ -210,6 +210,8 @@ public class ScriptGenerator {
             //enable/disable the textfield
             dialog.getImageFolderTextField().setEnabled(
                     dialog.getUseImagesCheckBox().isSelected());
+            dialog.getImageBrowseButton().setEnabled(
+                    dialog.getUseImagesCheckBox().isSelected());
         });
     }
 
