@@ -1268,7 +1268,7 @@ public class ProjectController {
             
             try {
                 //try to deserialize the project file
-                Project tempProject = deserializeProjectFromXML(tempFile);
+                Project tempProject = Project.deserializeProjectFromXML(tempFile);
                 if (tempProject == null) {
                     //tell the user the file does not end with .lecp
                     JOptionPane.showMessageDialog(frame, "Could not deserialize"
@@ -1356,16 +1356,6 @@ public class ProjectController {
         }
         modifiedController.setModified(false);
     }
-    
-    private Project deserializeProjectFromXML(File file) throws JAXBException {
-         JAXBContext context = JAXBContext.newInstance(Project.class);
-         Unmarshaller unmarshaller = context.createUnmarshaller();
-         Object obj = unmarshaller.unmarshal(file);
-         if (obj instanceof Project) {
-             return (Project) obj;
-         }
-         return null;
-     }
     
     //MARK: New Project
     private void openNewProjectDialog() {
@@ -1465,7 +1455,7 @@ public class ProjectController {
         currentProject.addType(Utils.DEFAULT_TYPE);
         typesController.updateTypeComboBox(currentProject.getTypes());
         //serialize the new project
-        serializeNewProjectToXML();
+        Project.serializeProjectToXML(currentProject);
         enterNewProjectState();
         projectOpenEnableMenuItems();
         //reset the info panel
@@ -1554,23 +1544,6 @@ public class ProjectController {
         //create the folder
         tempResourcesFile.mkdir();
         return true;
-    }
-    
-    /**
-     * Serializes the currentProject to the projectFile using JAXB
-     * XML serialization. 
-     * @throws JAXBException if something goes wrong in the serialization 
-     * process
-     */
-    private void serializeNewProjectToXML() throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(Project.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        Path projectLocationPath = currentProject.getProjectLocation().toPath();
-        File projectFile
-                = Paths.get(projectLocationPath.toString(), 
-                        currentProject.getName() + ".lecp").toFile();
-        marshaller.marshal(currentProject, projectFile);
     }
     
     private void resetNewProjectDialog(MainFrame frame) {
@@ -1930,7 +1903,7 @@ public class ProjectController {
     private void saveProject() {
         try {
             //serialize the new project
-            serializeNewProjectToXML();
+            Project.serializeProjectToXML(currentProject);
             
         } catch (JAXBException ex) {
             //if the serialization of the project was not successful,

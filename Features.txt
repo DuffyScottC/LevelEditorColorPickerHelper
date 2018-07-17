@@ -1,1 +1,3 @@
 remember the user's preferences regarding app size and layout
+
+serialize the project when deleting types, or prepare for cancel

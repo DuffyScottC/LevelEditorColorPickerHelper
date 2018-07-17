@@ -12,6 +12,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -289,6 +293,34 @@ public class Project {
     public void setCommand(List<String> newCommand) {
         command.clear();
         command.addAll(newCommand);
+    }
+    
+    /**
+     * Serializes the currentProject to the projectFile using JAXB
+     * XML serialization. 
+     * @param project The project to serialize
+     * @throws JAXBException if something goes wrong in the serialization 
+     * process
+     */
+    public static void serializeProjectToXML(Project project) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Project.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        Path projectLocationPath = project.getProjectLocation().toPath();
+        File projectFile
+                = Paths.get(projectLocationPath.toString(), 
+                        project.getName() + ".lecp").toFile();
+        marshaller.marshal(project, projectFile);
+    }
+    
+    public static Project deserializeProjectFromXML(File file) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Project.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        Object obj = unmarshaller.unmarshal(file);
+        if (obj instanceof Project) {
+            return (Project) obj;
+        }
+        return null;
     }
     
     @Override
