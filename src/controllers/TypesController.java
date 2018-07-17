@@ -209,6 +209,8 @@ public class TypesController {
                 if (typesDialog.getNewTypeTextField().getText().isEmpty()) {
                     //the user can't add an empty type
                     typesDialog.getAddButton().setEnabled(false);
+                } else {
+                    typesDialog.getAddButton().setEnabled(true);
                 }
             }
         });
