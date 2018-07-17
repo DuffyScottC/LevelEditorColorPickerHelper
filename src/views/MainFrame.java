@@ -10,6 +10,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -95,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
         unityPrefabPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         unityPrefabTextField = new javax.swing.JTextField();
-        menuBar = new javax.swing.JMenuBar();
+        mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProjectMenuItem = new javax.swing.JMenuItem();
         openProjectMenuItem = new javax.swing.JMenuItem();
@@ -492,7 +493,7 @@ public class MainFrame extends javax.swing.JFrame {
         preferencesMenuItem.setText("Preferences");
         fileMenu.add(preferencesMenuItem);
 
-        menuBar.add(fileMenu);
+        mainMenuBar.add(fileMenu);
 
         viewMenu.setText("View");
 
@@ -502,7 +503,7 @@ public class MainFrame extends javax.swing.JFrame {
         swapCheckBoxMenuItem.setText("Swap Panels");
         viewMenu.add(swapCheckBoxMenuItem);
 
-        menuBar.add(viewMenu);
+        mainMenuBar.add(viewMenu);
 
         toolsMenu.setText("Tools");
 
@@ -519,9 +520,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         toolsMenu.add(commandMenu);
 
-        menuBar.add(toolsMenu);
+        mainMenuBar.add(toolsMenu);
 
-        setJMenuBar(menuBar);
+        setJMenuBar(mainMenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -561,8 +562,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSplitPane listsSplitPane;
+    private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JSplitPane mainSplitPane;
-    private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JMenuItem newProjectMenuItem;
@@ -779,6 +780,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JPanel getUnityPrefabPanel() {
         return unityPrefabPanel;
+    }
+
+    public JMenuBar getMainMenuBar() {
+        return mainMenuBar;
     }
     
 }

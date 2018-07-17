@@ -7,12 +7,19 @@ package controllers;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 import views.MainFrame;
 
 public class Controller {
+    
+    public static final boolean devmode = false;
 
     private final MainFrame frame = new MainFrame();
     private final ProjectController projectController;
@@ -44,6 +51,24 @@ public class Controller {
         
         projectController.enterNewProjectState();
         
+        if (devmode) {
+            JMenu devMenu = new JMenu("Development");
+            JMenuItem resetPrefs = new JMenuItem("Reset All Preferences");
+            resetPrefs.addActionListener((ActionEvent e) -> {
+                Preferences prefs 
+                    = Preferences.userRoot()
+                    .node(projectController.getClass().getName());
+                try {
+                    prefs.clear();
+                } catch (BackingStoreException ex) {
+                    Logger.getLogger(Controller.class.getName())
+                            .log(Level.SEVERE, null, ex);
+                }
+            });
+            devMenu.add(resetPrefs);
+            frame.getMainMenuBar().add(devMenu);
+        }
+        
         frame.getAddEntityMenuItem().setEnabled(false);
         frame.getDeleteEntityMenuItem().setEnabled(false);
         frame.getSetCommandMenuItem().setEnabled(false);
@@ -56,13 +81,10 @@ public class Controller {
         
         //set up the split pane
         mainSplitPane = frame.getMainSplitPane();
-        mainSplitPane.setDividerLocation((double) 0.4);
         
         loadLayoutPreferences();
         
         frame.getSwapCheckBoxMenuItem().addActionListener((ActionEvent e) -> {
-            projectController.setLayoutSwap(
-                    frame.getSwapCheckBoxMenuItem().isSelected());
             swapPanels();
         });
         
@@ -81,14 +103,12 @@ public class Controller {
             = Preferences.userRoot().node(projectController.getClass().getName());
         
         boolean layoutVertical = prefs.getBoolean(Utils.LAYOUT_VERTICAL, false);
-        projectController.setLayoutVertical(layoutVertical);
         frame.getVerticalCheckBoxMenuItem().setSelected(layoutVertical);
         if (layoutVertical) {
             switchToVerticalSplit();
         }
         
         boolean layoutSwap = prefs.getBoolean(Utils.LAYOUT_SWAP, false);
-        projectController.setLayoutSwap(layoutSwap);
         frame.getSwapCheckBoxMenuItem().setSelected(layoutSwap);
         if (layoutSwap) {
             swapPanels();
@@ -113,7 +133,7 @@ public class Controller {
         frame.getMainSplitPane().setDividerLocation(mainSplitPos);
         
         double listsSplitPos 
-                = prefs.getDouble(Utils.LAYOUT_MAIN_SPLIT_POS, (double) 0.4);
+                = prefs.getDouble(Utils.LAYOUT_LISTS_SPLIT_POS, (double) 0.6);
         frame.getListsSplitPane().setDividerLocation(listsSplitPos);
     }
 
@@ -142,7 +162,6 @@ public class Controller {
         mainSplitPane.setTopComponent(l);
         mainSplitPane.setBottomComponent(r);
         mainSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        frame.getVerticalCheckBoxMenuItem().setText("Horizontal Layout");
         mainSplitPane.setDividerLocation((double) 0.4);
     }
     
@@ -159,7 +178,6 @@ public class Controller {
         mainSplitPane.setRightComponent(b);
         mainSplitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         mainSplitPane.setDividerLocation((double) 0.4);
-        frame.getVerticalCheckBoxMenuItem().setText("Vertical Layout");
     }
     
     public static void main(String[] args) {

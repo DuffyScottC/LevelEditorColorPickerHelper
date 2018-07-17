@@ -115,17 +115,6 @@ public class ProjectController {
             = new JFileChooser(System.getProperty("user.dir"));
     private final JFileChooser openProjectChooser 
             = new JFileChooser(System.getProperty("user.dir"));
-    //Layout prefs:
-    /**
-     * This is set in the controller class, when the user clicks the
-     * Vertical Layout menu item
-     */
-    private boolean layoutVertical = false;
-    /**
-     * This is set in the controller class, when the user clicks the
-     * Swap Panels menu item
-     */
-    private boolean layoutSwap = false;
     
     /**
      * A file filter which only allows .lecp files (Project files) to be
@@ -584,7 +573,10 @@ public class ProjectController {
     }
     
     private void saveLayoutToPrefs() {
+        boolean layoutVertical 
+                = frame.getVerticalCheckBoxMenuItem().isSelected();
         prefs.putBoolean(Utils.LAYOUT_VERTICAL, layoutVertical);
+        boolean layoutSwap = frame.getSwapCheckBoxMenuItem().isSelected();
         prefs.putBoolean(Utils.LAYOUT_SWAP, layoutSwap);
         prefs.putInt(Utils.LAYOUT_WIDTH, frame.getWidth());
         prefs.putInt(Utils.LAYOUT_HEIGHT, frame.getHeight());
@@ -2014,14 +2006,6 @@ public class ProjectController {
                 fileName.matches(".*\\.jpe?g") ||
                 fileName.matches(".*\\.gif") ||
                 fileName.matches(".*\\.tiff?");
-    }
-    
-    void setLayoutVertical(boolean layoutVertical) {
-        this.layoutSwap = layoutVertical;
-    }
-    
-    void setLayoutSwap(boolean layoutSwap) {
-        this.layoutSwap = layoutSwap;
     }
     
 }
