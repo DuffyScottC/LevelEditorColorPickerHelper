@@ -38,6 +38,8 @@ public class PreferencesDialog extends javax.swing.JDialog {
         alphaCheckBox = new javax.swing.JCheckBox();
         offsetCheckBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
+        unityPrefabCheckBox = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,11 +51,15 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         hashTagCheckBox.setText("Include hashtag in color hex code");
 
-        alphaCheckBox.setText("Include alpha in color");
+        alphaCheckBox.setText("Include alpha");
 
         offsetCheckBox.setText("Include offset");
 
         jLabel2.setText("Attributes:");
+
+        unityPrefabCheckBox.setText("Include Unity prefab");
+
+        jLabel1.setText("General:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,36 +69,47 @@ public class PreferencesDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 208, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(applyButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(okButton))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(alphaCheckBox)
-                                    .addComponent(hashTagCheckBox)
-                                    .addComponent(offsetCheckBox))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                    .addComponent(offsetCheckBox)
+                                    .addComponent(unityPrefabCheckBox)
+                                    .addComponent(alphaCheckBox))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 208, Short.MAX_VALUE)
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(applyButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(okButton)
+                        .addGap(6, 6, 6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(hashTagCheckBox))
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(hashTagCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(alphaCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(unityPrefabCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(offsetCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(okButton)
                     .addComponent(applyButton)
@@ -108,9 +125,11 @@ public class PreferencesDialog extends javax.swing.JDialog {
     private javax.swing.JButton applyButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JCheckBox hashTagCheckBox;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JCheckBox offsetCheckBox;
     private javax.swing.JButton okButton;
+    private javax.swing.JCheckBox unityPrefabCheckBox;
     // End of variables declaration//GEN-END:variables
 
     public JCheckBox getAlphaCheckBox() {
@@ -125,7 +144,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         return cancelButton;
     }
 
-    public JCheckBox getHashCheckBox() {
+    public JCheckBox getHashTagCheckBox() {
         return hashTagCheckBox;
     }
 
@@ -135,6 +154,10 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
     public JButton getOkButton() {
         return okButton;
+    }
+
+    public JCheckBox getUnityPrefabCheckBox() {
+        return unityPrefabCheckBox;
     }
     
 }

@@ -104,6 +104,7 @@ public class ProjectController {
     private PreferencesDialog preferencesDialog;
     private boolean includeHashTag = false;
     private boolean includeAlpha = true;
+    private boolean includeUnityPrefab = true;
     private boolean includeOffset = true;
     /**
      * Holds all user preferences for this application
@@ -330,59 +331,6 @@ public class ProjectController {
             modifiedController.setModified(false);
         });
         
-        frame.getNewTypeButton().addActionListener((ActionEvent e) -> {
-            //Get the new message type from the user
-            String newType = JOptionPane.showInputDialog(frame, "New type:", 
-                    "New Type", JOptionPane.PLAIN_MESSAGE);
-            //if the user did not press cancel
-            if (newType != null) {
-                //if the user actually entered a string
-                if (newType.length() > 0) {
-                    //if this type is NOT already in the types list
-                    if (!currentProject.getTypes().contains(newType)) {
-                        //add the new type to the project
-                        currentProject.addType(newType);
-                        //update the combo box
-                        typesController.updateTypeComboBox(
-                                currentProject.getTypes());
-                    } else {
-                        //tell the user that the type already exists
-                        JOptionPane.showMessageDialog(frame, "This type already "
-                                + "exists in this project.", "Type Exists", 
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        });
-        
-        frame.getDeleteTypeButton().addActionListener((ActionEvent e) -> {
-            JComboBox typeComboBox = frame.getTypeComboBox();
-            int selectedIndex = typeComboBox.getSelectedIndex();
-            if (selectedIndex == 0) {
-                JOptionPane.showMessageDialog(null, "Can't delete type \"" 
-                        + Utils.DEFAULT_TYPE + "\"");
-                return;
-            }
-            //get the selected type
-            String selectedType = currentProject.getTypes().get(selectedIndex);
-            //if the user does not want to delete this type
-            if (!Utils.shouldContinue("Are you sure you wish to delete the type \""
-                    + selectedType
-                    + "\"?\n"
-                    + "All entities of this type will be switched to \""
-                    + Utils.DEFAULT_TYPE + "\"\n"
-                    + "This operation cannot be undone.", frame)) {
-                return;
-            }
-            //remove the type from the types list and change all entities of
-            //that type to the default type
-            currentProject.removeType(selectedIndex);
-            //update the combo box
-            typesController.updateTypeComboBox(currentProject.getTypes());
-            //select the default type
-            typeComboBox.setSelectedIndex(0);
-        });
-        
         frame.getSelectButton().addActionListener((ActionEvent e) -> {
             //Copy the color code to the clipboard
             doSelectAction();
@@ -541,6 +489,7 @@ public class ProjectController {
                 int size = currentProject.getTypes().size();
                 //if the user clicked "Edit..."
                 if (index == size) {
+                    //show the types dialog
                     typesController.showTypesDialog(currentProject);
                 } else {
                     //the user selected a new type, so setModified
@@ -877,8 +826,9 @@ public class ProjectController {
      */
     private void showPreferencesDialog() {
         //set up the checkboxes to reflect the current preferences state
-        preferencesDialog.getHashCheckBox().setSelected(includeHashTag);
+        preferencesDialog.getHashTagCheckBox().setSelected(includeHashTag);
         preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
+        preferencesDialog.getUnityPrefabCheckBox().setSelected(includeUnityPrefab);
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
         
         //Make it so the user can press enter to select "OK"
@@ -906,13 +856,15 @@ public class ProjectController {
     
     private void applyPreferencesChanges() {
         //make the booleans match the checkboxes in the preferences window
-        includeHashTag = preferencesDialog.getHashCheckBox().isSelected();
+        includeHashTag = preferencesDialog.getHashTagCheckBox().isSelected();
         includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
+        includeUnityPrefab = preferencesDialog.getUnityPrefabCheckBox().isSelected();
         includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
         
         //save the user's preferences
         prefs.putBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
         prefs.putBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
+        prefs.putBoolean(Utils.INCLUDE_UNITY_PREFAB, includeUnityPrefab);
         prefs.putBoolean(Utils.INCLUDE_OFFSET, includeOffset);
         
         //include alpha
@@ -920,9 +872,13 @@ public class ProjectController {
 
         //include hashtag
         colorPickerController.setIncludeHashTag(includeHashTag);
-
+        
+        //include unity prefab
+        //show/hide the unity prefab panel depending on the checkbox
+        frame.getUnityPrefabPanel().setVisible(includeUnityPrefab);
+        
         //include offset
-        //show/hide the offset panel depending on the value the user checked
+        //show/hide the offset panel depending on the checkbox
         frame.getOffsetPanel().setVisible(includeOffset);
     }
     
@@ -956,10 +912,12 @@ public class ProjectController {
         //get the includeBlank stuff from prefs
         includeHashTag = prefs.getBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
         includeAlpha = prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
+        includeUnityPrefab = prefs.getBoolean(Utils.INCLUDE_UNITY_PREFAB, includeUnityPrefab);
         includeOffset = prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset);
         //update the preferences dialog to reflect this
-        preferencesDialog.getHashCheckBox().setSelected(includeHashTag);
+        preferencesDialog.getHashTagCheckBox().setSelected(includeHashTag);
         preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
+        preferencesDialog.getUnityPrefabCheckBox().setSelected(includeUnityPrefab);
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
     }
     
@@ -1846,8 +1804,6 @@ public class ProjectController {
         frame.getSelectButton().setEnabled(value);
         frame.getNameTextField().setEnabled(value);
         frame.getTypeComboBox().setEnabled(value);
-        frame.getNewTypeButton().setEnabled(value);
-        frame.getDeleteTypeButton().setEnabled(value);
         frame.getChangeImageButton().setEnabled(value);
         frame.getDeleteImageButton().setEnabled(value);
         frame.getColorCodeTextField().setEnabled(value);

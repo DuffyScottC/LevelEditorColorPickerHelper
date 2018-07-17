@@ -80,12 +80,8 @@ public class MainFrame extends javax.swing.JFrame {
         nameTextField = new javax.swing.JTextField();
         typeComboBox = new javax.swing.JComboBox<>();
         changeImageButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        unityPrefabTextField = new javax.swing.JTextField();
-        newTypeButton = new javax.swing.JButton();
         deleteImageButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         colorPanel = new views.ColorPanel();
         offsetPanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -97,6 +93,9 @@ public class MainFrame extends javax.swing.JFrame {
         alphaSlider = new javax.swing.JSlider();
         jLabel7 = new javax.swing.JLabel();
         alphaSpinner = new javax.swing.JSpinner();
+        unityPrefabPanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        unityPrefabTextField = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProjectMenuItem = new javax.swing.JMenuItem();
@@ -232,9 +231,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sliderPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(greenSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(redSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(blueSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(greenSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(redSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(blueSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
@@ -259,11 +258,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(greenSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, sliderPanelLayout.createSequentialGroup()
-                        .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(greenSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(3, 3, 3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(greenSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sliderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -301,15 +298,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         changeImageButton.setText("Change");
 
-        jLabel5.setText("Unity Prefab:");
-
-        newTypeButton.setText("New");
-
         deleteImageButton.setText("Delete");
 
         jLabel6.setText("Image:");
-
-        jButton1.setText("Delete");
 
         javax.swing.GroupLayout colorPanelLayout = new javax.swing.GroupLayout(colorPanel);
         colorPanel.setLayout(colorPanelLayout);
@@ -364,7 +355,7 @@ public class MainFrame extends javax.swing.JFrame {
         alphaPanelLayout.setHorizontalGroup(
             alphaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, alphaPanelLayout.createSequentialGroup()
-                .addComponent(alphaSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(alphaSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -379,57 +370,71 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel7))
         );
 
+        jLabel5.setText("Unity Prefab:");
+
+        javax.swing.GroupLayout unityPrefabPanelLayout = new javax.swing.GroupLayout(unityPrefabPanel);
+        unityPrefabPanel.setLayout(unityPrefabPanelLayout);
+        unityPrefabPanelLayout.setHorizontalGroup(
+            unityPrefabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(unityPrefabPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(unityPrefabTextField)
+                .addContainerGap())
+        );
+        unityPrefabPanelLayout.setVerticalGroup(
+            unityPrefabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(unityPrefabPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(unityPrefabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(unityPrefabTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
         infoPanelLayout.setHorizontalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sliderPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(infoPanelLayout.createSequentialGroup()
+                        .addComponent(nameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameTextField))
+                    .addGroup(infoPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(typeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(infoPanelLayout.createSequentialGroup()
+                        .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(colorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(revertButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(applyButton))
+                    .addComponent(alphaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(offsetPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(infoPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sliderPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selectButton)
                             .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(nameLabel)
+                                .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameTextField))
+                                .addComponent(changeImageButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteImageButton))
                             .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addComponent(colorLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(unityPrefabTextField))
-                            .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(typeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(newTypeButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
-                            .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(colorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(selectButton)
-                                    .addGroup(infoPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(changeImageButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(deleteImageButton))
-                                    .addGroup(infoPanelLayout.createSequentialGroup()
-                                        .addComponent(colorLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(colorCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 115, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(revertButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(applyButton))
-                            .addComponent(alphaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(colorCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(unityPrefabPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         infoPanelLayout.setVerticalGroup(
@@ -444,9 +449,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(newTypeButton)
-                    .addComponent(jButton1))
+                    .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(changeImageButton)
@@ -465,12 +468,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(alphaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(unityPrefabTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(unityPrefabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(offsetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(applyButton)
                     .addComponent(revertButton))
@@ -557,7 +558,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSpinner greenSpinner;
     private views.ImagePanel imagePanel;
     private javax.swing.JPanel infoPanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -576,7 +576,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JMenuItem newProjectMenuItem;
-    private javax.swing.JButton newTypeButton;
     private javax.swing.JPanel offsetPanel;
     private javax.swing.JMenuItem openProjectMenuItem;
     private javax.swing.JMenuItem preferencesMenuItem;
@@ -603,6 +602,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
+    private javax.swing.JPanel unityPrefabPanel;
     private javax.swing.JTextField unityPrefabTextField;
     private javax.swing.JCheckBoxMenuItem useCommandCheckBoxMenuItem;
     private javax.swing.JMenuItem verticalMenuItem;
@@ -715,10 +715,6 @@ public class MainFrame extends javax.swing.JFrame {
         return searchModeComboBox;
     }
 
-    public JButton getNewTypeButton() {
-        return newTypeButton;
-    }
-
     public JButton getDeleteImageButton() {
         return deleteImageButton;
     }
@@ -749,10 +745,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JPanel getSelectionPanel() {
         return selectionPanel;
-    }
-
-    public JButton getDeleteTypeButton() {
-        return jButton1;
     }
 
     public JMenuItem getSetCommandMenuItem() {
@@ -797,6 +789,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JMenuItem getPreferencesMenuItem() {
         return preferencesMenuItem;
+    }
+
+    public JPanel getUnityPrefabPanel() {
+        return unityPrefabPanel;
     }
     
 }

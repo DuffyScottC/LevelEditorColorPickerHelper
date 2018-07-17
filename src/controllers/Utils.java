@@ -25,6 +25,7 @@ public class Utils {
     public static final String OPEN_PROJECT_CHOOSER_PATH = "LECPOpenProjectChooserPath";
     public static final String INCLUDE_HASHTAG = "LECPIncludeHashtag";
     public static final String INCLUDE_ALPHA = "LECPIncludeAlpha";
+    public static final String INCLUDE_UNITY_PREFAB = "LECPIncludeUnityPrefab";
     public static final String INCLUDE_OFFSET = "LECPIncludeOffset";
     
     public static final String DEFAULT_TYPE = "Misc";
