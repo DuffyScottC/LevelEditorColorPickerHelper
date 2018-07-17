@@ -12,8 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -199,6 +197,8 @@ public class TypesController {
                 updateListModel();
                 //empty the new type textfield
                 typesDialog.getNewTypeTextField().setText("");
+                //disable the add button
+                typesDialog.getAddButton().setEnabled(false);
             }
         });
         
