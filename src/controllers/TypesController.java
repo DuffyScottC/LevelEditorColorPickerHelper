@@ -181,10 +181,10 @@ public class TypesController {
                             + "exists in this project.", "Type Exists", 
                             JOptionPane.ERROR_MESSAGE);
                 }
-                //add the new type to the end of the list
-                types.add(newType);
                 //update the visual list
                 updateListModel();
+                //empty the new type textfield
+                typesDialog.getNewTypeTextField().setText("");
             }
         });
         
