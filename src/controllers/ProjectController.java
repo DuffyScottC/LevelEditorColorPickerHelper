@@ -1702,7 +1702,9 @@ public class ProjectController {
             } catch (Exception ex) {
                 //if the creation of the project was not successful,
                 //output the exception message to the user.
-                JOptionPane.showMessageDialog(frame, ex.toString());
+                JOptionPane.showMessageDialog(frame, 
+                        "Could not create project:\n" + 
+                        ex.toString());
                 //allow the user to try again by staying still and keeping
                 //the newProjectDialog window open.
             }
