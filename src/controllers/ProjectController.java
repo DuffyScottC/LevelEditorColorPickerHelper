@@ -1136,7 +1136,11 @@ public class ProjectController {
             return null;
         }
 
-        int newTypeIndex = currentProject.getCurrentEntity().getTypeIndex();
+        Entity currentEntity = currentProject.getCurrentEntity();
+        int newTypeIndex = 0;
+        if (currentEntity != null) {
+            newTypeIndex = currentEntity.getTypeIndex();
+        }
 
         String newName = getUniqueDefaultName();
 
@@ -1590,8 +1594,8 @@ public class ProjectController {
         //if the tempResourcesFile does not exist 
         //or the user wants to overwrite this file, then
         //create the folder
-        tempResourcesFile.mkdir();
-        return true;
+        
+        return tempResourcesFile.mkdir();
     }
     
     private void resetNewProjectDialog(MainFrame frame) {
@@ -1719,7 +1723,7 @@ public class ProjectController {
     
     public void enterNewProjectState() {
         resultsListController.clearEntities();
-        recentListController.clearEntities();
+//        recentListController.clearEntities();
         setSearchElementsEnabled(false);
         setInfoElementsEnabled(false);
         modifiedController.setModified(false);
