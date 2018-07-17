@@ -5,3 +5,5 @@ merge projects
 analyze images for scripts to only generate the ones that are needed
 
 generate only a text file with the array elements, not the whole script
+
+make the default unique color generator include alpha

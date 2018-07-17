@@ -8,6 +8,7 @@ package scriptgeneration;
 import controllers.Utils;
 import entities.Entity;
 import entities.Offset;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -20,12 +21,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.io.FileFilter;
+import java.util.HashSet;
+import java.util.Set;
+import javax.imageio.ImageIO;
 import projects.Project;
 import views.MainFrame;
 import views.ScriptGeneratorDialog;
@@ -177,10 +179,14 @@ public class ScriptGenerator {
                 }
             }
             
-            generateScripts(destinationFolder, imageFolder);
+            boolean success = generateScripts(destinationFolder, imageFolder);
+            if (success) {
+                //hide the dialog
+                dialog.setVisible(false);
+            }
+            //otherwise keep the dialog open so that the user can correct
+            //the mistake
             
-            //hide the dialog
-            dialog.setVisible(false);
         });
         
         dialog.getCancelButton().addActionListener((ActionEvent e) -> {
@@ -221,7 +227,7 @@ public class ScriptGenerator {
      * @param destinationFolder The destination directory for the Scripts
      * @param imageFolder The directory with the images for analysis
      */
-    private void generateScripts(File destinationFolder, File imageFolder) {
+    private boolean generateScripts(File destinationFolder, File imageFolder) {
         try {
             boolean shouldLevelGenerator 
                     = dialog.getLevelGeneratorCheckBox().isSelected();
@@ -240,6 +246,11 @@ public class ScriptGenerator {
             
             if (shouldLevelGenerator) {
                 StringBuilder levelGenerator = getLevelGeneratorText(imageFolder);
+                //if the user wants to use images, but no images were found
+                if (levelGenerator == null) {
+                    //there was a problem
+                    return false;
+                }
                 createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
             }
             
@@ -251,6 +262,7 @@ public class ScriptGenerator {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
         }
+        return true;
     }
     
     /**
@@ -304,7 +316,9 @@ public class ScriptGenerator {
      * Generates the text for the LevelGenerator script using all of the
      * entities.
      * @param imageFolder the folder that holds images for analysis
-     * @return The text for the LevelGenerator.cs file
+     * @return The text for the LevelGenerator.cs file. Null in the odd
+     * circumstance that the user wants to use image analysis but the
+     * folder specified does not contain any images.
      */
     private StringBuilder getLevelGeneratorText(File imageFolder) {
         try {
@@ -326,7 +340,14 @@ public class ScriptGenerator {
             //if the user wants to use images
             if (dialog.getUseImagesCheckBox().isSelected()) {
                 //use only the correct entities
-                projectEntities = getUsedEntities(imageFolder);
+                projectEntities 
+                        = getUsedEntities(imageFolder, project.getEntities());
+                if (projectEntities == null) {
+                    JOptionPane.showMessageDialog(dialog, 
+                            "No images could be found in\n" + 
+                                    imageFolder.toString());
+                    return null;
+                }
             } else {
                 //get the project's entities
                 projectEntities = project.getEntities();
@@ -687,15 +708,115 @@ public class ScriptGenerator {
      * whose colors are used in those images.
      * @param imageFolder
      * @return A list of entities whose colors are used in the images in the
-     * imageFolder directory.
+     * imageFolder directory. (Null if no image files were found).
      */
-    private List<Entity> getUsedEntities(File imageFolder) {
+    private List<Entity> getUsedEntities(File imageFolder, 
+            List<Entity> projectEntities) {
+        FileFilter imageFilter = new FileFilter() {
+            String[] extensions = {
+                "png",
+                "jpeg",
+                "jpg",
+                "gif",
+                "tiff",
+                "tif"};
+            
+            @Override
+            public boolean accept(File pathname) {
+                //cycle through all the extensions
+                for (String ext : extensions) {
+                    //if the file name has this extension
+                    if (pathname.getName().matches(".*\\." + ext)) {
+                        //this is an acceptable file
+                        return true;
+                    }
+                    //otherwise continue
+                }
+                return false;
+            }
+        };
         
+        //get a list of image files in the folder
+        File[] imageFiles = imageFolder.listFiles(imageFilter);
         
+        //if no image files were found
+        if (imageFiles.length == 0) {
+            return null;
+        }
         
+        //this will hold all used colors
+        Set<Color> usedColors = new HashSet();
         
+        //loop through all the files
+        for (File imageFile : imageFiles) {
+            //get all the colors in this image
+            Set<Color> newColors = getColors(imageFile);
+            //if there were no problems
+            if (newColors != null) {
+                //add the unique colors from this image to the unique colors
+                //accross all the images looked at so far
+                usedColors.addAll(newColors);
+            } else {
+                //tell the user there was a problem reading this image
+                JOptionPane.showMessageDialog(dialog, 
+                        "Could not read the image\n" + 
+                                imageFile.toString(), 
+                        "Could Not Read File", 
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
         
-        return null;
+        //Get all Entities that are paired with the unique used colors:
+        
+        //holds all the entities which are used in the images
+        List<Entity> usedEntities = new ArrayList();
+        //loop through all the entities
+        for (Entity entity : projectEntities) {
+            //if this entity's color is contained in the set of 
+            //unique used colors
+            if (usedColors.contains(entity.getColor())) {
+                //add this to the usedEntities list
+                usedEntities.add(entity);
+            }
+        }
+        
+        //return all the entities that are used in this set of images
+        return usedEntities;
+    }
+    
+    /**
+     * Finds all unique colors within the given image.
+     * @param imageFile The image to search.
+     * @return A HashSet of unique Color objects representing the colors of
+     * the pixels in the passed in image.
+     */
+    private Set<Color> getColors(File imageFile) {
+        try {
+            BufferedImage image = ImageIO.read(imageFile);
+            int w = image.getWidth();
+            int h = image.getHeight();
+            Set<Color> colors = new HashSet();
+            //loop through all the pixels in the image
+            for (int x = 0; x < w; x++) {
+                for (int y = 0; y < h; y++) {
+                    //get the color at this pixel
+                    int colorInt = image.getRGB(x, y);
+                    //create a color from this image
+                    Color color = new Color(colorInt);
+                    //if the color is not completely transparent
+                    if (color.getAlpha() > 0) {
+                        //add it to the set
+                        colors.add(color);
+                    }
+                }
+            }
+            //return the set of unique colors in this image
+            return colors;
+        } catch (IOException ex) {
+            System.err.println("Could not read file:\n"
+                            + imageFile.toString() + "\n" + ex.toString());
+            return null;
+        }
     }
     
 }
