@@ -9,6 +9,7 @@ import controllers.Utils;
 import entities.Entity;
 import entities.Offset;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +20,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -98,6 +102,20 @@ public class ScriptGenerator {
             }
         });
         
+        dialog.getImageBrowseButton().addActionListener((ActionEvent e) -> {
+            int result = chooser.showOpenDialog(frame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFolder = chooser.getSelectedFile();
+                if (selectedFolder.exists()) {
+                    if (selectedFolder.isDirectory()) {
+                        //set the folder text field
+                        dialog.getImageFolderTextField().setText(
+                                selectedFolder.toString());
+                    }
+                }
+            }
+        });
+        
         dialog.getGenerateButton().addActionListener((ActionEvent e) -> {
             try {
                 String gridText = dialog.getGridSizeTextField().getText();
@@ -137,36 +155,29 @@ public class ScriptGenerator {
             }
             
             //get the user-entered text for the folder location
-            String desitnationFolderText 
+            String destinationFolderText 
                     = dialog.getDesitnationFolderTextField().getText();
-            //if the user entered an empty string
-            if (desitnationFolderText.length() == 0) {
-                JOptionPane.showMessageDialog(dialog, 
-                        "Cannot enter an empty string as a folder path.", 
-                        "Empty Path", 
-                        JOptionPane.ERROR_MESSAGE);
+            File destinationFolder = getFolderFile(destinationFolderText);
+            //if there was an error
+            if (destinationFolder == null) {
                 return;
             }
             
-            //convert the destination folder into a file
-            File destination = new File(desitnationFolderText);
-            if (!destination.exists()) {
-                JOptionPane.showMessageDialog(dialog, 
-                        "The designated folder does not exist.", 
-                        "Folder Does Not Exist", 
-                        JOptionPane.ERROR_MESSAGE);
-                return;
+            //initialize as null
+            File imageFolder = null;
+            //if the user wants to use images
+            if (dialog.getUseImagesCheckBox().isSelected()) {
+                //get the user-entered text for the folder location
+                String imageDestinationFolderText 
+                        = dialog.getDesitnationFolderTextField().getText();
+                imageFolder = getFolderFile(imageDestinationFolderText);
+                //if there was an error
+                if (imageFolder == null) {
+                    return;
+                }
             }
             
-            if (!destination.isDirectory()) {
-                JOptionPane.showMessageDialog(dialog, 
-                        "The designated file is not a directory.", 
-                        "Not a Directory", 
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            generateScripts(destination);
+            generateScripts(destinationFolder, imageFolder);
             
             //hide the dialog
             dialog.setVisible(false);
@@ -188,6 +199,15 @@ public class ScriptGenerator {
             dialog.getGroupEntitiesByTypeCheckBox().setEnabled(enabled);
             dialog.getGridSizeTextField().setEnabled(enabled);
         });
+        
+        dialog.getUseImagesCheckBox().addActionListener((ActionEvent e) -> {
+            //show/hide the description
+            dialog.getDescriptionPanel().setVisible(
+                    dialog.getUseImagesCheckBox().isSelected());
+            //enable/disable the textfield
+            dialog.getImageFolderTextField().setEnabled(
+                    dialog.getUseImagesCheckBox().isSelected());
+        });
     }
 
     public void showDialog(MainFrame frame) {
@@ -198,9 +218,10 @@ public class ScriptGenerator {
     
     /**
      * Generates the scripts for the path at the given destination directory.
-     * @param destination The destination directory for the Scripts
+     * @param destinationFolder The destination directory for the Scripts
+     * @param imageFolder The directory with the images for analysis
      */
-    private void generateScripts(File destination) {
+    private void generateScripts(File destinationFolder, File imageFolder) {
         try {
             boolean shouldLevelGenerator 
                     = dialog.getLevelGeneratorCheckBox().isSelected();
@@ -218,13 +239,13 @@ public class ScriptGenerator {
             }
             
             if (shouldLevelGenerator) {
-                StringBuilder levelGenerator = getLevelGeneratorText();
-                createFile(destination, levelGeneratorFileName, levelGenerator.toString());
+                StringBuilder levelGenerator = getLevelGeneratorText(imageFolder);
+                createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
             }
             
             if (shouldEntity) {
                 StringBuilder entity = readResource(entityResourceFileName);
-                createFile(destination, entityFileName, entity.toString());
+                createFile(destinationFolder, entityFileName, entity.toString());
             }
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
@@ -282,9 +303,10 @@ public class ScriptGenerator {
     /**
      * Generates the text for the LevelGenerator script using all of the
      * entities.
+     * @param imageFolder the folder that holds images for analysis
      * @return The text for the LevelGenerator.cs file
      */
-    private StringBuilder getLevelGeneratorText() {
+    private StringBuilder getLevelGeneratorText(File imageFolder) {
         try {
             
             String startFileName = "/resources/gameobject/start.cs";
@@ -299,8 +321,19 @@ public class ScriptGenerator {
             StringBuilder start = readResource(startFileName);
             StringBuilder middle = readResource(middleFileName);
             
-            //get the project's entities
-            List<Entity> projectEntities = project.getEntities();
+            //holds the entities to generate scripts with
+            List<Entity> projectEntities;
+            //if the user wants to use images
+            if (dialog.getUseImagesCheckBox().isSelected()) {
+                //use only the correct entities
+                projectEntities = getUsedEntities(imageFolder);
+            } else {
+                //get the project's entities
+                projectEntities = project.getEntities();
+            }
+            
+            
+            
             //get whether the user wants to group entities by type
             boolean groupByType 
                     = dialog.getGroupEntitiesByTypeCheckBox().isSelected();
@@ -568,13 +601,13 @@ public class ScriptGenerator {
     private void chooseType(ScriptType type) {
         scriptType = type;
         if (type == ScriptType.GameObject) { //GameObject
-            dialog.getGamObjectScriptsPanel().setVisible(true);
+            dialog.getGameObjectScriptsPanel().setVisible(true);
             dialog.getTileScriptsPanel().setVisible(false);
             
             dialog.getGridSizePanel().setVisible(true);
             dialog.getCellSizeGapPanel().setVisible(false);
         } else { //tilemap
-            dialog.getGamObjectScriptsPanel().setVisible(false);
+            dialog.getGameObjectScriptsPanel().setVisible(false);
             dialog.getTileScriptsPanel().setVisible(true);
             
             dialog.getGridSizePanel().setVisible(false);
@@ -612,6 +645,57 @@ public class ScriptGenerator {
         //remove all spaces
         formattedType = formattedType.replaceAll(" ", "");
         return formattedType;
+    }
+    
+    private File getFolderFile(String destinationFolderText) {
+        //if the user entered an empty string
+        if (destinationFolderText.length() == 0) {
+            JOptionPane.showMessageDialog(dialog, 
+                    "Cannot enter an empty string as a folder path.", 
+                    "Empty Path", 
+                    JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        //convert the destination folder into a file
+        File destination = new File(destinationFolderText);
+        
+        if (!destination.exists()) {
+            JOptionPane.showMessageDialog(dialog, 
+                    destination.toString() + 
+                            "\ndoes not exist.", 
+                    "Folder Does Not Exist", 
+                    JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        if (!destination.isDirectory()) {
+            JOptionPane.showMessageDialog(dialog, 
+                    destination.toString() + 
+                            "is not a directory.", 
+                    "Not a Directory", 
+                    JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        
+        return destination;
+    }
+
+    //MARK: Image Analysis
+    /**
+     * Loops through all the images in the folder and returns all the entities
+     * whose colors are used in those images.
+     * @param imageFolder
+     * @return A list of entities whose colors are used in the images in the
+     * imageFolder directory.
+     */
+    private List<Entity> getUsedEntities(File imageFolder) {
+        
+        
+        
+        
+        
+        return null;
     }
     
 }
