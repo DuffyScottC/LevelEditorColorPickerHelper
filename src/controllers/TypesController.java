@@ -77,12 +77,24 @@ public class TypesController {
     
     private void setUpReplaceTypeDialogActionListeners() {
         replaceTypeDialog.getOkButton().addActionListener((ActionEvent e) -> {
-            //remove the type
-            types.remove(removeIndex);
-            
             //get the selected type from the combo box
             int replaceIndex = replaceTypeDialog
                     .getReplaceTypeComboBox().getSelectedIndex();
+            
+            //if the user does not want to delete this type
+            if (!Utils.shouldContinue("Are you sure you wish to delete the"
+                    + " type \"" + types.get(removeIndex) + "\"?\n"
+                    + "All entities of this type will be switched to \""
+                    + types.get(replaceIndex) + "\"\n"
+                    + "This operation cannot be undone.", frame)) {
+                return;
+            }
+            
+            //remove the type
+            types.remove(removeIndex);
+            
+            //update the combo box in the info panel
+            updateTypeComboBox(types);
             
             //loop through all the entities
             for (Entity entity : entities) {
@@ -157,6 +169,18 @@ public class TypesController {
             String newType = typesDialog.getNewTypeTextField().getText();
             //if the new type is not empty
             if (!newType.isEmpty()) {
+                //if this type is NOT already in the types list
+                if (!types.contains(newType)) {
+                    //add the new type to the project
+                    types.add(newType);
+                    //update the combo box
+                    updateTypeComboBox(types);
+                } else {
+                    //tell the user that the type already exists
+                    JOptionPane.showMessageDialog(frame, "This type already "
+                            + "exists in this project.", "Type Exists", 
+                            JOptionPane.ERROR_MESSAGE);
+                }
                 //add the new type to the end of the list
                 types.add(newType);
                 //update the visual list
