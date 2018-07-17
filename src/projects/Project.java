@@ -58,6 +58,7 @@ public class Project {
     //MARK: Command
     private final List<String> command = new ArrayList();
     private boolean includeColorHex = false;
+    private boolean includeAlphaInHex = false;
     private boolean includeRed = false;
     private boolean includeGreen = false;
     private boolean includeBlue = false;
@@ -131,6 +132,10 @@ public class Project {
         return includeColorHex;
     }
 
+    public boolean isIncludeAlphaInHex() {
+        return includeAlphaInHex;
+    }
+
     public boolean isIncludeRed() {
         return includeRed;
     }
@@ -169,6 +174,7 @@ public class Project {
     
     public void setCommandBooleans(
             boolean includeColorHex,
+            boolean includeAlphaInHex,
             boolean includeRed,
             boolean includeGreen,
             boolean includeBlue,
@@ -179,6 +185,7 @@ public class Project {
             boolean includexOffset,
             boolean includeyOffset) {
         this.includeColorHex = includeColorHex;
+        this.includeAlphaInHex = includeAlphaInHex;
         this.includeRed = includeRed;
         this.includeGreen = includeGreen;
         this.includeBlue = includeBlue;

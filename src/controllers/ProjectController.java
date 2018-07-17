@@ -632,7 +632,8 @@ public class ProjectController {
         ActionListener checkBoxActionListener = (ActionEvent e) -> {
             //set the command booleans appropriately using the checkboxes
             currentProject.setCommandBooleans(
-                    setCommandDialog.getColorHexValueCheckBox().isSelected(), 
+                    setCommandDialog.getColorHexValueCheckBox().isSelected(),
+                    setCommandDialog.getAlphaInHexCheckBox().isSelected(),
                     setCommandDialog.getRedCheckBox().isSelected(), 
                     setCommandDialog.getGreenCheckBox().isSelected(), 
                     setCommandDialog.getBlueCheckBox().isSelected(),
@@ -646,6 +647,8 @@ public class ProjectController {
         };
         
         setCommandDialog.getColorHexValueCheckBox().addActionListener(
+                checkBoxActionListener);
+        setCommandDialog.getAlphaInHexCheckBox().addActionListener(
                 checkBoxActionListener);
         setCommandDialog.getRedCheckBox().addActionListener(
                 checkBoxActionListener);
@@ -742,8 +745,14 @@ public class ProjectController {
         int b = entity.getB();
         int a = entity.getA();
         if (currentProject.isIncludeColorHex()) {
-            String hex = String.format("%02X%02X%02X%02X", r, g, b, a);
-            commandList.add(hex);
+            //if we want to include the alpha in the hex code
+            if (currentProject.isIncludeAlphaInHex()) {
+                String hex = String.format("%02X%02X%02X%02X", r, g, b, a);
+                commandList.add(hex);
+            } else { //if we don't want to include the alpha
+                String hex = String.format("%02X%02X%02X", r, g, b);
+                commandList.add(hex);
+            }
         }
         if (currentProject.isIncludeRed()) {
             commandList.add(Integer.toString(r));
