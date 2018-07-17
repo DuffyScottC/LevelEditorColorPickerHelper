@@ -12,11 +12,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.xml.bind.JAXBException;
 import projects.Project;
 import views.MainFrame;
 import views.ReplaceTypeDialog;
@@ -33,6 +36,7 @@ public class TypesController {
     private final ReplaceTypeDialog replaceTypeDialog;
     
     private final DefaultListModel editTypesListModel = new DefaultListModel();
+    private Project currentProject;
     /**
      * Gets updated to reflect the types of the current project every time
      * showTypesDialog() is called.
@@ -120,6 +124,16 @@ public class TypesController {
             if (oldIndex == removeIndex) {
                 //set it to the new index
                 frame.getTypeComboBox().setSelectedIndex(replaceIndex);
+            }
+            
+            try {
+                Project.serializeProjectToXML(currentProject);
+            } catch (JAXBException ex) {
+                //if the serialization of the project was not successful,
+                //output the exception message to the user.
+                JOptionPane.showMessageDialog(frame, 
+                        "Unable to serialize project.\n" 
+                        + ex.toString());
             }
             
             replaceTypeDialog.setVisible(false);
@@ -222,9 +236,10 @@ public class TypesController {
     
     /**
      * Shows the dialog with the current types in the project
-     * @param types The list of all types in the project
+     * @param currentProject the current open project
      */
     public void showTypesDialog(Project currentProject) {
+        this.currentProject = currentProject;
         this.types = currentProject.getTypes();
         this.entities = currentProject.getEntities();
         
