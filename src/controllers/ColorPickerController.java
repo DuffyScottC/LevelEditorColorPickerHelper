@@ -8,7 +8,6 @@ package controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
-import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -37,7 +36,6 @@ public class ColorPickerController {
     private final JSpinner alphaSpinner;
     
     private final ColorPanel colorPanel;
-    private final JPanel alphaPanel;
     
     private final JTextField colorCodeTextField;
     
@@ -58,7 +56,6 @@ public class ColorPickerController {
         alphaSpinner = frame.getAlphaSpinner();
         
         colorPanel = frame.getColorPanel();
-        alphaPanel = frame.getAlphaPanel();
         
         colorCodeTextField = frame.getColorCodeTextField();
         
@@ -213,8 +210,8 @@ public class ColorPickerController {
             }
             //get the spinner value
             int val = (Integer) alphaSpinner.getValue();
-            //if val is at least 0
-            if (0 <= val) {
+            //if val is at least 1
+            if (1 <= val) {
                 if (val <= 255) {
                     //set r to the value in the spinner
                     a = val;
@@ -224,9 +221,9 @@ public class ColorPickerController {
                     alphaSpinner.setValue(255);
                 }
             } else {
-                //if val is less than 0
-                a = 0;
-                alphaSpinner.setValue(0);
+                //if val is less than 1
+                a = 1;
+                alphaSpinner.setValue(1);
             }
             updateColorCodeTextField();
             updateColorPanel();
@@ -392,8 +389,6 @@ public class ColorPickerController {
     
     public void setIncludeAlpha(boolean includeAlpha) {
         this.includeAlpha = includeAlpha;
-        //show/hide the slider depending on the value the user checked
-        alphaPanel.setVisible(includeAlpha);
         updateColorCodeTextField();
     }
     

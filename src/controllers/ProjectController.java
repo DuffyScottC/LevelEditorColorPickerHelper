@@ -231,11 +231,12 @@ public class ProjectController {
                 //generate a new default entity
                 Entity newEntity = generateNewDefaultEntity();
                 if (newEntity == null) { 
+                    //should never (EVER) happen
                     JOptionPane.showMessageDialog(null,
-                            "Oops! No more colors are available in the RGB spectrum!\n"
-                                    + "Congratulations, you used all 16,581,375 possible color\n"
-                                    + "combinations! Unfortunately, this means you can't add\n"
-                                    + "more entities (at least no to this project).",
+                            "Oops! No more colors are available in the RGBA spectrum!\n"
+                                    + "Congratulations, you used all 4,211,669,250 possible\n"
+                                    + "color combinations! Unfortunately, this means you can't\n"
+                                    + "add more entities (at least not to this project).",
                             "No More Colors",
                             JOptionPane.ERROR_MESSAGE);
                     //stop without saving the entity
@@ -1103,25 +1104,27 @@ public class ProjectController {
         for (int b = 0; b < 255; b++) {
             for (int g = 0; g < 255; g++) {
                 for (int r = 0; r < 255; r++) {
-                    //create a new color from these values
-                    Color color = new Color(r, g, b);
-                    
-                    for (Entity entity : entities) {
-                        //if this color is taken
-                        if (entity.getColor().equals(color)) {
-                            //this color is taken
-                            colorIsTaken = true;
-                            //leave this loop
-                            break;
+                    for (int a = 255; a > 0; a--) {
+                        //create a new color from these values
+                        Color color = new Color(r, g, b, a);
+
+                        for (Entity entity : entities) {
+                            //if this color is taken
+                            if (entity.getColor().equals(color)) {
+                                //this color is taken
+                                colorIsTaken = true;
+                                //leave this loop
+                                break;
+                            }
                         }
-                    }
-                    //if the color is not taken
-                    if (!colorIsTaken) {
-                        return color;
-                    } else {
-                        //reset colorIsTaken for the next color
-                        colorIsTaken = false;
-                        //continue searching
+                        //if the color is not taken
+                        if (!colorIsTaken) {
+                            return color;
+                        } else {
+                            //reset colorIsTaken for the next color
+                            colorIsTaken = false;
+                            //continue searching
+                        }
                     }
                 }
             }
