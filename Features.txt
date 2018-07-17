@@ -1,0 +1,1 @@
+remember the user's preferences regarding app size and layout

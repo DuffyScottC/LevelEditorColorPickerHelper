@@ -643,6 +643,15 @@ public class ProjectController {
                     setCommandDialog.getUnityPrefabCheckBox().isSelected(),
                     setCommandDialog.getxOffsetCheckBox().isSelected(),
                     setCommandDialog.getyOffsetCheckBox().isSelected());
+            //if the color hex value is checked
+            if (setCommandDialog.getColorHexValueCheckBox().isSelected()) {
+                //enable "alpha in hex"
+                setCommandDialog.getAlphaInHexCheckBox().setEnabled(true);
+            } else { //if it's not checked
+                //disable "alpha in hex" and deselect it
+                setCommandDialog.getAlphaInHexCheckBox().setEnabled(false);
+                setCommandDialog.getAlphaInHexCheckBox().setSelected(false);
+            }
             updateExampleCommandTextField();
         };
         
@@ -1566,7 +1575,7 @@ public class ProjectController {
     
     private void resetNewProjectDialog(MainFrame frame) {
         newProjectDialog.setName("New Project");
-        newProjectDialog.setLocationRelativeTo(null);
+        newProjectDialog.setLocationRelativeTo(frame);
         
         JButton finishButton = newProjectDialog.getFinishButton();
         
