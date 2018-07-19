@@ -584,20 +584,14 @@ public class ProjectController {
         prefs.putInt(Utils.LAYOUT_POS_Y, frame.getY());
         
         //Main
-        double mainDivLoc = (double) frame.getMainSplitPane().getDividerLocation();
-        double length = (double) frame.getMainSplitPane().getWidth();
-        if (layoutVertical) {
-            length = frame.getMainSplitPane().getHeight();
-        }
-        double mainPercentage = mainDivLoc/length;
-        prefs.putDouble(Utils.LAYOUT_MAIN_SPLIT_POS, mainPercentage);
+        int mainDivLoc 
+                = frame.getMainSplitPane().getDividerLocation();
+        prefs.putInt(Utils.LAYOUT_MAIN_SPLIT_POS, mainDivLoc);
         
         //Lists
-        double listsDivLoc 
-                = (double) frame.getListsSplitPane().getDividerLocation();
-        double listsHeight = (double) frame.getListsSplitPane().getHeight();
-        double listsPercentage = listsDivLoc/listsHeight;
-        prefs.putDouble(Utils.LAYOUT_LISTS_SPLIT_POS, listsPercentage);
+        int listsDivLoc 
+                = frame.getListsSplitPane().getDividerLocation();
+        prefs.putInt(Utils.LAYOUT_LISTS_SPLIT_POS, listsDivLoc);
     }
     
     //MARK: Command

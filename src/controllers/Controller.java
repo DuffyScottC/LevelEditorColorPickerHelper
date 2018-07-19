@@ -128,12 +128,12 @@ public class Controller {
             frame.setLocation(posX, posY);
         }
         
-        double mainSplitPos 
-                = prefs.getDouble(Utils.LAYOUT_MAIN_SPLIT_POS, (double) 0.4);
+        int mainSplitPos 
+                = prefs.getInt(Utils.LAYOUT_MAIN_SPLIT_POS, 300);
         frame.getMainSplitPane().setDividerLocation(mainSplitPos);
         
-        double listsSplitPos 
-                = prefs.getDouble(Utils.LAYOUT_LISTS_SPLIT_POS, (double) 0.6);
+        int listsSplitPos 
+                = prefs.getInt(Utils.LAYOUT_LISTS_SPLIT_POS, 300);
         frame.getListsSplitPane().setDividerLocation(listsSplitPos);
     }
 
