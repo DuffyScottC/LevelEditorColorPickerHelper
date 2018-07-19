@@ -1385,6 +1385,10 @@ public class ProjectController {
         
         //empty the searchTextField
         frame.getSearchTextField().setText("");
+        //set the searchController's search mode to Name
+        searchController.setSearchMode(SearchMode.Name);
+        //sort all the entities by name
+        newProject.sortEntities();
         //get a list of all the project's new entities
         List<Entity> allNewEntities = newProject.getEntities();
         //put all the entities in the results list

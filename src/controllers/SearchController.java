@@ -72,7 +72,7 @@ public class SearchController {
         });
     }
     
-    private void setSearchMode(SearchMode searchMode) {
+    public void setSearchMode(SearchMode searchMode) {
         this.searchMode = searchMode;
         resultsListController.setSearchMode(searchMode);
     }

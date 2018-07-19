@@ -84,12 +84,10 @@ public class Project {
      */
     @XmlTransient
     private Comparator alphabeticalComp = (Object o1, Object o2) -> {
-        if (o1 instanceof Entity) {
-            if (o2 instanceof Entity) {
-                Entity e1 = (Entity) o1;
-                Entity e2 = (Entity) o2;
-                return e1.getName().compareTo(e2.getName());
-            }
+        if ((o1 instanceof Entity) && (o2 instanceof Entity)) {
+            Entity e1 = (Entity) o1;
+            Entity e2 = (Entity) o2;
+            return e1.getName().compareTo(e2.getName());
         }
         return -1;
     };
@@ -120,8 +118,7 @@ public class Project {
     public void addEntity(Entity entity) {
         //place the entity in the list of all entities
         this.entities.add(entity);
-        //sort the entities by name.
-        entities.sort(alphabeticalComp);
+        sortEntities();
     }
 
     public String getName() {
@@ -242,6 +239,13 @@ public class Project {
 
     public void setEntities(List<Entity> entities) {
         this.entities.addAll(entities);
+        sortEntities();
+    }
+    
+    /**
+     * Sorts all entities by name.
+     */
+    public void sortEntities() {
         //sort the entities by name.
         entities.sort(alphabeticalComp);
     }
