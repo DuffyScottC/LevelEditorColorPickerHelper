@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="23">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="40">
         <file>
             <url>src/controllers/ProjectController.java</url>
-            <bookmark id="23">
+            <bookmark id="38">
                 <name/>
-                <line>1865</line>
+                <line>331</line>
+                <key/>
+            </bookmark>
+            <bookmark id="40">
+                <name/>
+                <line>485</line>
+                <key/>
+            </bookmark>
+            <bookmark id="39">
+                <name/>
+                <line>1867</line>
                 <key/>
             </bookmark>
         </file>
         <file>
             <url>src/scriptgeneration/ScriptGenerator.java</url>
-            <bookmark id="19">
-                <name/>
-                <line>148</line>
-                <key/>
-            </bookmark>
             <bookmark id="20">
                 <name/>
-                <line>266</line>
+                <line>404</line>
+                <key/>
+            </bookmark>
+            <bookmark id="26">
+                <name/>
+                <line>472</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/views/MainFrame.java</file>
             <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/controllers/ProjectController.java</file>
+            <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/scriptgeneration/ScriptGenerator.java</file>
             <file>file:/Users/Scott/Desktop/Programming/UdemyiOS9Course/Practice%20Programs/LevelEditorColorPickerHelper/src/controllers/Controller.java</file>
         </group>
     </open-files>

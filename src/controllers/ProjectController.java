@@ -1154,10 +1154,10 @@ public class ProjectController {
     private Color getUniqueDefaultColor() {
         List<Entity> entities = currentProject.getEntities();
         boolean colorIsTaken = false;
-        for (int b = 0; b < 255; b++) {
-            for (int g = 0; g < 255; g++) {
-                for (int r = 0; r < 255; r++) {
-                    for (int a = 255; a > 0; a--) {
+        for (int a = 255; a > 0; a--) {
+            for (int b = 0; b < 255; b++) {
+                for (int g = 0; g < 255; g++) {
+                    for (int r = 0; r < 255; r++) {
                         //create a new color from these values
                         Color color = new Color(r, g, b, a);
 
