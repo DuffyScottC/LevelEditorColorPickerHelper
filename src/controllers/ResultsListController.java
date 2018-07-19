@@ -81,14 +81,14 @@ public class ResultsListController {
      * entitiesInResults list. Also selects the first entity in the list.
      */
     private void updateListModel() {
+        //sort the results
+        entitiesInResults.sort(compareEntities);
         resultsListModel.clear();
         for (Entity e : entitiesInResults) {
             resultsListModel.addElement(e);
         }
         resultsList.repaint();
         resultsList.setSelectedIndex(0);
-        //sort the results
-        entitiesInResults.sort(compareEntities);
     }
     
     /**
