@@ -122,7 +122,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         mainPanel.add(typeComboBox, gridBagConstraints);
 
         gridSizeTextField.setColumns(4);
-        gridSizeTextField.setText("32.0");
+        gridSizeTextField.setText("1.0");
 
         jLabel3.setText("Grid Size:");
 

@@ -216,6 +216,7 @@ public class ScriptGenerator {
     }
 
     public void showDialog(MainFrame frame) {
+        dialog.setSize(380, 408);
         dialog.getDesitnationFolderTextField().setText(System.getProperty("user.dir"));
         dialog.getImageFolderTextField().setText(System.getProperty("user.dir"));
         dialog.setLocationRelativeTo(frame);
