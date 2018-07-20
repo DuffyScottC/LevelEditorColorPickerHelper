@@ -827,7 +827,7 @@ public class ProjectController {
             commandList.add(
                     currentProject.getTypes().get(entity.getTypeIndex()));
         }
-        if (currentProject.isIncludeUnityPrefab()) {
+        if (currentProject.isIncludeClass()) {
             commandList.add(Utils.getClassNameFromIndex(entity.getClassIndex()));
         }
         if (currentProject.isIncludexOffset()) {
@@ -877,7 +877,7 @@ public class ProjectController {
         setCommandDialog.getTypeCheckBox().setSelected(
                 currentProject.isIncludeType());
         setCommandDialog.getClassCheckBox().setSelected(
-                currentProject.isIncludeUnityPrefab());
+                currentProject.isIncludeClass());
         
         updateExampleCommandTextField();
     }

@@ -69,7 +69,7 @@ public class Project {
     private boolean includeAlpha = false;
     private boolean includeName = false;
     private boolean includeType = false;
-    private boolean includeUnityPrefab = false;
+    private boolean includeClass = false;
     private boolean includexOffset = false;
     private boolean includeyOffset = false;
     
@@ -161,8 +161,8 @@ public class Project {
         return includeType;
     }
 
-    public boolean isIncludeUnityPrefab() {
-        return includeUnityPrefab;
+    public boolean isIncludeClass() {
+        return includeClass;
     }
 
     public boolean isIncludexOffset() {
@@ -193,7 +193,7 @@ public class Project {
         this.includeAlpha = includeAlpha;
         this.includeName = includeName;
         this.includeType = includeType;
-        this.includeUnityPrefab = includeUnityPrefab;
+        this.includeClass = includeUnityPrefab;
         this.includexOffset = includexOffset;
         this.includeyOffset = includeyOffset;
     }
