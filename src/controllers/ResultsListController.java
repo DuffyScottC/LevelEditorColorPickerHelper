@@ -144,8 +144,12 @@ public class ResultsListController {
         return resultsList.getSelectedIndex();
     }
 
-    void removeSelectedEntity() {
+    public void removeSelectedEntity() {
         int oldIndex = resultsList.getSelectedIndex();
+        //if none selected, stop
+        if (oldIndex == -1) {
+            return;
+        }
         //remove the selected entity
         entitiesInResults.remove(oldIndex);
         //update the list model

@@ -275,6 +275,10 @@ public class ProjectController {
         frame.getAddEntityMenuItem().addActionListener(addEntityActionListener);
         
         frame.getDeleteEntityMenuItem().addActionListener((ActionEvent e) -> {
+            if (currentProject.getCurrentEntity() == null) {
+                JOptionPane.showMessageDialog(frame, "No entity selected.");
+                return;
+            }
             //if the user does not want to delete the entity
             if (!Utils.shouldContinue("Are you sure you wish to delete \n"
                     + currentProject.getCurrentEntity().getName() 
@@ -291,6 +295,7 @@ public class ProjectController {
             deleteImageFileToDelete();
             
             resultsListController.removeSelectedEntity();
+            recentListController.removeSelectedEntity();
             
             saveProject();
         });
@@ -353,8 +358,11 @@ public class ProjectController {
                 int index = resultsListController.getSelectedIndex();
                 //if there is no selection
                 if (index == -1) {
+                    //the user can't delete zero entities
+                    frame.getDeleteEntityMenuItem().setEnabled(false);
                     return;
                 }
+                frame.getDeleteEntityMenuItem().setEnabled(true);
                 //get the entity in the resultsList
                 Entity selectedEntity 
                         = resultsListController.getEntitiesInResults().get(index);

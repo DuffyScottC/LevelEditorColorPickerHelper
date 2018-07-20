@@ -100,6 +100,30 @@ public class RecentListController {
     public int getSelectedIndex() {
         return recentList.getSelectedIndex();
     }
+    
+    public void removeSelectedEntity() {
+        int oldIndex = recentList.getSelectedIndex();
+        //if none selected, stop
+        if (oldIndex == -1) {
+            return;
+        }
+        //remove the selected entity
+        entitiesInRecent.remove(oldIndex);
+        //update the list model
+        updateListModel();
+        //set the index to one less than what it was
+        int newIndex = oldIndex - 1;
+        //if the index is less than 0
+        if (newIndex < 0) {
+            //set it to 0
+            newIndex = 0;
+        }
+        //if there are entities left
+        if (newIndex < entitiesInRecent.size()) {
+            //select the the entity above the deleted entity
+            recentList.setSelectedIndex(newIndex);
+        }
+    }
 
     public List<Entity> getEntitiesInRecent() {
         return entitiesInRecent;
