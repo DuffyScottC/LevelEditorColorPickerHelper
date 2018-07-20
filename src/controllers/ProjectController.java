@@ -1127,7 +1127,7 @@ public class ProjectController {
     /**
      * Generates a new entity with default attributes.
      * @throws Exception if the user can't addEntity a new entity (the reason is
- in the exception's description).
+     * in the exception's description).
      */
     private Entity generateNewDefaultEntity() {
         // Set the color of the entity

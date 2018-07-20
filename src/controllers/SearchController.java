@@ -17,8 +17,7 @@ import views.MainFrame;
 
 enum SearchMode {
     Name,
-    Color,
-    UnityPrefab
+    Color
 }
 
 /**
@@ -62,11 +61,8 @@ public class SearchController {
                 case 0:
                     setSearchMode(SearchMode.Name);
                     break;
-                case 1:
-                    setSearchMode(SearchMode.Color);
-                    break;
                 default:
-                    setSearchMode(SearchMode.UnityPrefab);
+                    setSearchMode(SearchMode.Color);
                     break;
             }
         });
@@ -93,11 +89,8 @@ public class SearchController {
                 case Name:
                     searchResults = searchByName(searchString);
                     break;
-                case Color:
-                    searchResults = searchByColor(searchString);
-                    break;
                 default:
-                    searchResults = searchByUnityPrefab(searchString);
+                    searchResults = searchByColor(searchString);
             }
         }
         //put the search results in the results JList
@@ -179,19 +172,6 @@ public class SearchController {
         }
         //if the string is made up of hex characters
         return hex;
-    }
-    
-    private List<Entity> searchByUnityPrefab(String searchString) {
-        List<Entity> results = new ArrayList();
-        for (Entity entity : currentProject.getEntities()) {
-            //convert the unity prefab to lowercase
-            String unityPrefabLower = entity.getClassIndex().toLowerCase();
-            //if the search string partially matches the prefab of this entity
-            if (unityPrefabLower.contains(searchString)) {
-                results.add(entity);
-            }
-        }
-        return results;
     }
     
     public void setCurrentProject(Project currentProject) {
