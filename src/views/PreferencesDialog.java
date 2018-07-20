@@ -38,7 +38,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
         alphaCheckBox = new javax.swing.JCheckBox();
         offsetCheckBox = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        unityPrefabCheckBox = new javax.swing.JCheckBox();
+        classCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -51,13 +51,13 @@ public class PreferencesDialog extends javax.swing.JDialog {
 
         hashTagCheckBox.setText("Include hashtag in color hex code");
 
-        alphaCheckBox.setText("Include alpha");
+        alphaCheckBox.setText("Include alpha in color hex code");
 
-        offsetCheckBox.setText("Include offset");
+        offsetCheckBox.setText("Show Offset Field");
 
         jLabel2.setText("Attributes:");
 
-        unityPrefabCheckBox.setText("Include Unity prefab");
+        classCheckBox.setText("Show Class Field");
 
         jLabel1.setText("Color Hex Code:");
 
@@ -91,7 +91,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
                                 .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(offsetCheckBox)
-                                    .addComponent(unityPrefabCheckBox)))
+                                    .addComponent(classCheckBox)))
                             .addComponent(jLabel2))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -107,7 +107,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(unityPrefabCheckBox)
+                .addComponent(classCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(offsetCheckBox)
                 .addGap(18, 18, 18)
@@ -125,12 +125,12 @@ public class PreferencesDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox alphaCheckBox;
     private javax.swing.JButton applyButton;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JCheckBox classCheckBox;
     private javax.swing.JCheckBox hashTagCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JCheckBox offsetCheckBox;
     private javax.swing.JButton okButton;
-    private javax.swing.JCheckBox unityPrefabCheckBox;
     // End of variables declaration//GEN-END:variables
 
     public JCheckBox getAlphaCheckBox() {
@@ -157,8 +157,8 @@ public class PreferencesDialog extends javax.swing.JDialog {
         return okButton;
     }
 
-    public JCheckBox getUnityPrefabCheckBox() {
-        return unityPrefabCheckBox;
+    public JCheckBox getClassCheckBox() {
+        return classCheckBox;
     }
     
 }

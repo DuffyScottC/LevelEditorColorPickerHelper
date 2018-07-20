@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [System.Serializable]
-public class Entity
-{
+public class Entity {
+	
 	[HideInInspector]
 	public string name;
 	public GameObject prefab;

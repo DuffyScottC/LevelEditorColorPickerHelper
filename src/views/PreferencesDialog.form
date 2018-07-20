@@ -54,7 +54,7 @@
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="offsetCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="unityPrefabCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="classCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -77,7 +77,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="unityPrefabCheckBox" min="-2" max="-2" attributes="0"/>
+              <Component id="classCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="offsetCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -114,12 +114,12 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="alphaCheckBox">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Include alpha"/>
+        <Property name="text" type="java.lang.String" value="Include alpha in color hex code"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="offsetCheckBox">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Include offset"/>
+        <Property name="text" type="java.lang.String" value="Show Offset Field"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
@@ -127,9 +127,9 @@
         <Property name="text" type="java.lang.String" value="Attributes:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="unityPrefabCheckBox">
+    <Component class="javax.swing.JCheckBox" name="classCheckBox">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Include Unity prefab"/>
+        <Property name="text" type="java.lang.String" value="Show Class Field"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

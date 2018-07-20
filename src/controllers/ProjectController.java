@@ -891,7 +891,7 @@ public class ProjectController {
         //set up the checkboxes to reflect the current preferences state
         preferencesDialog.getHashTagCheckBox().setSelected(includeHashTag);
         preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
-        preferencesDialog.getUnityPrefabCheckBox().setSelected(includeUnityPrefab);
+        preferencesDialog.getClassCheckBox().setSelected(includeUnityPrefab);
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
         
         //Make it so the user can press enter to select "OK"
@@ -921,7 +921,7 @@ public class ProjectController {
         //make the booleans match the checkboxes in the preferences window
         includeHashTag = preferencesDialog.getHashTagCheckBox().isSelected();
         includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
-        includeUnityPrefab = preferencesDialog.getUnityPrefabCheckBox().isSelected();
+        includeUnityPrefab = preferencesDialog.getClassCheckBox().isSelected();
         includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
         
         //save the user's preferences
@@ -980,7 +980,7 @@ public class ProjectController {
         //update the preferences dialog to reflect this
         preferencesDialog.getHashTagCheckBox().setSelected(includeHashTag);
         preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
-        preferencesDialog.getUnityPrefabCheckBox().setSelected(includeUnityPrefab);
+        preferencesDialog.getClassCheckBox().setSelected(includeUnityPrefab);
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
     }
     
