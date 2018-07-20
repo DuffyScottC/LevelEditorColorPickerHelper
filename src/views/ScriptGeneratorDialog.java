@@ -85,6 +85,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(jLabel1, gridBagConstraints);
 
         groupEntitiesByTypeCheckBox.setText("Group Entities by Type");
@@ -92,7 +93,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 6, 0, 0);
         mainPanel.add(groupEntitiesByTypeCheckBox, gridBagConstraints);
 
         jLabel2.setText("Type:");
@@ -100,6 +101,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(jLabel2, gridBagConstraints);
 
         jLabel4.setText("Include:");
@@ -107,6 +109,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(jLabel4, gridBagConstraints);
 
         typeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -115,6 +118,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(typeComboBox, gridBagConstraints);
 
         gridSizeTextField.setColumns(4);
@@ -130,8 +134,8 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gridSizeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(gridSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(249, Short.MAX_VALUE))
         );
         gridSizePanelLayout.setVerticalGroup(
             gridSizePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,8 +150,9 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 16, 0, 0);
         mainPanel.add(gridSizePanel, gridBagConstraints);
 
         jLabel5.setText("Cell Size:");
@@ -229,7 +234,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 16, 0, 0);
         mainPanel.add(cellSizeGapPanel, gridBagConstraints);
 
         levelGeneratorCheckBox.setSelected(true);
@@ -262,6 +267,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(gameObjectScriptsPanel, gridBagConstraints);
 
         tileEntityCheckBox.setSelected(true);
@@ -294,6 +300,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(tileScriptsPanel, gridBagConstraints);
 
         useImagesCheckBox.setText("Use Image Analysis");
@@ -302,7 +309,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 16, 0, 0);
         mainPanel.add(useImagesCheckBox, gridBagConstraints);
 
         jLabel12.setText("Special:");
@@ -310,6 +317,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(jLabel12, gridBagConstraints);
 
         buttonPanel.setLayout(new javax.swing.BoxLayout(buttonPanel, javax.swing.BoxLayout.X_AXIS));
@@ -325,6 +333,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(buttonPanel, gridBagConstraints);
 
         imagePathPanel.setLayout(new javax.swing.BoxLayout(imagePathPanel, javax.swing.BoxLayout.X_AXIS));
@@ -338,7 +347,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 16, 0, 0);
         mainPanel.add(imagePathPanel, gridBagConstraints);
 
         destinationPathPanel.setLayout(new javax.swing.BoxLayout(destinationPathPanel, javax.swing.BoxLayout.X_AXIS));
@@ -352,6 +361,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(destinationPathPanel, gridBagConstraints);
 
         getContentPane().add(mainPanel, java.awt.BorderLayout.NORTH);

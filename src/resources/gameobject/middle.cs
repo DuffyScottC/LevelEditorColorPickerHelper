@@ -25,7 +25,7 @@
     /// color.</param>
     /// <param name="x">The x coordinate of the pixel's position.</param>
     /// <param name="y">The y coordinate of the pixel's position.</param>
-    private void instantiateIfMatch(Entity entity, Color pixelColor, int x, int y) {
+    private void instantiateIfMatch(Entity entity, Color32 pixelColor, int x, int y) {
     if (entity.color.Equals(pixelColor)) {
             //convert the grid position into actuall world coordinates
             Vector2 position = new Vector2(x * gridSize, y * gridSize);
@@ -42,7 +42,7 @@
     /// <param name="x">The x coordinate.</param>
     /// <param name="y">The y coordinate.</param>
     private void GenerateTile (int x, int y) {
-        Color pixelColor = level.GetPixel(x, y);      
+        Color32 pixelColor = level.GetPixel(x, y);      
 
         if (pixelColor.a == 0) {
             //ignore transparent pixels

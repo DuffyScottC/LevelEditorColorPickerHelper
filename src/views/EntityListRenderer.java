@@ -26,7 +26,9 @@ import javax.swing.JList;
 public class EntityListRenderer extends DefaultListCellRenderer {
 
     /**
-     * A reference to the entities in the result list
+     * A reference to the entities in the list. This is a reference to
+     * the ResultsListController's entitiesInResults list (or that of the
+     * RecentListController). This gets updated when that does.
      */
     private final List<Entity> entitiesInList;
     private final Font font = new Font("helvitica", Font.PLAIN, 15);
@@ -40,16 +42,18 @@ public class EntityListRenderer extends DefaultListCellRenderer {
      * in a reference to the list that holds the entities contained in the
      * element.
      *
-     * @param entitiesInList
+     * @param entitiesInList A reference to the List of entities contained
+     * in the JList.
      */
     public EntityListRenderer(List<Entity> entitiesInList) {
         this.entitiesInList = entitiesInList;
     }
 
     @Override
-    public Component getListCellRendererComponent(
+    public Component getListCellRendererComponent (
             JList list, Object value, int index,
             boolean isSelected, boolean cellHasFocus) {
+        
         //Call the original super method
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);

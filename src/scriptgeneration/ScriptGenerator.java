@@ -217,7 +217,11 @@ public class ScriptGenerator {
 
     public void showDialog(MainFrame frame) {
         dialog.getDesitnationFolderTextField().setText(System.getProperty("user.dir"));
+        dialog.getImageFolderTextField().setText(System.getProperty("user.dir"));
         dialog.setLocationRelativeTo(frame);
+        dialog.getUseImagesCheckBox().setSelected(false);
+        dialog.getImageFolderTextField().setEnabled(false);
+        dialog.getImageBrowseButton().setEnabled(false);
         dialog.setVisible(true);
     }
     

@@ -55,7 +55,7 @@
     /// <param name="y">The y coordinate of the pixel's position.</param>
     /// <param name="index">The index of the current layer.</param>
     private void placeTileIfMatch(TileEntity tileEntity, 
-                                    Color pixelColor, int x, int y, int index) {
+                                    Color32 pixelColor, int x, int y, int index) {
         //if the tileEntity's color matches the pixelColor
         if (tileEntity.color.Equals(pixelColor)) {
             //convert the pixel position into a tilemap position
@@ -72,7 +72,7 @@
     /// <param name="y">The y coordinate.</param>
     /// <param name="index">The index of the current layer</param>
     private void GenerateTile(int x, int y, int index) {
-        Color pixelColor = levelLayers[index].GetPixel(x, y);
+        Color32 pixelColor = levelLayers[index].GetPixel(x, y);
 
         if (pixelColor.a == 0) {
             //ignore transparent pixels

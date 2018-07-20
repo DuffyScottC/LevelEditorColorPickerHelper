@@ -7,16 +7,16 @@ public class TileEntity {
 	[HideInInspector]
 	public string name;
 	public Tile tile;
-	public Color color;
+	public Color32 color;
 	public Vector2 offset;
 
-	public TileEntity(string name, Color color) {
+	public TileEntity(string name, Color32 color) {
         this.name = name;
         this.color = color;
 		this.offset = Vector2.zero;
     }
 
-	public TileEntity(string name, Color color, Vector2 offset) {
+	public TileEntity(string name, Color32 color, Vector2 offset) {
         this.name = name;
         this.color = color;
 		this.offset = offset;

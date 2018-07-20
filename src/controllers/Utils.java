@@ -64,13 +64,14 @@ public class Utils {
      * this algorithm only works for square displays, but the image can be any 
      * dimension (square, or rectangle of north-south or east-west orientation).
      * 
-     * @param dim
+     * @param dim The width and height of the canvas that the image will
+     * be drawn on. 
      * @param imageFile The file containing the image that you would like
      * to draw onto the desired BufferedImage (or null if you would just like
      * to use the color input)
      * @param color The color that the BufferedImage will be if null is passed
      * in for the imageFile or if the imageFile could not be found or read.
-     * @return A BufferedImage of the passed in height and width with the
+     * @return A BufferedImage of the passed in dimensions with the
      * imageFile drawn onto it.
      */
     public static BufferedImage getBufferedImageFromFile(
