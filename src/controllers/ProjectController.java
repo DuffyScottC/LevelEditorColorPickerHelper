@@ -484,7 +484,7 @@ public class ProjectController {
             }
         });
         
-        frame.getUnityPrefabTextField().addKeyListener(new KeyAdapter() {
+        frame.getClassComboBox().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 modifiedController.setModified(true);
@@ -1868,7 +1868,7 @@ public class ProjectController {
         frame.getBlueSpinner().setEnabled(value);
         frame.getAlphaSlider().setEnabled(value);
         frame.getAlphaSpinner().setEnabled(value);
-        frame.getUnityPrefabTextField().setEnabled(value);
+        frame.getClassComboBox().setEnabled(value);
         frame.getxOffsetSpinner().setEnabled(value);
         frame.getyOffsetSpinner().setEnabled(value);
     }
@@ -1899,7 +1899,7 @@ public class ProjectController {
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
         Color newColor = colorPickerController.getColor();
-        String newUnityPrefab = frame.getUnityPrefabTextField().getText();
+        String newUnityPrefab = frame.getClassComboBox().getText();
         Offset newOffset = getOffsetFromInfoPanel();
         //load all the new values into the currentEntity
         currentEntity.replaceValues(newImage, newName, 
