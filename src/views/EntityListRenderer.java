@@ -18,6 +18,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 
 /**
  * 
@@ -54,28 +55,30 @@ public class EntityListRenderer extends DefaultListCellRenderer {
             JList list, Object value, int index,
             boolean isSelected, boolean cellHasFocus) {
         
+        Entity entity = entitiesInList.get(index);
+        
         //Call the original super method
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
-        Entity entity = entitiesInList.get(index);
-        
+
         //get the path to the image associated with the entity at this index
         File imageFile = getEntityImageFile(entity);
-        
+
         BufferedImage newImage 
                 = Utils.getBufferedImageFromFile(
                         Utils.LIST_ICON_DIM, 
                         imageFile, entity.getColor());
-        
+
         //create an image icon from the new image
         ImageIcon imageIcon = new ImageIcon(newImage);
         //set the label's icon to this image
         label.setIcon(imageIcon);
-        
+
         label.setHorizontalTextPosition(JLabel.RIGHT);
         label.setFont(font);
 
         return label;
+        
     }
     
     /**

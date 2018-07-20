@@ -49,13 +49,73 @@ public class Utils {
     
     public static final String EDIT_TYPES_ITEM = "Edit...";
     
+    /**
+     * Gets a BufferedImage of the specified height, width, and solid color.
+     * Any transparency is simply seen through.
+     * @param width
+     * @param height
+     * @param color
+     * @return 
+     */
     public static BufferedImage getBlankBufferedImage(int width, int height, Color color) {
         //Create a blank white image icon
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bi.createGraphics();
+        
         g2d.setColor(color);
         g2d.fillRect(0, 0, width, height);
         return bi;
+    }
+    
+    /**
+     * Gets a BufferedImage of the specified height, width, and solid color.
+     * Any transparency reveals a checkered pattern of grey and white squares
+     * with the passed in dimension.
+     * @param width
+     * @param height
+     * @param dimension
+     * @param color
+     * @return 
+     */
+    private static BufferedImage getBlankBufferedImageTransparent(
+            int width, int height, int dimension, Color color) {
+        //Create a blank white image icon
+        BufferedImage bi 
+                = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bi.createGraphics();
+        
+        drawCheckeredPattern(g2d, color, width, height, dimension);
+        
+        g2d.setColor(color);
+        g2d.fillRect(0, 0, width, height);
+        return bi;
+    }
+    
+    public static void drawCheckeredPattern (
+            Graphics2D g2,
+            Color theColor,
+            int width,
+            int height,
+            int dimension) {
+        //if the color is transparent
+        if (theColor.getAlpha() < 255) {
+            //draw a checkered pattern
+            boolean alt = true;
+            int maxX = width * dimension;
+            int maxY = height * dimension;
+            for (int x = 0; x < maxX; x += dimension) {
+                for (int y = 0; y < maxY; y += dimension) {
+                    if (alt) { //white
+                        g2.setColor(Color.white);
+                    } else { //grey
+                        g2.setColor(Color.lightGray);
+                    }
+                    g2.fillRect(x, y, dimension, dimension);
+                    alt = !alt;
+                }
+                alt = !alt;
+            }
+        }
     }
     
     /**
@@ -146,7 +206,8 @@ public class Utils {
         
         if (noImage) {
             //use the backup color passed in
-            resultImage = getBlankBufferedImage(width, height, color);
+            resultImage 
+                    = getBlankBufferedImageTransparent(width, height, 4, color);
         }
         return resultImage;
     }
