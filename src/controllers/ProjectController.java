@@ -1779,6 +1779,7 @@ public class ProjectController {
                 entity.getG(),
                 entity.getB(), 
                 entity.getA());
+        frame.getClassComboBox().setSelectedIndex(entity.getClassIndex());
         //set the offset values
         frame.getxOffsetSpinner().setValue(entity.getOffset().getX());
         frame.getyOffsetSpinner().setValue(entity.getOffset().getY());
