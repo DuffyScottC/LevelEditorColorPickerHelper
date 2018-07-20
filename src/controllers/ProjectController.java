@@ -685,7 +685,7 @@ public class ProjectController {
                     setCommandDialog.getAlphaCheckBox().isSelected(),
                     setCommandDialog.getNameCheckBox().isSelected(), 
                     setCommandDialog.getTypeCheckBox().isSelected(), 
-                    setCommandDialog.getUnityPrefabCheckBox().isSelected(),
+                    setCommandDialog.getClassCheckBox().isSelected(),
                     setCommandDialog.getxOffsetCheckBox().isSelected(),
                     setCommandDialog.getyOffsetCheckBox().isSelected());
             //if the color hex value is checked
@@ -716,7 +716,7 @@ public class ProjectController {
                 checkBoxActionListener);
         setCommandDialog.getTypeCheckBox().addActionListener(
                 checkBoxActionListener);
-        setCommandDialog.getUnityPrefabCheckBox().addActionListener(
+        setCommandDialog.getClassCheckBox().addActionListener(
                 checkBoxActionListener);
         setCommandDialog.getxOffsetCheckBox().addActionListener(
                 checkBoxActionListener);
@@ -876,7 +876,7 @@ public class ProjectController {
                 currentProject.isIncludeName());
         setCommandDialog.getTypeCheckBox().setSelected(
                 currentProject.isIncludeType());
-        setCommandDialog.getUnityPrefabCheckBox().setSelected(
+        setCommandDialog.getClassCheckBox().setSelected(
                 currentProject.isIncludeUnityPrefab());
         
         updateExampleCommandTextField();
