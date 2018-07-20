@@ -103,7 +103,7 @@ public class ProjectController {
     private PreferencesDialog preferencesDialog;
     private boolean includeHashTag = false;
     private boolean includeAlpha = true;
-    private boolean includeUnityPrefab = true;
+    private boolean includeClass = true;
     private boolean includeOffset = true;
     /**
      * Holds all user preferences for this application
@@ -891,7 +891,7 @@ public class ProjectController {
         //set up the checkboxes to reflect the current preferences state
         preferencesDialog.getHashTagCheckBox().setSelected(includeHashTag);
         preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
-        preferencesDialog.getClassCheckBox().setSelected(includeUnityPrefab);
+        preferencesDialog.getClassCheckBox().setSelected(includeClass);
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
         
         //Make it so the user can press enter to select "OK"
@@ -921,13 +921,13 @@ public class ProjectController {
         //make the booleans match the checkboxes in the preferences window
         includeHashTag = preferencesDialog.getHashTagCheckBox().isSelected();
         includeAlpha = preferencesDialog.getAlphaCheckBox().isSelected();
-        includeUnityPrefab = preferencesDialog.getClassCheckBox().isSelected();
+        includeClass = preferencesDialog.getClassCheckBox().isSelected();
         includeOffset = preferencesDialog.getOffsetCheckBox().isSelected();
         
         //save the user's preferences
         prefs.putBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
         prefs.putBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
-        prefs.putBoolean(Utils.INCLUDE_UNITY_PREFAB, includeUnityPrefab);
+        prefs.putBoolean(Utils.INCLUDE_CLASS, includeClass);
         prefs.putBoolean(Utils.INCLUDE_OFFSET, includeOffset);
         
         //include alpha
@@ -936,9 +936,9 @@ public class ProjectController {
         //include hashtag
         colorPickerController.setIncludeHashTag(includeHashTag);
         
-        //include unity prefab
-        //show/hide the unity prefab panel depending on the checkbox
-        frame.getUnityPrefabPanel().setVisible(includeUnityPrefab);
+        //include class
+        //show/hide the class panel depending on the checkbox
+        frame.getClassPanel().setVisible(includeClass);
         
         //include offset
         //show/hide the offset panel depending on the checkbox
@@ -975,12 +975,12 @@ public class ProjectController {
         //get the includeBlank stuff from prefs
         includeHashTag = prefs.getBoolean(Utils.INCLUDE_HASHTAG, includeHashTag);
         includeAlpha = prefs.getBoolean(Utils.INCLUDE_ALPHA, includeAlpha);
-        includeUnityPrefab = prefs.getBoolean(Utils.INCLUDE_UNITY_PREFAB, includeUnityPrefab);
+        includeClass = prefs.getBoolean(Utils.INCLUDE_CLASS, includeClass);
         includeOffset = prefs.getBoolean(Utils.INCLUDE_OFFSET, includeOffset);
         //update the preferences dialog to reflect this
         preferencesDialog.getHashTagCheckBox().setSelected(includeHashTag);
         preferencesDialog.getAlphaCheckBox().setSelected(includeAlpha);
-        preferencesDialog.getClassCheckBox().setSelected(includeUnityPrefab);
+        preferencesDialog.getClassCheckBox().setSelected(includeClass);
         preferencesDialog.getOffsetCheckBox().setSelected(includeOffset);
     }
     

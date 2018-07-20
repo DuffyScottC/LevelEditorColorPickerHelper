@@ -27,7 +27,7 @@ public class Utils {
     
     public static final String INCLUDE_HASHTAG = "LECPIncludeHashtag";
     public static final String INCLUDE_ALPHA = "LECPIncludeAlpha";
-    public static final String INCLUDE_UNITY_PREFAB = "LECPIncludeUnityPrefab";
+    public static final String INCLUDE_CLASS = "LECPIncludeUnityPrefab";
     public static final String INCLUDE_OFFSET = "LECPIncludeOffset";
     
     public static final String LAYOUT_VERTICAL = "LECPLayoutVertical";

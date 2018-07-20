@@ -93,7 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
         yOffsetSpinner = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        unityPrefabPanel = new javax.swing.JPanel();
+        classPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         classComboBox = new javax.swing.JComboBox<>();
         mainMenuBar = new javax.swing.JMenuBar();
@@ -369,20 +369,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         classComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GameObject", "Tile" }));
 
-        javax.swing.GroupLayout unityPrefabPanelLayout = new javax.swing.GroupLayout(unityPrefabPanel);
-        unityPrefabPanel.setLayout(unityPrefabPanelLayout);
-        unityPrefabPanelLayout.setHorizontalGroup(
-            unityPrefabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(unityPrefabPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout classPanelLayout = new javax.swing.GroupLayout(classPanel);
+        classPanel.setLayout(classPanelLayout);
+        classPanelLayout.setHorizontalGroup(
+            classPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(classPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        unityPrefabPanelLayout.setVerticalGroup(
-            unityPrefabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(unityPrefabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        classPanelLayout.setVerticalGroup(
+            classPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(classPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel5)
                 .addComponent(classComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -412,7 +412,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(revertButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(applyButton))
-                    .addComponent(unityPrefabPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(classPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(selectButton)
@@ -459,7 +459,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sliderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(unityPrefabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(classPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(offsetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -537,6 +537,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSpinner blueSpinner;
     private javax.swing.JButton changeImageButton;
     private javax.swing.JComboBox<String> classComboBox;
+    private javax.swing.JPanel classPanel;
     private javax.swing.JTextField colorCodeTextField;
     private javax.swing.JLabel colorLabel;
     private views.ColorPanel colorPanel;
@@ -593,7 +594,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> typeComboBox;
     private javax.swing.JLabel typeLabel;
     private javax.swing.JPanel typePanel;
-    private javax.swing.JPanel unityPrefabPanel;
     private javax.swing.JCheckBoxMenuItem useCommandCheckBoxMenuItem;
     private javax.swing.JCheckBoxMenuItem verticalCheckBoxMenuItem;
     private javax.swing.JMenu viewMenu;
@@ -777,8 +777,8 @@ public class MainFrame extends javax.swing.JFrame {
         return preferencesMenuItem;
     }
 
-    public JPanel getUnityPrefabPanel() {
-        return unityPrefabPanel;
+    public JPanel getClassPanel() {
+        return classPanel;
     }
 
     public JMenuBar getMainMenuBar() {

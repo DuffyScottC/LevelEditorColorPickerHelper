@@ -775,7 +775,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="applyButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="unityPrefabPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="classPanel" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="selectButton" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -834,7 +834,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="sliderPanel" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="unityPrefabPanel" min="-2" max="-2" attributes="0"/>
+                      <Component id="classPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="offsetPanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -1142,7 +1142,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="unityPrefabPanel">
+            <Container class="javax.swing.JPanel" name="classPanel">
 
               <Layout>
                 <DimensionLayout dim="0">
