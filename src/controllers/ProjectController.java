@@ -1899,11 +1899,11 @@ public class ProjectController {
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
         Color newColor = colorPickerController.getColor();
-        String newUnityPrefab = frame.getClassComboBox().getText();
+        int newClass = frame.getClassComboBox().getSelectedIndex();
         Offset newOffset = getOffsetFromInfoPanel();
         //load all the new values into the currentEntity
         currentEntity.replaceValues(newImage, newName, 
-                newTypeIndex, newColor, newUnityPrefab, newOffset);
+                newTypeIndex, newColor, newClass, newOffset);
     }
     
     /**
