@@ -831,7 +831,7 @@ public class ProjectController {
                     currentProject.getTypes().get(entity.getTypeIndex()));
         }
         if (currentProject.isIncludeUnityPrefab()) {
-            commandList.add(entity.getUnityPrefab());
+            commandList.add(entity.getClassIndex());
         }
         if (currentProject.isIncludexOffset()) {
             commandList.add(Double.toString(entity.getOffset().getX()));
@@ -1217,7 +1217,7 @@ public class ProjectController {
         for (Entity entity : entities) {
             //if this entity's prfab matches the generated prefab
             //(if this prefab is already taken)
-            if (entity.getUnityPrefab().equals(prefabBase + num)) {
+            if (entity.getClassIndex().equals(prefabBase + num)) {
                 //increment the number
                 num++;
             }
@@ -1899,11 +1899,11 @@ public class ProjectController {
         String newName = frame.getNameTextField().getText();
         int newTypeIndex = frame.getTypeComboBox().getSelectedIndex();
         Color newColor = colorPickerController.getColor();
-        int newClass = frame.getClassComboBox().getSelectedIndex();
+        int newClassIndex = frame.getClassComboBox().getSelectedIndex();
         Offset newOffset = getOffsetFromInfoPanel();
         //load all the new values into the currentEntity
         currentEntity.replaceValues(newImage, newName, 
-                newTypeIndex, newColor, newClass, newOffset);
+                newTypeIndex, newColor, newClassIndex, newOffset);
     }
     
     /**

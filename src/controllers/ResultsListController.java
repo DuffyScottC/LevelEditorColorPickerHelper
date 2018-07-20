@@ -45,7 +45,7 @@ public class ResultsListController {
                 case Color:
                     return e1.getColor().getRGB() - e2.getColor().getRGB();
                 default:
-                    return e1.getUnityPrefab().compareTo(e2.getUnityPrefab());
+                    return e1.getClassIndex().compareTo(e2.getClassIndex());
             }
         }
         return -1;

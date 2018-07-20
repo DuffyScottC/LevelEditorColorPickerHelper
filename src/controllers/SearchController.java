@@ -185,7 +185,7 @@ public class SearchController {
         List<Entity> results = new ArrayList();
         for (Entity entity : currentProject.getEntities()) {
             //convert the unity prefab to lowercase
-            String unityPrefabLower = entity.getUnityPrefab().toLowerCase();
+            String unityPrefabLower = entity.getClassIndex().toLowerCase();
             //if the search string partially matches the prefab of this entity
             if (unityPrefabLower.contains(searchString)) {
                 results.add(entity);

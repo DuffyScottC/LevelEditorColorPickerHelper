@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement(name="Entity")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder={"image","name","typeIndex","r","g","b","a","unityPrefab","offset"})
+@XmlType(propOrder={"image","name","typeIndex","r","g","b","a","classIndex","offset"})
 public class Entity implements Comparable<Entity> {
     /**
      * The path of a the image associated with this entity. This is null
@@ -53,11 +53,9 @@ public class Entity implements Comparable<Entity> {
      */
     private int a;
     /**
-     * The path of the Unity Prefab associated with this entity. This is 
-     * meant to be in the form of a path to the prefab 
-     * (e.g. "Prefabs/Prafabname").
+     * The classIndex of this entity. (0=GameObject, 1=TileEntity)
      */
-    private String unityPrefab;
+    private int classIndex;
     /**
      * The offset associated with this entity
      */
@@ -74,7 +72,7 @@ public class Entity implements Comparable<Entity> {
         this.g = 0;
         this.b = 0;
         this.a = 255;
-        this.unityPrefab = null;
+        this.classIndex = 0;
         this.offset = Offset.zero;
     }
     
@@ -84,13 +82,13 @@ public class Entity implements Comparable<Entity> {
  null if you don't have an image path for this entity, and the entity will
  simply use its own color as the image)
      * @param name The name associated with this entity
-     * @param type The name of the type or category associated with this entity
+     * @param typeIndex The name of the type or category associated with this entity
      * @param color The color associated with this entity
-     * @param unityPrefab The path of the Unity Prefab associated with this entity
+     * @param classIndex The class of this entity (GameObject=0, Tile=0)
      * @param offset The offset of the entity
      */
     public Entity (String image, String name, int typeIndex, 
-            Color color, String unityPrefab, Offset offset) {
+            Color color, int classIndex, Offset offset) {
         this.image = image;
         this.name = name;
         this.typeIndex = typeIndex;
@@ -98,12 +96,12 @@ public class Entity implements Comparable<Entity> {
         this.g = color.getGreen();
         this.b = color.getBlue();
         this.a = color.getAlpha();
-        this.unityPrefab = unityPrefab;
+        this.classIndex = classIndex;
         this.offset = offset;
     }
     
     public void replaceValues(String image, String name, int typeIndex, 
-            Color color, String unityPrefab, Offset offset) {
+            Color color, int classIndex, Offset offset) {
         this.image = image;
         this.name = name;
         this.typeIndex = typeIndex;
@@ -111,7 +109,7 @@ public class Entity implements Comparable<Entity> {
         this.g = color.getGreen();
         this.b = color.getBlue();
         this.a = color.getAlpha();
-        this.unityPrefab = unityPrefab;
+        this.classIndex = classIndex;
         this.offset = offset;
     }
     
@@ -122,18 +120,18 @@ public class Entity implements Comparable<Entity> {
      * @param r The r of the color associated with this entity
      * @param g The g of the color associated with this entity
      * @param b The b of the color associated with this entity
-     * @param unityPrefab The path of the Unity Prefab associated with this entity
+     * @param classIndex The path of the Unity Prefab associated with this entity
      * @param offset The offset of the Entity
      */
     public Entity (String image, String name, int r, int g, int b, int a, 
-            String unityPrefab, Offset offset) {
+            int classIndex, Offset offset) {
         this.image = image;
         this.name = name;
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
-        this.unityPrefab = unityPrefab;
+        this.classIndex = classIndex;
         this.offset = offset;
     }
     
@@ -158,7 +156,7 @@ public class Entity implements Comparable<Entity> {
             Entity e = (Entity) obj;
             if (this.name.equals(e.name)) {
                 if (this.r == e.r && this.g == e.g && this.b == e.b && this.a == e.a) {
-                    if (this.unityPrefab.equals(e.unityPrefab)) {
+                    if (this.classIndex == e.classIndex) {
                         if (this.offset.equals(offset)) {
                             return true;
                         }
@@ -243,12 +241,12 @@ public class Entity implements Comparable<Entity> {
         a = color.getAlpha();
     }
 
-    public String getUnityPrefab() {
-        return unityPrefab;
+    public int getClassIndex() {
+        return classIndex;
     }
 
-    public void setUnityPrefab(String unityPrefab) {
-        this.unityPrefab = unityPrefab;
+    public void setClassIndex(int classIndex) {
+        this.classIndex = classIndex;
     }
 
     public Offset getOffset() {
