@@ -769,7 +769,7 @@ public class ProjectController {
     private void updateExampleCommandTextField() {
         //create an example entity
         Entity exampleEntity = new Entity(null, "Name", 1, 
-                Color.pink, "Prefab", new Offset(1.5, 2)); 
+                Color.pink, Utils.GAMEOBJECT_INDEX, new Offset(1.5, 2)); 
        //get the arguments that the user desires using the exampleEntity
         List<String> arguments = getArguments(exampleEntity);
         //get the user's command
@@ -831,7 +831,7 @@ public class ProjectController {
                     currentProject.getTypes().get(entity.getTypeIndex()));
         }
         if (currentProject.isIncludeUnityPrefab()) {
-            commandList.add(entity.getClassIndex());
+            commandList.add(Utils.getClassNameFromIndex(entity.getClassIndex()));
         }
         if (currentProject.isIncludexOffset()) {
             commandList.add(Double.toString(entity.getOffset().getX()));
@@ -1145,12 +1145,13 @@ public class ProjectController {
         }
 
         String newName = getUniqueDefaultName();
-
-        String newUnityPrefab = getUniqueDefaultUnityPrefab();
+        
+        //use the last selected classIndex
+        int newClassIndex = currentEntity.getClassIndex();
 
         //create and return a new entity with the attributes created above
         return new Entity(null, newName, newTypeIndex, newColor, 
-                newUnityPrefab, Offset.zero);
+                newClassIndex, Offset.zero);
     }
     
     private Color getUniqueDefaultColor() {
@@ -1206,24 +1207,6 @@ public class ProjectController {
         }
         //return the unique name
         return nameBase + num;
-    }
-    
-    private String getUniqueDefaultUnityPrefab() {
-        List<Entity> entities = currentProject.getEntities();
-        String prefabBase = "Prefabs/Prefab";
-        int num = 1;
-        //keep incrementing the num component until we find a unique string
-        //(i.e. a prefab that is not already in entities)
-        for (Entity entity : entities) {
-            //if this entity's prfab matches the generated prefab
-            //(if this prefab is already taken)
-            if (entity.getClassIndex().equals(prefabBase + num)) {
-                //increment the number
-                num++;
-            }
-        }
-        //return the unique prefab string
-        return prefabBase + num;
     }
     
     /**

@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  * @author Scott
  */
 public class Utils {
+    
     //Preferences keys:
     public static final String IMAGE_CHOOSER_PATH = "LECPImageChooserPath";
     public static final String NEW_PROJECT_CHOOSER_PATH = "LECPNewProjectChooserPath";
@@ -48,6 +49,21 @@ public class Utils {
     public static final String ARRAY_TILE_NAME_EXTENSION = "Entities";
     
     public static final String EDIT_TYPES_ITEM = "Edit...";
+    
+    //Class:
+    public static final int GAMEOBJECT_INDEX = 0;
+    public static final String GAMEOBJECT_NAME = "GameObject";
+    public static final int TILE_INDEX = 1;
+    public static final String TILE_NAME = "Tile";
+    
+    public static String getClassNameFromIndex(int classIndex) {
+        switch(classIndex) {
+            case GAMEOBJECT_INDEX:
+                return GAMEOBJECT_NAME;
+            default:
+                return TILE_NAME;
+        }
+    }
     
     /**
      * Gets a BufferedImage of the specified height, width, and solid color.
