@@ -484,11 +484,8 @@ public class ProjectController {
             }
         });
         
-        frame.getClassComboBox().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                modifiedController.setModified(true);
-            }
+        frame.getClassComboBox().addActionListener((ActionEvent e) -> {
+            modifiedController.setModified(true);
         });
         
         frame.getTypeComboBox().addActionListener((ActionEvent e) -> {
