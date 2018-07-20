@@ -23,7 +23,7 @@ enum SearchMode {
 /**
  * Handles the search engine, making it so that the user can search for objects
  * by typing into the search bar, and making sure the user can choose to
- * search by name, type, prefab, etc.
+ * search by name, color, etc.
  * @author Scott
  */
 public class SearchController {
@@ -53,7 +53,6 @@ public class SearchController {
         searchModeComboBox.removeAllItems();
         searchModeComboBox.addItem("Name");
         searchModeComboBox.addItem("Color");
-        searchModeComboBox.addItem("Unity Prefab");
         
         searchModeComboBox.addActionListener((ActionEvent e) -> {
             int index = searchModeComboBox.getSelectedIndex();

@@ -554,12 +554,12 @@ public class ScriptGenerator {
     private void addEntityToStringBuilder(Entity entity, 
             StringBuilder entityObjects, boolean last) {
         /*
-        The elements in the colorToPrefabs array look like:
+        The elements in the entityObjects array look like:
             new Entity("Name", new Color32(0, 0, 0, 255)),
         but the last element has no comma at the end
         */
 
-        //Add to the colorToPrefabs array
+        //Add to the entityObjects array
         entityObjects.append("\t\tnew ");
         if (scriptType == ScriptType.GameObject) {
             entityObjects.append("Entity");

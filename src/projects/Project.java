@@ -182,7 +182,7 @@ public class Project {
             boolean includeAlpha,
             boolean includeName,
             boolean includeType,
-            boolean includeUnityPrefab,
+            boolean includeClass,
             boolean includexOffset,
             boolean includeyOffset) {
         this.includeColorHex = includeColorHex;
@@ -193,7 +193,7 @@ public class Project {
         this.includeAlpha = includeAlpha;
         this.includeName = includeName;
         this.includeType = includeType;
-        this.includeClass = includeUnityPrefab;
+        this.includeClass = includeClass;
         this.includexOffset = includexOffset;
         this.includeyOffset = includeyOffset;
     }

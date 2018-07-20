@@ -17,7 +17,7 @@
     }
 
     /// <summary>
-    /// Instantiates the entity's prefab at the given (x,y) position if the 
+    /// Instantiates the entity's GameObject at the given (x,y) position if the 
     /// passed in pixelColor matches the entity's color.
     /// </summary>
     /// <param name="entity">The Entity to instantiate.</param>
@@ -31,8 +31,8 @@
             Vector2 position = new Vector2(x * gridSize, y * gridSize);
             //add the entity's offset to the position
             position += entity.offset;
-            //instantiate the prefab
-            Instantiate(entity.prefab, position, Quaternion.identity, transform);
+            //instantiate the gameObject
+            Instantiate(entity.gameObject, position, Quaternion.identity, transform);
         }
     }
 

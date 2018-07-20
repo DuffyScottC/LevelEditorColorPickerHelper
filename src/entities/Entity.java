@@ -120,7 +120,7 @@ public class Entity implements Comparable<Entity> {
      * @param r The r of the color associated with this entity
      * @param g The g of the color associated with this entity
      * @param b The b of the color associated with this entity
-     * @param classIndex The path of the Unity Prefab associated with this entity
+     * @param classIndex The class of this entity
      * @param offset The offset of the Entity
      */
     public Entity (String image, String name, int r, int g, int b, int a, 

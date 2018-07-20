@@ -5,7 +5,7 @@ public class Entity {
 	
 	[HideInInspector]
 	public string name;
-	public GameObject prefab;
+	public GameObject gameObject;
     public Color32 color;
 	public Vector2 offset;
 
