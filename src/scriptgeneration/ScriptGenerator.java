@@ -254,16 +254,25 @@ public class ScriptGenerator {
             boolean shouldLevelGenerator 
                     = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
             boolean shouldEntity = dialog.getGameObjectEntityCheckBox().isSelected();
-            String levelGeneratorFileName = "LevelGenerator.cs";
-            String entityResourceFileName = "/resources/gameobject/Entity.cs";
-            String entityFileName = "Entity.cs";
-            if (scriptType == ScriptType.Tilemap) {
-                shouldLevelGenerator 
-                    = dialog.getTileLevelGeneratorCheckBox().isSelected();
-                shouldEntity = dialog.getTileEntityCheckBox().isSelected();
-                levelGeneratorFileName = "TileLevelGenerator.cs";
-                entityResourceFileName = "/resources/tilemap/TileEntity.cs";
-                entityFileName = "TileEntity.cs";
+            String levelGeneratorFileName = "GameObjectLevelGenerator.cs";
+            String entityResourceFileName = "/resources/gameobject/GameObjectEntity.cs";
+            String entityFileName = "GameObjectEntity.cs";
+            switch (scriptType) {
+                case Tilemap:
+                    shouldLevelGenerator 
+                        = dialog.getTileLevelGeneratorCheckBox().isSelected();
+                    shouldEntity = dialog.getTileEntityCheckBox().isSelected();
+                    levelGeneratorFileName = "TileLevelGenerator.cs";
+                    entityResourceFileName = "/resources/tilemap/TileEntity.cs";
+                    entityFileName = "TileEntity.cs";
+                    break;
+                default:
+                    shouldLevelGenerator 
+                        = dialog.getMixedLevelGeneratorCheckBox().isSelected();
+                    shouldEntity = dialog.getBaseEntityCheckBox().isSelected();
+                    levelGeneratorFileName = "MixedLevelGenerator.cs";
+                    entityResourceFileName = "/resources/mixed/BaseEntity.cs";
+                    entityFileName = "BaseEntity.cs";
             }
             
             if (shouldLevelGenerator) {
@@ -347,12 +356,17 @@ public class ScriptGenerator {
             
             String startFileName = "/resources/gameobject/start.cs";
             String middleFileName = "/resources/gameobject/middle.cs";
-            if (scriptType == ScriptType.Tilemap) {
-                startFileName = "/resources/tilemap/start.cs";
-                middleFileName = "/resources/tilemap/middle.cs";
+            switch (scriptType) {
+                case Tilemap:
+                    startFileName = "/resources/tilemap/start.cs";
+                    middleFileName = "/resources/tilemap/middle.cs";
+                    break;
+                default:
+                    startFileName = "/resources/mixed/start.cs";
+                    middleFileName = "/resources/mixed/middle.cs";
             }
             
-            // The LevelGenerator Sctipt
+            // The LevelGenerator Script
             //get the start and end text
             StringBuilder start = readResource(startFileName);
             StringBuilder middle = readResource(middleFileName);
@@ -395,12 +409,22 @@ public class ScriptGenerator {
                 formattedTypes = new ArrayList();
                 //add a single element called entities that will hold all the
                 //entities in the project.
-                if (scriptType == ScriptType.GameObject) {
-                    types.add("Entities");
-                    formattedTypes.add("entities");
-                } else {
-                    types.add("Tile Entities");
-                    formattedTypes.add("tileEntities");
+                switch (scriptType) {
+                    case GameObject:
+                        types.add("GameObject Entities");
+                        formattedTypes.add("gameObjectEntities");
+                        break;
+                    case Tilemap:
+                        types.add("Tile Entities");
+                        formattedTypes.add("tileEntities");
+                        break;
+                    default: //Mixed
+                        //Mixed needs both
+                        types.add("Tile Entities");
+                        types.add("GameObject Entities");
+                        
+                        formattedTypes.add("tileEntities");
+                        formattedTypes.add("gameObjectEntities");
                 }
             }
             
@@ -647,6 +671,7 @@ public class ScriptGenerator {
             case GameObject:
                 dialog.getGameObjectScriptsPanel().setVisible(true);
                 dialog.getTileScriptsPanel().setVisible(false);
+                dialog.getMixedScriptsPanel().setVisible(false);
 
                 dialog.getGridSizePanel().setVisible(true);
                 dialog.getCellSizeGapPanel().setVisible(false);
@@ -654,12 +679,18 @@ public class ScriptGenerator {
             case Tilemap:
                 dialog.getGameObjectScriptsPanel().setVisible(false);
                 dialog.getTileScriptsPanel().setVisible(true);
+                dialog.getMixedScriptsPanel().setVisible(false);
 
                 dialog.getGridSizePanel().setVisible(false);
                 dialog.getCellSizeGapPanel().setVisible(true);
                 break;
             default:
+                dialog.getGameObjectScriptsPanel().setVisible(false);
+                dialog.getTileScriptsPanel().setVisible(false);
+                dialog.getMixedScriptsPanel().setVisible(true);
                 
+                dialog.getGridSizePanel().setVisible(true);
+                dialog.getCellSizeGapPanel().setVisible(true);
         }
     }
 
