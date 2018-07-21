@@ -430,7 +430,7 @@ public class ScriptGenerator {
         String entityFileName = "BaseEntity.cs";
         
         if (shouldLevelGenerator) {
-            StringBuilder levelGenerator = getLevelGeneratorText(imageFolder);
+            StringBuilder levelGenerator = getLevelGeneratorTextForMixed(imageFolder);
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
@@ -444,6 +444,88 @@ public class ScriptGenerator {
             createFile(destinationFolder, entityFileName, entity.toString());
         }
         return true;
+    }
+    
+    /**
+     * Generates the text for the GameObjectLevelGenerator script using all of
+     * the entities.
+     * @param imageFolder the folder that holds images for analysis
+     * @return The text for the LevelGenerator.cs file. Null in the odd
+     * circumstance that the user wants to use image analysis but the
+     * folder specified does not contain any images.
+     */
+    private StringBuilder getLevelGeneratorTextForMixed(File imageFolder) {
+        try {
+            
+            // The LevelGenerator Script
+            //get the start and end text
+            StringBuilder start = readResource("/resources/mixed/start.cs");
+            StringBuilder middle = readResource("/resources/mixed/middle.cs");
+            
+            //holds the entities to generate scripts with
+            List<Entity> projectEntities = getProjectEntities(imageFolder);
+            if (projectEntities == null) {
+                return null;
+            }
+            
+            List<String> tileTypes;
+            List<String> formattedTileTypes = new ArrayList();
+            
+            List<String> gameObjectTypes;
+            List<String> formattedGameObjectTypes = new ArrayList();
+            
+            //if the user wants to organize by type
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                //set types to be all the types in the project
+                tileTypes = project.getTypes();
+                //cycle through all the types
+                for (String type : tileTypes) {
+                    //add the formatted version
+                    formattedTileTypes.add(formatType(type));
+                }
+            } else {
+                //initialize the types list
+                tileTypes = new ArrayList();
+                tileTypes.add("Tile Entities");
+                formattedTileTypes.add("tileEntities");
+            }
+            
+            List<StringBuilder> entitySBs 
+                    = constructEntityStringBuilder(tileTypes, projectEntities);
+            
+            //this will hold the final text of the file
+            StringBuilder complete = new StringBuilder();
+            //add on the start of the file
+            complete.append(start);
+            
+            //add on the gridSize
+            addGridSizeToComplete(complete);
+            
+            //loop through all the types
+            for (int i = 0; i < tileTypes.size(); i++) {
+                //add the array of Entities with a title matching the type
+                addTypeToCompleteSB(
+                        complete, 
+                        entitySBs.get(i), 
+                        tileTypes.get(i), 
+                        formattedTileTypes.get(i),
+                        classType);
+            }
+            //add on the middle of the file
+            complete.append(middle);
+            //add on the loops
+            addLoopForEachTypeToCompleteSB(complete, 
+                    tileTypes, 
+                    formattedTileTypes,
+                    classType + " entity",
+                    placeFunction);
+            //return the completed text
+            return complete;
+        } catch (IOException ex) {
+            System.err.println("I/O Exception: Could not read file\n"
+                    + ex.toString());
+            return null;
+        }
     }
     
     //MARK: All
