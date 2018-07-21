@@ -277,8 +277,7 @@ public class ScriptGenerator {
                     "GameObject Entities",
                     "gameObjectEntities",
                     "GameObjectEntity",
-                    "instantiateIfMatch(entity, pixelColor, x, y);",
-                    Utils.ARRAY_NAME_EXTENSION);
+                    "instantiateIfMatch(entity, pixelColor, x, y);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
@@ -309,8 +308,7 @@ public class ScriptGenerator {
             String singleType,
             String singleFormattedType,
             String classType,
-            String placeFunction,
-            String arrayNameExtension) {
+            String placeFunction) {
         try {
             
             // The LevelGenerator Script
@@ -361,8 +359,7 @@ public class ScriptGenerator {
                         entitySBs.get(i), 
                         types.get(i), 
                         formattedTypes.get(i),
-                        classType,
-                        Utils.ARRAY_NAME_EXTENSION);
+                        classType);
             }
             //add on the middle of the file
             complete.append(middle);
@@ -372,7 +369,6 @@ public class ScriptGenerator {
                     types, 
                     formattedTypes,
                     classType + " entity",
-                    arrayNameExtension,
                     placeFunction);
             //return the completed text
             return complete;
@@ -405,7 +401,6 @@ public class ScriptGenerator {
             List<String> types,
             List<String> formattedTypes,
             String itemType,
-            String arrayNameExtension,
             String placeFunction) {
         for (int i = 0; i < types.size(); i++) {
             complete.append("\t\tforeach (");
@@ -418,7 +413,7 @@ public class ScriptGenerator {
             //if the user wants to group entities by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //add on the word "Entities" to the name of the array
-                complete.append(arrayNameExtension);   
+                complete.append(Utils.ARRAY_NAME_EXTENSION);   
             }
             complete.append(") {\n\t\t\t");
             complete.append(placeFunction);
@@ -444,17 +439,13 @@ public class ScriptGenerator {
      * array for
      * @param classType should be "GameObjectEntity", "TileEntity",
      * "TEntity", or "GOEntity".
-     * @param arrayNameExtension if the user wants to group entities by type,
-     * then this is added to the end of each array. Example:
-     * Utils.ARRAY_NAME_EXTENSION
      */
     private void addTypeToCompleteSB(
             StringBuilder complete,
             StringBuilder entitySB,
             String type,
             String formattedType,
-            String classType,
-            String arrayNameExtension) {
+            String classType) {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
         complete.append("[Header(\"");
         complete.append(type);
@@ -469,7 +460,7 @@ public class ScriptGenerator {
         
         //if the user wants to group entities by type
         if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-            complete.append(arrayNameExtension);
+            complete.append(Utils.ARRAY_NAME_EXTENSION);
         }
         
         complete.append(" = new ");
@@ -500,8 +491,7 @@ public class ScriptGenerator {
                     "Tile Entities",
                     "tileEntities",
                     "TileEntity",
-                    "placeTileIfMatch(entity, pixelColor, x, y, index);",
-                    Utils.ARRAY_NAME_EXTENSION);
+                    "placeTileIfMatch(entity, pixelColor, x, y, index);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
