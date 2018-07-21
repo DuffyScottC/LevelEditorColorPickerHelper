@@ -57,13 +57,10 @@ public class ScriptGenerator {
     
     private final Project project;
     private final ScriptGeneratorDialog dialog;
-    private List<String>  types;
-    private List<String>  formattedTypes;
     private ScriptType scriptType = ScriptType.GameObject;
     
     //GameObject
     private double gridSize = 1;
-    
     //Tilemap
     private Three cellSize = new Three(1, 1, 0);
     private Three cellGap = new Three(0, 0, 0);
@@ -137,6 +134,7 @@ public class ScriptGenerator {
         });
         
         dialog.getGenerateButton().addActionListener((ActionEvent e) -> {
+            //Get gridSize
             try {
                 String gridText = dialog.getGridSizeTextField().getText();
                 //get the value of the grid size field
@@ -153,6 +151,7 @@ public class ScriptGenerator {
                 return;
             }
             
+            //Get Cell Size and Cell Gap
             try {
                 //get the values of the cell size field
                 double sx = Double.valueOf(dialog.getxCellSizeTextField().getText());
@@ -269,33 +268,27 @@ public class ScriptGenerator {
     //MARK: GameObject ----------------------------------------------------
     private boolean generateGameObjectScripts(File destinationFolder, 
             File imageFolder) throws IOException {
-        boolean shouldLevelGenerator 
-                = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
-        boolean shouldEntity = dialog.getGameObjectEntityCheckBox().isSelected();
-        String levelGeneratorFileName = "GameObjectLevelGenerator.cs";
-        String entityResourceFileName = "/resources/gameobject/GameObjectEntity.cs";
-        String entityFileName = "GameObjectEntity.cs";
         
-        if (shouldLevelGenerator) {
+        if (dialog.getGameObjectLevelGeneratorCheckBox().isSelected()) {
             StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
                 return false;
             }
-            createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
+            createFile(destinationFolder, "GameObjectLevelGenerator.cs", levelGenerator.toString());
         }
 
-        if (shouldEntity) {
-            StringBuilder entity = readResource(entityResourceFileName);
-            createFile(destinationFolder, entityFileName, entity.toString());
+        if (dialog.getGameObjectEntityCheckBox().isSelected()) {
+            StringBuilder entity = readResource("/resources/gameobject/GameObjectEntity.cs");
+            createFile(destinationFolder, "GameObjectEntity.cs", entity.toString());
         }
         return true;
     }
     
     /**
-     * Generates the text for the LevelGenerator script using all of the
-     * entities.
+     * Generates the text for the GameObjectLevelGenerator script using all of
+     * the entities.
      * @param imageFolder the folder that holds images for analysis
      * @return The text for the LevelGenerator.cs file. Null in the odd
      * circumstance that the user wants to use image analysis but the
@@ -306,15 +299,6 @@ public class ScriptGenerator {
             
             String startFileName = "/resources/gameobject/start.cs";
             String middleFileName = "/resources/gameobject/middle.cs";
-            switch (scriptType) {
-                case Tilemap:
-                    startFileName = "/resources/tilemap/start.cs";
-                    middleFileName = "/resources/tilemap/middle.cs";
-                    break;
-                default:
-                    startFileName = "/resources/mixed/start.cs";
-                    middleFileName = "/resources/mixed/middle.cs";
-            }
             
             // The LevelGenerator Script
             //get the start and end text
@@ -322,86 +306,32 @@ public class ScriptGenerator {
             StringBuilder middle = readResource(middleFileName);
             
             //holds the entities to generate scripts with
-            List<Entity> projectEntities;
-            //if the user wants to use images
-            if (dialog.getUseImagesCheckBox().isSelected()) {
-                //use only the correct entities
-                projectEntities 
-                        = getUsedEntities(imageFolder, project.getEntities());
-                if (projectEntities == null) {
-                    JOptionPane.showMessageDialog(dialog, 
-                            "No images could be found in\n" + 
-                                    imageFolder.toString());
-                    return null;
-                }
-            } else {
-                //get the project's entities
-                projectEntities = project.getEntities();
+            List<Entity> projectEntities = getProjectEntities(imageFolder);
+            if (projectEntities == null) {
+                return null;
             }
             
-            
-            
-            //get whether the user wants to group entities by type
-            boolean groupByType 
-                    = dialog.getGroupEntitiesByTypeCheckBox().isSelected();
+            List<String> types;
+            List<String> formattedTypes = new ArrayList();
             //if the user wants to organize by type
-            if (groupByType) {
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //set types to be all the types in the project
                 types = project.getTypes();
                 //cycle through all the types
                 for (String type : types) {
+                    //add the formatted version
                     formattedTypes.add(formatType(type));
                 }
             } else {
-                //if the user does not want to organize by type
                 //initialize the types list
                 types = new ArrayList();
-                formattedTypes = new ArrayList();
-                //add a single element called entities that will hold all the
-                //entities in the project.
-                switch (scriptType) {
-                    case GameObject:
-                        types.add("GameObject Entities");
-                        formattedTypes.add("gameObjectEntities");
-                        break;
-                    case Tilemap:
-                        types.add("Tile Entities");
-                        formattedTypes.add("tileEntities");
-                        break;
-                    default: //Mixed
-                        //Mixed needs both
-                        types.add("Tile Entities");
-                        types.add("GameObject Entities");
-                        
-                        formattedTypes.add("tileEntities");
-                        formattedTypes.add("gameObjectEntities");
-                }
+                //add a single element that will hold all the entities
+                types.add("GameObject Entities");
+                formattedTypes.add("gameObjectEntities");
             }
             
-            List<StringBuilder> entityObjectSBs = new ArrayList();
-            //initialize a StringBuilder for each type in the project and
-            //initialize the number of entities in each type to zero
-            for (int t = 0; t < types.size(); t++) {
-                entityObjectSBs.add(new StringBuilder());
-            }
-            
-            //loop through all the entities in the project
-            for (int i = 0; i < projectEntities.size(); i++) {
-                //true if this is the last iteration
-                boolean last = (i == projectEntities.size() - 1);
-                //get the entity at index i
-                Entity e = projectEntities.get(i);
-                //initialize the typeIndex to 0
-                int typeIndex = 0;
-                //if the user wants to group by type
-                if (groupByType) {
-                    //get the index of this entity's type
-                    typeIndex = e.getTypeIndex();
-                } //leave it at 0 if the user is not grouping by type
-                //put e in the StringBuilders corrosponding to the typeIndex
-                addEntityToStringBuilder(e, 
-                        entityObjectSBs.get(typeIndex), last);
-            }
+            List<StringBuilder> entitySBs 
+                    = constructEntityStringBuilder(types, projectEntities);
             
             //this will hold the final text of the file
             StringBuilder complete = new StringBuilder();
@@ -409,40 +339,22 @@ public class ScriptGenerator {
             complete.append(start);
             
             if (scriptType == ScriptType.GameObject) {
-                // Add on the gridSize variable
-                complete.append("\tpublic float gridSize = ");
-                complete.append(gridSize);
-                complete.append("f;\n");
+                addGridSizeToComplete(complete);
             } else {
-                //add on the cellSize variable
-                complete.append("\tpublic Vector3 cellSize = new Vector3(");
-                complete.append(cellSize.getX());
-                complete.append("f, ");
-                complete.append(cellSize.getY());
-                complete.append("f, ");
-                complete.append(cellSize.getZ());
-                complete.append("f);\n");
-                //add on the cellGap variable
-                complete.append("\tpublic Vector3 cellGap = new Vector3(");
-                complete.append(cellGap.getX());
-                complete.append("f, ");
-                complete.append(cellGap.getY());
-                complete.append("f, ");
-                complete.append(cellGap.getZ());
-                complete.append("f);\n");
+                addCellSizeAndCellGapVariablesToComplete(complete);
             }
             
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
                 //for each type, add the array of Entity objects with the title
                 //matching the corrosponding type
-                addTypeToCompleteSB(i, 
-                        entityObjectSBs.get(i), complete);
+                addTypeToCompleteSB(
+                        i, entitySBs.get(i), complete, types, formattedTypes);
             }
             //add on the middle of the file
             complete.append(middle);
             //add on the loops
-            addLoopForEachTypeToCompleteSB(complete);
+            addLoopForEachTypeToCompleteSB(complete, types, formattedTypes);
             //return the completed text
             return complete;
         } catch (IOException ex) {
@@ -457,7 +369,10 @@ public class ScriptGenerator {
      * @param types All the types in the LevelGenerator script
      * @param complete the complete StringBuilder
      */
-    private void addLoopForEachTypeToCompleteSB(StringBuilder complete) {
+    private void addLoopForEachTypeToCompleteSB(
+            StringBuilder complete,
+            List<String> types,
+            List<String> formattedTypes) {
         for (int i = 0; i < types.size(); i++) {
             complete.append("\t\tforeach (");
             if (scriptType == ScriptType.GameObject) {
@@ -498,7 +413,9 @@ public class ScriptGenerator {
      */
     private void addTypeToCompleteSB(int typeIndex, 
             StringBuilder entityObjects, 
-            StringBuilder complete) {
+            StringBuilder complete,
+            List<String> types,
+            List<String> formattedTypes) {
         //add a comment discribing the type
         complete.append("\t//");
         complete.append(types.get(typeIndex));
@@ -534,51 +451,6 @@ public class ScriptGenerator {
         
         //add a new line between each type
         complete.append("\n");
-    }
-    
-    /**
-     * Adds the passed in Entity to the entityObject StringBuilder,
-     * including a comma afterwards unless told this is the last iteration.
-     * @param entity The Entity to add
-     * @param entityObjects the entityObjects StringBuilder
-     * @param last Specifies whether this is the last iteration
-     */
-    private void addEntityToStringBuilder(Entity entity, 
-            StringBuilder entityObjects, boolean last) {
-        /*
-        The elements in the entityObjects array look like:
-            new Entity("Name", new Color32(0, 0, 0, 255)),
-        but the last element has no comma at the end
-        */
-
-        //Add to the entityObjects array
-        entityObjects.append("\t\tnew ");
-        if (scriptType == ScriptType.GameObject) {
-            entityObjects.append("Entity");
-        } else {
-            entityObjects.append("TileEntity");
-        }
-        entityObjects.append("(\"");
-        entityObjects.append(entity.getName());
-        entityObjects.append("\", new Color32(");
-        entityObjects.append(entity.getR());
-        entityObjects.append(", ");
-        entityObjects.append(entity.getG());
-        entityObjects.append(", ");
-        entityObjects.append(entity.getB());
-        entityObjects.append(", ");
-        entityObjects.append(entity.getA());
-        if (entity.getOffset().equals(Offset.zero)) { //if it's just (0,0)
-            entityObjects.append("))"); //use the color-only constructor
-        } else { //if it's not (0,0)
-            entityObjects.append("), new Vector2");
-            entityObjects.append(entity.getOffset().toString()); //e.g. "(15, 5)"
-            entityObjects.append(")");
-        }
-        if (!last) { //if not the last
-            entityObjects.append(",");
-        }
-        entityObjects.append("\n");
     }
     
     //MARK: Tile ----------------------------------------------------------
@@ -637,6 +509,132 @@ public class ScriptGenerator {
     }
     
     //MARK: All
+    /**
+     * Constructs the comma-separated list of entity objects (be they
+     * GameObjectEntities, TileEntities, TEntities, or GOEntities, depending
+     * on the type of entity (Tile or GameObject) and on the ScriptType) and
+     * returns that list as a StringBuilder object.
+     * @param types The types that the entities are to be grouped by.
+     * @param projectEntities The entities to be added to the StringBuilder.
+     * @return A StringBuilder object with the comma-separated list of
+     * entity objects.
+     */
+    private List<StringBuilder> constructEntityStringBuilder(
+            List<String> types, List<Entity> projectEntities) {
+        
+        List<StringBuilder> entitySBs = new ArrayList();
+        //initialize an empty StringBuilder for each type
+        for (int t = 0; t < types.size(); t++) {
+            entitySBs.add(new StringBuilder());
+        }
+
+        //loop through all the entities in the project
+        for (int i = 0; i < projectEntities.size(); i++) {
+            boolean lastIteration = (i == projectEntities.size() - 1);
+            Entity e = projectEntities.get(i);
+            int typeIndex = determineTypeIndex(e);
+            //put e in the StringBuilders corrosponding to the typeIndex
+            addEntityToStringBuilder(e, 
+                    entitySBs.get(typeIndex), lastIteration);
+        }
+        
+        return entitySBs;
+    }
+    
+    /**
+     * Adds the passed in Entity to the entitySB StringBuilder as
+     * GameObjectEntities, TileEntities, TEntities, or GOEntities, depending
+     * on the type of entity (Tile or GameObject) and on the ScriptType.
+     * Includes a comma afterwards unless told this is the last iteration.
+     * @param entity The Entity to add
+     * @param entitySB the entitySB StringBuilder that will hold the list
+     * of comma-separated Entity objects as we continue to call this function.
+     * @param lastIteration Specifies whether this is the last iteration. If
+     * not, add a comma. If so, forgo the comma.
+     */
+    private void addEntityToStringBuilder(Entity entity, 
+            StringBuilder entitySB, boolean lastIteration) {
+        /*
+        Depending on ScriptType, entities look like this:
+            new GameObjectEntity("Barrier", new Color32(0, 0, 0, 255)),
+            new TileEntity("Barrier", new Color32(0, 0, 0, 255)),
+            new TEntity("Barrier", new Color32(0, 0, 0, 255)),
+        Everything is the same except for the name of the class.
+        */
+        
+        //Add to the entityObjects array
+        entitySB.append("\t\tnew ");
+        switch (scriptType) {
+            case GameObject:
+                entitySB.append("");
+                break;
+            case Tilemap:
+                entitySB.append("");
+                break;
+            default:
+                entitySB.append("");
+        }
+        entitySB.append("(\"");
+        entitySB.append(entity.getName());
+        entitySB.append("\", new Color32(");
+        entitySB.append(entity.getR());
+        entitySB.append(", ");
+        entitySB.append(entity.getG());
+        entitySB.append(", ");
+        entitySB.append(entity.getB());
+        entitySB.append(", ");
+        entitySB.append(entity.getA());
+        if (entity.getOffset().equals(Offset.zero)) { //if it's just (0,0)
+            entitySB.append("))"); //use the color-only constructor
+        } else { //if it's not (0,0)
+            entitySB.append("), new Vector2");
+            entitySB.append(entity.getOffset().toString()); //e.g. "(15, 5)"
+            entitySB.append(")");
+        }
+        if (!lastIteration) { //if not the last
+            entitySB.append(",");
+        }
+        entitySB.append("\n");
+    }
+    
+    /**
+     * Uses the gridSize field to create a float that represents this value
+     * in C# and adds it to the "complete" StringBuilder.
+     * @param complete The "complete" StringBuilder
+     */
+    private void addGridSizeToComplete(StringBuilder complete) {
+        // Add on the gridSize variable
+        complete.append("\tpublic float gridSize = ");
+        complete.append(gridSize);
+        complete.append("f;\n");
+    }
+    
+    /**
+     * Uses the cellSize and cellGap fields to create a set of Vector3 objects
+     * that represent these values in C# and adds them to the "complete"
+     * StringBuilder.
+     * @param complete The "complete" StringBuilder
+     */
+    private void addCellSizeAndCellGapVariablesToComplete(
+            StringBuilder complete) {
+        //add on the cellSize variable
+        complete.append("\tpublic Vector3 cellSize = new Vector3(");
+        complete.append(cellSize.getX());
+        complete.append("f, ");
+        complete.append(cellSize.getY());
+        complete.append("f, ");
+        complete.append(cellSize.getZ());
+        complete.append("f);\n");
+        //add on the cellGap variable
+        complete.append("\tpublic Vector3 cellGap = new Vector3(");
+        complete.append(cellGap.getX());
+        complete.append("f, ");
+        complete.append(cellGap.getY());
+        complete.append("f, ");
+        complete.append(cellGap.getZ());
+        complete.append("f);\n");
+    }
+    
     /**
      * Creates the file at the given destination with the given name and the
      * given contents.
@@ -812,6 +810,35 @@ public class ScriptGenerator {
         
         return destination;
     }
+    
+    /**
+     * Gets a list of entities to use for generating scripts
+     * @param imageFolder The image folder, in case the user wants to use
+     * images.
+     * @return A list of entities to generate scripts for. Null if the user
+     * wants to use images, but no images could be found.
+     */
+    private List<Entity> getProjectEntities(File imageFolder) {
+        //if the user wants to use images
+        if (dialog.getUseImagesCheckBox().isSelected()) {
+            //use only the correct entities
+            List<Entity> projectEntities 
+                    = getUsedEntities(imageFolder, project.getEntities());
+            //if no image files were found
+            if (projectEntities == null) {
+                JOptionPane.showMessageDialog(dialog, 
+                        "No images could be found in\n" + 
+                                imageFolder.toString());
+                return null;
+            } else {
+                //otherwise return the used entities
+                return projectEntities;
+            }
+        } else {
+            //get the project's entities
+            return project.getEntities();
+        }
+    }
 
     //MARK: Image Analysis
     /**
@@ -928,5 +955,24 @@ public class ScriptGenerator {
                             + imageFile.toString() + "\n" + ex.toString());
             return null;
         }
+    }
+    
+    /**
+     * Convenience method to improve readability and reduce duplicate code.
+     * Returns the entity's typeIndex if the user wants to group by type,
+     * or 0 if the user does not want to group by type.
+     * @param entity The entity for which we might need it's typeIndex, but
+     * only if the user wants to group by type.
+     * @return the entity's typeIndex if the user wants to group by type,
+     * or 0 if the user does not want to group by type.
+     */
+    private int determineTypeIndex(Entity entity) {
+        //if the user wants to group by type
+        if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+            //get the index of this entity's type
+            return entity.getTypeIndex();
+        } 
+        //leave it at 0 if the user is not grouping by type
+        return 0;
     }
 }
