@@ -46,7 +46,6 @@ public class Utils {
     public static final int LIST_ICON_DIM = 32;
     
     public static final String ARRAY_NAME_EXTENSION = "Entities";
-    public static final String ARRAY_TILE_NAME_EXTENSION = "Entities";
     
     public static final String EDIT_TYPES_ITEM = "Edit...";
     

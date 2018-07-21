@@ -270,7 +270,15 @@ public class ScriptGenerator {
             File imageFolder) throws IOException {
         
         if (dialog.getGameObjectLevelGeneratorCheckBox().isSelected()) {
-            StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
+            StringBuilder levelGenerator = getLevelGeneratorText(
+                    imageFolder,
+                    "/resources/gameobject/start.cs",
+                    "/resources/gameobject/middle.cs",
+                    "GameObject Entities",
+                    "gameObjectEntities",
+                    "GameObjectEntity",
+                    "instantiateIfMatch(entity, pixelColor, x, y);",
+                    Utils.ARRAY_NAME_EXTENSION);
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
@@ -294,11 +302,16 @@ public class ScriptGenerator {
      * circumstance that the user wants to use image analysis but the
      * folder specified does not contain any images.
      */
-    private StringBuilder getGameObjectLevelGeneratorText(File imageFolder) {
+    private StringBuilder getLevelGeneratorText(
+            File imageFolder,
+            String startFileName,
+            String middleFileName,
+            String singleType,
+            String singleFormattedType,
+            String classType,
+            String placeFunction,
+            String arrayNameExtension) {
         try {
-            
-            String startFileName = "/resources/gameobject/start.cs";
-            String middleFileName = "/resources/gameobject/middle.cs";
             
             // The LevelGenerator Script
             //get the start and end text
@@ -325,9 +338,8 @@ public class ScriptGenerator {
             } else {
                 //initialize the types list
                 types = new ArrayList();
-                //add a single element that will hold all the entities
-                types.add("GameObject Entities");
-                formattedTypes.add("gameObjectEntities");
+                types.add(singleType);
+                formattedTypes.add(singleFormattedType);
             }
             
             List<StringBuilder> entitySBs 
@@ -349,7 +361,7 @@ public class ScriptGenerator {
                         entitySBs.get(i), 
                         types.get(i), 
                         formattedTypes.get(i),
-                        "GameObjectEntity",
+                        classType,
                         Utils.ARRAY_NAME_EXTENSION);
             }
             //add on the middle of the file
@@ -359,9 +371,9 @@ public class ScriptGenerator {
                     complete, 
                     types, 
                     formattedTypes,
-                    "GameObjectEntity entity",
-                    Utils.ARRAY_NAME_EXTENSION,
-                    "instantiateIfMatch(entity, pixelColor, x, y);");
+                    classType + " entity",
+                    arrayNameExtension,
+                    placeFunction);
             //return the completed text
             return complete;
         } catch (IOException ex) {
@@ -481,7 +493,15 @@ public class ScriptGenerator {
         String entityFileName = "TileEntity.cs";
         
         if (shouldLevelGenerator) {
-            StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
+            StringBuilder levelGenerator = getLevelGeneratorText(
+                    imageFolder,
+                    "/resources/tilemap/start.cs",
+                    "/resources/tilemap/middle.cs",
+                    "Tile Entities",
+                    "tileEntities",
+                    "TileEntity",
+                    "placeTileIfMatch(entity, pixelColor, x, y, index);",
+                    Utils.ARRAY_NAME_EXTENSION);
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
@@ -509,7 +529,7 @@ public class ScriptGenerator {
         String entityFileName = "BaseEntity.cs";
         
         if (shouldLevelGenerator) {
-            StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
+            StringBuilder levelGenerator = getLevelGeneratorText(imageFolder);
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
                 //there was a problem
