@@ -39,14 +39,14 @@ enum ScriptType {
 }
 
 /*
-    switch (scriptType) {
-        case GameObject:
-            break;
-        case Tilemap:
-            break;
-        default:
+        switch (scriptType) {
+            case GameObject:
+                break;
+            case Tilemap:
+                break;
+            default:
 
-    }
+        }
 */
 
 /**
@@ -338,23 +338,30 @@ public class ScriptGenerator {
             //add on the start of the file
             complete.append(start);
             
-            if (scriptType == ScriptType.GameObject) {
-                addGridSizeToComplete(complete);
-            } else {
-                addCellSizeAndCellGapVariablesToComplete(complete);
-            }
+            //add on the gridSize
+            addGridSizeToComplete(complete);
             
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
-                //for each type, add the array of Entity objects with the title
-                //matching the corrosponding type
+                //add the array of Entities with a title matching the type
                 addTypeToCompleteSB(
-                        i, entitySBs.get(i), complete, types, formattedTypes);
+                        complete, 
+                        entitySBs.get(i), 
+                        types.get(i), 
+                        formattedTypes.get(i),
+                        "GameObjectEntity",
+                        Utils.ARRAY_NAME_EXTENSION);
             }
             //add on the middle of the file
             complete.append(middle);
             //add on the loops
-            addLoopForEachTypeToCompleteSB(complete, types, formattedTypes);
+            addLoopForEachTypeToCompleteSB(
+                    complete, 
+                    types, 
+                    formattedTypes,
+                    "GameObjectEntity entity",
+                    Utils.ARRAY_NAME_EXTENSION,
+                    "instantiateIfMatch(entity, pixelColor, x, y);");
             //return the completed text
             return complete;
         } catch (IOException ex) {
@@ -368,18 +375,29 @@ public class ScriptGenerator {
      * Creates a for loop for each type array in the LevelGenerator script.
      * @param types All the types in the LevelGenerator script
      * @param complete the complete StringBuilder
+     * @param itemType e.g. "TileEntity entity" or "GOEntity entity"
+     * @param arrayNameExtension if the user wants to group entities by type, 
+     * then this is added to the end of each array. Example: 
+     * Utils.ARRAY_NAME_EXTENSION
+     * @param placeFunction e.g. 
+     * (for GameObject)
+     * "instantiateIfMatch(entity, pixelColor, x, y);", or
+     * (for Tilemap)
+     * "placeTileIfMatch(entity, pixelColor, x, y, index);", or
+     * (for Mixed)
+     * "placeTileIfColorMatches(entity, pixelColor, x, y, index);", or
+     * "placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);"
      */
     private void addLoopForEachTypeToCompleteSB(
             StringBuilder complete,
             List<String> types,
-            List<String> formattedTypes) {
+            List<String> formattedTypes,
+            String itemType,
+            String arrayNameExtension,
+            String placeFunction) {
         for (int i = 0; i < types.size(); i++) {
             complete.append("\t\tforeach (");
-            if (scriptType == ScriptType.GameObject) {
-                complete.append("Entity entity");
-            } else {
-                complete.append("TileEntity tileEntity");
-            }
+            complete.append(itemType);
             complete.append(" in ");
             
             //use the formatted type name as a variable name
@@ -388,15 +406,11 @@ public class ScriptGenerator {
             //if the user wants to group entities by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //add on the word "Entities" to the name of the array
-                complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                complete.append(arrayNameExtension);   
             }
             complete.append(") {\n\t\t\t");
-            if (scriptType == ScriptType.GameObject) {
-                complete.append("instantiateIfMatch(entity, pixelColor, x, y);\n");
-            } else {
-                complete.append("placeTileIfMatch(tileEntity, pixelColor, x, y, index);\n");
-            }
-            complete.append("\t\t}\n");
+            complete.append(placeFunction);
+            complete.append("\n\t\t}\n");
         }
         //close the last braces
         complete.append("\t}\n");
@@ -405,48 +419,51 @@ public class ScriptGenerator {
     }
     
     /**
-     * Adds the entityObjects StringBuilder's contents associated
-     * with the given type to the complete StringBuilder.
-     * @param type The name of the type that we're making an array for
-     * @param entityObjects
+     * Adds the entitySB StringBuilder's contents associated with the given
+     * type to the "complete" StringBuilder. This is used to create individual
+     * arrays for each type (if the user wants to group by type) or a single
+     * array for all of the entities (if the user doesn't want to group by
+     * type). This function is called once per array as needed, adding on a
+     * single array to the "complete" StringBuilder every time.
      * @param complete
+     * @param entitySB
+     * @param type The name of the type that we're making an array for
+     * @param formattedType The formatted name of the type that we're making an
+     * array for
+     * @param classType should be "GameObjectEntity", "TileEntity",
+     * "TEntity", or "GOEntity".
+     * @param arrayNameExtension if the user wants to group entities by type,
+     * then this is added to the end of each array. Example:
+     * Utils.ARRAY_NAME_EXTENSION
      */
-    private void addTypeToCompleteSB(int typeIndex, 
-            StringBuilder entityObjects, 
+    private void addTypeToCompleteSB(
             StringBuilder complete,
-            List<String> types,
-            List<String> formattedTypes) {
-        //add a comment discribing the type
-        complete.append("\t//");
-        complete.append(types.get(typeIndex));
-
-        if (scriptType == ScriptType.GameObject) {
-            complete.append("\n\tpublic Entity[] ");
-        } else {
-            complete.append("\n\tpublic TileEntity[] ");
-        }
+            StringBuilder entitySB,
+            String type,
+            String formattedType,
+            String classType,
+            String arrayNameExtension) {
+        //add a Header discribing the type (e.g. [Header("Enemy Entities")])
+        complete.append("[Header(\"");
+        complete.append(type);
+        complete.append(" Entities\")]");
+        
+        complete.append("\n\tpublic ");
+        complete.append(classType);
+        complete.append("[] ");
         
         //use the formatted type name as a variable name
-        complete.append(formattedTypes.get(typeIndex));
+        complete.append(formattedType);
         
         //if the user wants to group entities by type
         if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-            if (scriptType == ScriptType.GameObject) {
-                //add on the word "Entities" to the name of the array
-                complete.append(Utils.ARRAY_NAME_EXTENSION);
-            }  else {
-                //add on the word "TileEntities" to the name of the array
-                complete.append(Utils.ARRAY_TILE_NAME_EXTENSION);
-            }
+            complete.append(arrayNameExtension);
         }
+        
         complete.append(" = new ");
-        if (scriptType == ScriptType.GameObject) {
-            complete.append("Entity");
-        }  else {
-            complete.append("TileEntity");
-        }
+        complete.append(classType);
         complete.append("[] {\n");
-        complete.append(entityObjects);
+        complete.append(entitySB);
         complete.append("\t};\n");
         
         //add a new line between each type
