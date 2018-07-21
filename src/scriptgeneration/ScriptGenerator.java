@@ -294,92 +294,6 @@ public class ScriptGenerator {
     }
     
     /**
-     * Generates the text for the GameObjectLevelGenerator script using all of
-     * the entities.
-     * @param imageFolder the folder that holds images for analysis
-     * @return The text for the LevelGenerator.cs file. Null in the odd
-     * circumstance that the user wants to use image analysis but the
-     * folder specified does not contain any images.
-     */
-    private StringBuilder getLevelGeneratorText(
-            File imageFolder,
-            String startFileName,
-            String middleFileName,
-            String singleType,
-            String singleFormattedType,
-            String classType,
-            String placeFunction) {
-        try {
-            
-            // The LevelGenerator Script
-            //get the start and end text
-            StringBuilder start = readResource(startFileName);
-            StringBuilder middle = readResource(middleFileName);
-            
-            //holds the entities to generate scripts with
-            List<Entity> projectEntities = getProjectEntities(imageFolder);
-            if (projectEntities == null) {
-                return null;
-            }
-            
-            List<String> types;
-            List<String> formattedTypes = new ArrayList();
-            //if the user wants to organize by type
-            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                //set types to be all the types in the project
-                types = project.getTypes();
-                //cycle through all the types
-                for (String type : types) {
-                    //add the formatted version
-                    formattedTypes.add(formatType(type));
-                }
-            } else {
-                //initialize the types list
-                types = new ArrayList();
-                types.add(singleType);
-                formattedTypes.add(singleFormattedType);
-            }
-            
-            List<StringBuilder> entitySBs 
-                    = constructEntityStringBuilder(types, projectEntities);
-            
-            //this will hold the final text of the file
-            StringBuilder complete = new StringBuilder();
-            //add on the start of the file
-            complete.append(start);
-            
-            //add on the gridSize
-            addGridSizeToComplete(complete);
-            
-            //loop through all the types
-            for (int i = 0; i < types.size(); i++) {
-                //add the array of Entities with a title matching the type
-                addTypeToCompleteSB(
-                        complete, 
-                        entitySBs.get(i), 
-                        types.get(i), 
-                        formattedTypes.get(i),
-                        classType);
-            }
-            //add on the middle of the file
-            complete.append(middle);
-            //add on the loops
-            addLoopForEachTypeToCompleteSB(
-                    complete, 
-                    types, 
-                    formattedTypes,
-                    classType + " entity",
-                    placeFunction);
-            //return the completed text
-            return complete;
-        } catch (IOException ex) {
-            System.err.println("I/O Exception: Could not read file\n"
-                    + ex.toString());
-            return null;
-        }
-    }
-    
-    /**
      * Creates a for loop for each type array in the LevelGenerator script.
      * @param types All the types in the LevelGenerator script
      * @param complete the complete StringBuilder
@@ -533,6 +447,92 @@ public class ScriptGenerator {
     }
     
     //MARK: All
+    /**
+     * Generates the text for the GameObjectLevelGenerator script using all of
+     * the entities.
+     * @param imageFolder the folder that holds images for analysis
+     * @return The text for the LevelGenerator.cs file. Null in the odd
+     * circumstance that the user wants to use image analysis but the
+     * folder specified does not contain any images.
+     */
+    private StringBuilder getLevelGeneratorText(
+            File imageFolder,
+            String startFileName,
+            String middleFileName,
+            String singleType,
+            String singleFormattedType,
+            String classType,
+            String placeFunction) {
+        try {
+            
+            // The LevelGenerator Script
+            //get the start and end text
+            StringBuilder start = readResource(startFileName);
+            StringBuilder middle = readResource(middleFileName);
+            
+            //holds the entities to generate scripts with
+            List<Entity> projectEntities = getProjectEntities(imageFolder);
+            if (projectEntities == null) {
+                return null;
+            }
+            
+            List<String> types;
+            List<String> formattedTypes = new ArrayList();
+            //if the user wants to organize by type
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                //set types to be all the types in the project
+                types = project.getTypes();
+                //cycle through all the types
+                for (String type : types) {
+                    //add the formatted version
+                    formattedTypes.add(formatType(type));
+                }
+            } else {
+                //initialize the types list
+                types = new ArrayList();
+                types.add(singleType);
+                formattedTypes.add(singleFormattedType);
+            }
+            
+            List<StringBuilder> entitySBs 
+                    = constructEntityStringBuilder(types, projectEntities);
+            
+            //this will hold the final text of the file
+            StringBuilder complete = new StringBuilder();
+            //add on the start of the file
+            complete.append(start);
+            
+            //add on the gridSize
+            addGridSizeToComplete(complete);
+            
+            //loop through all the types
+            for (int i = 0; i < types.size(); i++) {
+                //add the array of Entities with a title matching the type
+                addTypeToCompleteSB(
+                        complete, 
+                        entitySBs.get(i), 
+                        types.get(i), 
+                        formattedTypes.get(i),
+                        classType);
+            }
+            //add on the middle of the file
+            complete.append(middle);
+            //add on the loops
+            addLoopForEachTypeToCompleteSB(
+                    complete, 
+                    types, 
+                    formattedTypes,
+                    classType + " entity",
+                    placeFunction);
+            //return the completed text
+            return complete;
+        } catch (IOException ex) {
+            System.err.println("I/O Exception: Could not read file\n"
+                    + ex.toString());
+            return null;
+        }
+    }
+    
     /**
      * Constructs the comma-separated list of entity objects (be they
      * GameObjectEntities, TileEntities, TEntities, or GOEntities, depending
