@@ -384,9 +384,6 @@ public class ScriptGenerator {
      * @param types All the types in the LevelGenerator script
      * @param complete the complete StringBuilder
      * @param itemType e.g. "TileEntity entity" or "GOEntity entity"
-     * @param arrayNameExtension if the user wants to group entities by type, 
-     * then this is added to the end of each array. Example: 
-     * Utils.ARRAY_NAME_EXTENSION
      * @param placeFunction e.g. 
      * (for GameObject)
      * "instantiateIfMatch(entity, pixelColor, x, y);", or
