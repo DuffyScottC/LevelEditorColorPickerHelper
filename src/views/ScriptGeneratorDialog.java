@@ -59,8 +59,8 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         yCellGapTextField = new javax.swing.JTextField();
         zCellGapTextField = new javax.swing.JTextField();
         gameObjectScriptsPanel = new javax.swing.JPanel();
-        levelGeneratorCheckBox = new javax.swing.JCheckBox();
-        entityCheckBox = new javax.swing.JCheckBox();
+        gameObjectLevelGeneratorCheckBox = new javax.swing.JCheckBox();
+        gameObjectEntityCheckBox = new javax.swing.JCheckBox();
         tileScriptsPanel = new javax.swing.JPanel();
         tileEntityCheckBox = new javax.swing.JCheckBox();
         tileLevelGeneratorCheckBox = new javax.swing.JCheckBox();
@@ -75,6 +75,9 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         destinationPathPanel = new javax.swing.JPanel();
         desitnationFolderTextField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
+        mixedScriptsPanel = new javax.swing.JPanel();
+        baseEntityCheckBox = new javax.swing.JCheckBox();
+        mixedLevelGeneratorCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,7 +86,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         jLabel1.setText("Destination Folder:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(jLabel1, gridBagConstraints);
@@ -91,7 +94,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         groupEntitiesByTypeCheckBox.setText("Group Entities by Type");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 6, 0, 0);
         mainPanel.add(groupEntitiesByTypeCheckBox, gridBagConstraints);
@@ -135,7 +138,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gridSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         gridSizePanelLayout.setVerticalGroup(
             gridSizePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +152,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 16, 0, 0);
@@ -232,16 +235,16 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 16, 0, 0);
         mainPanel.add(cellSizeGapPanel, gridBagConstraints);
 
-        levelGeneratorCheckBox.setSelected(true);
-        levelGeneratorCheckBox.setText("LevelGenerator.cs");
+        gameObjectLevelGeneratorCheckBox.setSelected(true);
+        gameObjectLevelGeneratorCheckBox.setText("GameObjectLevelGenerator.cs");
 
-        entityCheckBox.setSelected(true);
-        entityCheckBox.setText("Entity.cs");
+        gameObjectEntityCheckBox.setSelected(true);
+        gameObjectEntityCheckBox.setText("GameObjectEntity.cs");
 
         javax.swing.GroupLayout gameObjectScriptsPanelLayout = new javax.swing.GroupLayout(gameObjectScriptsPanel);
         gameObjectScriptsPanel.setLayout(gameObjectScriptsPanelLayout);
@@ -250,16 +253,16 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
             .addGroup(gameObjectScriptsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(gameObjectScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(entityCheckBox)
-                    .addComponent(levelGeneratorCheckBox)))
+                    .addComponent(gameObjectEntityCheckBox)
+                    .addComponent(gameObjectLevelGeneratorCheckBox)))
         );
         gameObjectScriptsPanelLayout.setVerticalGroup(
             gameObjectScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gameObjectScriptsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(entityCheckBox)
+                .addComponent(gameObjectEntityCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(levelGeneratorCheckBox)
+                .addComponent(gameObjectLevelGeneratorCheckBox)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -330,7 +333,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
@@ -358,11 +361,45 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(destinationPathPanel, gridBagConstraints);
+
+        baseEntityCheckBox.setSelected(true);
+        baseEntityCheckBox.setText("BaseEntity.cs");
+
+        mixedLevelGeneratorCheckBox.setSelected(true);
+        mixedLevelGeneratorCheckBox.setText("MixedLevelGenerator.cs");
+
+        javax.swing.GroupLayout mixedScriptsPanelLayout = new javax.swing.GroupLayout(mixedScriptsPanel);
+        mixedScriptsPanel.setLayout(mixedScriptsPanelLayout);
+        mixedScriptsPanelLayout.setHorizontalGroup(
+            mixedScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mixedScriptsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mixedScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(baseEntityCheckBox)
+                    .addComponent(mixedLevelGeneratorCheckBox))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        mixedScriptsPanelLayout.setVerticalGroup(
+            mixedScriptsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mixedScriptsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(baseEntityCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mixedLevelGeneratorCheckBox)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
+        mainPanel.add(mixedScriptsPanel, gridBagConstraints);
 
         getContentPane().add(mainPanel, java.awt.BorderLayout.NORTH);
 
@@ -370,13 +407,15 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox baseEntityCheckBox;
     private javax.swing.JButton browseButton;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel cellSizeGapPanel;
     private javax.swing.JTextField desitnationFolderTextField;
     private javax.swing.JPanel destinationPathPanel;
-    private javax.swing.JCheckBox entityCheckBox;
+    private javax.swing.JCheckBox gameObjectEntityCheckBox;
+    private javax.swing.JCheckBox gameObjectLevelGeneratorCheckBox;
     private javax.swing.JPanel gameObjectScriptsPanel;
     private javax.swing.JButton generateButton;
     private javax.swing.JPanel gridSizePanel;
@@ -395,8 +434,9 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JCheckBox levelGeneratorCheckBox;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JCheckBox mixedLevelGeneratorCheckBox;
+    private javax.swing.JPanel mixedScriptsPanel;
     private javax.swing.JCheckBox tileEntityCheckBox;
     private javax.swing.JCheckBox tileLevelGeneratorCheckBox;
     private javax.swing.JPanel tileScriptsPanel;
@@ -426,12 +466,12 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         return generateButton;
     }
 
-    public JCheckBox getEntityCheckBox() {
-        return entityCheckBox;
+    public JCheckBox getGameObjectEntityCheckBox() {
+        return gameObjectEntityCheckBox;
     }
 
-    public JCheckBox getLevelGeneratorCheckBox() {
-        return levelGeneratorCheckBox;
+    public JCheckBox getGameObjectLevelGeneratorCheckBox() {
+        return gameObjectLevelGeneratorCheckBox;
     }
 
     public JCheckBox getGroupEntitiesByTypeCheckBox() {
@@ -504,6 +544,18 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
     public JButton getImageBrowseButton() {
         return imageBrowseButton;
+    }
+
+    public JPanel getMixedScriptsPanel() {
+        return mixedScriptsPanel;
+    }
+
+    public JCheckBox getBaseEntityCheckBox() {
+        return baseEntityCheckBox;
+    }
+
+    public JCheckBox getMixedLevelGeneratorCheckBox() {
+        return mixedLevelGeneratorCheckBox;
     }
     
 }

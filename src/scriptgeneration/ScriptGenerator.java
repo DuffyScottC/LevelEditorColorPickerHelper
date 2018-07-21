@@ -34,8 +34,20 @@ import views.ScriptGeneratorDialog;
 
 enum ScriptType {
     GameObject,
-    Tilemap
+    Tilemap,
+    Mixed
 }
+
+/*
+    switch (scriptType) {
+        case GameObject:
+            break;
+        case Tilemap:
+            break;
+        default:
+
+    }
+*/
 
 /**
  * Handles generating scripts
@@ -50,7 +62,7 @@ public class ScriptGenerator {
     private ScriptType scriptType = ScriptType.GameObject;
     
     //GameObject
-    private double gridSize = 32;
+    private double gridSize = 1;
     
     //Tilemap
     private Three cellSize = new Three(1, 1, 0);
@@ -77,16 +89,22 @@ public class ScriptGenerator {
         typeComboBox.removeAllItems();
         typeComboBox.addItem("GameObject");
         typeComboBox.addItem("Tilemap");
+        typeComboBox.addItem("Mixed");
         
         //initialize the type as GameObject
         chooseType(ScriptType.GameObject);
         
         typeComboBox.addActionListener((ActionEvent e) -> {
             int index = typeComboBox.getSelectedIndex();
-            if (index == 0) { //GameObject
-                chooseType(ScriptType.GameObject);
-            } else { //Tilemap
-                chooseType(ScriptType.Tilemap);
+            switch (index) {
+                case 0:
+                    chooseType(ScriptType.GameObject);
+                    break;
+                case 1:
+                    chooseType(ScriptType.Tilemap);
+                    break;
+                default:
+                    chooseType(ScriptType.Mixed);
             }
         });
         
@@ -194,8 +212,8 @@ public class ScriptGenerator {
             dialog.setVisible(false);
         });
         
-        dialog.getLevelGeneratorCheckBox().addActionListener((ActionEvent e) -> {
-            boolean enabled = dialog.getLevelGeneratorCheckBox().isSelected();
+        dialog.getGameObjectLevelGeneratorCheckBox().addActionListener((ActionEvent e) -> {
+            boolean enabled = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
             //if we are not generating the LevelGenerator script
             if (!enabled) {
                 //deselect the GroupEntitiesByType check box
@@ -234,8 +252,8 @@ public class ScriptGenerator {
     private boolean generateScripts(File destinationFolder, File imageFolder) {
         try {
             boolean shouldLevelGenerator 
-                    = dialog.getLevelGeneratorCheckBox().isSelected();
-            boolean shouldEntity = dialog.getEntityCheckBox().isSelected();
+                    = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
+            boolean shouldEntity = dialog.getGameObjectEntityCheckBox().isSelected();
             String levelGeneratorFileName = "LevelGenerator.cs";
             String entityResourceFileName = "/resources/gameobject/Entity.cs";
             String entityFileName = "Entity.cs";
@@ -625,18 +643,23 @@ public class ScriptGenerator {
      */
     private void chooseType(ScriptType type) {
         scriptType = type;
-        if (type == ScriptType.GameObject) { //GameObject
-            dialog.getGameObjectScriptsPanel().setVisible(true);
-            dialog.getTileScriptsPanel().setVisible(false);
-            
-            dialog.getGridSizePanel().setVisible(true);
-            dialog.getCellSizeGapPanel().setVisible(false);
-        } else { //tilemap
-            dialog.getGameObjectScriptsPanel().setVisible(false);
-            dialog.getTileScriptsPanel().setVisible(true);
-            
-            dialog.getGridSizePanel().setVisible(false);
-            dialog.getCellSizeGapPanel().setVisible(true);
+        switch (scriptType) {
+            case GameObject:
+                dialog.getGameObjectScriptsPanel().setVisible(true);
+                dialog.getTileScriptsPanel().setVisible(false);
+
+                dialog.getGridSizePanel().setVisible(true);
+                dialog.getCellSizeGapPanel().setVisible(false);
+                break;
+            case Tilemap:
+                dialog.getGameObjectScriptsPanel().setVisible(false);
+                dialog.getTileScriptsPanel().setVisible(true);
+
+                dialog.getGridSizePanel().setVisible(false);
+                dialog.getCellSizeGapPanel().setVisible(true);
+                break;
+            default:
+                
         }
     }
 
