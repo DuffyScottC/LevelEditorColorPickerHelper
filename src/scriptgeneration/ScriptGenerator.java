@@ -251,43 +251,13 @@ public class ScriptGenerator {
      */
     private boolean generateScripts(File destinationFolder, File imageFolder) {
         try {
-            boolean shouldLevelGenerator 
-                    = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
-            boolean shouldEntity = dialog.getGameObjectEntityCheckBox().isSelected();
-            String levelGeneratorFileName = "GameObjectLevelGenerator.cs";
-            String entityResourceFileName = "/resources/gameobject/GameObjectEntity.cs";
-            String entityFileName = "GameObjectEntity.cs";
             switch (scriptType) {
+                case GameObject:
+                    return generateGameObjectScripts(destinationFolder, imageFolder);
                 case Tilemap:
-                    shouldLevelGenerator 
-                        = dialog.getTileLevelGeneratorCheckBox().isSelected();
-                    shouldEntity = dialog.getTileEntityCheckBox().isSelected();
-                    levelGeneratorFileName = "TileLevelGenerator.cs";
-                    entityResourceFileName = "/resources/tilemap/TileEntity.cs";
-                    entityFileName = "TileEntity.cs";
-                    break;
+                    return generateTileScripts(destinationFolder, imageFolder);
                 default:
-                    shouldLevelGenerator 
-                        = dialog.getMixedLevelGeneratorCheckBox().isSelected();
-                    shouldEntity = dialog.getBaseEntityCheckBox().isSelected();
-                    levelGeneratorFileName = "MixedLevelGenerator.cs";
-                    entityResourceFileName = "/resources/mixed/BaseEntity.cs";
-                    entityFileName = "BaseEntity.cs";
-            }
-            
-            if (shouldLevelGenerator) {
-                StringBuilder levelGenerator = getLevelGeneratorText(imageFolder);
-                //if the user wants to use images, but no images were found
-                if (levelGenerator == null) {
-                    //there was a problem
-                    return false;
-                }
-                createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
-            }
-            
-            if (shouldEntity) {
-                StringBuilder entity = readResource(entityResourceFileName);
-                createFile(destinationFolder, entityFileName, entity.toString());
+                    return generateMixedScripts(destinationFolder, imageFolder);
             }
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
@@ -296,51 +266,31 @@ public class ScriptGenerator {
         return true;
     }
     
-    /**
-     * Creates the file at the given destination with the given name and the
-     * given contents.
-     * @param destination
-     * @param name
-     * @param contents 
-     */
-    private void createFile(File destination, String name, String contents) {
-        //create a writer up here so we can close it in the finally statement
-        FileWriter writer = null;
-        try {
-            //convert the destination to a path
-            Path destinationPath = destination.toPath();
-            //create a path to the file
-            Path filePath = Paths.get(destinationPath.toString(), name);
-            //convert the path to a file
-            File file = filePath.toFile();
-            
-            //if the file already exists
-            if (file.exists()) {
-                //if the user does NOt want to overwrite
-                if (!Utils.shouldContinue(
-                        "The file " + name + " already exists.\n"
-                        + "Would you like to overwrite this file?", dialog)) {
-                    return;
-                }
+    //MARK: GameObject ----------------------------------------------------
+    private boolean generateGameObjectScripts(File destinationFolder, 
+            File imageFolder) throws IOException {
+        boolean shouldLevelGenerator 
+                = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
+        boolean shouldEntity = dialog.getGameObjectEntityCheckBox().isSelected();
+        String levelGeneratorFileName = "GameObjectLevelGenerator.cs";
+        String entityResourceFileName = "/resources/gameobject/GameObjectEntity.cs";
+        String entityFileName = "GameObjectEntity.cs";
+        
+        if (shouldLevelGenerator) {
+            StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
+            //if the user wants to use images, but no images were found
+            if (levelGenerator == null) {
+                //there was a problem
+                return false;
             }
-            
-            //create a writer from the file
-            writer = new FileWriter(file);
-            //write the contents to the file
-            writer.write(contents);
-        } catch (IOException ex) {
-            System.err.println("I/O Exeption: Could not create file " + name 
-                    + "\n" + ex.toString());
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException ex) {
-                System.err.println("I/O Exeption: Could not write to file "
-                    + name + "\n" + ex.toString());
-            }
+            createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
         }
+
+        if (shouldEntity) {
+            StringBuilder entity = readResource(entityResourceFileName);
+            createFile(destinationFolder, entityFileName, entity.toString());
+        }
+        return true;
     }
     
     /**
@@ -351,7 +301,7 @@ public class ScriptGenerator {
      * circumstance that the user wants to use image analysis but the
      * folder specified does not contain any images.
      */
-    private StringBuilder getLevelGeneratorText(File imageFolder) {
+    private StringBuilder getGameObjectLevelGeneratorText(File imageFolder) {
         try {
             
             String startFileName = "/resources/gameobject/start.cs";
@@ -631,6 +581,109 @@ public class ScriptGenerator {
         entityObjects.append("\n");
     }
     
+    //MARK: Tile ----------------------------------------------------------
+    private boolean generateTileScripts(File destinationFolder, 
+            File imageFolder) throws IOException {
+        boolean shouldLevelGenerator 
+                   = dialog.getTileLevelGeneratorCheckBox().isSelected();
+        boolean shouldEntity = dialog.getTileEntityCheckBox().isSelected();
+        String levelGeneratorFileName = "TileLevelGenerator.cs";
+        String entityResourceFileName = "/resources/tilemap/TileEntity.cs";
+        String entityFileName = "TileEntity.cs";
+        
+        if (shouldLevelGenerator) {
+            StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
+            //if the user wants to use images, but no images were found
+            if (levelGenerator == null) {
+                //there was a problem
+                return false;
+            }
+            createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
+        }
+
+        if (shouldEntity) {
+            StringBuilder entity = readResource(entityResourceFileName);
+            createFile(destinationFolder, entityFileName, entity.toString());
+        }
+        return true;
+    }
+
+    
+    //MARK: Mixed ---------------------------------------------------------
+    private boolean generateMixedScripts(File destinationFolder, 
+            File imageFolder) throws IOException {
+        boolean shouldLevelGenerator 
+                   = dialog.getMixedLevelGeneratorCheckBox().isSelected();
+        boolean shouldEntity = dialog.getBaseEntityCheckBox().isSelected();
+        String levelGeneratorFileName = "MixedLevelGenerator.cs";
+        String entityResourceFileName = "/resources/mixed/BaseEntity.cs";
+        String entityFileName = "BaseEntity.cs";
+        
+        if (shouldLevelGenerator) {
+            StringBuilder levelGenerator = getGameObjectLevelGeneratorText(imageFolder);
+            //if the user wants to use images, but no images were found
+            if (levelGenerator == null) {
+                //there was a problem
+                return false;
+            }
+            createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
+        }
+
+        if (shouldEntity) {
+            StringBuilder entity = readResource(entityResourceFileName);
+            createFile(destinationFolder, entityFileName, entity.toString());
+        }
+        return true;
+    }
+    
+    //MARK: All
+    /**
+     * Creates the file at the given destination with the given name and the
+     * given contents.
+     * @param destination
+     * @param name
+     * @param contents 
+     */
+    private void createFile(File destination, String name, String contents) {
+        //create a writer up here so we can close it in the finally statement
+        FileWriter writer = null;
+        try {
+            //convert the destination to a path
+            Path destinationPath = destination.toPath();
+            //create a path to the file
+            Path filePath = Paths.get(destinationPath.toString(), name);
+            //convert the path to a file
+            File file = filePath.toFile();
+            
+            //if the file already exists
+            if (file.exists()) {
+                //if the user does NOt want to overwrite
+                if (!Utils.shouldContinue(
+                        "The file " + name + " already exists.\n"
+                        + "Would you like to overwrite this file?", dialog)) {
+                    return;
+                }
+            }
+            
+            //create a writer from the file
+            writer = new FileWriter(file);
+            //write the contents to the file
+            writer.write(contents);
+        } catch (IOException ex) {
+            System.err.println("I/O Exeption: Could not create file " + name 
+                    + "\n" + ex.toString());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+                System.err.println("I/O Exeption: Could not write to file "
+                    + name + "\n" + ex.toString());
+            }
+        }
+    }
+    
     /**
      * Reads the passed in resource and outputs a StringBuilder
      * @param resource The resource (e.g. "/resources/start.cs")
@@ -876,5 +929,4 @@ public class ScriptGenerator {
             return null;
         }
     }
-    
 }
