@@ -1,5 +1,4 @@
-//start of middle section
-    public void Start() {
+        //start of middle section
         grid = new GameObject("Grid");
         grid.AddComponent<Grid>();
         Grid gridComponent = grid.GetComponent<Grid>();
@@ -11,7 +10,7 @@
         //make a tilemap object for each layer
         for (int i = 0; i < levelLayers.Length; i++) {
             //create a gameobject to be a tilemap layer
-            GameObject tilemapLayer = new GameObject("Layer " + (i+1));
+            GameObject tilemapLayer = new GameObject("Layer " + (i + 1));
             tilemapLayer.AddComponent<Tilemap>();
             tilemapLayer.AddComponent<TilemapRenderer>();
             tilemapLayer.transform.SetParent(grid.transform);
@@ -35,8 +34,7 @@
         //first cycle through the x pixels (columns)
         for (int x = 0; x < levelLayers[index].width; x++) {
             //for every x pixel (column) cycle through the y pixels (rows)
-            for (int y = 0; y < levelLayers[index].height; y++)
-            {
+            for (int y = 0; y < levelLayers[index].height; y++) {
                 //generate a tile using this pixel position
                 GenerateTile(x, y, index);
             }
@@ -54,7 +52,7 @@
     /// <param name="x">The x coordinate of the pixel's position.</param>
     /// <param name="y">The y coordinate of the pixel's position.</param>
     /// <param name="index">The index of the current layer.</param>
-    private void placeTileIfMatch(TileEntity tileEntity, 
+    private void placeTileIfMatch(TileEntity tileEntity,
                                     Color32 pixelColor, int x, int y, int index) {
         //if the tileEntity's color matches the pixelColor
         if (tileEntity.color.Equals(pixelColor)) {
