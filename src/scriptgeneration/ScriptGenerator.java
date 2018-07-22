@@ -274,12 +274,11 @@ public class ScriptGenerator {
                     imageFolder,
                     "/resources/gameobject/start.cs",
                     "/resources/gameobject/middle.cs",
-                    "GameObject Entities",
-                    "gameObjectEntities",
-                    "GameObjectEntity",
-                    "GameObject",
-                    "gameObjects",
-                    "gameObject",
+                    "GameObject Entities", //singleType
+                    "gameObjectEntities",  //singleFormattedType
+                    "GameObjectEntity",    //className
+                    "GameObject",          //basicClassName
+                    "gameObject",          //entityAttribute
                     "instantiateIfMatch(entity, pixelColor, x, y);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
@@ -299,18 +298,19 @@ public class ScriptGenerator {
     /**
      * 
      * @param complete
-     * @param basicTypeArrayName "gameObjects" or "tiles"
+     * @param basicClassName "GameObject" or "TileBase"
      * @param entityAttribute "gameObject" or "tile"
      */
     private void addFillingLoopForEachTypeToCompleteSB(
             StringBuilder complete,
             List<String> formattedTypes,
-            String basicTypeArrayName,
+            String basicClassName,
             String entityAttribute) {
         for (int i = 0; i < formattedTypes.size(); i++) {
             complete.append("\n\t\tfor (int i = 0; i < ");
-            complete.append(basicTypeArrayName);
-            complete.append(".Length; i++) {\n\t\t\t");
+            complete.append(formattedTypes.get(i));
+            complete.append(basicClassName);
+            complete.append("s.Length; i++) {\n\t\t\t");
 
             //use the formatted type name as a variable name
             complete.append(formattedTypes.get(i));
@@ -323,8 +323,9 @@ public class ScriptGenerator {
             complete.append(".");
             complete.append(entityAttribute);
             complete.append(" = ");
-            complete.append(basicTypeArrayName);
-            complete.append("[i];\n\t\t}\n");
+            complete.append(formattedTypes.get(i));
+            complete.append(basicClassName);
+            complete.append("s[i];\n\t\t}\n");
         }
     }
     
@@ -383,26 +384,24 @@ public class ScriptGenerator {
      * @param type The name of the type that we're making an array for
      * @param formattedType The formatted name of the type that we're making an
      * array for
-     * @param classType should be "GameObjectEntity", "TileEntity",
+     * @param className should be "GameObjectEntity", "TileEntity",
      * "TEntity", or "GOEntity".
-     * @param basicClassType should be "TileBase" or "GameObject"
-     * @param formattedBasicClassType should be "tiles" or "gameObjects"
+     * @param basicClassName should be "TileBase" or "GameObject"
      */
     private void addTypeToCompleteSB(
             StringBuilder complete,
             StringBuilder entitySB,
             String type,
             String formattedType,
-            String classType,
-            String basicClassType,
-            String formattedBasicClassType) {
+            String className,
+            String basicClassName) {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
         complete.append("\t[Header(\"");
         complete.append(type);
         complete.append(" Entities\")]");
         
         complete.append("\n\tpublic ");
-        complete.append(classType);
+        complete.append(className);
         complete.append("[] ");
         
         //use the formatted type name as a variable name
@@ -414,7 +413,7 @@ public class ScriptGenerator {
         }
         
         complete.append(" = new ");
-        complete.append(classType);
+        complete.append(className);
         complete.append("[] {\n");
         complete.append(entitySB);
         complete.append("\t};\n");
@@ -429,10 +428,11 @@ public class ScriptGenerator {
         
         //add on the actuall array that holds the objects to be loaded
         complete.append("\tpublic ");
-        complete.append(basicClassType);
+        complete.append(basicClassName);
         complete.append("[] ");
-        complete.append(formattedBasicClassType);
-        complete.append(";\n");
+        complete.append(formattedType);
+        complete.append(basicClassName);
+        complete.append("s;\n");
         
         //add a new line between each type
         complete.append("\n");
@@ -453,12 +453,11 @@ public class ScriptGenerator {
                     imageFolder,
                     "/resources/tilemap/start.cs",
                     "/resources/tilemap/middle.cs",
-                    "Tile Entities",
-                    "tileEntities",
-                    "TileEntity",
-                    "TileBase",
-                    "tiles",
-                    "tile",
+                    "Tile Entities",    //singleType
+                    "tileEntities",     //singleFormattedType
+                    "TileEntity",       //className
+                    "TileBase",         //basicClassName
+                    "tile",             //entityAttribute
                     "placeTileIfMatch(entity, pixelColor, x, y, index);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
@@ -574,11 +573,13 @@ public class ScriptGenerator {
             }
             
             
-            List<StringBuilder> gameObjectEntitySBs 
-                    = constructEntityStringBuilder(types, gameObjectProjectEntities);
-            
             List<StringBuilder> tileEntitySBs 
-                    = constructEntityStringBuilder(types, tileProjectEntities);
+                    = constructEntityStringBuilder(
+                            types, gameObjectProjectEntities, "TEntity");
+            
+            List<StringBuilder> gameObjectEntitySBs
+                    = constructEntityStringBuilder(
+                            types, tileProjectEntities, "GOEntity");
             
             //this will hold the final text of the file
             StringBuilder complete = new StringBuilder();
@@ -597,8 +598,7 @@ public class ScriptGenerator {
                         types.get(i), 
                         formattedTypes.get(i),
                         "TEntity",
-                        "TileBase",
-                        "tiles");
+                        "TileBase");
             }
             
             //Add the array of GameObject Entities to "complete"
@@ -610,8 +610,7 @@ public class ScriptGenerator {
                         types.get(i), 
                         formattedTypes.get(i),
                         "GOEntity",
-                        "GameObject",
-                        "gameObjects");
+                        "GameObject");
             }
             
             //add on the filling loops
@@ -665,9 +664,9 @@ public class ScriptGenerator {
      * all of the entities
      * @param singleFormattedType The formatted name of the type that we're
      * making an array for
-     * @param classType should be "GameObjectEntity", "TileEntity",
-     * @param basicClassType "GameObject" or "TileBase"
-     * @param basicClassTypeArrayName "gameObjects" or "tiles"
+     * @param className should be "GameObjectEntity", "TileEntity",
+     * @param basicClassName "GameObject" or "TileBase"
+     * @param basicClassArrayName "gameObjects" or "tiles"
      * @param entityAttribute "gameObject" or "tile"
      * @param placeFunction e.g. 
      * (for GameObject)
@@ -687,9 +686,8 @@ public class ScriptGenerator {
             String middleFileName,
             String singleType,
             String singleFormattedType,
-            String classType,
-            String basicClassType,
-            String basicClassTypeArrayName,
+            String className,
+            String basicClassName,
             String entityAttribute,
             String placeFunction) {
         try {
@@ -707,6 +705,7 @@ public class ScriptGenerator {
             
             List<String> types;
             List<String> formattedTypes = new ArrayList();
+            List<String> unityArrayNames; //formattedType + "GameObjects"/"Tiles"
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //set types to be all the types in the project
@@ -724,7 +723,8 @@ public class ScriptGenerator {
             }
             
             List<StringBuilder> entitySBs 
-                    = constructEntityStringBuilder(types, projectEntities);
+                    = constructEntityStringBuilder(
+                            types, projectEntities, className);
             
             //this will hold the final text of the file
             StringBuilder complete = new StringBuilder();
@@ -747,16 +747,17 @@ public class ScriptGenerator {
                         entitySBs.get(i), 
                         types.get(i), 
                         formattedTypes.get(i),
-                        classType,
-                        basicClassType,
-                        basicClassTypeArrayName);
+                        className,
+                        basicClassName);
             }
+            
+            complete.append("\tpublic void Start() {\n");
             
             //add on the filling loops
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
                 formattedTypes,
-                basicClassTypeArrayName,
+                basicClassName,
                 entityAttribute);
             
             //add on the middle of the file
@@ -766,7 +767,7 @@ public class ScriptGenerator {
                     complete, 
                     types, 
                     formattedTypes,
-                    classType + " entity",
+                    className + " entity",
                     placeFunction);
             //return the completed text
             return complete;
@@ -786,11 +787,13 @@ public class ScriptGenerator {
      * entity objects that share a common type.
      * @param types The types that the entities are to be grouped by.
      * @param projectEntities The entities to be added to the StringBuilder.
+     * @param className should be "GameObjectEntity", "TileEntity",
+     * "TEntity", or "GOEntity".
      * @return A StringBuilder object with the comma-separated list of
      * entity objects.
      */
     private List<StringBuilder> constructEntityStringBuilder(
-            List<String> types, List<Entity> projectEntities) {
+            List<String> types, List<Entity> projectEntities, String className) {
         
         List<StringBuilder> entitySBs = new ArrayList();
         //initialize an empty StringBuilder for each type
@@ -803,9 +806,9 @@ public class ScriptGenerator {
             boolean lastIteration = (i == projectEntities.size() - 1);
             Entity e = projectEntities.get(i);
             int typeIndex = determineTypeIndex(e);
-            //put e in the StringBuilders corrosponding to the typeIndex
+            //put e in the StringBuilder corrosponding to the typeIndex
             addEntityToStringBuilder(e, 
-                    entitySBs.get(typeIndex), lastIteration);
+                    entitySBs.get(typeIndex), className, lastIteration);
         }
         
         return entitySBs;
@@ -819,31 +822,25 @@ public class ScriptGenerator {
      * @param entity The Entity to add
      * @param entitySB the entitySB StringBuilder that will hold the list
      * of comma-separated Entity objects as we continue to call this function.
+     * @param className should be "GameObjectEntity", "TileEntity",
+     * "TEntity", or "GOEntity".
      * @param lastIteration Specifies whether this is the last iteration. If
      * not, add a comma. If so, forgo the comma.
      */
     private void addEntityToStringBuilder(Entity entity, 
-            StringBuilder entitySB, boolean lastIteration) {
+            StringBuilder entitySB, String className, boolean lastIteration) {
         /*
         Depending on ScriptType, entities look like this:
             new GameObjectEntity("Barrier", new Color32(0, 0, 0, 255)),
             new TileEntity("Barrier", new Color32(0, 0, 0, 255)),
             new TEntity("Barrier", new Color32(0, 0, 0, 255)),
+            new GOEntity("Barrier", new Color32(0, 0, 0, 255)),
         Everything is the same except for the name of the class.
         */
         
         //Add to the entityObjects array
         entitySB.append("\t\tnew ");
-        switch (scriptType) {
-            case GameObject:
-                entitySB.append("");
-                break;
-            case Tilemap:
-                entitySB.append("");
-                break;
-            default:
-                entitySB.append("");
-        }
+        entitySB.append(className);
         entitySB.append("(\"");
         entitySB.append(entity.getName());
         entitySB.append("\", new Color32(");
@@ -876,7 +873,7 @@ public class ScriptGenerator {
         // Add on the gridSize variable
         complete.append("\tpublic float gridSize = ");
         complete.append(gridSize);
-        complete.append("f;\n");
+        complete.append("f;\n\n");
     }
     
     /**
@@ -902,7 +899,7 @@ public class ScriptGenerator {
         complete.append(cellGap.getY());
         complete.append("f, ");
         complete.append(cellGap.getZ());
-        complete.append("f);\n");
+        complete.append("f);\n\n");
     }
     
     /**
@@ -1034,10 +1031,10 @@ public class ScriptGenerator {
             }
         }
         
-        //if the first character is lowercase
-        if (97 <= chars[0] && chars[0] <= 122) {
-            //make it uppercase
-            chars[0] = (char) (chars[0] - 32);
+        //if the first character is uppercase
+        if (65 <= chars[0] && chars[0] <= 90) {
+            //make it lowercase
+            chars[0] = (char) (chars[0] + 32);
         }
         
         //convert the chars back into this
