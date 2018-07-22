@@ -279,6 +279,7 @@ public class ScriptGenerator {
                     "GameObjectEntity",
                     "GameObject",
                     "gameObjects",
+                    "gameObject",
                     "instantiateIfMatch(entity, pixelColor, x, y);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
@@ -296,6 +297,38 @@ public class ScriptGenerator {
     }
     
     /**
+     * 
+     * @param complete
+     * @param basicTypeArrayName "gameObjects" or "tiles"
+     * @param entityAttribute "gameObject" or "tile"
+     */
+    private void addFillingLoopForEachTypeToCompleteSB(
+            StringBuilder complete,
+            List<String> formattedTypes,
+            String basicTypeArrayName,
+            String entityAttribute) {
+        for (int i = 0; i < formattedTypes.size(); i++) {
+            complete.append("\n\t\tfor (int i = 0; i < ");
+            complete.append(basicTypeArrayName);
+            complete.append(".Length; i++) {\n\t\t\t");
+
+            //use the formatted type name as a variable name
+            complete.append(formattedTypes.get(i));
+            //if the user wants to group entities by type
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                //add on the word "Entities" to the name of the array
+                complete.append(Utils.ARRAY_NAME_EXTENSION);   
+            }
+            
+            complete.append(".");
+            complete.append(entityAttribute);
+            complete.append(" = ");
+            complete.append(basicTypeArrayName);
+            complete.append("[i];\n\t\t}\n");
+        }
+    }
+    
+    /**
      * Creates a for loop for each type array in the LevelGenerator script.
      * @param types All the types in the LevelGenerator script
      * @param complete the complete StringBuilder
@@ -309,7 +342,7 @@ public class ScriptGenerator {
      * "placeTileIfColorMatches(entity, pixelColor, x, y, index);", or
      * "placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);"
      */
-    private void addLoopForEachTypeToCompleteSB(
+    private void addSearchingLoopForEachTypeToCompleteSB(
             StringBuilder complete,
             List<String> types,
             List<String> formattedTypes,
@@ -353,7 +386,7 @@ public class ScriptGenerator {
      * @param classType should be "GameObjectEntity", "TileEntity",
      * "TEntity", or "GOEntity".
      * @param basicClassType should be "TileBase" or "GameObject"
-     * @param formattedBasicClassType should be "tileBases" or "gameObjects"
+     * @param formattedBasicClassType should be "tiles" or "gameObjects"
      */
     private void addTypeToCompleteSB(
             StringBuilder complete,
@@ -425,6 +458,7 @@ public class ScriptGenerator {
                     "TileEntity",
                     "TileBase",
                     "tiles",
+                    "tile",
                     "placeTileIfMatch(entity, pixelColor, x, y, index);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
@@ -580,16 +614,31 @@ public class ScriptGenerator {
                         "gameObjects");
             }
             
+            //add on the filling loops
+            addFillingLoopForEachTypeToCompleteSB(
+                complete,
+                formattedTypes,
+                "tiles",
+                "tile");
+            
+            addFillingLoopForEachTypeToCompleteSB(
+                complete,
+                formattedTypes,
+                "gameObjects",
+                "gameObject");
+            
             //add on the middle of the file
             complete.append(middle);
+            //add on the searching loops
+            
             //add on the loops
-            addLoopForEachTypeToCompleteSB(complete, 
+            addSearchingLoopForEachTypeToCompleteSB(complete, 
                     types, 
                     formattedTypes,
                     "TEntity entity",
                     "placeTileIfColorMatches(entity, pixelColor, x, y, index);");
             
-            addLoopForEachTypeToCompleteSB(complete, 
+            addSearchingLoopForEachTypeToCompleteSB(complete, 
                     types, 
                     formattedTypes,
                     "GOEntity entity",
@@ -604,15 +653,30 @@ public class ScriptGenerator {
         }
     }
     
-    private void addLoopForEachTypeToCompleteSB() {
-        
-    }
-    
     //MARK: All
     /**
      * Generates the text for the GameObjectLevelGenerator script using all of
      * the entities.
      * @param imageFolder the folder that holds images for analysis
+     * @param startFileName
+     * @param middleFileName
+     * @param singleType If the user does not want to sort the entities by
+     * type, then we will need a string to use as a single "type" to hold
+     * all of the entities
+     * @param singleFormattedType The formatted name of the type that we're
+     * making an array for
+     * @param classType should be "GameObjectEntity", "TileEntity",
+     * @param basicClassType "GameObject" or "TileBase"
+     * @param basicClassTypeArrayName "gameObjects" or "tiles"
+     * @param entityAttribute "gameObject" or "tile"
+     * @param placeFunction e.g. 
+     * (for GameObject)
+     * "instantiateIfMatch(entity, pixelColor, x, y);", or
+     * (for Tilemap)
+     * "placeTileIfMatch(entity, pixelColor, x, y, index);", or
+     * (for Mixed)
+     * "placeTileIfColorMatches(entity, pixelColor, x, y, index);", or
+     * "placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);"
      * @return The text for the LevelGenerator.cs file. Null in the odd
      * circumstance that the user wants to use image analysis but the
      * folder specified does not contain any images.
@@ -625,7 +689,8 @@ public class ScriptGenerator {
             String singleFormattedType,
             String classType,
             String basicClassType,
-            String formattedBasicClassType,
+            String basicClassTypeArrayName,
+            String entityAttribute,
             String placeFunction) {
         try {
             
@@ -684,12 +749,20 @@ public class ScriptGenerator {
                         formattedTypes.get(i),
                         classType,
                         basicClassType,
-                        formattedBasicClassType);
+                        basicClassTypeArrayName);
             }
+            
+            //add on the filling loops
+            addFillingLoopForEachTypeToCompleteSB(
+                complete,
+                formattedTypes,
+                basicClassTypeArrayName,
+                entityAttribute);
+            
             //add on the middle of the file
             complete.append(middle);
-            //add on the loops
-            addLoopForEachTypeToCompleteSB(
+            //add on the searching loops
+            addSearchingLoopForEachTypeToCompleteSB(
                     complete, 
                     types, 
                     formattedTypes,
