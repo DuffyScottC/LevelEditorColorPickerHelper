@@ -320,7 +320,7 @@ public class ScriptGenerator {
                 complete.append(Utils.ARRAY_NAME_EXTENSION);   
             }
             
-            complete.append(".");
+            complete.append("[i].");
             complete.append(entityAttribute);
             complete.append(" = ");
             complete.append(formattedTypes.get(i));
@@ -396,7 +396,7 @@ public class ScriptGenerator {
             String className,
             String basicClassName) {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
-        complete.append("\t[Header(\"");
+        complete.append("\n\t[Header(\"");
         complete.append(type);
         complete.append(" Entities\")]");
         
@@ -553,33 +553,38 @@ public class ScriptGenerator {
                 }
             }
             
-            List<String> types;
-            List<String> formattedTypes = new ArrayList();
+            List<String> tileTypes = new ArrayList();
+            List<String> formattedTileTypes = new ArrayList();
+            
+            List<String> gameObjectTypes = new ArrayList();
+            List<String> formattedGameObjectTypes = new ArrayList();
             
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                //set types to be all the types in the project
-                types = project.getTypes();
-                //cycle through all the types
-                for (String type : types) {
+                for (String type : project.getTypes()) {
+                    tileTypes.add("tile" + type);
+                    gameObjectTypes.add("gameObject" + type);
+                    
                     //add the formatted version
-                    formattedTypes.add(formatType(type));
+                    formattedTileTypes.add(formatType("tile" + type));
+                    formattedGameObjectTypes.add(formatType("gameObject" + type));
                 }
             } else {
-                //initialize the types list
-                types = new ArrayList();
-                types.add("Tile Entities");
-                formattedTypes.add("tileEntities");
+                tileTypes.add("Tile");
+                gameObjectTypes.add("GameObject");
+                
+                formattedTileTypes.add("tile");
+                formattedGameObjectTypes.add("gameObject");
             }
             
             
             List<StringBuilder> tileEntitySBs 
                     = constructEntityStringBuilder(
-                            types, gameObjectProjectEntities, "TEntity");
+                            tileTypes, gameObjectProjectEntities, "TEntity");
             
             List<StringBuilder> gameObjectEntitySBs
                     = constructEntityStringBuilder(
-                            types, tileProjectEntities, "GOEntity");
+                            gameObjectTypes, tileProjectEntities, "GOEntity");
             
             //this will hold the final text of the file
             StringBuilder complete = new StringBuilder();
@@ -590,25 +595,25 @@ public class ScriptGenerator {
             addCellSizeAndCellGapVariablesToComplete(complete);
             
             //Add the array of Tile Entities to "complete"
-            for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < tileTypes.size(); i++) {
                 //add the array of Entities with a title matching the type
                 addTypeToCompleteSB(
                         complete, 
                         tileEntitySBs.get(i), 
-                        types.get(i), 
-                        formattedTypes.get(i),
+                        tileTypes.get(i), 
+                        formattedTileTypes.get(i),
                         "TEntity",
                         "TileBase");
             }
             
             //Add the array of GameObject Entities to "complete"
-            for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < gameObjectTypes.size(); i++) {
                 //add the array of Entities with a title matching the type
                 addTypeToCompleteSB(
                         complete, 
                         gameObjectEntitySBs.get(i), 
-                        types.get(i), 
-                        formattedTypes.get(i),
+                        gameObjectTypes.get(i), 
+                        formattedGameObjectTypes.get(i),
                         "GOEntity",
                         "GameObject");
             }
@@ -616,13 +621,13 @@ public class ScriptGenerator {
             //add on the filling loops
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
-                formattedTypes,
+                formattedGameObjectTypes,
                 "tiles",
                 "tile");
             
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
-                formattedTypes,
+                formattedGameObjectTypes,
                 "gameObjects",
                 "gameObject");
             
@@ -632,14 +637,14 @@ public class ScriptGenerator {
             
             //add on the loops
             addSearchingLoopForEachTypeToCompleteSB(complete, 
-                    types, 
-                    formattedTypes,
+                    tileTypes, 
+                    formattedTileTypes,
                     "TEntity entity",
                     "placeTileIfColorMatches(entity, pixelColor, x, y, index);");
             
             addSearchingLoopForEachTypeToCompleteSB(complete, 
-                    types, 
-                    formattedTypes,
+                    gameObjectTypes, 
+                    formattedGameObjectTypes,
                     "GOEntity entity",
                     "placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);");
             
@@ -751,7 +756,7 @@ public class ScriptGenerator {
                         basicClassName);
             }
             
-            complete.append("\tpublic void Start() {\n");
+            complete.append("\tpublic void Start() {");
             
             //add on the filling loops
             addFillingLoopForEachTypeToCompleteSB(
@@ -873,7 +878,7 @@ public class ScriptGenerator {
         // Add on the gridSize variable
         complete.append("\tpublic float gridSize = ");
         complete.append(gridSize);
-        complete.append("f;\n\n");
+        complete.append("f;\n");
     }
     
     /**
@@ -899,7 +904,7 @@ public class ScriptGenerator {
         complete.append(cellGap.getY());
         complete.append("f, ");
         complete.append(cellGap.getZ());
-        complete.append("f);\n\n");
+        complete.append("f);\n");
     }
     
     /**
