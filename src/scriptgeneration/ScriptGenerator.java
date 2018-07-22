@@ -277,6 +277,8 @@ public class ScriptGenerator {
                     "GameObject Entities",
                     "gameObjectEntities",
                     "GameObjectEntity",
+                    "GameObject",
+                    "gameObjects",
                     "instantiateIfMatch(entity, pixelColor, x, y);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
@@ -350,13 +352,17 @@ public class ScriptGenerator {
      * array for
      * @param classType should be "GameObjectEntity", "TileEntity",
      * "TEntity", or "GOEntity".
+     * @param basicClassType should be "TileBase" or "GameObject"
+     * @param formattedBasicClassType should be "tileBases" or "gameObjects"
      */
     private void addTypeToCompleteSB(
             StringBuilder complete,
             StringBuilder entitySB,
             String type,
             String formattedType,
-            String classType) {
+            String classType,
+            String basicClassType,
+            String formattedBasicClassType) {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
         complete.append("[Header(\"");
         complete.append(type);
@@ -382,6 +388,21 @@ public class ScriptGenerator {
         
         //add a new line between each type
         complete.append("\n");
+        
+        //add on the tooltip
+        complete.append("[Tooltip(\"Must have the same size as ");
+        complete.append(formattedType);
+        if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+            complete.append(Utils.ARRAY_NAME_EXTENSION);
+        }
+        complete.append("\")]\n");
+        
+        //add on the actuall array that holds the objects to be loaded
+        complete.append("public ");
+        complete.append(basicClassType);
+        complete.append("[] ");
+        complete.append(formattedBasicClassType);
+        complete.append(";\n");
     }
     
     //MARK: Tile ----------------------------------------------------------
@@ -402,6 +423,8 @@ public class ScriptGenerator {
                     "Tile Entities",
                     "tileEntities",
                     "TileEntity",
+                    "TileBase",
+                    "tiles",
                     "placeTileIfMatch(entity, pixelColor, x, y, index);");
             //if the user wants to use images, but no images were found
             if (levelGenerator == null) {
@@ -462,63 +485,116 @@ public class ScriptGenerator {
             StringBuilder start = readResource("/resources/mixed/start.cs");
             StringBuilder middle = readResource("/resources/mixed/middle.cs");
             
-            //holds the entities to generate scripts with
-            List<Entity> projectEntities = getProjectEntities(imageFolder);
-            if (projectEntities == null) {
-                return null;
+            //holds all the entities to be included in the script
+            List<Entity> usedEnitites;
+            //if the user wants to use images
+            if (dialog.getUseImagesCheckBox().isSelected()) {
+                //get only the used entities
+                usedEnitites
+                        = getUsedEntities(imageFolder, project.getEntities());
+                //if no image files were found
+                if (usedEnitites == null) {
+                    JOptionPane.showMessageDialog(dialog, 
+                            "No images could be found in\n" + 
+                                    imageFolder.toString());
+                    return null;
+                }
+            } else {
+                //get the project's entities
+                usedEnitites = project.getEntities();
             }
             
-            List<String> tileTypes;
-            List<String> formattedTileTypes = new ArrayList();
+            //holds the GameObject class Entities to generate scripts with
+            List<Entity> gameObjectProjectEntities = new ArrayList();
+            //holds the Tile class Entities to generate scripts with
+            List<Entity> tileProjectEntities = new ArrayList();
+            //cycle through all the entities and divide them based on classIndex
+            for (Entity e : usedEnitites) {
+                //if this is a GameObject entity
+                if (e.getClassIndex() == Utils.GAMEOBJECT_INDEX) {
+                    //add it to the gameObject entities list
+                    gameObjectProjectEntities.add(e);
+                } else { //otherwise
+                    //add it to the tile entities list
+                    tileProjectEntities.add(e);
+                }
+            }
             
-            List<String> gameObjectTypes;
-            List<String> formattedGameObjectTypes = new ArrayList();
+            List<String> types;
+            List<String> formattedTypes = new ArrayList();
             
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //set types to be all the types in the project
-                tileTypes = project.getTypes();
+                types = project.getTypes();
                 //cycle through all the types
-                for (String type : tileTypes) {
+                for (String type : types) {
                     //add the formatted version
-                    formattedTileTypes.add(formatType(type));
+                    formattedTypes.add(formatType(type));
                 }
             } else {
                 //initialize the types list
-                tileTypes = new ArrayList();
-                tileTypes.add("Tile Entities");
-                formattedTileTypes.add("tileEntities");
+                types = new ArrayList();
+                types.add("Tile Entities");
+                formattedTypes.add("tileEntities");
             }
             
-            List<StringBuilder> entitySBs 
-                    = constructEntityStringBuilder(tileTypes, projectEntities);
+            
+            List<StringBuilder> gameObjectEntitySBs 
+                    = constructEntityStringBuilder(types, gameObjectProjectEntities);
+            
+            List<StringBuilder> tileEntitySBs 
+                    = constructEntityStringBuilder(types, tileProjectEntities);
             
             //this will hold the final text of the file
             StringBuilder complete = new StringBuilder();
             //add on the start of the file
             complete.append(start);
             
-            //add on the gridSize
             addGridSizeToComplete(complete);
+            addCellSizeAndCellGapVariablesToComplete(complete);
             
-            //loop through all the types
-            for (int i = 0; i < tileTypes.size(); i++) {
+            //Add the array of Tile Entities to "complete"
+            for (int i = 0; i < types.size(); i++) {
                 //add the array of Entities with a title matching the type
                 addTypeToCompleteSB(
                         complete, 
-                        entitySBs.get(i), 
-                        tileTypes.get(i), 
-                        formattedTileTypes.get(i),
-                        classType);
+                        tileEntitySBs.get(i), 
+                        types.get(i), 
+                        formattedTypes.get(i),
+                        "TEntity",
+                        "TileBase",
+                        "tiles");
             }
+            
+            //Add the array of GameObject Entities to "complete"
+            for (int i = 0; i < types.size(); i++) {
+                //add the array of Entities with a title matching the type
+                addTypeToCompleteSB(
+                        complete, 
+                        gameObjectEntitySBs.get(i), 
+                        types.get(i), 
+                        formattedTypes.get(i),
+                        "GOEntity",
+                        "GameObject",
+                        "gameObjects");
+            }
+            
             //add on the middle of the file
             complete.append(middle);
             //add on the loops
             addLoopForEachTypeToCompleteSB(complete, 
-                    tileTypes, 
-                    formattedTileTypes,
-                    classType + " entity",
-                    placeFunction);
+                    types, 
+                    formattedTypes,
+                    "TEntity entity",
+                    "placeTileIfColorMatches(entity, pixelColor, x, y, index);");
+            
+            addLoopForEachTypeToCompleteSB(complete, 
+                    types, 
+                    formattedTypes,
+                    "GOEntity entity",
+                    "placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);");
+            
             //return the completed text
             return complete;
         } catch (IOException ex) {
@@ -526,6 +602,10 @@ public class ScriptGenerator {
                     + ex.toString());
             return null;
         }
+    }
+    
+    private void addLoopForEachTypeToCompleteSB() {
+        
     }
     
     //MARK: All
@@ -544,6 +624,8 @@ public class ScriptGenerator {
             String singleType,
             String singleFormattedType,
             String classType,
+            String basicClassType,
+            String formattedBasicClassType,
             String placeFunction) {
         try {
             
@@ -584,8 +666,13 @@ public class ScriptGenerator {
             //add on the start of the file
             complete.append(start);
             
-            //add on the gridSize
-            addGridSizeToComplete(complete);
+            switch (scriptType) {
+                case GameObject:
+                    addGridSizeToComplete(complete);
+                    break;
+                default:
+                    addCellSizeAndCellGapVariablesToComplete(complete);
+            }
             
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
@@ -595,7 +682,9 @@ public class ScriptGenerator {
                         entitySBs.get(i), 
                         types.get(i), 
                         formattedTypes.get(i),
-                        classType);
+                        classType,
+                        basicClassType,
+                        formattedBasicClassType);
             }
             //add on the middle of the file
             complete.append(middle);
@@ -616,10 +705,12 @@ public class ScriptGenerator {
     }
     
     /**
-     * Constructs the comma-separated list of entity objects (be they
+     * Constructs as many comma-separated lists of entity objects (be they
      * GameObjectEntities, TileEntities, TEntities, or GOEntities, depending
-     * on the type of entity (Tile or GameObject) and on the ScriptType) and
-     * returns that list as a StringBuilder object.
+     * on the type of entity (Tile or GameObject) and on the ScriptType) as
+     * there are types and puts them into a List of StringBuilder objects, so
+     * that each element of the returned list is a comma-separated list of
+     * entity objects that share a common type.
      * @param types The types that the entities are to be grouped by.
      * @param projectEntities The entities to be added to the StringBuilder.
      * @return A StringBuilder object with the comma-separated list of
