@@ -654,104 +654,110 @@ public class ScriptGenerator {
             
             //loop through all the types for GameObjects
             for (int i = 0; i < goTypes.size(); i++) {
-                //Add the array of Entities with a title matching the type:
-                //add a Header discribing the type (e.g. [Header("Enemy Entities")])
-                mixedComplete.append("\n\t[Header(\"");
-                mixedComplete.append(goTypes.get(i));
-                mixedComplete.append(" ");
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                //if this type is not completely empty
+                if (goEntitySBs.get(i).length() != 0) {
+                    //Add the array of Entities with a title matching the type:
+                    //add a Header discribing the type (e.g. [Header("Enemy Entities")])
+                    mixedComplete.append("\n\t[Header(\"");
+                    mixedComplete.append(goTypes.get(i));
+                    mixedComplete.append(" ");
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                    }
+                    mixedComplete.append("\")]");
+
+                    mixedComplete.append("\n\tpublic ");
+                    mixedComplete.append("GOEntity");
+                    mixedComplete.append("[] ");
+
+                    //use the formatted type name as a variable name
+                    mixedComplete.append(goFormattedTypes.get(i));
+
+                    //if the user wants to group entities by type
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                    }
+
+                    mixedComplete.append(" = new ");
+                    mixedComplete.append("GOEntity");
+                    mixedComplete.append("[] {\n");
+                    mixedComplete.append(goEntitySBs.get(i));
+                    mixedComplete.append("\t};\n");
+
+                    //add on the tooltip
+                    mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
+                    mixedComplete.append(goFormattedTypes.get(i));
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                    }
+                    mixedComplete.append("\")]\n");
+
+                    //add on the actuall array that holds the objects to be loaded
+                    mixedComplete.append("\tpublic ");
+                    mixedComplete.append("GameObject");
+                    mixedComplete.append("[] ");
+                    mixedComplete.append(goFormattedTypes.get(i));
+                    mixedComplete.append("GameObject");
+                    mixedComplete.append("s;\n");
+
+                    //add a new line between each type
+                    mixedComplete.append("\n");
                 }
-                mixedComplete.append("\")]");
-
-                mixedComplete.append("\n\tpublic ");
-                mixedComplete.append("GOEntity");
-                mixedComplete.append("[] ");
-
-                //use the formatted type name as a variable name
-                mixedComplete.append(goFormattedTypes.get(i));
-
-                //if the user wants to group entities by type
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
-                }
-
-                mixedComplete.append(" = new ");
-                mixedComplete.append("GOEntity");
-                mixedComplete.append("[] {\n");
-                mixedComplete.append(goEntitySBs.get(i));
-                mixedComplete.append("\t};\n");
-
-                //add on the tooltip
-                mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
-                mixedComplete.append(goFormattedTypes.get(i));
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
-                }
-                mixedComplete.append("\")]\n");
-
-                //add on the actuall array that holds the objects to be loaded
-                mixedComplete.append("\tpublic ");
-                mixedComplete.append("GameObject");
-                mixedComplete.append("[] ");
-                mixedComplete.append(goFormattedTypes.get(i));
-                mixedComplete.append("GameObject");
-                mixedComplete.append("s;\n");
-
-                //add a new line between each type
-                mixedComplete.append("\n");
             }
             
             mixedComplete.append("\n\t[Header(\"Tilemap:\")]\n");
             
             //loop through all the types for Tiles
             for (int i = 0; i < tTypes.size(); i++) {
-                //Add the array of Entities with a title matching the type:
-                //add a Header discribing the type (e.g. [Header("Enemy Entities")])
-                mixedComplete.append("\n\t[Header(\"");
-                mixedComplete.append(tTypes.get(i));
-                mixedComplete.append(" ");
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                //if this type is not completely empty
+                if (tEntitySBs.get(i).length() != 0) {
+                    //Add the array of Entities with a title matching the type:
+                    //add a Header discribing the type (e.g. [Header("Enemy Entities")])
+                    mixedComplete.append("\n\t[Header(\"");
+                    mixedComplete.append(tTypes.get(i));
+                    mixedComplete.append(" ");
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                    }
+                    mixedComplete.append("\")]");
+
+                    mixedComplete.append("\n\tpublic ");
+                    mixedComplete.append("TEntity");
+                    mixedComplete.append("[] ");
+
+                    //use the formatted type name as a variable name
+                    mixedComplete.append(tFormattedTypes.get(i));
+
+                    //if the user wants to group entities by type
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                    }
+
+                    mixedComplete.append(" = new ");
+                    mixedComplete.append("TEntity");
+                    mixedComplete.append("[] {\n");
+                    mixedComplete.append(tEntitySBs.get(i));
+                    mixedComplete.append("\t};\n");
+
+                    //add on the tooltip
+                    mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
+                    mixedComplete.append(tFormattedTypes.get(i));
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                    }
+                    mixedComplete.append("\")]\n");
+
+                    //add on the actuall array that holds the objects to be loaded
+                    mixedComplete.append("\tpublic ");
+                    mixedComplete.append("TileBase");
+                    mixedComplete.append("[] ");
+                    mixedComplete.append(tFormattedTypes.get(i));
+                    mixedComplete.append("TileBase");
+                    mixedComplete.append("s;\n");
+
+                    //add a new line between each type
+                    mixedComplete.append("\n");
                 }
-                mixedComplete.append("\")]");
-
-                mixedComplete.append("\n\tpublic ");
-                mixedComplete.append("TEntity");
-                mixedComplete.append("[] ");
-
-                //use the formatted type name as a variable name
-                mixedComplete.append(tFormattedTypes.get(i));
-
-                //if the user wants to group entities by type
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
-                }
-
-                mixedComplete.append(" = new ");
-                mixedComplete.append("TEntity");
-                mixedComplete.append("[] {\n");
-                mixedComplete.append(tEntitySBs.get(i));
-                mixedComplete.append("\t};\n");
-
-                //add on the tooltip
-                mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
-                mixedComplete.append(tFormattedTypes.get(i));
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
-                }
-                mixedComplete.append("\")]\n");
-
-                //add on the actuall array that holds the objects to be loaded
-                mixedComplete.append("\tpublic ");
-                mixedComplete.append("TileBase");
-                mixedComplete.append("[] ");
-                mixedComplete.append(tFormattedTypes.get(i));
-                mixedComplete.append("TileBase");
-                mixedComplete.append("s;\n");
-
-                //add a new line between each type
-                mixedComplete.append("\n");
             }
             
             mixedComplete.append("\tpublic void Start() {");
@@ -950,14 +956,17 @@ public class ScriptGenerator {
             
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
-                //add the array of Entities with a title matching the type
-                addTypeToCompleteSB(
-                        complete, 
-                        entitySBs.get(i), 
-                        types.get(i), 
-                        formattedTypes.get(i),
-                        className,
-                        basicClassName);
+                //if this type is not completely empty
+                if (entitySBs.get(i).length() != 0) {
+                    //add the array of Entities with a title matching the type
+                    addTypeToCompleteSB(
+                            complete, 
+                            entitySBs.get(i), 
+                            types.get(i), 
+                            formattedTypes.get(i),
+                            className,
+                            basicClassName);
+                }
             }
             
             complete.append("\tpublic void Start() {");
