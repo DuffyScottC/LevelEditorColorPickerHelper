@@ -1137,15 +1137,16 @@ public class ProjectController {
 
         Entity currentEntity = currentProject.getCurrentEntity();
         int newTypeIndex = 0;
+        int newClassIndex = 0;
         if (currentEntity != null) {
+            //use the last selected typeIndex
             newTypeIndex = currentEntity.getTypeIndex();
+            //use the last selected classIndex
+            newClassIndex = currentEntity.getClassIndex();
         }
 
         String newName = getUniqueDefaultName();
         
-        //use the last selected classIndex
-        int newClassIndex = currentEntity.getClassIndex();
-
         //create and return a new entity with the attributes created above
         return new Entity(null, newName, newTypeIndex, newColor, 
                 newClassIndex, Offset.zero);
