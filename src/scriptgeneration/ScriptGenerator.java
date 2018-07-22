@@ -516,7 +516,6 @@ public class ScriptGenerator {
      * folder specified does not contain any images.
      */
     private StringBuilder getLevelGeneratorTextForMixed(File imageFolder) {
-        
         try {
             // The LevelGenerator Script
             //get the start and end text
@@ -576,8 +575,8 @@ public class ScriptGenerator {
                 */
                 
                 //get the stringbuilder that matches this typeIndex
-                StringBuilder goEntitySB = tEntitySBs.get(typeIndex);
-                StringBuilder tEntitySB = goEntitySBs.get(typeIndex);
+                StringBuilder goEntitySB = goEntitySBs.get(typeIndex);
+                StringBuilder tEntitySB = tEntitySBs.get(typeIndex);
                 //Add to the entityObjects array
                 switch (entity.getClassIndex()) {
                     case Utils.GAMEOBJECT_INDEX:
@@ -634,12 +633,12 @@ public class ScriptGenerator {
             }
             
             //this will hold the final text of the file
-            StringBuilder mixedComplete = new StringBuilder();
+            PStringBuilder mixedComplete = new PStringBuilder();
             //add on the start of the file
             mixedComplete.append(start);
             
-            addGridSizeToComplete(mixedComplete);
-            addCellSizeAndCellGapVariablesToComplete(mixedComplete);
+            addGridSizeToComplete(mixedComplete.getStringBuilder());
+            addCellSizeAndCellGapVariablesToComplete(mixedComplete.getStringBuilder());
             
             //loop through all the types for GameObjects
             for (int i = 0; i < types.size(); i++) {
@@ -841,7 +840,7 @@ public class ScriptGenerator {
             mixedComplete.append("\n");
             
             //return the completed text
-            return mixedComplete;
+            return mixedComplete.getStringBuilder();
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
