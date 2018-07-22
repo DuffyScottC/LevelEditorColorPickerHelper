@@ -237,7 +237,7 @@ public class ScriptGenerator {
     }
 
     public void showDialog(MainFrame frame) {
-        dialog.setSize(380, 408);
+        dialog.setSize(380, 375);
         dialog.getDesitnationFolderTextField().setText(System.getProperty("user.dir"));
         dialog.getImageFolderTextField().setText(System.getProperty("user.dir"));
         dialog.setLocationRelativeTo(frame);
@@ -532,29 +532,26 @@ public class ScriptGenerator {
                 return null;
             }
             
-            List<String> tTypes;
+            List<String> tTypes = new ArrayList();
             List<String> tFormattedTypes = new ArrayList();
             
-            List<String> goTypes;
+            List<String> goTypes = new ArrayList();
             List<String> goFormattedTypes = new ArrayList();
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                //set types to be all the types in the project
-                tTypes = project.getTypes();
-                goTypes = project.getTypes();
                 //cycle through all the types
-                for (String type : tTypes) {
+                for (String type : project.getTypes()) {
+                    tTypes.add("T " + type);
+                    goTypes.add("GO " + type);
+                    
                     //add the formatted version
-                    tFormattedTypes.add(formatType(type));
-                    goFormattedTypes.add(formatType(type));
+                    tFormattedTypes.add(formatType("T " + type));
+                    goFormattedTypes.add(formatType("GO " + type));
                 }
             } else {
-                //initialize the types list
-                tTypes = new ArrayList();
                 tTypes.add("Tile Entities");
                 tFormattedTypes.add("tileEntities");
                 
-                goTypes = new ArrayList();
                 goTypes.add("GameObject Entities");
                 goFormattedTypes.add("gameObjectEntities");
             }
@@ -653,6 +650,8 @@ public class ScriptGenerator {
             addGridSizeToComplete(mixedComplete.getStringBuilder());
             addCellSizeAndCellGapVariablesToComplete(mixedComplete.getStringBuilder());
             
+            mixedComplete.append("\n\t[Header(\"GameObject:\")]\n");
+            
             //loop through all the types for GameObjects
             for (int i = 0; i < goTypes.size(); i++) {
                 //Add the array of Entities with a title matching the type:
@@ -702,6 +701,8 @@ public class ScriptGenerator {
                 //add a new line between each type
                 mixedComplete.append("\n");
             }
+            
+            mixedComplete.append("\n\t[Header(\"Tilemap:\")]\n");
             
             //loop through all the types for Tiles
             for (int i = 0; i < tTypes.size(); i++) {
@@ -1195,6 +1196,7 @@ public class ScriptGenerator {
         scriptType = type;
         switch (scriptType) {
             case GameObject:
+                dialog.setSize(380, 375);
                 dialog.getGameObjectScriptsPanel().setVisible(true);
                 dialog.getTileScriptsPanel().setVisible(false);
                 dialog.getMixedScriptsPanel().setVisible(false);
@@ -1203,6 +1205,7 @@ public class ScriptGenerator {
                 dialog.getCellSizeGapPanel().setVisible(false);
                 break;
             case Tilemap:
+                dialog.setSize(380, 420);
                 dialog.getGameObjectScriptsPanel().setVisible(false);
                 dialog.getTileScriptsPanel().setVisible(true);
                 dialog.getMixedScriptsPanel().setVisible(false);
@@ -1211,6 +1214,7 @@ public class ScriptGenerator {
                 dialog.getCellSizeGapPanel().setVisible(true);
                 break;
             default:
+                dialog.setSize(380, 460);
                 dialog.getGameObjectScriptsPanel().setVisible(false);
                 dialog.getTileScriptsPanel().setVisible(false);
                 dialog.getMixedScriptsPanel().setVisible(true);

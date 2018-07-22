@@ -20,7 +20,7 @@ public class PStringBuilder {
     public void append(Object input) {
         s.append(input);
 //        System.out.println("----------------------------------------");
-        System.out.println(s);
+//        System.out.println(s);
     }
     
     public StringBuilder getStringBuilder() {
