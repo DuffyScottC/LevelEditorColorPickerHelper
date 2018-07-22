@@ -618,6 +618,8 @@ public class ScriptGenerator {
                         "GameObject");
             }
             
+            complete.append("\tpublic void Start() {");
+            
             //add on the filling loops
             addFillingLoopForEachTypeToCompleteSB(
                 complete,

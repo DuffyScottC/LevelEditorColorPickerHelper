@@ -19,31 +19,31 @@ public class MixedLevelGenerator : MonoBehaviour {
 	public Vector3 cellSize = new Vector3(1.0f, 1.0f, 0.0f);
 	public Vector3 cellGap = new Vector3(0.0f, 0.0f, 0.0f);
 
-	[Header("Tile Entities Entities")]
-	public TEntity[] tileEntities = new TEntity[] {
+	[Header("Tile Entities")]
+	public TEntity[] tile = new TEntity[] {
 	};
-	[Tooltip("Must have the same size as tileEntities")]
-	public TileBase[] tileEntitiesTileBases;
+	[Tooltip("Must have the same size as tile")]
+	public TileBase[] tileTileBases;
 
 
-	[Header("Tile Entities Entities")]
-	public GOEntity[] tileEntities = new GOEntity[] {
+	[Header("GameObject Entities")]
+	public GOEntity[] gameObject = new GOEntity[] {
 		new GOEntity("Barrier", new Color32(124, 107, 68, 255)),
 		new GOEntity("Barrier Breakable", new Color32(216, 177, 139, 255)),
 		new GOEntity("Barrier Hole", new Color32(41, 38, 36, 255)),
 		new GOEntity("Ground", new Color32(228, 206, 156, 255)),
 		new GOEntity("Player 1", new Color32(0, 0, 255, 255))
 	};
-	[Tooltip("Must have the same size as tileEntities")]
-	public GameObject[] tileEntitiesGameObjects;
+	[Tooltip("Must have the same size as gameObject")]
+	public GameObject[] gameObjectGameObjects;
 
 
-		for (int i = 0; i < tileEntitiestiless.Length; i++) {
-			tileEntities[i].tile = tileEntitiestiless[i];
+		for (int i = 0; i < gameObjecttiless.Length; i++) {
+			gameObject[i].tile = gameObjecttiless[i];
 		}
 
-		for (int i = 0; i < tileEntitiesgameObjectss.Length; i++) {
-			tileEntities[i].gameObject = tileEntitiesgameObjectss[i];
+		for (int i = 0; i < gameObjectgameObjectss.Length; i++) {
+			gameObject[i].gameObject = gameObjectgameObjectss[i];
 		}
         //start of middle section
         //Create the grid for the tilemap layers
@@ -170,13 +170,13 @@ public class MixedLevelGenerator : MonoBehaviour {
         //entity matches this pixelColor
         //end of middle section
         
-		foreach (TEntity entity in tileEntities) {
+		foreach (TEntity entity in tile) {
 			placeTileIfColorMatches(entity, pixelColor, x, y, index);
 		}
 	}
 }
 
-		foreach (GOEntity entity in tileEntities) {
+		foreach (GOEntity entity in gameObject) {
 			placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);
 		}
 	}
