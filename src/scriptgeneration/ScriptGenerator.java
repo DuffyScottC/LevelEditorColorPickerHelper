@@ -323,7 +323,8 @@ public class ScriptGenerator {
             complete.append("[i].");
             complete.append(entityAttribute);
             complete.append(" = ");
-            complete.append(formattedTypes.get(i));
+            String ft = formattedTypes.get(i);
+            complete.append(ft);
             complete.append(basicClassName);
             complete.append("s[i];\n\t\t}\n");
         }
@@ -398,7 +399,7 @@ public class ScriptGenerator {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
         complete.append("\n\t[Header(\"");
         complete.append(type);
-        complete.append(" Entities\")]");
+        complete.append(" Entities\")]");//probably only add Entities if groupByType
         
         complete.append("\n\tpublic ");
         complete.append(className);
@@ -562,19 +563,19 @@ public class ScriptGenerator {
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 for (String type : project.getTypes()) {
-                    tileTypes.add("tile" + type);
-                    gameObjectTypes.add("gameObject" + type);
+                    tileTypes.add("Tile " + type);
+                    gameObjectTypes.add("GameObject " + type);
                     
                     //add the formatted version
                     formattedTileTypes.add(formatType("tile" + type));
                     formattedGameObjectTypes.add(formatType("gameObject" + type));
                 }
             } else {
-                tileTypes.add("Tile");
-                gameObjectTypes.add("GameObject");
+                tileTypes.add("Tile Entities");
+                gameObjectTypes.add("GameObject Entities");
                 
-                formattedTileTypes.add("tile");
-                formattedGameObjectTypes.add("gameObject");
+                formattedTileTypes.add("tileEntities");
+                formattedGameObjectTypes.add("gameObjectEntities");
             }
             
             
@@ -623,7 +624,7 @@ public class ScriptGenerator {
             //add on the filling loops
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
-                formattedGameObjectTypes,
+                formattedTileTypes,
                 "TileBase",
                 "tile");
             
@@ -712,7 +713,6 @@ public class ScriptGenerator {
             
             List<String> types;
             List<String> formattedTypes = new ArrayList();
-            List<String> unityArrayNames; //formattedType + "GameObjects"/"Tiles"
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //set types to be all the types in the project
