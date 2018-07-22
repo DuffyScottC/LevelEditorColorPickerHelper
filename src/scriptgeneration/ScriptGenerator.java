@@ -643,12 +643,12 @@ public class ScriptGenerator {
             }
             
             //this will hold the final text of the file
-            PStringBuilder mixedComplete = new PStringBuilder();
+            StringBuilder mixedComplete = new StringBuilder();
             //add on the start of the file
             mixedComplete.append(start);
             
-            addGridSizeToComplete(mixedComplete.getStringBuilder());
-            addCellSizeAndCellGapVariablesToComplete(mixedComplete.getStringBuilder());
+            addGridSizeToComplete(mixedComplete);
+            addCellSizeAndCellGapVariablesToComplete(mixedComplete);
             
             mixedComplete.append("\n\t[Header(\"GameObject:\")]\n");
             
@@ -854,7 +854,7 @@ public class ScriptGenerator {
             mixedComplete.append("\n");
             
             //return the completed text
-            return mixedComplete.getStringBuilder();
+            return mixedComplete;
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
