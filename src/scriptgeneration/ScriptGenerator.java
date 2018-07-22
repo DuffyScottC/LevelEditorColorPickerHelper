@@ -512,10 +512,167 @@ public class ScriptGenerator {
      * folder specified does not contain any images.
      */
     private StringBuilder getLevelGeneratorTextForMixed(File imageFolder) {
+        String className = "TEntity"; //new TEntity[] ... entities
+        String basicClassName = "TileBase"; //new TileBase[] ... filler type
+        String entityAttribute = "tile"; //TEntity.tile
+        String loopItemInitializer = "TEntity entity"; //foreach (TEntity entity ...
+        String placeFunction = "placeTileIfColorMatches(entity, pixelColor, x, y, index);";
+        
         try {
+            // The LevelGenerator Script
+            //get the start and end text
+            StringBuilder start = readResource("/resources/mixed/start.cs");
+            StringBuilder middle = readResource("/resources/mixed/middle.cs");
+            
+            //holds the entities to generate scripts with
+            List<Entity> projectEntities = getProjectEntities(imageFolder);
+            if (projectEntities == null) {
+                return null;
+            }
+            
+            List<String> types;
+            List<String> formattedTypes = new ArrayList();
+            //if the user wants to organize by type
+            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                //set types to be all the types in the project
+                types = project.getTypes();
+                //cycle through all the types
+                for (String type : types) {
+                    //add the formatted version
+                    formattedTypes.add(formatType(type));
+                }
+            } else {
+                //initialize the types list
+                types = new ArrayList();
+                types.add("Tile Entities");
+                formattedTypes.add("tileEntities");
+            }
             
             
+            List<StringBuilder> entitySBs = new ArrayList();
+            //initialize an empty StringBuilder for each type
+            for (int t = 0; t < types.size(); t++) {
+                entitySBs.add(new StringBuilder());
+            }
+
+            //loop through all the entities in the project
+            for (int i = 0; i < projectEntities.size(); i++) {
+                boolean lastIteration = (i == projectEntities.size() - 1);
+                Entity e = projectEntities.get(i);
+                int typeIndex = determineTypeIndex(e);
+                //put e in the StringBuilder corrosponding to the typeIndex
+                addEntityToStringBuilder(e, 
+                        entitySBs.get(typeIndex), className, lastIteration);
+            }
             
+            
+            //this will hold the final text of the file
+            StringBuilder complete = new StringBuilder();
+            //add on the start of the file
+            complete.append(start);
+            
+            addGridSizeToComplete(complete);
+            addCellSizeAndCellGapVariablesToComplete(complete);
+            
+            //loop through all the types
+            for (int i = 0; i < types.size(); i++) {
+                //Add the array of Entities with a title matching the type:
+                //add a Header discribing the type (e.g. [Header("Enemy Entities")])
+                complete.append("\n\t[Header(\"");
+                complete.append(types.get(i));
+                complete.append(" Entities\")]");//probably only add Entities if groupByType
+
+                complete.append("\n\tpublic ");
+                complete.append(className);
+                complete.append("[] ");
+
+                //use the formatted type name as a variable name
+                complete.append(formattedTypes.get(i));
+
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    complete.append(Utils.ARRAY_NAME_EXTENSION);
+                }
+
+                complete.append(" = new ");
+                complete.append(className);
+                complete.append("[] {\n");
+                complete.append(entitySBs.get(i));
+                complete.append("\t};\n");
+
+                //add on the tooltip
+                complete.append("\t[Tooltip(\"Must have the same size as ");
+                complete.append(formattedTypes.get(i));
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    complete.append(Utils.ARRAY_NAME_EXTENSION);
+                }
+                complete.append("\")]\n");
+
+                //add on the actuall array that holds the objects to be loaded
+                complete.append("\tpublic ");
+                complete.append(basicClassName);
+                complete.append("[] ");
+                complete.append(formattedTypes.get(i));
+                complete.append(basicClassName);
+                complete.append("s;\n");
+
+                //add a new line between each type
+                complete.append("\n");
+            }
+            
+            complete.append("\tpublic void Start() {");
+            
+            //add on the filling loops
+            for (int i = 0; i < formattedTypes.size(); i++) {
+                complete.append("\n\t\tfor (int i = 0; i < ");
+                complete.append(formattedTypes.get(i));
+                complete.append(basicClassName);
+                complete.append("s.Length; i++) {\n\t\t\t");
+
+                //use the formatted type name as a variable name
+                complete.append(formattedTypes.get(i));
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //add on the word "Entities" to the name of the array
+                    complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                }
+
+                complete.append("[i].");
+                complete.append(entityAttribute);
+                complete.append(" = ");
+                String ft = formattedTypes.get(i);
+                complete.append(ft);
+                complete.append(basicClassName);
+                complete.append("s[i];\n\t\t}\n");
+            }
+            
+            //add on the middle of the file
+            complete.append(middle);
+            //add on the searching loops
+            for (int i = 0; i < types.size(); i++) {
+                complete.append("\t\tforeach (");
+                complete.append(loopItemInitializer);
+                complete.append(" in ");
+
+                //use the formatted type name as a variable name
+                complete.append(formattedTypes.get(i));
+
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //add on the word "Entities" to the name of the array
+                    complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                }
+                complete.append(") {\n\t\t\t");
+                complete.append(placeFunction);
+                complete.append("\n\t\t}\n");
+            }
+            //close the last braces
+            complete.append("\t}\n");
+            complete.append("}\n");
+            complete.append("\n");
+            
+            //return the completed text
+            return complete;
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
