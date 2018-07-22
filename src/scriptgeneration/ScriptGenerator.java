@@ -624,13 +624,13 @@ public class ScriptGenerator {
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
                 formattedGameObjectTypes,
-                "tiles",
+                "TileBase",
                 "tile");
             
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
                 formattedGameObjectTypes,
-                "gameObjects",
+                "GameObject",
                 "gameObject");
             
             //add on the middle of the file
