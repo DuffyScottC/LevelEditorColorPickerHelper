@@ -53,7 +53,7 @@ public class Utils {
     public static final int GAMEOBJECT_INDEX = 0;
     public static final String GAMEOBJECT_NAME = "GameObject";
     public static final int TILE_INDEX = 1;
-    public static final String TILE_NAME = "Tile";
+    public static final String TILE_NAME = "TileBase";
     
     public static String getClassNameFromIndex(int classIndex) {
         switch(classIndex) {

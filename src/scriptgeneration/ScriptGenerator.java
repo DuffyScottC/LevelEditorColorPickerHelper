@@ -516,11 +516,6 @@ public class ScriptGenerator {
      * folder specified does not contain any images.
      */
     private StringBuilder getLevelGeneratorTextForMixed(File imageFolder) {
-        String className = "TEntity"; //new TEntity[] ... entities
-        String basicClassName = "TileBase"; //new TileBase[] ... filler type
-        String entityAttribute = "tile"; //TEntity.tile
-        String loopItemInitializer = "TEntity entity"; //foreach (TEntity entity ...
-        String placeFunction = "placeTileIfColorMatches(entity, pixelColor, x, y, index);";
         
         try {
             // The LevelGenerator Script
@@ -553,22 +548,90 @@ public class ScriptGenerator {
             }
             
             
-            List<StringBuilder> entitySBs = new ArrayList();
-            //initialize an empty StringBuilder for each type
+            List<StringBuilder> tEntitySBs = new ArrayList();
+            List<StringBuilder> goEntitySBs = new ArrayList();
+            //initialize one empty StringBuilder for each type
             for (int t = 0; t < types.size(); t++) {
-                entitySBs.add(new StringBuilder());
+                tEntitySBs.add(new StringBuilder());
+                goEntitySBs.add(new StringBuilder());
             }
 
             //loop through all the entities in the project
             for (int i = 0; i < projectEntities.size(); i++) {
                 boolean lastIteration = (i == projectEntities.size() - 1);
-                Entity e = projectEntities.get(i);
-                int typeIndex = determineTypeIndex(e);
-                //put e in the StringBuilder corrosponding to the typeIndex
-                addEntityToStringBuilder(e, 
-                        entitySBs.get(typeIndex), className, lastIteration);
+                Entity entity = projectEntities.get(i);
+                int typeIndex = 0;
+                //if the user wants to group by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //get the index of this entity's type
+                    typeIndex = entity.getTypeIndex();
+                }
+                
+                //put entity in the StringBuilder corrosponding to the typeIndex
+                /*
+                Depending on entity's classIndex, entities look like this:
+                    new TEntity("Barrier", new Color32(0, 0, 0, 255)),
+                    new GOEntity("Barrier", new Color32(0, 0, 0, 255)),
+                Everything is the same except for the name of the class.
+                */
+                
+                //get the stringbuilder that matches this typeIndex
+                StringBuilder goEntitySB = tEntitySBs.get(i);
+                StringBuilder tEntitySB = goEntitySBs.get(i);
+                //Add to the entityObjects array
+                switch (entity.getClassIndex()) {
+                    case Utils.GAMEOBJECT_INDEX:
+                        goEntitySB.append("\t\tnew ");
+                        goEntitySB.append("GOEntity");
+                        goEntitySB.append("(\"");
+                        goEntitySB.append(entity.getName());
+                        goEntitySB.append("\", new Color32(");
+                        goEntitySB.append(entity.getR());
+                        goEntitySB.append(", ");
+                        goEntitySB.append(entity.getG());
+                        goEntitySB.append(", ");
+                        goEntitySB.append(entity.getB());
+                        goEntitySB.append(", ");
+                        goEntitySB.append(entity.getA());
+                        if (entity.getOffset().equals(Offset.zero)) { //if it's just (0,0)
+                            goEntitySB.append("))"); //use the color-only constructor
+                        } else { //if it's not (0,0)
+                            goEntitySB.append("), new Vector2");
+                            goEntitySB.append(entity.getOffset().toString()); //e.g. "(15, 5)"
+                            goEntitySB.append(")");
+                        }
+                        if (!lastIteration) { //if not the last
+                            goEntitySB.append(",");
+                        }
+                        goEntitySB.append("\n");
+                        break;
+                    default: //TILE_INDEX
+                        tEntitySB.append("\t\tnew ");
+                        tEntitySB.append("TEntity");
+                        tEntitySB.append("(\"");
+                        tEntitySB.append(entity.getName());
+                        tEntitySB.append("\", new Color32(");
+                        tEntitySB.append(entity.getR());
+                        tEntitySB.append(", ");
+                        tEntitySB.append(entity.getG());
+                        tEntitySB.append(", ");
+                        tEntitySB.append(entity.getB());
+                        tEntitySB.append(", ");
+                        tEntitySB.append(entity.getA());
+                        if (entity.getOffset().equals(Offset.zero)) { //if it's just (0,0)
+                            tEntitySB.append("))"); //use the color-only constructor
+                        } else { //if it's not (0,0)
+                            tEntitySB.append("), new Vector2");
+                            tEntitySB.append(entity.getOffset().toString()); //e.g. "(15, 5)"
+                            tEntitySB.append(")");
+                        }
+                        if (!lastIteration) { //if not the last
+                            tEntitySB.append(",");
+                        }
+                        tEntitySB.append("\n");
+                }
+                
             }
-            
             
             //this will hold the final text of the file
             StringBuilder mixedComplete = new StringBuilder();
@@ -578,7 +641,7 @@ public class ScriptGenerator {
             addGridSizeToComplete(mixedComplete);
             addCellSizeAndCellGapVariablesToComplete(mixedComplete);
             
-            //loop through all the types
+            //loop through all the types for GameObjects
             for (int i = 0; i < types.size(); i++) {
                 //Add the array of Entities with a title matching the type:
                 //add a Header discribing the type (e.g. [Header("Enemy Entities")])
@@ -591,7 +654,7 @@ public class ScriptGenerator {
                 mixedComplete.append("\")]");
 
                 mixedComplete.append("\n\tpublic ");
-                mixedComplete.append(className);
+                mixedComplete.append("GOEntity");
                 mixedComplete.append("[] ");
 
                 //use the formatted type name as a variable name
@@ -603,9 +666,9 @@ public class ScriptGenerator {
                 }
 
                 mixedComplete.append(" = new ");
-                mixedComplete.append(className);
+                mixedComplete.append("GOEntity");
                 mixedComplete.append("[] {\n");
-                mixedComplete.append(entitySBs.get(i));
+                mixedComplete.append(goEntitySBs.get(i));
                 mixedComplete.append("\t};\n");
 
                 //add on the tooltip
@@ -618,10 +681,60 @@ public class ScriptGenerator {
 
                 //add on the actuall array that holds the objects to be loaded
                 mixedComplete.append("\tpublic ");
-                mixedComplete.append(basicClassName);
+                mixedComplete.append("GameObject");
                 mixedComplete.append("[] ");
                 mixedComplete.append(formattedTypes.get(i));
-                mixedComplete.append(basicClassName);
+                mixedComplete.append("GameObject");
+                mixedComplete.append("s;\n");
+
+                //add a new line between each type
+                mixedComplete.append("\n");
+            }
+            
+            //loop through all the types for Tiles
+            for (int i = 0; i < types.size(); i++) {
+                //Add the array of Entities with a title matching the type:
+                //add a Header discribing the type (e.g. [Header("Enemy Entities")])
+                mixedComplete.append("\n\t[Header(\"");
+                mixedComplete.append(types.get(i));
+                mixedComplete.append(" ");
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                }
+                mixedComplete.append("\")]");
+
+                mixedComplete.append("\n\tpublic ");
+                mixedComplete.append("TEntity");
+                mixedComplete.append("[] ");
+
+                //use the formatted type name as a variable name
+                mixedComplete.append(formattedTypes.get(i));
+
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                }
+
+                mixedComplete.append(" = new ");
+                mixedComplete.append("TEntity");
+                mixedComplete.append("[] {\n");
+                mixedComplete.append(tEntitySBs.get(i));
+                mixedComplete.append("\t};\n");
+
+                //add on the tooltip
+                mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
+                mixedComplete.append(formattedTypes.get(i));
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                }
+                mixedComplete.append("\")]\n");
+
+                //add on the actuall array that holds the objects to be loaded
+                mixedComplete.append("\tpublic ");
+                mixedComplete.append("TileBase");
+                mixedComplete.append("[] ");
+                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append("TileBase");
                 mixedComplete.append("s;\n");
 
                 //add a new line between each type
@@ -630,11 +743,11 @@ public class ScriptGenerator {
             
             mixedComplete.append("\tpublic void Start() {");
             
-            //add on the filling loops
+            //add on the filling loops for GameObjects
             for (int i = 0; i < formattedTypes.size(); i++) {
                 mixedComplete.append("\n\t\tfor (int i = 0; i < ");
                 mixedComplete.append(formattedTypes.get(i));
-                mixedComplete.append(basicClassName);
+                mixedComplete.append("GameObject");
                 mixedComplete.append("s.Length; i++) {\n\t\t\t");
 
                 //use the formatted type name as a variable name
@@ -646,20 +759,46 @@ public class ScriptGenerator {
                 }
 
                 mixedComplete.append("[i].");
-                mixedComplete.append(entityAttribute);
+                mixedComplete.append("gameObject");
                 mixedComplete.append(" = ");
                 String ft = formattedTypes.get(i);
                 mixedComplete.append(ft);
-                mixedComplete.append(basicClassName);
+                mixedComplete.append("GameObject");
+                mixedComplete.append("s[i];\n\t\t}\n");
+            }
+            
+            //add on the filling loops for Tiles
+            for (int i = 0; i < formattedTypes.size(); i++) {
+                mixedComplete.append("\n\t\tfor (int i = 0; i < ");
+                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append("TileBase");
+                mixedComplete.append("s.Length; i++) {\n\t\t\t");
+
+                //use the formatted type name as a variable name
+                mixedComplete.append(formattedTypes.get(i));
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //add on the word "Entities" to the name of the array
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                }
+
+                mixedComplete.append("[i].");
+                mixedComplete.append("tile");
+                mixedComplete.append(" = ");
+                String ft = formattedTypes.get(i);
+                mixedComplete.append(ft);
+                mixedComplete.append("TileBase");
                 mixedComplete.append("s[i];\n\t\t}\n");
             }
             
             //add on the middle of the file
             mixedComplete.append(middle);
-            //add on the searching loops
+            
+            
+            //add on the searching loops for GameObject
             for (int i = 0; i < types.size(); i++) {
                 mixedComplete.append("\t\tforeach (");
-                mixedComplete.append(loopItemInitializer);
+                mixedComplete.append("GOEntity entity");
                 mixedComplete.append(" in ");
 
                 //use the formatted type name as a variable name
@@ -671,9 +810,31 @@ public class ScriptGenerator {
                     mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
                 }
                 mixedComplete.append(") {\n\t\t\t");
-                mixedComplete.append(placeFunction);
+                mixedComplete.append("placeGameObjectIfColorMatches(entity, ");
+                mixedComplete.append("pixelColor, x, y, index);");
                 mixedComplete.append("\n\t\t}\n");
             }
+            
+            //add on the searching loops for Tile
+            for (int i = 0; i < types.size(); i++) {
+                mixedComplete.append("\t\tforeach (");
+                mixedComplete.append("TEntity entity");
+                mixedComplete.append(" in ");
+
+                //use the formatted type name as a variable name
+                mixedComplete.append(formattedTypes.get(i));
+
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //add on the word "Entities" to the name of the array
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                }
+                mixedComplete.append(") {\n\t\t\t");
+                mixedComplete.append("placeTileIfColorMatches(entity, ");
+                mixedComplete.append("pixelColor, x, y, index);");
+                mixedComplete.append("\n\t\t}\n");
+            }
+            
             //close the last braces
             mixedComplete.append("\t}\n");
             mixedComplete.append("}\n");
