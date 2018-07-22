@@ -78,6 +78,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         mixedScriptsPanel = new javax.swing.JPanel();
         baseEntityCheckBox = new javax.swing.JCheckBox();
         mixedLevelGeneratorCheckBox = new javax.swing.JCheckBox();
+        printSizeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -138,7 +139,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gridSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         gridSizePanelLayout.setVerticalGroup(
             gridSizePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,6 +402,9 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         mainPanel.add(mixedScriptsPanel, gridBagConstraints);
 
+        printSizeButton.setText("PrintSize");
+        mainPanel.add(printSizeButton, new java.awt.GridBagConstraints());
+
         getContentPane().add(mainPanel, java.awt.BorderLayout.NORTH);
 
         pack();
@@ -437,6 +441,7 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JCheckBox mixedLevelGeneratorCheckBox;
     private javax.swing.JPanel mixedScriptsPanel;
+    private javax.swing.JButton printSizeButton;
     private javax.swing.JCheckBox tileEntityCheckBox;
     private javax.swing.JCheckBox tileLevelGeneratorCheckBox;
     private javax.swing.JPanel tileScriptsPanel;
@@ -556,6 +561,10 @@ public class ScriptGeneratorDialog extends javax.swing.JDialog {
 
     public JCheckBox getMixedLevelGeneratorCheckBox() {
         return mixedLevelGeneratorCheckBox;
+    }
+
+    public JButton getPrintSizeButton() {
+        return printSizeButton;
     }
     
 }

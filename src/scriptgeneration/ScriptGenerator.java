@@ -211,6 +211,10 @@ public class ScriptGenerator {
             dialog.setVisible(false);
         });
         
+        dialog.getPrintSizeButton().addActionListener((ActionEvent e) -> {
+            System.out.println(dialog.getSize());
+        });
+        
         dialog.getGameObjectLevelGeneratorCheckBox().addActionListener((ActionEvent e) -> {
             boolean enabled = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
             //if we are not generating the LevelGenerator script
@@ -528,29 +532,38 @@ public class ScriptGenerator {
                 return null;
             }
             
-            List<String> types;
-            List<String> formattedTypes = new ArrayList();
+            List<String> tTypes;
+            List<String> tFormattedTypes = new ArrayList();
+            
+            List<String> goTypes;
+            List<String> goFormattedTypes = new ArrayList();
             //if the user wants to organize by type
             if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                 //set types to be all the types in the project
-                types = project.getTypes();
+                tTypes = project.getTypes();
+                goTypes = project.getTypes();
                 //cycle through all the types
-                for (String type : types) {
+                for (String type : tTypes) {
                     //add the formatted version
-                    formattedTypes.add(formatType(type));
+                    tFormattedTypes.add(formatType(type));
+                    goFormattedTypes.add(formatType(type));
                 }
             } else {
                 //initialize the types list
-                types = new ArrayList();
-                types.add("Tile Entities");
-                formattedTypes.add("tileEntities");
+                tTypes = new ArrayList();
+                tTypes.add("Tile Entities");
+                tFormattedTypes.add("tileEntities");
+                
+                goTypes = new ArrayList();
+                goTypes.add("GameObject Entities");
+                goFormattedTypes.add("gameObjectEntities");
             }
             
             
             List<StringBuilder> tEntitySBs = new ArrayList();
             List<StringBuilder> goEntitySBs = new ArrayList();
             //initialize one empty StringBuilder for each type
-            for (int t = 0; t < types.size(); t++) {
+            for (int t = 0; t < tTypes.size(); t++) {
                 tEntitySBs.add(new StringBuilder());
                 goEntitySBs.add(new StringBuilder());
             }
@@ -641,11 +654,11 @@ public class ScriptGenerator {
             addCellSizeAndCellGapVariablesToComplete(mixedComplete.getStringBuilder());
             
             //loop through all the types for GameObjects
-            for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < goTypes.size(); i++) {
                 //Add the array of Entities with a title matching the type:
                 //add a Header discribing the type (e.g. [Header("Enemy Entities")])
                 mixedComplete.append("\n\t[Header(\"");
-                mixedComplete.append(types.get(i));
+                mixedComplete.append(goTypes.get(i));
                 mixedComplete.append(" ");
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
@@ -657,7 +670,7 @@ public class ScriptGenerator {
                 mixedComplete.append("[] ");
 
                 //use the formatted type name as a variable name
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(goFormattedTypes.get(i));
 
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
@@ -672,7 +685,7 @@ public class ScriptGenerator {
 
                 //add on the tooltip
                 mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(goFormattedTypes.get(i));
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
                 }
@@ -682,7 +695,7 @@ public class ScriptGenerator {
                 mixedComplete.append("\tpublic ");
                 mixedComplete.append("GameObject");
                 mixedComplete.append("[] ");
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(goFormattedTypes.get(i));
                 mixedComplete.append("GameObject");
                 mixedComplete.append("s;\n");
 
@@ -691,11 +704,11 @@ public class ScriptGenerator {
             }
             
             //loop through all the types for Tiles
-            for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < tTypes.size(); i++) {
                 //Add the array of Entities with a title matching the type:
                 //add a Header discribing the type (e.g. [Header("Enemy Entities")])
                 mixedComplete.append("\n\t[Header(\"");
-                mixedComplete.append(types.get(i));
+                mixedComplete.append(tTypes.get(i));
                 mixedComplete.append(" ");
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
@@ -707,7 +720,7 @@ public class ScriptGenerator {
                 mixedComplete.append("[] ");
 
                 //use the formatted type name as a variable name
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(tFormattedTypes.get(i));
 
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
@@ -722,7 +735,7 @@ public class ScriptGenerator {
 
                 //add on the tooltip
                 mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(tFormattedTypes.get(i));
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
                 }
@@ -732,7 +745,7 @@ public class ScriptGenerator {
                 mixedComplete.append("\tpublic ");
                 mixedComplete.append("TileBase");
                 mixedComplete.append("[] ");
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(tFormattedTypes.get(i));
                 mixedComplete.append("TileBase");
                 mixedComplete.append("s;\n");
 
@@ -743,14 +756,14 @@ public class ScriptGenerator {
             mixedComplete.append("\tpublic void Start() {");
             
             //add on the filling loops for GameObjects
-            for (int i = 0; i < formattedTypes.size(); i++) {
+            for (int i = 0; i < goFormattedTypes.size(); i++) {
                 mixedComplete.append("\n\t\tfor (int i = 0; i < ");
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(goFormattedTypes.get(i));
                 mixedComplete.append("GameObject");
                 mixedComplete.append("s.Length; i++) {\n\t\t\t");
 
                 //use the formatted type name as a variable name
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(goFormattedTypes.get(i));
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     //add on the word "Entities" to the name of the array
@@ -760,21 +773,21 @@ public class ScriptGenerator {
                 mixedComplete.append("[i].");
                 mixedComplete.append("gameObject");
                 mixedComplete.append(" = ");
-                String ft = formattedTypes.get(i);
+                String ft = goFormattedTypes.get(i);
                 mixedComplete.append(ft);
                 mixedComplete.append("GameObject");
                 mixedComplete.append("s[i];\n\t\t}\n");
             }
             
             //add on the filling loops for Tiles
-            for (int i = 0; i < formattedTypes.size(); i++) {
+            for (int i = 0; i < tFormattedTypes.size(); i++) {
                 mixedComplete.append("\n\t\tfor (int i = 0; i < ");
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(tFormattedTypes.get(i));
                 mixedComplete.append("TileBase");
                 mixedComplete.append("s.Length; i++) {\n\t\t\t");
 
                 //use the formatted type name as a variable name
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(tFormattedTypes.get(i));
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     //add on the word "Entities" to the name of the array
@@ -784,7 +797,7 @@ public class ScriptGenerator {
                 mixedComplete.append("[i].");
                 mixedComplete.append("tile");
                 mixedComplete.append(" = ");
-                String ft = formattedTypes.get(i);
+                String ft = tFormattedTypes.get(i);
                 mixedComplete.append(ft);
                 mixedComplete.append("TileBase");
                 mixedComplete.append("s[i];\n\t\t}\n");
@@ -795,13 +808,13 @@ public class ScriptGenerator {
             
             
             //add on the searching loops for GameObject
-            for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < goTypes.size(); i++) {
                 mixedComplete.append("\t\tforeach (");
                 mixedComplete.append("GOEntity entity");
                 mixedComplete.append(" in ");
 
                 //use the formatted type name as a variable name
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(goFormattedTypes.get(i));
 
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
@@ -815,13 +828,13 @@ public class ScriptGenerator {
             }
             
             //add on the searching loops for Tile
-            for (int i = 0; i < types.size(); i++) {
+            for (int i = 0; i < tTypes.size(); i++) {
                 mixedComplete.append("\t\tforeach (");
                 mixedComplete.append("TEntity entity");
                 mixedComplete.append(" in ");
 
                 //use the formatted type name as a variable name
-                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(tFormattedTypes.get(i));
 
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {

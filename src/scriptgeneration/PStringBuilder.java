@@ -19,7 +19,7 @@ public class PStringBuilder {
     
     public void append(Object input) {
         s.append(input);
-        System.out.println("----------------------------------------");
+//        System.out.println("----------------------------------------");
         System.out.println(s);
     }
     
