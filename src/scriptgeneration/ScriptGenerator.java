@@ -576,8 +576,8 @@ public class ScriptGenerator {
                 */
                 
                 //get the stringbuilder that matches this typeIndex
-                StringBuilder goEntitySB = tEntitySBs.get(i);
-                StringBuilder tEntitySB = goEntitySBs.get(i);
+                StringBuilder goEntitySB = tEntitySBs.get(typeIndex);
+                StringBuilder tEntitySB = goEntitySBs.get(typeIndex);
                 //Add to the entityObjects array
                 switch (entity.getClassIndex()) {
                     case Utils.GAMEOBJECT_INDEX:
