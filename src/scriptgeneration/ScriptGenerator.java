@@ -399,7 +399,11 @@ public class ScriptGenerator {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
         complete.append("\n\t[Header(\"");
         complete.append(type);
-        complete.append(" Entities\")]");//probably only add Entities if groupByType
+        complete.append(" ");
+        if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+            complete.append(Utils.ARRAY_NAME_EXTENSION);
+        }
+        complete.append("\")]");
         
         complete.append("\n\tpublic ");
         complete.append(className);
@@ -567,112 +571,116 @@ public class ScriptGenerator {
             
             
             //this will hold the final text of the file
-            StringBuilder complete = new StringBuilder();
+            StringBuilder mixedComplete = new StringBuilder();
             //add on the start of the file
-            complete.append(start);
+            mixedComplete.append(start);
             
-            addGridSizeToComplete(complete);
-            addCellSizeAndCellGapVariablesToComplete(complete);
+            addGridSizeToComplete(mixedComplete);
+            addCellSizeAndCellGapVariablesToComplete(mixedComplete);
             
             //loop through all the types
             for (int i = 0; i < types.size(); i++) {
                 //Add the array of Entities with a title matching the type:
                 //add a Header discribing the type (e.g. [Header("Enemy Entities")])
-                complete.append("\n\t[Header(\"");
-                complete.append(types.get(i));
-                complete.append(" Entities\")]");//probably only add Entities if groupByType
+                mixedComplete.append("\n\t[Header(\"");
+                mixedComplete.append(types.get(i));
+                mixedComplete.append(" ");
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
+                }
+                mixedComplete.append("\")]");
 
-                complete.append("\n\tpublic ");
-                complete.append(className);
-                complete.append("[] ");
+                mixedComplete.append("\n\tpublic ");
+                mixedComplete.append(className);
+                mixedComplete.append("[] ");
 
                 //use the formatted type name as a variable name
-                complete.append(formattedTypes.get(i));
+                mixedComplete.append(formattedTypes.get(i));
 
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    complete.append(Utils.ARRAY_NAME_EXTENSION);
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
                 }
 
-                complete.append(" = new ");
-                complete.append(className);
-                complete.append("[] {\n");
-                complete.append(entitySBs.get(i));
-                complete.append("\t};\n");
+                mixedComplete.append(" = new ");
+                mixedComplete.append(className);
+                mixedComplete.append("[] {\n");
+                mixedComplete.append(entitySBs.get(i));
+                mixedComplete.append("\t};\n");
 
                 //add on the tooltip
-                complete.append("\t[Tooltip(\"Must have the same size as ");
-                complete.append(formattedTypes.get(i));
+                mixedComplete.append("\t[Tooltip(\"Must have the same size as ");
+                mixedComplete.append(formattedTypes.get(i));
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    complete.append(Utils.ARRAY_NAME_EXTENSION);
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);
                 }
-                complete.append("\")]\n");
+                mixedComplete.append("\")]\n");
 
                 //add on the actuall array that holds the objects to be loaded
-                complete.append("\tpublic ");
-                complete.append(basicClassName);
-                complete.append("[] ");
-                complete.append(formattedTypes.get(i));
-                complete.append(basicClassName);
-                complete.append("s;\n");
+                mixedComplete.append("\tpublic ");
+                mixedComplete.append(basicClassName);
+                mixedComplete.append("[] ");
+                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(basicClassName);
+                mixedComplete.append("s;\n");
 
                 //add a new line between each type
-                complete.append("\n");
+                mixedComplete.append("\n");
             }
             
-            complete.append("\tpublic void Start() {");
+            mixedComplete.append("\tpublic void Start() {");
             
             //add on the filling loops
             for (int i = 0; i < formattedTypes.size(); i++) {
-                complete.append("\n\t\tfor (int i = 0; i < ");
-                complete.append(formattedTypes.get(i));
-                complete.append(basicClassName);
-                complete.append("s.Length; i++) {\n\t\t\t");
+                mixedComplete.append("\n\t\tfor (int i = 0; i < ");
+                mixedComplete.append(formattedTypes.get(i));
+                mixedComplete.append(basicClassName);
+                mixedComplete.append("s.Length; i++) {\n\t\t\t");
 
                 //use the formatted type name as a variable name
-                complete.append(formattedTypes.get(i));
+                mixedComplete.append(formattedTypes.get(i));
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     //add on the word "Entities" to the name of the array
-                    complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
                 }
 
-                complete.append("[i].");
-                complete.append(entityAttribute);
-                complete.append(" = ");
+                mixedComplete.append("[i].");
+                mixedComplete.append(entityAttribute);
+                mixedComplete.append(" = ");
                 String ft = formattedTypes.get(i);
-                complete.append(ft);
-                complete.append(basicClassName);
-                complete.append("s[i];\n\t\t}\n");
+                mixedComplete.append(ft);
+                mixedComplete.append(basicClassName);
+                mixedComplete.append("s[i];\n\t\t}\n");
             }
             
             //add on the middle of the file
-            complete.append(middle);
+            mixedComplete.append(middle);
             //add on the searching loops
             for (int i = 0; i < types.size(); i++) {
-                complete.append("\t\tforeach (");
-                complete.append(loopItemInitializer);
-                complete.append(" in ");
+                mixedComplete.append("\t\tforeach (");
+                mixedComplete.append(loopItemInitializer);
+                mixedComplete.append(" in ");
 
                 //use the formatted type name as a variable name
-                complete.append(formattedTypes.get(i));
+                mixedComplete.append(formattedTypes.get(i));
 
                 //if the user wants to group entities by type
                 if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
                     //add on the word "Entities" to the name of the array
-                    complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
                 }
-                complete.append(") {\n\t\t\t");
-                complete.append(placeFunction);
-                complete.append("\n\t\t}\n");
+                mixedComplete.append(") {\n\t\t\t");
+                mixedComplete.append(placeFunction);
+                mixedComplete.append("\n\t\t}\n");
             }
             //close the last braces
-            complete.append("\t}\n");
-            complete.append("}\n");
-            complete.append("\n");
+            mixedComplete.append("\t}\n");
+            mixedComplete.append("}\n");
+            mixedComplete.append("\n");
             
             //return the completed text
-            return complete;
+            return mixedComplete;
         } catch (IOException ex) {
             System.err.println("I/O Exception: Could not read file\n"
                     + ex.toString());
