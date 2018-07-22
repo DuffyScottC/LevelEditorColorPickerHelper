@@ -397,7 +397,7 @@ public class ScriptGenerator {
             String basicClassType,
             String formattedBasicClassType) {
         //add a Header discribing the type (e.g. [Header("Enemy Entities")])
-        complete.append("[Header(\"");
+        complete.append("\t[Header(\"");
         complete.append(type);
         complete.append(" Entities\")]");
         
@@ -419,11 +419,8 @@ public class ScriptGenerator {
         complete.append(entitySB);
         complete.append("\t};\n");
         
-        //add a new line between each type
-        complete.append("\n");
-        
         //add on the tooltip
-        complete.append("[Tooltip(\"Must have the same size as ");
+        complete.append("\t[Tooltip(\"Must have the same size as ");
         complete.append(formattedType);
         if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
             complete.append(Utils.ARRAY_NAME_EXTENSION);
@@ -431,11 +428,14 @@ public class ScriptGenerator {
         complete.append("\")]\n");
         
         //add on the actuall array that holds the objects to be loaded
-        complete.append("public ");
+        complete.append("\tpublic ");
         complete.append(basicClassType);
         complete.append("[] ");
         complete.append(formattedBasicClassType);
         complete.append(";\n");
+        
+        //add a new line between each type
+        complete.append("\n");
     }
     
     //MARK: Tile ----------------------------------------------------------
