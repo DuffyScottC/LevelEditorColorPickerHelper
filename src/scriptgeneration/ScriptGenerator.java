@@ -211,10 +211,6 @@ public class ScriptGenerator {
             dialog.setVisible(false);
         });
         
-        dialog.getPrintSizeButton().addActionListener((ActionEvent e) -> {
-            System.out.println(dialog.getSize());
-        });
-        
         dialog.getGameObjectLevelGeneratorCheckBox().addActionListener((ActionEvent e) -> {
             boolean enabled = dialog.getGameObjectLevelGeneratorCheckBox().isSelected();
             //if we are not generating the LevelGenerator script
