@@ -7,7 +7,10 @@ package controllers;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import javax.swing.JColorChooser;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -42,6 +45,7 @@ public class ColorPickerController {
     private boolean includeHashTag = false;
     private boolean includeAlpha = true;
     
+    private boolean enabled = false;
     
     public ColorPickerController(MainFrame frame,
             ModifiedController modifiedController) {
@@ -58,6 +62,32 @@ public class ColorPickerController {
         colorPanel = frame.getColorPanel();
         
         colorCodeTextField = frame.getColorCodeTextField();
+        
+        colorPanel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                //if this is not enabled
+                if (!enabled) {
+                    return;
+                }
+                //if the user double-clicked
+                if(e.getClickCount()==2){
+                    //Open the JColorChooser
+                    Color newColor = JColorChooser.showDialog(
+                            frame, "Pick A Color", new Color(r, g, b, a));
+                    if (newColor == null) {
+                        return;
+                    }
+                    //fill out the new color
+                    r = newColor.getRed();
+                    g = newColor.getGreen();
+                    b = newColor.getBlue();
+                    a = newColor.getAlpha();
+                    //update the visual elements and sliders
+                    updateAll();
+                    modifiedController.setModified(true);
+                }
+            }
+        });
         
         redSlider.addChangeListener((ChangeEvent e) -> {
             r = redSlider.getValue();
@@ -392,4 +422,19 @@ public class ColorPickerController {
         updateColorCodeTextField();
     }
     
+    /**
+     * Enables or disables all of the visual elements.
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        colorCodeTextField.setEnabled(enabled);
+        redSlider.setEnabled(enabled);
+        redSpinner.setEnabled(enabled);
+        greenSlider.setEnabled(enabled);
+        greenSpinner.setEnabled(enabled);
+        blueSlider.setEnabled(enabled);
+        blueSpinner.setEnabled(enabled);
+        alphaSlider.setEnabled(enabled);
+        alphaSpinner.setEnabled(enabled);
+    }
 }

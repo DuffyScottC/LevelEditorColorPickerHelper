@@ -12,3 +12,10 @@ Warn the user that they MUST follow this procedure for their image importing:
 Advanced: Read/Write Enabled = true
 Filter Mode = Point (No filter)
 Default: Compression = none
+
+Make the name of the entity be the color of the entity, and add a tint to the icon.
+
+Allow the user to right-click and select "show in finder"
+
+Errors:
+add an image to Entity1. Press apply. Open Entity2. Add identically named image to Entity2. Press delete image button. Result: Entity1's image is deleted.

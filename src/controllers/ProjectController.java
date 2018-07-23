@@ -1840,15 +1840,9 @@ public class ProjectController {
         frame.getTypeComboBox().setEnabled(value);
         frame.getChangeImageButton().setEnabled(value);
         frame.getDeleteImageButton().setEnabled(value);
-        frame.getColorCodeTextField().setEnabled(value);
-        frame.getRedSlider().setEnabled(value);
-        frame.getRedSpinner().setEnabled(value);
-        frame.getGreenSlider().setEnabled(value);
-        frame.getGreenSpinner().setEnabled(value);
-        frame.getBlueSlider().setEnabled(value);
-        frame.getBlueSpinner().setEnabled(value);
-        frame.getAlphaSlider().setEnabled(value);
-        frame.getAlphaSpinner().setEnabled(value);
+        
+        colorPickerController.setEnabled(value);
+        
         frame.getClassComboBox().setEnabled(value);
         frame.getxOffsetSpinner().setEnabled(value);
         frame.getyOffsetSpinner().setEnabled(value);
