@@ -253,9 +253,18 @@ public class ScriptGenerator {
     }
 
     public void showDialog(MainFrame frame) {
-        dialog.setSize(380, 375);
-        dialog.getDesitnationFolderTextField().setText(System.getProperty("user.dir"));
-        dialog.getImageFolderTextField().setText(System.getProperty("user.dir"));
+        Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+        
+        String imageFolderChooserFilePath 
+                = prefs.get(Utils.IMAGE_FOLDER_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        dialog.getDesitnationFolderTextField().setText(imageFolderChooserFilePath);
+        
+        String destinationChooserFilePath 
+                = prefs.get(Utils.DESTINATION_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        dialog.getImageFolderTextField().setText(destinationChooserFilePath);
+        
         dialog.setLocationRelativeTo(frame);
         dialog.getUseImagesCheckBox().setSelected(false);
         dialog.getImageFolderTextField().setEnabled(false);
