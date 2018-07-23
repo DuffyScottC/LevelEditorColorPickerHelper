@@ -90,6 +90,7 @@ public class ScriptGenerator {
                 = new JFileChooser(imageFolderChooserFile.getParent());
         imageFolderChooser.setMultiSelectionEnabled(false);
         imageFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        imageFolderChooser.setDragEnabled(true);
         
         String destinationChooserFilePath 
                 = prefs.get(Utils.DESTINATION_CHOOSER_PATH, 
@@ -100,7 +101,7 @@ public class ScriptGenerator {
                 = new JFileChooser(destinationChooserFile.getParent());
         destinationChooser.setMultiSelectionEnabled(false);
         destinationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
+        destinationChooser.setDragEnabled(true);
         
         //setup the combo box
         JComboBox typeComboBox = dialog.getTypeComboBox();

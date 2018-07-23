@@ -5,20 +5,14 @@
  */
 package controllers;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.prefs.Preferences;
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
 import views.MainFrame;
 
 public class Controller {
-    
-    public static final boolean devmode = false;
 
     private final MainFrame frame = new MainFrame();
     private final ProjectController projectController;
@@ -50,15 +44,6 @@ public class Controller {
         
         projectController.enterNewProjectState();
         
-        if (devmode) {
-            JMenu devMenu = new JMenu("Development");
-            JMenuItem showColor = new JMenuItem("Show Color Dialog");
-            showColor.addActionListener((ActionEvent e) -> {
-                JColorChooser.showDialog(null, "Pick A Color", Color.yellow);
-            });
-            devMenu.add(showColor);
-            frame.getMainMenuBar().add(devMenu);
-        }
         
         frame.getAddEntityMenuItem().setEnabled(false);
         frame.getDeleteEntityMenuItem().setEnabled(false);
