@@ -308,29 +308,32 @@ public class ScriptGenerator {
     private void addFillingLoopForEachTypeToCompleteSB(
             StringBuilder complete,
             List<String> formattedTypes,
+            List<StringBuilder> entitySBs,
             String basicClassName,
             String entityAttribute) {
         for (int i = 0; i < formattedTypes.size(); i++) {
-            complete.append("\n\t\tfor (int i = 0; i < ");
-            complete.append(formattedTypes.get(i));
-            complete.append(basicClassName);
-            complete.append("s.Length; i++) {\n\t\t\t");
+            if (entitySBs.get(i).length() != 0) {
+                complete.append("\n\t\tfor (int i = 0; i < ");
+                complete.append(formattedTypes.get(i));
+                complete.append(basicClassName);
+                complete.append("s.Length; i++) {\n\t\t\t");
 
-            //use the formatted type name as a variable name
-            complete.append(formattedTypes.get(i));
-            //if the user wants to group entities by type
-            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                //add on the word "Entities" to the name of the array
-                complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                //use the formatted type name as a variable name
+                complete.append(formattedTypes.get(i));
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //add on the word "Entities" to the name of the array
+                    complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                }
+
+                complete.append("[i].");
+                complete.append(entityAttribute);
+                complete.append(" = ");
+                String ft = formattedTypes.get(i);
+                complete.append(ft);
+                complete.append(basicClassName);
+                complete.append("s[i];\n\t\t}\n");
             }
-            
-            complete.append("[i].");
-            complete.append(entityAttribute);
-            complete.append(" = ");
-            String ft = formattedTypes.get(i);
-            complete.append(ft);
-            complete.append(basicClassName);
-            complete.append("s[i];\n\t\t}\n");
         }
     }
     
@@ -352,24 +355,27 @@ public class ScriptGenerator {
             StringBuilder complete,
             List<String> types,
             List<String> formattedTypes,
+            List<StringBuilder> entitySBs,
             String itemType,
             String placeFunction) {
         for (int i = 0; i < types.size(); i++) {
-            complete.append("\t\tforeach (");
-            complete.append(itemType);
-            complete.append(" in ");
-            
-            //use the formatted type name as a variable name
-            complete.append(formattedTypes.get(i));
-            
-            //if the user wants to group entities by type
-            if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                //add on the word "Entities" to the name of the array
-                complete.append(Utils.ARRAY_NAME_EXTENSION);   
+            if (entitySBs.get(i).length() != 0) {
+                complete.append("\t\tforeach (");
+                complete.append(itemType);
+                complete.append(" in ");
+
+                //use the formatted type name as a variable name
+                complete.append(formattedTypes.get(i));
+
+                //if the user wants to group entities by type
+                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                    //add on the word "Entities" to the name of the array
+                    complete.append(Utils.ARRAY_NAME_EXTENSION);   
+                }
+                complete.append(") {\n\t\t\t");
+                complete.append(placeFunction);
+                complete.append("\n\t\t}\n");
             }
-            complete.append(") {\n\t\t\t");
-            complete.append(placeFunction);
-            complete.append("\n\t\t}\n");
         }
         //close the last braces
         complete.append("\t}\n");
@@ -764,50 +770,54 @@ public class ScriptGenerator {
             
             //add on the filling loops for GameObjects
             for (int i = 0; i < goFormattedTypes.size(); i++) {
-                mixedComplete.append("\n\t\tfor (int i = 0; i < ");
-                mixedComplete.append(goFormattedTypes.get(i));
-                mixedComplete.append("GameObject");
-                mixedComplete.append("s.Length; i++) {\n\t\t\t");
+                if (goEntitySBs.get(i).length() != 0) {
+                    mixedComplete.append("\n\t\tfor (int i = 0; i < ");
+                    mixedComplete.append(goFormattedTypes.get(i));
+                    mixedComplete.append("GameObject");
+                    mixedComplete.append("s.Length; i++) {\n\t\t\t");
 
-                //use the formatted type name as a variable name
-                mixedComplete.append(goFormattedTypes.get(i));
-                //if the user wants to group entities by type
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    //add on the word "Entities" to the name of the array
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    //use the formatted type name as a variable name
+                    mixedComplete.append(goFormattedTypes.get(i));
+                    //if the user wants to group entities by type
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        //add on the word "Entities" to the name of the array
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    }
+
+                    mixedComplete.append("[i].");
+                    mixedComplete.append("gameObject");
+                    mixedComplete.append(" = ");
+                    String ft = goFormattedTypes.get(i);
+                    mixedComplete.append(ft);
+                    mixedComplete.append("GameObject");
+                    mixedComplete.append("s[i];\n\t\t}\n");
                 }
-
-                mixedComplete.append("[i].");
-                mixedComplete.append("gameObject");
-                mixedComplete.append(" = ");
-                String ft = goFormattedTypes.get(i);
-                mixedComplete.append(ft);
-                mixedComplete.append("GameObject");
-                mixedComplete.append("s[i];\n\t\t}\n");
             }
             
             //add on the filling loops for Tiles
             for (int i = 0; i < tFormattedTypes.size(); i++) {
-                mixedComplete.append("\n\t\tfor (int i = 0; i < ");
-                mixedComplete.append(tFormattedTypes.get(i));
-                mixedComplete.append("TileBase");
-                mixedComplete.append("s.Length; i++) {\n\t\t\t");
+                if (tEntitySBs.get(i).length() != 0) {
+                    mixedComplete.append("\n\t\tfor (int i = 0; i < ");
+                    mixedComplete.append(tFormattedTypes.get(i));
+                    mixedComplete.append("TileBase");
+                    mixedComplete.append("s.Length; i++) {\n\t\t\t");
 
-                //use the formatted type name as a variable name
-                mixedComplete.append(tFormattedTypes.get(i));
-                //if the user wants to group entities by type
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    //add on the word "Entities" to the name of the array
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    //use the formatted type name as a variable name
+                    mixedComplete.append(tFormattedTypes.get(i));
+                    //if the user wants to group entities by type
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        //add on the word "Entities" to the name of the array
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    }
+
+                    mixedComplete.append("[i].");
+                    mixedComplete.append("tile");
+                    mixedComplete.append(" = ");
+                    String ft = tFormattedTypes.get(i);
+                    mixedComplete.append(ft);
+                    mixedComplete.append("TileBase");
+                    mixedComplete.append("s[i];\n\t\t}\n");
                 }
-
-                mixedComplete.append("[i].");
-                mixedComplete.append("tile");
-                mixedComplete.append(" = ");
-                String ft = tFormattedTypes.get(i);
-                mixedComplete.append(ft);
-                mixedComplete.append("TileBase");
-                mixedComplete.append("s[i];\n\t\t}\n");
             }
             
             //add on the middle of the file
@@ -816,42 +826,46 @@ public class ScriptGenerator {
             
             //add on the searching loops for GameObject
             for (int i = 0; i < goTypes.size(); i++) {
-                mixedComplete.append("\t\tforeach (");
-                mixedComplete.append("GOEntity entity");
-                mixedComplete.append(" in ");
+                if (goEntitySBs.get(i).length() != 0) {
+                    mixedComplete.append("\t\tforeach (");
+                    mixedComplete.append("GOEntity entity");
+                    mixedComplete.append(" in ");
 
-                //use the formatted type name as a variable name
-                mixedComplete.append(goFormattedTypes.get(i));
+                    //use the formatted type name as a variable name
+                    mixedComplete.append(goFormattedTypes.get(i));
 
-                //if the user wants to group entities by type
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    //add on the word "Entities" to the name of the array
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    //if the user wants to group entities by type
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        //add on the word "Entities" to the name of the array
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    }
+                    mixedComplete.append(") {\n\t\t\t");
+                    mixedComplete.append("placeGameObjectIfColorMatches(entity, ");
+                    mixedComplete.append("pixelColor, x, y, index);");
+                    mixedComplete.append("\n\t\t}\n");
                 }
-                mixedComplete.append(") {\n\t\t\t");
-                mixedComplete.append("placeGameObjectIfColorMatches(entity, ");
-                mixedComplete.append("pixelColor, x, y, index);");
-                mixedComplete.append("\n\t\t}\n");
             }
             
             //add on the searching loops for Tile
             for (int i = 0; i < tTypes.size(); i++) {
-                mixedComplete.append("\t\tforeach (");
-                mixedComplete.append("TEntity entity");
-                mixedComplete.append(" in ");
+                if (tEntitySBs.get(i).length() != 0) {
+                    mixedComplete.append("\t\tforeach (");
+                    mixedComplete.append("TEntity entity");
+                    mixedComplete.append(" in ");
 
-                //use the formatted type name as a variable name
-                mixedComplete.append(tFormattedTypes.get(i));
+                    //use the formatted type name as a variable name
+                    mixedComplete.append(tFormattedTypes.get(i));
 
-                //if the user wants to group entities by type
-                if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
-                    //add on the word "Entities" to the name of the array
-                    mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    //if the user wants to group entities by type
+                    if (dialog.getGroupEntitiesByTypeCheckBox().isSelected()) {
+                        //add on the word "Entities" to the name of the array
+                        mixedComplete.append(Utils.ARRAY_NAME_EXTENSION);   
+                    }
+                    mixedComplete.append(") {\n\t\t\t");
+                    mixedComplete.append("placeTileIfColorMatches(entity, ");
+                    mixedComplete.append("pixelColor, x, y, index);");
+                    mixedComplete.append("\n\t\t}\n");
                 }
-                mixedComplete.append(") {\n\t\t\t");
-                mixedComplete.append("placeTileIfColorMatches(entity, ");
-                mixedComplete.append("pixelColor, x, y, index);");
-                mixedComplete.append("\n\t\t}\n");
             }
             
             //close the last braces
@@ -975,6 +989,7 @@ public class ScriptGenerator {
             addFillingLoopForEachTypeToCompleteSB(
                 complete,
                 formattedTypes,
+                entitySBs,
                 basicClassName,
                 entityAttribute);
             
@@ -985,6 +1000,7 @@ public class ScriptGenerator {
                     complete, 
                     types, 
                     formattedTypes,
+                    entitySBs,
                     className + " entity",
                     placeFunction);
             //return the completed text
@@ -1267,7 +1283,7 @@ public class ScriptGenerator {
     
     private File getFolderFile(String destinationFolderText) {
         //if the user entered an empty string
-        if (destinationFolderText.length() == 0) {
+        if (destinationFolderText.length() != 0) {
             JOptionPane.showMessageDialog(dialog, 
                     "Cannot enter an empty string as a folder path.", 
                     "Empty Path", 
