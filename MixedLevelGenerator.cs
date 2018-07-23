@@ -42,24 +42,8 @@ public class MixedLevelGenerator : MonoBehaviour {
 	public TileBase[] tTerrainTileBases;
 
 	public void Start() {
-		for (int i = 0; i < gOMiscGameObjects.Length; i++) {
-			gOMiscEntities[i].gameObject = gOMiscGameObjects[i];
-		}
-
 		for (int i = 0; i < gOPlayerGameObjects.Length; i++) {
 			gOPlayerEntities[i].gameObject = gOPlayerGameObjects[i];
-		}
-
-		for (int i = 0; i < gOTerrainGameObjects.Length; i++) {
-			gOTerrainEntities[i].gameObject = gOTerrainGameObjects[i];
-		}
-
-		for (int i = 0; i < tMiscTileBases.Length; i++) {
-			tMiscEntities[i].tile = tMiscTileBases[i];
-		}
-
-		for (int i = 0; i < tPlayerTileBases.Length; i++) {
-			tPlayerEntities[i].tile = tPlayerTileBases[i];
 		}
 
 		for (int i = 0; i < tTerrainTileBases.Length; i++) {
@@ -190,20 +174,8 @@ public class MixedLevelGenerator : MonoBehaviour {
         //entity matches this pixelColor
         //end of middle section
         
-		foreach (GOEntity entity in gOMiscEntities) {
-			placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);
-		}
 		foreach (GOEntity entity in gOPlayerEntities) {
 			placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);
-		}
-		foreach (GOEntity entity in gOTerrainEntities) {
-			placeGameObjectIfColorMatches(entity, pixelColor, x, y, index);
-		}
-		foreach (TEntity entity in tMiscEntities) {
-			placeTileIfColorMatches(entity, pixelColor, x, y, index);
-		}
-		foreach (TEntity entity in tPlayerEntities) {
-			placeTileIfColorMatches(entity, pixelColor, x, y, index);
 		}
 		foreach (TEntity entity in tTerrainEntities) {
 			placeTileIfColorMatches(entity, pixelColor, x, y, index);

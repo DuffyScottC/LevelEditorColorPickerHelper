@@ -1283,7 +1283,7 @@ public class ScriptGenerator {
     
     private File getFolderFile(String destinationFolderText) {
         //if the user entered an empty string
-        if (destinationFolderText.length() != 0) {
+        if (destinationFolderText.length() == 0) {
             JOptionPane.showMessageDialog(dialog, 
                     "Cannot enter an empty string as a folder path.", 
                     "Empty Path", 
