@@ -40,9 +40,8 @@ public class PaletteGenerator {
         destinationChooser.setDragEnabled(true);
         FileFilter projectFileFilter 
             = new FileNameExtensionFilter("GIMP Palette (.gpl)","gpl");
-        destinationChooser.setSelectedFile(new File(
-                destinationChooserFilePath + 
-                        project.getName() + ".gpl"));
+        destinationChooser.setFileFilter(projectFileFilter);
+        destinationChooser.setSelectedFile(new File(project.getName() + ".gpl"));
         
         int result = destinationChooser.showSaveDialog(frame);
         if (result == JFileChooser.APPROVE_OPTION) {
