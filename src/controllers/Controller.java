@@ -5,12 +5,11 @@
  */
 package controllers;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -53,19 +52,11 @@ public class Controller {
         
         if (devmode) {
             JMenu devMenu = new JMenu("Development");
-            JMenuItem resetPrefs = new JMenuItem("Reset All Preferences");
-            resetPrefs.addActionListener((ActionEvent e) -> {
-                Preferences prefs 
-                    = Preferences.userRoot()
-                    .node(projectController.getClass().getName());
-                try {
-                    prefs.clear();
-                } catch (BackingStoreException ex) {
-                    Logger.getLogger(Controller.class.getName())
-                            .log(Level.SEVERE, null, ex);
-                }
+            JMenuItem showColor = new JMenuItem("Show Color Dialog");
+            showColor.addActionListener((ActionEvent e) -> {
+                JColorChooser.showDialog(null, "Pick A Color", Color.yellow);
             });
-            devMenu.add(resetPrefs);
+            devMenu.add(showColor);
             frame.getMainMenuBar().add(devMenu);
         }
         

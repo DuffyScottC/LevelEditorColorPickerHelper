@@ -66,6 +66,8 @@ public class ScriptGenerator {
     private Three cellSize = new Three(1, 1, 0);
     private Three cellGap = new Three(0, 0, 0);
     
+    private final Preferences prefs;
+    
     /**
      * Creates a new script generator for the passed in project.
      * @param project The project to generate scripts for
@@ -77,13 +79,15 @@ public class ScriptGenerator {
         //make it so the user can press enter to generate
         dialog.getRootPane().setDefaultButton(dialog.getGenerateButton());
         
-        Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+        prefs = Preferences.userRoot().node(this.getClass().getName());
         
         String imageFolderChooserFilePath 
                 = prefs.get(Utils.IMAGE_FOLDER_CHOOSER_PATH, 
                         System.getProperty("user.dir"));
         File imageFolderChooserFile = new File(imageFolderChooserFilePath);
-        JFileChooser imageFolderChooser = new JFileChooser(imageFolderChooserFile);
+        //make it the parent so they can actually CLICK the desired folder again
+        JFileChooser imageFolderChooser 
+                = new JFileChooser(imageFolderChooserFile.getParent());
         imageFolderChooser.setMultiSelectionEnabled(false);
         imageFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
@@ -91,7 +95,9 @@ public class ScriptGenerator {
                 = prefs.get(Utils.DESTINATION_CHOOSER_PATH, 
                         System.getProperty("user.dir"));
         File destinationChooserFile = new File(destinationChooserFilePath);
-        JFileChooser destinationChooser = new JFileChooser(destinationChooserFile);
+        //make it the parent so they can actually CLICK the desired folder again
+        JFileChooser destinationChooser 
+                = new JFileChooser(destinationChooserFile.getParent());
         destinationChooser.setMultiSelectionEnabled(false);
         destinationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
@@ -253,17 +259,16 @@ public class ScriptGenerator {
     }
 
     public void showDialog(MainFrame frame) {
-        Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
         
         String imageFolderChooserFilePath 
                 = prefs.get(Utils.IMAGE_FOLDER_CHOOSER_PATH, 
                         System.getProperty("user.dir"));
-        dialog.getDesitnationFolderTextField().setText(imageFolderChooserFilePath);
+        dialog.getImageFolderTextField().setText(imageFolderChooserFilePath);
         
         String destinationChooserFilePath 
                 = prefs.get(Utils.DESTINATION_CHOOSER_PATH, 
                         System.getProperty("user.dir"));
-        dialog.getImageFolderTextField().setText(destinationChooserFilePath);
+        dialog.getDesitnationFolderTextField().setText(destinationChooserFilePath);
         
         dialog.setLocationRelativeTo(frame);
         dialog.getUseImagesCheckBox().setSelected(false);
