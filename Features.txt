@@ -4,11 +4,9 @@ generate only a text file with the array elements, not the whole script
 
 Allow users to specify for a given project that images are not to be copied, but instead linked to (to save space)
 
-Allow users to generate scripts for projects which are combinations of tilemaps and gameobjects, not just one or the other.
-
 Make the list items show the color instead of white, so that users who have different colored entities with the same grey-scale drawing can visually tell the difference.
 
-Idea: Make a separate array of just gameobjects (or tilemaps) that allows the user to drop them in all at once in alphabetical order, then the user will be able to drag and drop a swath into the array and, on start, that array is used to assign the objects for the entities (which are in their own array, and may not even be public)
+Make a color picker that allows the user to pick a color from, at least, the image associated with the entity.
 
 Warn the user that they MUST follow this procedure for their image importing:
 Advanced: Read/Write Enabled = true
