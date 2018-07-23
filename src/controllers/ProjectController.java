@@ -46,6 +46,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 import projects.Project;
+import scriptgeneration.PaletteGenerator;
 import scriptgeneration.ScriptGenerator;
 import views.MainFrame;
 import views.NewProjectDialog;
@@ -550,6 +551,11 @@ public class ProjectController {
             ScriptGenerator scriptGenerator 
                     = new ScriptGenerator(currentProject, frame);
             scriptGenerator.showDialog(frame);
+        });
+        
+        frame.getExportPaletteMenuItem().addActionListener((ActionEvent e) -> {
+            PaletteGenerator paletteGenerator 
+                    = new PaletteGenerator(currentProject, frame);
         });
         
         frame.getPreferencesMenuItem().addActionListener((ActionEvent e) -> {
@@ -1334,6 +1340,7 @@ public class ProjectController {
         frame.getSetCommandMenuItem().setEnabled(true);
         frame.getUseCommandCheckBoxMenuItem().setEnabled(true);
         frame.getGenerateScriptsMenuItem().setEnabled(true);
+        frame.getExportPaletteMenuItem().setEnabled(true);
     }
     
     /**

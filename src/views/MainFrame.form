@@ -67,6 +67,11 @@
                 <Property name="text" type="java.lang.String" value="Generate Scripts"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="exportPaletteMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Export GIMP Palette"/>
+              </Properties>
+            </MenuItem>
             <Menu class="javax.swing.JMenu" name="commandMenu">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Command"/>

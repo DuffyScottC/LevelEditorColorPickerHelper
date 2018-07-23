@@ -39,17 +39,6 @@ enum ScriptType {
     Mixed
 }
 
-/*
-        switch (scriptType) {
-            case GameObject:
-                break;
-            case Tilemap:
-                break;
-            default:
-
-        }
-*/
-
 /**
  * Handles generating scripts
  * @author Scott
@@ -320,12 +309,12 @@ public class ScriptGenerator {
                 //there was a problem
                 return false;
             }
-            createFile(destinationFolder, "GameObjectLevelGenerator.cs", levelGenerator.toString());
+            Utils.createFile(destinationFolder, "GameObjectLevelGenerator.cs", levelGenerator.toString());
         }
 
         if (dialog.getGameObjectEntityCheckBox().isSelected()) {
             StringBuilder entity = readResource("/resources/gameobject/GameObjectEntity.cs");
-            createFile(destinationFolder, "GameObjectEntity.cs", entity.toString());
+            Utils.createFile(destinationFolder, "GameObjectEntity.cs", entity.toString());
         }
         return true;
     }
@@ -510,12 +499,12 @@ public class ScriptGenerator {
                 //there was a problem
                 return false;
             }
-            createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
+            Utils.createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
         }
 
         if (shouldEntity) {
             StringBuilder entity = readResource(entityResourceFileName);
-            createFile(destinationFolder, entityFileName, entity.toString());
+            Utils.createFile(destinationFolder, entityFileName, entity.toString());
         }
         return true;
     }
@@ -538,12 +527,12 @@ public class ScriptGenerator {
                 //there was a problem
                 return false;
             }
-            createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
+            Utils.createFile(destinationFolder, levelGeneratorFileName, levelGenerator.toString());
         }
 
         if (shouldEntity) {
             StringBuilder entity = readResource(entityResourceFileName);
-            createFile(destinationFolder, entityFileName, entity.toString());
+            Utils.createFile(destinationFolder, entityFileName, entity.toString());
         }
         return true;
     }
@@ -1165,53 +1154,6 @@ public class ScriptGenerator {
         complete.append("f, ");
         complete.append(cellGap.getZ());
         complete.append("f);\n");
-    }
-    
-    /**
-     * Creates the file at the given destination with the given name and the
-     * given contents.
-     * @param destination
-     * @param name
-     * @param contents 
-     */
-    private void createFile(File destination, String name, String contents) {
-        //create a writer up here so we can close it in the finally statement
-        FileWriter writer = null;
-        try {
-            //convert the destination to a path
-            Path destinationPath = destination.toPath();
-            //create a path to the file
-            Path filePath = Paths.get(destinationPath.toString(), name);
-            //convert the path to a file
-            File file = filePath.toFile();
-            
-            //if the file already exists
-            if (file.exists()) {
-                //if the user does NOt want to overwrite
-                if (!Utils.shouldContinue(
-                        "The file " + name + " already exists.\n"
-                        + "Would you like to overwrite this file?", dialog)) {
-                    return;
-                }
-            }
-            
-            //create a writer from the file
-            writer = new FileWriter(file);
-            //write the contents to the file
-            writer.write(contents);
-        } catch (IOException ex) {
-            System.err.println("I/O Exeption: Could not create file " + name 
-                    + "\n" + ex.toString());
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException ex) {
-                System.err.println("I/O Exeption: Could not write to file "
-                    + name + "\n" + ex.toString());
-            }
-        }
     }
     
     /**

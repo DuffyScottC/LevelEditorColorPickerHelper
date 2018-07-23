@@ -10,7 +10,10 @@ import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
@@ -26,6 +29,7 @@ public class Utils {
     public static final String OPEN_PROJECT_CHOOSER_PATH = "LECPOpenProjectChooserPath";
     public static final String IMAGE_FOLDER_CHOOSER_PATH = "LECPImageFolderChooserPath";
     public static final String DESTINATION_CHOOSER_PATH = "LECPDestinationChooserPath";
+    public static final String GIMP_DESTINATION_CHOOSER_PATH = "LECPGIMPDestinationChooserPath";
     
     public static final String INCLUDE_HASHTAG = "LECPIncludeHashtag";
     public static final String INCLUDE_ALPHA = "LECPIncludeAlpha";
@@ -244,6 +248,64 @@ public class Utils {
         //if the user did choose yes, then we should continue the operation
         //if the file has been saved, then we can just return true
         return selection == JOptionPane.YES_OPTION;
+    }
+    
+    /**
+     * Creates the file at the given destination with the given name and the
+     * given contents.
+     * @param destination The place to save the file
+     * @param name The name of the file
+     * @param contents The contents of the file
+     */
+    public static void createFile(File destination, String name, String contents) {
+        //convert the destination to a path
+            Path destinationPath = destination.toPath();
+            //create a path to the file
+            Path filePath = Paths.get(destinationPath.toString(), name);
+            //convert the path to a file
+            File destinationFile = filePath.toFile();
+            createFile(destinationFile, contents);
+    }
+    
+    /**
+     * Creates the file at the given destination with the given name and the
+     * given contents.
+     * @param file The File in which to save this text
+     * @param contents The text to put in the file
+     */
+    public static void createFile(File file, String contents) {
+        //create a writer up here so we can close it in the finally statement
+        FileWriter writer = null;
+        try {
+            
+            //if the file already exists
+            if (file.exists()) {
+                //if the user does NOt want to overwrite
+                if (!Utils.shouldContinue(
+                        "The file " + file.getName() + " already exists.\n"
+                        + "Would you like to overwrite this file?", null)) {
+                    return;
+                }
+            }
+            
+            //create a writer from the file
+            writer = new FileWriter(file);
+            //write the contents to the file
+            writer.write(contents);
+        } catch (IOException ex) {
+            System.err.println("I/O Exeption: Could not create file " + 
+                    file.getName() 
+                    + "\n" + ex.toString());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException ex) {
+                System.err.println("I/O Exeption: Could not write to file "
+                    + file.getName() + "\n" + ex.toString());
+            }
+        }
     }
     
 }

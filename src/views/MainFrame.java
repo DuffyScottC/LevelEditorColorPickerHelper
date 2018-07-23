@@ -110,6 +110,7 @@ public class MainFrame extends javax.swing.JFrame {
         swapCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         toolsMenu = new javax.swing.JMenu();
         generateScriptsMenuItem = new javax.swing.JMenuItem();
+        exportPaletteMenuItem = new javax.swing.JMenuItem();
         commandMenu = new javax.swing.JMenu();
         useCommandCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         setCommandMenuItem = new javax.swing.JMenuItem();
@@ -509,6 +510,9 @@ public class MainFrame extends javax.swing.JFrame {
         generateScriptsMenuItem.setText("Generate Scripts");
         toolsMenu.add(generateScriptsMenuItem);
 
+        exportPaletteMenuItem.setText("Export GIMP Palette");
+        toolsMenu.add(exportPaletteMenuItem);
+
         commandMenu.setText("Command");
 
         useCommandCheckBoxMenuItem.setText("Use Command");
@@ -544,6 +548,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu commandMenu;
     private javax.swing.JMenuItem deleteEntityMenuItem;
     private javax.swing.JButton deleteImageButton;
+    private javax.swing.JMenuItem exportPaletteMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem generateScriptsMenuItem;
     private javax.swing.JSlider greenSlider;
@@ -783,6 +788,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public JMenuBar getMainMenuBar() {
         return mainMenuBar;
+    }
+
+    public JMenuItem getExportPaletteMenuItem() {
+        return exportPaletteMenuItem;
     }
     
 }
