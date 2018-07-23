@@ -24,6 +24,8 @@ public class Utils {
     public static final String IMAGE_CHOOSER_PATH = "LECPImageChooserPath";
     public static final String NEW_PROJECT_CHOOSER_PATH = "LECPNewProjectChooserPath";
     public static final String OPEN_PROJECT_CHOOSER_PATH = "LECPOpenProjectChooserPath";
+    public static final String IMAGE_FOLDER_CHOOSER_PATH = "LECPImageFolderChooserPath";
+    public static final String DESTINATION_CHOOSER_PATH = "LECPDestinationChooserPath";
     
     public static final String INCLUDE_HASHTAG = "LECPIncludeHashtag";
     public static final String INCLUDE_ALPHA = "LECPIncludeAlpha";

@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import java.io.FileFilter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.prefs.Preferences;
 import javax.imageio.ImageIO;
 import projects.Project;
 import views.MainFrame;
@@ -76,9 +77,24 @@ public class ScriptGenerator {
         //make it so the user can press enter to generate
         dialog.getRootPane().setDefaultButton(dialog.getGenerateButton());
         
-        JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
+        
+        String imageFolderChooserFilePath 
+                = prefs.get(Utils.IMAGE_FOLDER_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        File imageFolderChooserFile = new File(imageFolderChooserFilePath);
+        JFileChooser imageFolderChooser = new JFileChooser(imageFolderChooserFile);
+        imageFolderChooser.setMultiSelectionEnabled(false);
+        imageFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
+        String destinationChooserFilePath 
+                = prefs.get(Utils.DESTINATION_CHOOSER_PATH, 
+                        System.getProperty("user.dir"));
+        File destinationChooserFile = new File(destinationChooserFilePath);
+        JFileChooser destinationChooser = new JFileChooser(destinationChooserFile);
+        destinationChooser.setMultiSelectionEnabled(false);
+        destinationChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
         
         //setup the combo box
         JComboBox typeComboBox = dialog.getTypeComboBox();
@@ -106,9 +122,11 @@ public class ScriptGenerator {
         });
         
         dialog.getBrowseButton().addActionListener((ActionEvent e) -> {
-            int result = chooser.showOpenDialog(frame);
+            int result = destinationChooser.showOpenDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFolder = chooser.getSelectedFile();
+                File selectedFolder = destinationChooser.getSelectedFile();
+                //save the current directory to the user's preferences
+                prefs.put(Utils.DESTINATION_CHOOSER_PATH, selectedFolder.toString());
                 if (selectedFolder.exists()) {
                     if (selectedFolder.isDirectory()) {
                         //set the folder text field
@@ -120,9 +138,11 @@ public class ScriptGenerator {
         });
         
         dialog.getImageBrowseButton().addActionListener((ActionEvent e) -> {
-            int result = chooser.showOpenDialog(frame);
+            int result = imageFolderChooser.showOpenDialog(frame);
             if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFolder = chooser.getSelectedFile();
+                File selectedFolder = imageFolderChooser.getSelectedFile();
+                //save the current directory to the user's preferences
+                prefs.put(Utils.IMAGE_FOLDER_CHOOSER_PATH, selectedFolder.toString());
                 if (selectedFolder.exists()) {
                     if (selectedFolder.isDirectory()) {
                         //set the folder text field
