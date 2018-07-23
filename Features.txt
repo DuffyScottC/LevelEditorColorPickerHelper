@@ -19,3 +19,5 @@ Allow the user to right-click and select "show in finder"
 
 Errors:
 add an image to Entity1. Press apply. Open Entity2. Add identically named image to Entity2. Press delete image button. Result: Entity1's image is deleted.
+
+For entities with no image, when you change their color and click apply, the ImagePanel's color does not update.

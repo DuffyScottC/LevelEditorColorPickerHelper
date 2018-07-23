@@ -124,6 +124,7 @@ public class ResultsListController {
         if (0 <= index && index < resultsListModel.size()) {
             resultsList.setSelectedIndex(index);
             resultsList.repaint();
+            resultsList.ensureIndexIsVisible(index);
         } else if (index == -1) {
             resultsList.clearSelection();
         }
